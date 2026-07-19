@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第12章 尿の生成と排泄 パートA｜生理学スライド</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#4a3a6b;padding:14px 28px}
+.hd .ch{font-size:11px;color:#c4b5e8;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.hd .tt{font-size:20px;font-weight:500;color:#fff}
+.bd{padding:20px 28px 16px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.box{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:12px}
+.row{display:block;font-size:14px;line-height:1.9;color:#222;padding:5px 0;border-bottom:1px solid #e5e7eb}
+.row:last-child{border-bottom:none}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:#4a3a6b;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
+.tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;color:#4a3a6b;white-space:nowrap;min-width:100px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
+.tf{background:rgba(74,58,107,.12);color:#4a3a6b}
+.tb{background:rgba(180,60,30,.12);color:#b43c1e}
+.blank{display:inline-block;min-width:72px;border-bottom:2.5px solid #4a3a6b;border-radius:3px 3px 0 0;cursor:pointer;text-align:center;padding:0 5px;transition:all .22s;position:relative;vertical-align:baseline}
+.blank::after{content:"？";font-size:12px;color:#4a3a6b;opacity:.45;position:absolute;left:50%;transform:translateX(-50%)}
+.blank span{visibility:hidden;font-weight:600;color:#4a3a6b;font-size:14px;opacity:0;transition:opacity .22s;display:inline-block}
+.blank.on{border-bottom-color:transparent;background:rgba(74,58,107,.1);border-radius:4px;padding:1px 7px}
+.blank.on::after{display:none}
+.blank.on span{visibility:visible;opacity:1}
+.blank:not(.on):hover{background:rgba(74,58,107,.07)}
+.ctrl{display:flex;align-items:center;gap:8px;padding:10px 28px 12px;background:#f8f9fb;border-top:1px solid #e5e7eb;flex-wrap:wrap}
+.btn{padding:7px 15px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:#4a3a6b;color:#fff;border-color:#4a3a6b}
+.btnp:hover{background:#3d305a}
+.cnt{font-size:11px;color:#888;margin-left:auto}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
+.dot.a{background:#4a3a6b}
+.pg{font-size:11px;color:#888;margin-left:auto}
+</style>
+</head>
+<body>
+<h1>生理学 第12章 尿の生成と排泄｜パートA：腎臓の構造</h1>
+<div class="slide">
+  <div id="sc"></div>
+  <div class="ctrl">
+    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="all()">すべて表示</button>
+    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
+    <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+<script>
+const S=[
+{t:"腎臓の位置と形態",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"p",
+rows:[
+{t:"腎臓は [後腹膜] に位置する左右1対の臓器である．",b:["後腹膜"]},
+{t:"成人の腎臓は [握りこぶし] 大で，重さは約 [150g] である．",b:["握りこぶし","150g"]},
+{t:"腎臓の内側のくぼみを [腎門] といい，血管・神経・尿管が出入りする．",b:["腎門"]},
+{t:"腎臓の断面は外側の [皮質] と内側の [髄質] に分けられる．",b:["皮質","髄質"]},
+{t:"髄質には [腎錐体] があり，その先端（[腎乳頭]）から尿が腎杯へ排出される．",b:["腎錐体","腎乳頭"]},
+]},
+{t:"ネフロンの構造",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"p",
+rows:[
+{t:"腎臓の機能単位を [ネフロン]（腎単位）という．",b:["ネフロン"]},
+{t:"1個の腎臓には約 [100万個] のネフロンがある．",b:["100万個"]},
+{t:"ネフロンは [腎小体] と [尿細管] で構成される．",b:["腎小体","尿細管"]},
+{t:"腎小体は [糸球体] と [ボーマン嚢] からなる．",b:["糸球体","ボーマン嚢"]},
+{t:"腎小体は腎臓の [皮質] に存在する．",b:["皮質"]},
+]},
+{t:"尿細管の構造と走行",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"tbl",
+cols:["部位","走行・特徴"],
+rows:[
+["[近位尿細管]","ボーマン嚢に続く・[皮質] に存在・再吸収が最も盛ん"],
+["[ヘンレのループ]","髄質へ下降後，上行する U字型の構造"],
+["[遠位尿細管]","皮質へ戻る・[集合管] へ続く"],
+["[集合管]","複数の尿細管が合流・[髄質] を通り腎乳頭へ"],
+],
+blanks:["近位尿細管","皮質","ヘンレのループ","遠位尿細管","集合管","集合管","髄質"]
+},
+{t:"糸球体と傍糸球体装置",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"p",
+rows:[
+{t:"糸球体は [輸入細動脈] から血液が流入し，[輸出細動脈] から流出する毛細血管の塊である．",b:["輸入細動脈","輸出細動脈"]},
+{t:"輸入細動脈と遠位尿細管の接触部には [傍糸球体装置] がある．",b:["傍糸球体装置"]},
+{t:"傍糸球体装置は [レニン] を分泌し，血圧・体液量の調節に関わる．",b:["レニン"]},
+{t:"糸球体の毛細血管壁は [有窓型] で，血漿成分が濾過されやすい構造になっている．",b:["有窓型"]},
+]},
+{t:"腎臓の血液循環",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"p",
+rows:[
+{t:"腎臓への血液供給は [腎動脈] から行われる．",b:["腎動脈"]},
+{t:"心拍出量の約 [1/4]（約1L/分）が腎臓へ流れる．",b:["1/4"]},
+{t:"輸入細動脈 → [糸球体毛細血管] → [輸出細動脈] → [尿細管周囲毛細血管] の順に流れる．",b:["糸球体毛細血管","輸出細動脈","尿細管周囲毛細血管"]},
+{t:"尿細管周囲毛細血管は尿細管での [再吸収] や [分泌] に関わる．",b:["再吸収","分泌"]},
+]},
+{t:"腎臓の機能概要",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"tbl",
+cols:["機能","内容"],
+rows:[
+["[尿の生成]","老廃物・余分な水分・電解質を尿として排泄"],
+["[体液の調節]","血漿浸透圧・pH・電解質バランスの維持"],
+["[血圧の調節]","[レニン] 分泌による血圧調節"],
+["[造血の促進]","[エリスロポエチン] 分泌→赤血球産生促進"],
+["[ビタミンDの活性化]","活性型 [ビタミンD] を産生→Ca吸収促進"],
+],
+blanks:["尿の生成","体液の調節","血圧の調節","レニン","造血の促進","エリスロポエチン","ビタミンDの活性化","ビタミンD"]
+},
+{t:"尿の生成の3ステップ",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"tbl",
+cols:["ステップ","場所","内容"],
+rows:[
+["[濾過]","[糸球体]→ボーマン嚢","血漿成分が原尿として濾過される"],
+["[再吸収]","[尿細管]・集合管","必要な物質を血液へ取り戻す"],
+["[分泌]","[尿細管]・集合管","不要な物質を尿細管腔へ追加排泄"],
+],
+blanks:["濾過","糸球体","再吸収","尿細管","分泌","尿細管"]
+},
+{t:"パートAまとめ",ch:"第12章 尿の生成と排泄 ｜ パートAまとめ",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["腎臓の機能単位","[ネフロン]（約100万個/腎臓）"],
+["腎小体","[糸球体]＋[ボーマン嚢]（皮質に存在）"],
+["尿細管の順序","近位尿細管→[ヘンレのループ]→遠位尿細管→[集合管]"],
+["傍糸球体装置","[レニン] 分泌→血圧調節"],
+["腎臓のホルモン産生","[エリスロポエチン]（造血）・活性型[ビタミンD]（Ca吸収）"],
+["尿生成の3ステップ","[濾過]→[再吸収]→[分泌]"],
+],
+blanks:["ネフロン","糸球体","ボーマン嚢","ヘンレのループ","集合管","レニン","エリスロポエチン","ビタミンD","濾過","再吸収","分泌"]
+},
+];
+let cur=0,bs=[];
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function buildSlide(i){
+  const s=S[i];bs=[];
+  let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
+  if(s.type==="p"){
+    h+=`<div class="sec">重要事項</div><div class="box">`;
+    s.rows.forEach(r=>{
+      let t=r.t;
+      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
+      h+=`<span class="row">${t}</span>`;
+    });
+    h+=`</div>`;
+  }else if(s.type==="tbl"){
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    s.cols.forEach(c=>h+=`<th>${c}</th>`);
+    h+=`</tr></thead><tbody>`;
+    s.rows.forEach(row=>{
+      h+=`<tr>`;
+      row.forEach(cell=>{
+        let t=cell;
+        if(s.blanks)s.blanks.forEach(a=>{
+          if(t.includes("["+a+"]")){const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));}
+        });
+        h+=`<td>${t}</td>`;
+      });
+      h+=`</tr>`;
+    });
+    h+=`</tbody></table></div>`;
+  }
+  h+=`</div>`;
+  document.getElementById("sc").innerHTML=h;
+  upd();bldNav();
+}
+function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
+function all(){bs.forEach(b=>rb(b.id));}
+function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
+function bldNav(){
+  let h="";
+  S.forEach((_,i)=>h+=`<div class="dot${i===cur?" a":""}" onclick="go(${i})"></div>`);
+  h+=`<span class="pg">${cur+1} / ${S.length}</span>`;
+  document.getElementById("nav").innerHTML=h;
+}
+buildSlide(0);
+</script>
+</body>
+</html>
