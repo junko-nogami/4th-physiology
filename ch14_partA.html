@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第14章 消化と吸収 パートA｜生理学スライド</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#7a4a1e;padding:14px 28px}
+.hd .ch{font-size:11px;color:#e8c99a;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.hd .tt{font-size:20px;font-weight:500;color:#fff}
+.bd{padding:20px 28px 16px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.box{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:12px}
+.row{display:block;font-size:14px;line-height:1.9;color:#222;padding:5px 0;border-bottom:1px solid #e5e7eb}
+.row:last-child{border-bottom:none}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:#7a4a1e;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
+.tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;color:#7a4a1e;white-space:nowrap;min-width:110px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
+.tf{background:rgba(122,74,30,.12);color:#7a4a1e}
+.tb{background:rgba(30,80,122,.12);color:#1e507a}
+.blank{display:inline-block;min-width:72px;border-bottom:2.5px solid #7a4a1e;border-radius:3px 3px 0 0;cursor:pointer;text-align:center;padding:0 5px;transition:all .22s;position:relative;vertical-align:baseline}
+.blank::after{content:"？";font-size:12px;color:#7a4a1e;opacity:.45;position:absolute;left:50%;transform:translateX(-50%)}
+.blank span{visibility:hidden;font-weight:600;color:#7a4a1e;font-size:14px;opacity:0;transition:opacity .22s;display:inline-block}
+.blank.on{border-bottom-color:transparent;background:rgba(122,74,30,.1);border-radius:4px;padding:1px 7px}
+.blank.on::after{display:none}
+.blank.on span{visibility:visible;opacity:1}
+.blank:not(.on):hover{background:rgba(122,74,30,.07)}
+.ctrl{display:flex;align-items:center;gap:8px;padding:10px 28px 12px;background:#f8f9fb;border-top:1px solid #e5e7eb;flex-wrap:wrap}
+.btn{padding:7px 15px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:#7a4a1e;color:#fff;border-color:#7a4a1e}
+.btnp:hover{background:#6a3f1a}
+.cnt{font-size:11px;color:#888;margin-left:auto}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
+.dot.a{background:#7a4a1e}
+.pg{font-size:11px;color:#888;margin-left:auto}
+</style>
+</head>
+<body>
+<h1>生理学 第14章 消化と吸収｜パートA：消化器系の構成とはたらき</h1>
+<div class="slide">
+  <div id="sc"></div>
+  <div class="ctrl">
+    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="all()">すべて表示</button>
+    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
+    <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+<script>
+const S=[
+{t:"消化器系の構成",ch:"第14章 消化と吸収 ｜ A 消化器系の構成",type:"p",
+rows:[
+{t:"食物は口から入り，[食道]→[胃]→[小腸]（十二指腸・空腸・回腸）→[大腸]（盲腸・結腸・直腸）の順に流れる．",b:["食道","胃","小腸","大腸"]},
+{t:"この1つの管を [消化管] という．",b:["消化管"]},
+{t:"消化液を分泌する [唾液腺]・[膵臓]・[肝臓]・[胆嚢] も消化器系を構成する．",b:["唾液腺","膵臓","肝臓","胆嚢"]},
+{t:"吸収されなかった残りかすは [便] として [肛門] から排泄される．",b:["便","肛門"]},
+]},
+{t:"消化の種類",ch:"第14章 消化と吸収 ｜ A 消化と吸収",type:"two",
+left:{label:"機械的消化",tag:"tf",rows:[
+{t:"噛むことなどで食物を小さな断片にすることである．",b:[]},
+{t:"胃や小腸の壁にある筋の収縮運動（[消化管運動]）も内容物をかき混ぜて消化を進める．",b:["消化管運動"]},
+]},
+right:{label:"化学的消化",tag:"tb",rows:[
+{t:"胃液などの [消化液] に含まれる [消化酵素] で，栄養素を高分子から低分子へ分解することである．",b:["消化液","消化酵素"]},
+{t:"消化された栄養素は主に [小腸] で体内へ吸収される．",b:["小腸"]},
+]}},
+{t:"消化管壁の構造",ch:"第14章 消化と吸収 ｜ A 消化管壁の微細構造",type:"p",
+rows:[
+{t:"消化管壁は外側から [漿膜]・[筋層]・[粘膜] の3層で構成される．",b:["漿膜","筋層","粘膜"]},
+{t:"筋層は [縦走筋] と [輪走筋] の2層からなる．縦走筋が収縮すると消化管が [長軸方向] に縮む．",b:["縦走筋","輪走筋","長軸方向"]},
+{t:"粘膜の内表面は [上皮細胞] で覆われ，小腸粘膜表面には [絨毛] と呼ばれる多数の突起がみられる．",b:["上皮細胞","絨毛"]},
+]},
+{t:"消化管運動",ch:"第14章 消化と吸収 ｜ A 消化管運動",type:"two",
+left:{label:"分節運動",tag:"tf",rows:[
+{t:"主として [輪走筋] の収縮で起こる．",b:["輪走筋"]},
+{t:"腸の一部でくびれをつくり腸内容物をかき [混ぜる] 運動である．",b:["混ぜる"]},
+{t:"機械的消化と化学的消化を [進行] させる．",b:["進行"]},
+]},
+right:{label:"蠕動運動",tag:"tb",rows:[
+{t:"強い収縮でくびれが起こり，[口側] から [肛門側] へゆっくりと進む運動である．",b:["口側","肛門側"]},
+{t:"腸内容物を [移送] する役割を担う．",b:["移送"]},
+{t:"食道での移送は主に [蠕動運動] で起こる．",b:["蠕動運動"]},
+]}},
+{t:"消化液の種類と消化腺",ch:"第14章 消化と吸収 ｜ A 消化液分泌",type:"tbl",
+cols:["消化液","消化腺","主な成分・特徴"],
+rows:[
+["[唾液]","唾液腺（耳下腺・顎下腺・舌下腺）","[アミラーゼ]・粘液・抗菌タンパク質（リゾチーム）"],
+["[胃液]","胃腺","[ペプシン]・塩酸・内因子"],
+["[膵液]","膵臓","三大栄養素の消化酵素（前駆体）・[重炭酸イオン]（アルカリ性）"],
+["[胆汁]","肝臓（貯蔵：胆嚢）","[胆汁酸]・ビリルビン・コレステロール"],
+["[腸液]","腸腺","水分・塩分の補給・[壁内神経系] で調節"],
+],
+blanks:["唾液","アミラーゼ","胃液","ペプシン","膵液","重炭酸イオン","胆汁","胆汁酸","腸液","壁内神経系"]
+},
+{t:"消化管の神経調節",ch:"第14章 消化と吸収 ｜ A 神経とホルモンによる調節",type:"p",
+rows:[
+{t:"消化管壁内にある神経ネットワークを [壁内神経系]（腸管神経系）という．",b:["壁内神経系"]},
+{t:"縦走筋と輪走筋の間にある [アウエルバッハ神経叢] は腸壁の [筋収縮] を主に調節する．",b:["アウエルバッハ神経叢","筋収縮"]},
+{t:"筋層と粘膜の間にある [マイスネル神経叢] は腸液の [分泌] を主に調節する．",b:["マイスネル神経叢","分泌"]},
+{t:"[副交感神経] は消化吸収機能を高める方向にはたらき，[交感神経] は消化吸収機能を抑える方向にはたらく．",b:["副交感神経","交感神経"]},
+]},
+{t:"消化管ホルモン",ch:"第14章 消化と吸収 ｜ A 神経とホルモンによる調節",type:"tbl",
+cols:["ホルモン","存在部位","主なはたらき","分泌刺激"],
+rows:[
+["[ガストリン]","胃・小腸上部","胃酸・[ペプシン] 分泌促進","消化産物・迷走神経"],
+["[セクレチン]","小腸","[膵液] 分泌（重炭酸イオン）・胃液分泌抑制","粥状液（胃酸）"],
+["[コレシストキニン]","小腸","膵液分泌（酵素）・[胆嚢収縮]","粥状液（消化産物）"],
+["[グレリン]","胃・小腸","摂食促進・[成長ホルモン] 分泌増加","食事前の空腹"],
+],
+blanks:["ガストリン","ペプシン","セクレチン","膵液","コレシストキニン","胆嚢収縮","グレリン","成長ホルモン"]
+},
+{t:"パートAまとめ",ch:"第14章 消化と吸収 ｜ パートAまとめ",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["消化管の順序","口→食道→胃→[小腸]→[大腸]→肛門"],
+["消化の種類","[機械的消化]（噛む・消化管運動）・[化学的消化]（消化酵素）"],
+["消化管壁の3層","外側から [漿膜]・[筋層]・[粘膜]"],
+["分節運動","[輪走筋] の収縮→内容物を混ぜる"],
+["蠕動運動","口側→肛門側への [移送]"],
+["副交感神経","消化吸収機能を [高める]"],
+["壁内神経系","アウエルバッハ（[筋収縮]）・マイスネル（[分泌]）"],
+],
+blanks:["小腸","大腸","機械的消化","化学的消化","漿膜","筋層","粘膜","輪走筋","移送","高める","筋収縮","分泌"]
+},
+];
+let cur=0,bs=[];
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function buildSlide(i){
+  const s=S[i];bs=[];
+  let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
+  if(s.type==="p"){
+    h+=`<div class="sec">重要事項</div><div class="box">`;
+    s.rows.forEach(r=>{
+      let t=r.t;
+      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
+      h+=`<span class="row">${t}</span>`;
+    });
+    h+=`</div>`;
+  }else if(s.type==="tbl"){
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    s.cols.forEach(c=>h+=`<th>${c}</th>`);
+    h+=`</tr></thead><tbody>`;
+    s.rows.forEach(row=>{
+      h+=`<tr>`;
+      row.forEach(cell=>{
+        let t=cell;
+        if(s.blanks)s.blanks.forEach(a=>{
+          if(t.includes("["+a+"]")){const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));}
+        });
+        h+=`<td>${t}</td>`;
+      });
+      h+=`</tr>`;
+    });
+    h+=`</tbody></table></div>`;
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];
+      const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{
+        let t=r.t;
+        r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
+        h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${t}</p>`;
+      });
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById("sc").innerHTML=h;
+  upd();bldNav();
+}
+function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
+function all(){bs.forEach(b=>rb(b.id));}
+function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
+function bldNav(){
+  let h="";
+  S.forEach((_,i)=>h+=`<div class="dot${i===cur?" a":""}" onclick="go(${i})"></div>`);
+  h+=`<span class="pg">${cur+1} / ${S.length}</span>`;
+  document.getElementById("nav").innerHTML=h;
+}
+buildSlide(0);
+</script>
+</body>
+</html>
