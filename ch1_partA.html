@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第1章 生理学とは パートA｜生理学スライド</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#0e6b6b;padding:14px 28px}
+.hd .ch{font-size:11px;color:#a3ddd8;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.hd .tt{font-size:20px;font-weight:500;color:#fff}
+.bd{padding:20px 28px 16px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.box{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:12px}
+.row{display:block;font-size:14px;line-height:1.9;color:#222;padding:5px 0;border-bottom:1px solid #e5e7eb}
+.row:last-child{border-bottom:none}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:#0e6b6b;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
+.tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;color:#0e6b6b;white-space:nowrap;min-width:110px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
+.tf{background:rgba(14,107,107,.12);color:#0e6b6b}
+.tb{background:rgba(180,60,30,.12);color:#b43c1e}
+.blank{display:inline-block;min-width:72px;border-bottom:2.5px solid #0e6b6b;border-radius:3px 3px 0 0;cursor:pointer;text-align:center;padding:0 5px;transition:all .22s;position:relative;vertical-align:baseline}
+.blank::after{content:"？";font-size:12px;color:#0e6b6b;opacity:.45;position:absolute;left:50%;transform:translateX(-50%)}
+.blank span{visibility:hidden;font-weight:600;color:#0e6b6b;font-size:14px;opacity:0;transition:opacity .22s;display:inline-block}
+.blank.on{border-bottom-color:transparent;background:rgba(14,107,107,.1);border-radius:4px;padding:1px 7px}
+.blank.on::after{display:none}
+.blank.on span{visibility:visible;opacity:1}
+.blank:not(.on):hover{background:rgba(14,107,107,.07)}
+.ctrl{display:flex;align-items:center;gap:8px;padding:10px 28px 12px;background:#f8f9fb;border-top:1px solid #e5e7eb;flex-wrap:wrap}
+.btn{padding:7px 15px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:#0e6b6b;color:#fff;border-color:#0e6b6b}
+.btnp:hover{background:#0a5555}
+.cnt{font-size:11px;color:#888;margin-left:auto}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
+.dot.a{background:#0e6b6b}
+.pg{font-size:11px;color:#888;margin-left:auto}
+</style>
+</head>
+<body>
+<h1>生理学 第1章 生理学とは｜パートA：生理学とは・細胞膜</h1>
+<div class="slide">
+  <div id="sc"></div>
+  <div class="ctrl">
+    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="all()">すべて表示</button>
+    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
+    <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+<script>
+const S=[
+{t:"生理学とは",ch:"第1章 生理学とは ｜ 生理学とは",type:"p",
+rows:[
+{t:"からだの構造を明らかにする学問を [解剖学]，物理学的・化学的方法で生命活動を探究する学問を [生理学] という．",b:["解剖学","生理学"]},
+{t:"生理学とは，正常なヒトのからだの [しくみ] と [はたらき] を扱う学問である．",b:["しくみ","はたらき"]},
+{t:"人体は約 [数十兆個] の細胞で構成され，それらはすべて [1個] の受精卵が分裂して生じたものである．",b:["数十兆個","1個"]},
+{t:"細胞は発達に伴って [分化] し，異なる形態や機能をもつが，すべての細胞は同一の [DNA] をもつ．",b:["分化","DNA"]},
+]},
+{t:"細胞の構造（概観）",ch:"第1章 生理学とは ｜ A 細胞の構造と機能",type:"p",
+rows:[
+{t:"細胞は，[細胞膜] に覆われた [細胞質] と [核] で構成されている．",b:["細胞膜","細胞質","核"]},
+{t:"細胞質には，ミトコンドリア・小胞体・ゴルジ装置・リソソームなどの [細胞内小器官] と核が含まれる．",b:["細胞内小器官"]},
+{t:"細胞内小器官の間は，[細胞質基質]（[サイトゾル]）と呼ばれる液状成分で満たされている．",b:["細胞質基質","サイトゾル"]},
+]},
+{t:"細胞膜の構造",ch:"第1章 生理学とは ｜ A-1 細胞膜",type:"p",
+rows:[
+{t:"細胞膜は，[脂質二重層] と [膜タンパク質] で構成される．",b:["脂質二重層","膜タンパク質"]},
+{t:"細胞膜は [リン脂質] が二層に重なった膜で，膜タンパク質が埋め込まれている．",b:["リン脂質"]},
+{t:"リン脂質の頭部は [リン酸基] で構成され球状の形をしており，[親水性] である．",b:["リン酸基","親水性"]},
+{t:"リン脂質の尾部は2本の [脂肪酸] で構成され膜の内側にあり，[疎水性] である．",b:["脂肪酸","疎水性"]},
+]},
+{t:"膜タンパク質",ch:"第1章 生理学とは ｜ A-1 細胞膜",type:"p",
+rows:[
+{t:"膜タンパク質は物質の [輸送] を担い，[輸送体] と [チャネル] の2種類がある．",b:["輸送","輸送体","チャネル"]},
+{t:"[チャネル] は，特定のイオンを [選択的] に通過させる．",b:["チャネル","選択的"]},
+{t:"[輸送体] は，その結合部位にぴったりと合う物質やイオンしか通さない．",b:["輸送体"]},
+]},
+{t:"物質の移動①：拡散・浸透・濾過",ch:"第1章 生理学とは ｜ A-1 細胞膜を介した物質の移動",type:"p",
+rows:[
+{t:"細胞膜は [半透膜] の性質をもち，酸素・二酸化炭素のほか脂溶性の [アルコール] などは自由に通過できる．",b:["半透膜","アルコール"]},
+{t:"[拡散] とは，物質が濃度の [高い] ほうから [低い] ほうへ自然に移動する現象である．",b:["拡散","高い","低い"]},
+{t:"[浸透] とは，物質の濃度が高い場所へ水が移動し水溶液を薄める現象で，このときはたらく力を [浸透圧] という．",b:["浸透","浸透圧"]},
+{t:"[濾過] とは，小さな穴に水溶液を通して大きな物質を分けることで，[毛細血管] の壁などで行われる．",b:["濾過","毛細血管"]},
+]},
+{t:"物質の移動②：受動輸送と能動輸送",ch:"第1章 生理学とは ｜ A-1 細胞膜を介した物質の移動",type:"two",
+left:{label:"受動輸送",tag:"tf",rows:[
+{t:"膜タンパク質を通る物質が [濃度勾配] に従って移動する輸送．",b:["濃度勾配"]},
+{t:"[駆動力] を必要とせず，受動的に移動する．",b:["駆動力"]},
+]},
+right:{label:"能動輸送",tag:"tb",rows:[
+{t:"物質を濃度勾配に [逆らって] 移動させる輸送．",b:["逆らって"]},
+{t:"膜タンパク質が [仕事] をする必要がある．",b:["仕事"]},
+{t:"[一次能動輸送] と [二次能動輸送] に分けられる．",b:["一次能動輸送","二次能動輸送"]},
+]}},
+{t:"能動輸送の種類",ch:"第1章 生理学とは ｜ A-1 細胞膜を介した物質の移動",type:"two",
+left:{label:"一次能動輸送",tag:"tf",rows:[
+{t:"[ATP]（アデノシン三リン酸）のエネルギーを利用して物質を輸送する．",b:["ATP"]},
+]},
+right:{label:"二次能動輸送",tag:"tb",rows:[
+{t:"ATPのエネルギーを用いず，イオンの [電気化学的勾配] を利用して物質を輸送する．",b:["電気化学的勾配"]},
+]}},
+{t:"物質の移動③：エクソ／エンドサイトーシス",ch:"第1章 生理学とは ｜ A-1 細胞膜を介した物質の移動",type:"two",
+left:{label:"エクソサイトーシス（開口分泌）",tag:"tf",rows:[
+{t:"分泌顆粒膜と [細胞膜] が融合する．",b:["細胞膜"]},
+{t:"顆粒内の物質が細胞 [外] へ放出される．",b:["外"]},
+]},
+right:{label:"エンドサイトーシス",tag:"tb",rows:[
+{t:"大きな細胞外物質が細胞膜上の [受容体] に結合し，小胞として細胞 [内] へ取り込まれる．",b:["受容体","内"]},
+{t:"白血球などが死んだ細胞やバクテリアを取り込んで消化することを [食作用] という．",b:["食作用"]},
+]}},
+{t:"パートAまとめ",ch:"第1章 生理学とは ｜ パートAまとめ",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["解剖学と生理学","構造を扱うのが [解剖学]，しくみとはたらきを扱うのが [生理学]"],
+["細胞の構成","[細胞膜]・細胞質・核／細胞質基質（[サイトゾル]）で満たされる"],
+["細胞膜","[脂質二重層] と膜タンパク質（[輸送体]・チャネル）で構成"],
+["受動的な移動","拡散・[浸透]（力＝[浸透圧]）・濾過"],
+["能動輸送","一次＝[ATP] を利用／二次＝[電気化学的勾配] を利用"],
+["小胞による輸送","放出＝エクソサイトーシス／取り込み＝[エンドサイトーシス]（[食作用] を含む）"],
+],
+blanks:["解剖学","生理学","細胞膜","サイトゾル","脂質二重層","輸送体","浸透","浸透圧","ATP","電気化学的勾配","エンドサイトーシス","食作用"]
+},
+];
+let cur=0,bs=[];
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function buildSlide(i){
+  const s=S[i];bs=[];
+  let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
+  if(s.type==="p"){
+    h+=`<div class="sec">重要事項</div><div class="box">`;
+    s.rows.forEach(r=>{
+      let t=r.t;
+      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
+      h+=`<span class="row">${t}</span>`;
+    });
+    h+=`</div>`;
+  }else if(s.type==="tbl"){
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    s.cols.forEach(c=>h+=`<th>${c}</th>`);
+    h+=`</tr></thead><tbody>`;
+    s.rows.forEach(row=>{
+      h+=`<tr>`;
+      row.forEach(cell=>{
+        let t=cell;
+        if(s.blanks)s.blanks.forEach(a=>{
+          if(t.includes("["+a+"]")){const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));}
+        });
+        h+=`<td>${t}</td>`;
+      });
+      h+=`</tr>`;
+    });
+    h+=`</tbody></table></div>`;
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];
+      const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{
+        let t=r.t;
+        r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
+        h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${t}</p>`;
+      });
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById("sc").innerHTML=h;
+  upd();bldNav();
+}
+function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
+function all(){bs.forEach(b=>rb(b.id));}
+function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
+function bldNav(){
+  let h="";
+  S.forEach((_,i)=>h+=`<div class="dot${i===cur?" a":""}" onclick="go(${i})"></div>`);
+  h+=`<span class="pg">${cur+1} / ${S.length}</span>`;
+  document.getElementById("nav").innerHTML=h;
+}
+buildSlide(0);
+</script>
+</body>
+</html>
