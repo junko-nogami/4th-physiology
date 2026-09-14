@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第2章 パートA 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#9e3450;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#e8b3c1;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#e8b3c1;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#9e3450;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#9e3450;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(158,52,80,.13);color:#84293f}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#9e3450;background:#fdf3f5}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #9e3450;background:#9e3450;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#84293f}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#9e3450;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#9e3450;background:#fdf3f5}
+.mode .nm{font-size:16px;font-weight:600;color:#9e3450;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#9e3450;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#84293f;background:rgba(158,52,80,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#9e3450;background:rgba(158,52,80,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第2章 筋の生理｜パートA 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第2章 筋の生理 ｜ A 筋の分類・骨格筋の構造</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第2章 P11〜14 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon:true … 落としちゃダメな基本問題（🎯基本／ドボンモードでは💣ドボン！）
+   gori :true … 「誤っているのはどれか」形式。設問の上に ⚠ 誤りを選ぶ タグが出る
+                 gori問題では、true が付くのは「誤っている記述」＝選ぶべき選択肢
+   exp … 正解時に見せる「なぜ正しいか」 */
+const PICK=5;
+const POOL=[
+{q:"平滑筋の細胞の特徴として正しいのはどれか。",kihon:true,
+ choices:[
+  ["紡錘形で横紋がない",true,""],
+  ["細長い円柱状で横紋がある",false,"骨格筋の筋線維の特徴。"],
+  ["枝分かれした円柱状で介在板をもつ",false,"心筋細胞の特徴。"],
+  ["多くの核をもつ多核細胞である",false,"骨格筋の筋線維の特徴。"]],
+ exp:"平滑筋の細胞は紡錘形で横紋がない。血管や消化管など中腔臓器の壁を構成し、自律神経に支配される不随意筋である。"},
+
+{q:"心筋の筋線維について正しいのはどれか。",kihon:true,
+ choices:[
+  ["介在板によって細胞どうしが連結する",true,""],
+  ["横紋をもたない",false,"平滑筋の特徴。心筋には横紋がある。"],
+  ["運動神経の支配を受ける",false,"骨格筋の特徴。心筋を支配するのは自律神経。"],
+  ["意思で動かすことができる",false,"随意筋である骨格筋の特徴。心筋は不随意筋。"]],
+ exp:"心筋の細胞は枝分かれした円柱状で、介在板によって互いに連結している。横紋はあるが、自律神経に支配される不随意筋。"},
+
+{q:"筋線維が集合して構成される単位はどれか。",
+ choices:[
+  ["筋束",true,""],
+  ["筋原線維",false,"筋線維の内部を長軸方向に走る直径約1〜3μmの構造で、筋線維より小さい。"],
+  ["サルコメア",false,"Z膜からZ膜までの分節で、筋収縮の機能的最小単位。"],
+  ["筋周膜",false,"筋束を包む結合組織であり、筋の構成単位そのものではない。"]],
+ exp:"筋線維が集合して筋束をつくり、筋束が集合して1つの骨格筋（全筋）を構成する。"},
+
+{q:"筋小胞体に蓄えられ、筋収縮に使われるイオンはどれか。",kihon:true,
+ choices:[
+  ["カルシウムイオン",true,""],
+  ["ナトリウムイオン",false,"細胞外に多く、興奮（活動電位）の発生に関わるイオン。"],
+  ["カリウムイオン",false,"細胞内に多く、静止電位の維持に関わるイオン。"],
+  ["塩化物イオン",false,"細胞外に多い陰イオンで、筋小胞体に蓄えられるイオンではない。"]],
+ exp:"筋小胞体は筋線維内の細胞小器官で、筋が収縮するときに使われるCa²⁺を蓄えている。"},
+
+{q:"太いフィラメントを構成するタンパク質はどれか。",kihon:true,
+ choices:[
+  ["ミオシン",true,""],
+  ["アクチン",false,"細いフィラメント（アクチンフィラメント）を構成するタンパク質。"],
+  ["トロポニン",false,"細いフィラメント側に含まれる収縮調節タンパク質。"],
+  ["トロポミオシン",false,"同じく細いフィラメント側に含まれる収縮調節タンパク質。"]],
+ exp:"太いフィラメント＝ミオシンフィラメント、細いフィラメント＝アクチンフィラメント。"},
+
+{q:"ミオシンフィラメントについて正しいのはどれか。",
+ choices:[
+  ["頭部が規則正しくらせん状に並ぶ",true,""],
+  ["細いフィラメントを構成する",false,"細いフィラメントを構成するのはアクチン。"],
+  ["トロポニンを含む",false,"トロポニンは細いフィラメント（アクチンフィラメント）側に含まれる調節タンパク質。"],
+  ["収縮時にそれ自体が短縮する",false,"収縮してもA帯の幅は変わらず、フィラメント自体の長さは変化しない。"]],
+ exp:"ミオシンフィラメントでは頭部が規則正しくらせん状に並び、アクチンと結合することで筋収縮が生じる。"},
+
+{q:"A帯（暗帯）に並ぶフィラメントはどれか。",kihon:true,
+ choices:[
+  ["ミオシンフィラメント",true,""],
+  ["アクチンフィラメント",false,"I帯（明帯）に並ぶ細いフィラメント。"],
+  ["コラーゲン線維",false,"結合組織の線維で、筋原線維の構成要素ではない。"],
+  ["筋小胞体",false,"Ca²⁺を蓄える細胞小器官で、フィラメントではない。"]],
+ exp:"暗い部分がA帯（暗帯）でミオシンフィラメントが並び、明るい部分がI帯（明帯）でアクチンフィラメントが並ぶ。"},
+
+{q:"Z膜からZ膜までの分節で、筋収縮の機能的最小単位はどれか。",kihon:true,
+ choices:[
+  ["サルコメア（筋節）",true,""],
+  ["H帯",false,"A帯の中央にある、アクチンと重なり合わないミオシンのみのやや明るい部分。"],
+  ["I帯",false,"アクチンフィラメントが並ぶ明るい部分で、その中央にZ膜がある。"],
+  ["筋束",false,"筋線維が集合した構成単位で、顕微鏡レベルの分節ではない。"]],
+ exp:"Z膜からZ膜までの分節をサルコメア（筋節）と呼び、筋収縮の機能的最小単位となる。顕微鏡でみえる縞模様は、サルコメアが長軸方向に規則的に配列しているために観察される。"},
+
+{q:"筋が収縮するときの変化について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["A帯の幅が狭くなる",true,""],
+  ["I帯の幅が狭くなる",false,"収縮時に実際に起こる変化なので、正しい記述。"],
+  ["H帯の幅が狭くなる",false,"収縮時に実際に起こる変化なので、正しい記述。"],
+  ["各サルコメアが短くなる",false,"収縮時に実際に起こる変化なので、正しい記述。"]],
+ exp:"収縮時はI帯とH帯の幅が狭くなり、各サルコメアが短くなる。しかしA帯の幅は変わらない。この「A帯だけ変わらない」ことが、アクチンフィラメントがミオシンフィラメントの間へ滑り込む（滑り説）根拠になる。"},
+
+{q:"骨格筋の結合組織について正しいのはどれか。",
+ choices:[
+  ["筋内膜は個々の筋線維を包む",true,""],
+  ["筋外膜は筋束を包む",false,"筋外膜（筋上膜）が包むのは全筋。筋束を包むのは筋周膜。"],
+  ["筋周膜は全筋を包む",false,"筋周膜が包むのは筋束。全筋を包むのは筋外膜（筋上膜）。"],
+  ["筋内膜は筋原線維を包む",false,"筋内膜が包むのは筋線維。筋原線維を包んでいるのは筋小胞体。"]],
+ exp:"外側から、筋外膜（筋上膜）＝全筋 → 筋周膜＝筋束 → 筋内膜＝個々の筋線維。内側にいくほど包む対象が細かくなる。"},
+
+{q:"筋の分類について正しいのはどれか。",kihon:true,
+ choices:[
+  ["心筋は横紋をもつが、自律神経に支配される不随意筋である",true,""],
+  ["骨格筋は自律神経に支配される",false,"骨格筋を支配するのは運動神経で、意思で動かせる随意筋。"],
+  ["平滑筋は横紋をもつ",false,"平滑筋に横紋はなく、細胞は紡錘形をしている。"],
+  ["平滑筋は意思で動かすことができる",false,"平滑筋は不随意筋で、意思では動かせない。"]],
+ exp:"横紋の有無（骨格筋・心筋はあり／平滑筋はなし）と、随意・不随意（随意は骨格筋のみ）は別の分類軸。この2つを混同しやすいので整理しておく。"},
+
+/* ---- やや難（ひっかけ・複合・理由を問う） ---- */
+{q:"筋の収縮時、I帯とH帯の幅は狭くなるがA帯の幅は変わらない。このことから何がわかるか。",
+ choices:[
+  ["アクチンフィラメントがミオシンフィラメントの間へ滑り込む",true,""],
+  ["ミオシンフィラメント自体が短縮する",false,"短縮するならA帯の幅も狭くなるはずで、観察された事実と合わない。"],
+  ["アクチンフィラメント自体が短縮する",false,"起きているのは滑り込みであり、フィラメント自体の長さは変わらない。"],
+  ["Z膜が消失する",false,"Z膜はサルコメアの境界として残り、収縮時はZ膜どうしが近づく。"]],
+ exp:"A帯の幅が変わらないということは、ミオシンフィラメントの長さが変わらないということ。それでいてサルコメアが短くなるので、アクチンフィラメントが滑り込んだと考えられる。これが滑り説。"},
+
+{q:"骨格筋の構造について誤っているのはどれか。",gori:true,
+ choices:[
+  ["筋原線維の直径は10〜150μm程度である",true,""],
+  ["筋線維は多くの核をもつ多核細胞である",false,"教科書どおりの記述なので、正しい。"],
+  ["筋線維の直径は10〜150μm程度である",false,"教科書どおりの記述なので、正しい。"],
+  ["筋線維が集合して筋束を構成する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"直径は、筋線維（筋細胞）が10〜150μm、その中を走る筋原線維が約1〜3μm。桁が2つ違うので、どちらの数値かを取り違えないこと。"},
+
+{q:"筋原線維を構成するタンパク質について誤っているのはどれか。",gori:true,
+ choices:[
+  ["トロポニンは太いフィラメントに含まれる",true,""],
+  ["ミオシンフィラメントの周囲に6本のアクチンフィラメントが並ぶ",false,"六角格子状に6本が整然と並ぶ。教科書どおりの記述なので、正しい。"],
+  ["ミオシンの頭部は規則正しくらせん状に並ぶ",false,"教科書どおりの記述なので、正しい。"],
+  ["トロポミオシンは収縮調節タンパク質としてはたらく",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"トロポニンとトロポミオシンは、太いフィラメントではなく細いフィラメント（アクチンフィラメント）に含まれ、ミオシンとアクチンの結合を調整する収縮調節タンパク質としてはたらく。"},
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.kihon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
+  if(item.gori) markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.kihon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.kihon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
