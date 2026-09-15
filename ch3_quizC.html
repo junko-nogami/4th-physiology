@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3章 パートC 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#3a4a8c;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#b8c2e8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#b8c2e8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#3a4a8c;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#3a4a8c;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(58,74,140,.13);color:#2e3c73}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#3a4a8c;background:#f2f4fb}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #3a4a8c;background:#3a4a8c;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#2e3c73}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#3a4a8c;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#3a4a8c;background:#f2f4fb}
+.mode .nm{font-size:16px;font-weight:600;color:#3a4a8c;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#3a4a8c;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#2e3c73;background:rgba(58,74,140,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#3a4a8c;background:rgba(58,74,140,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第3章 神経の生理｜パートC 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第3章 神経の生理 ｜ B 神経系の構成／C-1 脳の構造／C-2 機能局在／C-3 連合野</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第3章 P30下段〜P34上段 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 落としちゃダメな基本・頻出問題（🎯基本／ドボンモードでは💣ドボン！）
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。kihon とは併用しない
+   exp … 正解時に見せる「なぜ正しいか」
+
+   🎯基本の付け方：過去問（10章 神経／(9)大脳皮質）での出題頻度を基準にした。
+   機能局在6回／言語中枢4回／体部位再現3回／前頭葉障害2回／神経系の区分0回
+
+   注意：過去問は「前頭葉・頭頂葉」など葉の名称で機能局在を問うが、
+   教科書本文には葉の名称が出てこない。そのため葉レベルの局在は📘補足に回している。 */
+const PICK=5;
+const POOL=[
+
+/* ---------- B 神経系の構成 ---------- */
+
+{q:"中枢神経系を構成するのはどれか。",kihon:true,
+ choices:[
+  ["脳と脊髄",true,""],
+  ["脳と末梢神経",false,"末梢神経系は中枢神経系に入出力する神経線維群で、中枢神経系には含まれない。"],
+  ["脊髄と自律神経",false,"自律神経系は末梢神経系に属する。"],
+  ["大脳皮質と大脳基底核",false,"どちらも終脳の一部であり、中枢神経系全体を表す組み合わせではない。"]],
+ exp:"中枢神経系は<b>脳と脊髄</b>からなる。中枢神経系に入出力する神経線維群が末梢神経系。（教科書 P30）"},
+
+{q:"末梢神経系は、機能の違いから何と何に分類されるか。",kihon:true,
+ choices:[
+  ["体性神経系と自律神経系",true,""],
+  ["求心性神経系と遠心性神経系",false,"情報の向きによる区別で、体性・自律のどちらの神経にも両方が含まれる別の切り口。"],
+  ["交感神経系と副交感神経系",false,"自律神経系のさらに内側の分類。"],
+  ["運動神経系と感覚神経系",false,"体性神経系のさらに内側の分類。"]],
+ exp:"末梢神経系は、まず<b>体性神経系</b>と<b>自律神経系</b>に分類される。（教科書 P31、図3・6）"},
+
+{q:"体性神経系が関与するのはどれか。",
+ choices:[
+  ["運動や感覚などの動物性機能",true,""],
+  ["呼吸・循環・排泄などの植物性機能",false,"自律神経系が関与する機能。"],
+  ["記憶や学習などの高次機能",false,"大脳皮質の連合野が担う機能。"],
+  ["本能的な情動行動",false,"大脳辺縁系が担うはたらき。"]],
+ exp:"体性神経系は運動や感覚などの<b>動物性機能</b>、自律神経系は呼吸・循環・排泄・体温調節などの<b>植物性機能</b>に関与する。（教科書 P31）"},
+
+{q:"自律神経系の説明として正しいのはどれか。",
+ choices:[
+  ["呼吸・循環・排泄・体温調節などの植物性機能に関与する",true,""],
+  ["運動と感覚の動物性機能に関与する",false,"体性神経系が関与する機能。"],
+  ["中枢神経系に分類される",false,"自律神経系は末梢神経系に属する。"],
+  ["遠心性神経線維のみで構成される",false,"求心性神経線維（内臓求心性神経）も含まれている。"]],
+ exp:"自律神経系は末梢神経系に属し、<b>植物性機能</b>に関与する。求心性・遠心性の両方の線維を含む。（教科書 P31、図3・6）"},
+
+{q:"各種受容器に由来する情報を中枢神経系へ伝達する線維はどれか。",
+ choices:[
+  ["求心性神経線維",true,""],
+  ["遠心性神経線維",false,"中枢神経系からの指令を効果器へ伝える線維で、向きが逆。"],
+  ["節前線維",false,"自律神経系で、中枢から自律神経節までの線維のこと。"],
+  ["節後線維",false,"自律神経系で、自律神経節から効果器までの線維のこと。"]],
+ exp:"受容器から中枢へが<b>求心性神経線維</b>、中枢から効果器へが<b>遠心性神経線維</b>。体性・自律のどちらの神経にも含まれる。（教科書 P31）"},
+
+{q:"脊髄を構成するのはどれか。",
+ choices:[
+  ["頸髄・胸髄・腰髄・仙髄",true,""],
+  ["頸髄・胸髄・腰髄",false,"教科書が挙げる構成のうち1つが欠けている。"],
+  ["延髄・橋・中脳",false,"いずれも脳の一部であり、脊髄ではない。"],
+  ["視床・視床下部",false,"どちらも間脳に含まれる部位。"]],
+ exp:"脊髄は<b>頸髄・胸髄・腰髄・仙髄</b>で構成されている。（教科書 P30）"},
+
+/* ---------- C-1 脳の構造 ---------- */
+
+{q:"脳を構成する部位の組み合わせとして正しいのはどれか。",
+ choices:[
+  ["小脳・延髄・橋・中脳・間脳・終脳",true,""],
+  ["小脳・延髄・橋・中脳・脊髄",false,"脊髄は脳には含まれず、脳と並ぶ中枢神経系のもう一方。"],
+  ["大脳皮質・大脳基底核・脊髄",false,"前の2つは終脳の一部であり、脳全体を表す組み合わせではない。"],
+  ["間脳・終脳のみ",false,"脳幹や小脳が抜け落ちている。"]],
+ exp:"脳は<b>小脳・延髄・橋・中脳・間脳（視床、視床下部）・終脳（大脳基底核、大脳皮質）</b>で構成されている。（教科書 P31）"},
+
+{q:"間脳に含まれるのはどれか。",
+ choices:[
+  ["視床と視床下部",true,""],
+  ["大脳基底核と大脳皮質",false,"どちらも終脳に含まれる部位。"],
+  ["延髄と橋",false,"どちらも脳幹を構成する部位で、間脳とは別。"],
+  ["海馬と扁桃体",false,"大脳辺縁系に含まれる部位。"]],
+ exp:"間脳は<b>視床と視床下部</b>、終脳は<b>大脳基底核と大脳皮質</b>。この対応を押さえる。（教科書 P31）"},
+
+{q:"成人の脳の重さはおよそどれくらいか。",
+ choices:[
+  ["約1,400g",true,""],
+  ["約400g",false,"実際よりかなり軽く、桁が合わない。"],
+  ["約2,500g",false,"2,500という数字は大脳皮質の表面積（cm²）のほう。"],
+  ["約5,000g",false,"実際よりかなり重い。"]],
+ exp:"成人の脳は約<b>1,400g</b>。脳表面には多数の皺（溝）があり、大脳皮質の表面積は約2,500cm²と新聞紙ほどの大きさになる。（教科書 P31）"},
+
+{q:"脳にあるニューロンの数はおよそどれくらいか。",
+ choices:[
+  ["約1,000億個",true,""],
+  ["約1,000万個",false,"実際よりはるかに少なく、桁が合わない。"],
+  ["約100兆個",false,"100兆はシナプスの数のほう。"],
+  ["約52個",false,"52は大脳皮質が組織学的特徴から分類される部位の数。"]],
+ exp:"脳には約<b>1,000億個</b>のニューロンがあり、シナプスは約<b>100兆個</b>に上る。（教科書 P31）"},
+
+{q:"血液脳関門のはたらきを担っているのはどれか。",kihon:true,
+ choices:[
+  ["グリア細胞",true,""],
+  ["ニューロン",false,"血液中の物質から守られる側の細胞。"],
+  ["脳脊髄液",false,"脳が浮かんでいる液体で、関門のはたらきそのものを担うものではない。"],
+  ["大脳基底核",false,"終脳に含まれる神経核で、関門とは関係しない。"]],
+ exp:"血液脳関門（blood-brain barrier）は、血液中の物質がニューロンへ影響を直接与えることを防ぐ。この機能は、ニューロンを栄養している<b>グリア細胞</b>（数はニューロンの数倍）のはたらきによる。（教科書 P31）"},
+
+/* ---------- C-2 大脳皮質の機能局在 ---------- */
+
+{q:"大脳皮質が部位ごとに異なる機能をもつことを何というか。",kihon:true,
+ choices:[
+  ["機能局在",true,""],
+  ["体部位再現",false,"一次運動野を電気刺激すると、からだの部位に対応した運動が再現されることを指す語。"],
+  ["統合作用",false,"連合野が各領野の情報をまとめてはたらくことを指す語。"],
+  ["可塑性",false,"シナプスの使用頻度に応じて伝達効率が変化することを指す語。"]],
+ exp:"大脳皮質は部位ごとに機能が異なる。これを<b>機能局在</b>と呼ぶ。機能局在が最も明確な部位は運動野と感覚野。（教科書 P32）"},
+
+{q:"大脳皮質は、組織学的特徴からいくつの部位に分類されるか。",
+ choices:[
+  ["52",true,""],
+  ["4",false,"4は一次運動野に相当するブロードマンの野の番号。"],
+  ["22",false,"22はウェルニッケ野に相当するブロードマンの野の番号。"],
+  ["100",false,"教科書の記述と合わない。"]],
+ exp:"大脳皮質は組織学的特徴から<b>52</b>の部位に分類される。この分類をもとに作成されたのが脳地図。（教科書 P32）"},
+
+{q:"組織構造に基づいて脳地図を作成したのはどれか。",
+ choices:[
+  ["ブロードマン（Brodmann）",true,""],
+  ["ブローカ",false,"前頭連合野にある運動性言語中枢に名を残す人物。"],
+  ["ウェルニッケ",false,"側頭連合野にある感覚性言語中枢に名を残す人物。"],
+  ["ベッツ",false,"大脳皮質の大錐体細胞に名を残す人物。"]],
+ exp:"<b>ブロードマン</b>が組織構造に基づいて作成したものが脳地図である。番号による分類は機能局在とよく一致している。（教科書 P32、図3・8）"},
+
+{q:"一次運動野はブロードマンの何野にあたるか。",kihon:true,
+ choices:[
+  ["4野",true,""],
+  ["17野",false,"視覚野に相当する番号。"],
+  ["22野",false,"ウェルニッケ野（感覚性言語中枢）に相当する番号。"],
+  ["52野",false,"52は大脳皮質が分類される部位の総数のほう。"]],
+ exp:"一次運動野は<b>ブロードマンの4野</b>。（教科書 P32）"},
+
+{q:"一次運動野を電気刺激すると、からだの部位に対応した運動機能が再現される。これを何というか。",kihon:true,
+ choices:[
+  ["体部位再現",true,""],
+  ["機能局在",false,"大脳皮質が部位ごとに異なる機能をもつこと全般を指す、より広い語。"],
+  ["統合作用",false,"連合野が各領野の情報をまとめてはたらくことを指す語。"],
+  ["空間認知",false,"頭頂連合野がはたらいて空間を把握することを指す語。"]],
+ exp:"一次運動野の<b>体部位再現</b>という。体性感覚野でも同様の体部位の局在性が確認できる。（教科書 P32）"},
+
+/* ---------- C-3 連合野の統合機能・言語中枢 ---------- */
+
+{q:"連合野の分類として正しいのはどれか。",kihon:true,
+ choices:[
+  ["前頭連合野・頭頂連合野・側頭連合野",true,""],
+  ["前頭連合野・頭頂連合野・後頭連合野",false,"教科書が挙げる3つのうち1つが別のものに置き換わっている。"],
+  ["運動野・感覚野・視覚野",false,"連合野と密接に連携する領野であって、連合野の分類ではない。"],
+  ["大脳皮質・大脳基底核・大脳辺縁系",false,"脳の構造上の区分であり、連合野の分類ではない。"]],
+ exp:"ヒトの脳で最も発達した大脳皮質の部位が連合野で、<b>前頭連合野・頭頂連合野・側頭連合野</b>に分類される。（教科書 P32）"},
+
+{q:"知的機能を主に担い、損傷すると人格の変容が生じる連合野はどれか。",kihon:true,
+ choices:[
+  ["前頭連合野",true,""],
+  ["頭頂連合野",false,"空間認知と環境への注意喚起にはたらく連合野。"],
+  ["側頭連合野",false,"高次の聴覚情報処理や視覚形態認知、言語機能に関わる連合野。"],
+  ["大脳辺縁系",false,"本能的なはたらきを担う部位で、連合野ではない。"]],
+ exp:"<b>前頭連合野</b>は連合野の中でも特に高度な統合作用をもち、知的機能を主に担う。損傷すると創造力・計画力の低下や人格の変容（軽薄・粗野・短気・無気力など）を生じる。（教科書 P33）"},
+
+{q:"空間認知と環境への注意喚起にはたらく連合野はどれか。",kihon:true,
+ choices:[
+  ["頭頂連合野",true,""],
+  ["前頭連合野",false,"知的機能を主に担い、人格の統合に関わる連合野。"],
+  ["側頭連合野",false,"高次の聴覚情報処理や視覚形態認知、言語機能に関わる連合野。"],
+  ["運動前野",false,"前頭連合野の一部で、運動の統合中枢。"]],
+ exp:"<b>頭頂連合野</b>は視覚と体性感覚に関連する領域からの情報を受ける。損傷すると、物を手で触ってもそれが何かがわからなくなる。（教科書 P33）"},
+
+{q:"ブローカ野について正しいのはどれか。",kihon:true,
+ choices:[
+  ["前頭連合野にある運動性言語中枢である",true,""],
+  ["側頭連合野にある感覚性言語中枢である",false,"ウェルニッケ野の説明。"],
+  ["頭頂連合野にあり空間認知を担う",false,"頭頂連合野のはたらきの説明で、言語中枢ではない。"],
+  ["後頭部にあり視覚情報を処理する",false,"視覚野の説明。"]],
+ exp:"<b>ブローカ野＝前頭連合野の運動性言語中枢</b>。ウェルニッケ野からの情報を受けて言語のパターンをつくり、運動性皮質にその情報を出力すると考えられている。（教科書 P34）"},
+
+{q:"ウェルニッケ野の障害で起こるのはどれか。",kihon:true,
+ choices:[
+  ["音は聞こえるが意味を理解できなくなる",true,""],
+  ["音そのものが聞こえなくなる",false,"聴覚そのものが失われる状態で、言語中枢の障害の説明ではない。"],
+  ["話の理解はできるが構音に障害が生じる",false,"ブローカ野の障害（運動性失語症）の説明。"],
+  ["物を手で触ってもそれが何かわからなくなる",false,"頭頂連合野を損傷したときの症状。"]],
+ exp:"ウェルニッケ野は側頭連合野にある感覚性言語中枢。障害が起こると音は聞こえるが意味を理解できなくなる。これを<b>感覚性失語症</b>という。（教科書 P34）"},
+
+{q:"ウェルニッケ野はブロードマンの何野に相当するか。",
+ choices:[
+  ["22野",true,""],
+  ["4野",false,"一次運動野に相当する番号。"],
+  ["17野",false,"視覚野に相当する番号。"],
+  ["44野",false,"図3・8で前頭連合野側に位置する番号。"]],
+ exp:"側頭連合野にある感覚性言語中枢（ウェルニッケ野）は、ブロードマンの<b>22野</b>に相当する。（教科書 P34）"},
+
+{q:"言語野は約何%の人で左半球にみられるか。",kihon:true,
+ choices:[
+  ["約95%",true,""],
+  ["約50%",false,"左右がほぼ半々という意味になり、教科書の記述と合わない。"],
+  ["約70%",false,"教科書の記述より低い。"],
+  ["約100%",false,"右半球にある人もわずかに存在するため、全員ではない。"]],
+ exp:"言語野は約<b>95%</b>の人で<b>左半球</b>にみられる。（教科書 P33）"},
+
+{q:"右半球の損傷者の約4割に認められるのはどれか。",
+ choices:[
+  ["左半側空間無視",true,""],
+  ["右半側空間無視",false,"左半球損傷で起こりうる症状だが、まれである。"],
+  ["運動性失語症",false,"ブローカ野（前頭連合野）の障害で生じる症状。"],
+  ["感覚性失語症",false,"ウェルニッケ野（側頭連合野）の障害で生じる症状。"]],
+ exp:"右半球損傷者の約<b>4割</b>で<b>左半側空間無視</b>が認められる。一方、左半球損傷で右半側空間無視が起こることはまれである。損傷側と無視される側が左右逆になる点に注意。（教科書 P33）"},
+
+/* ---------- ⚠ 誤りを選ぶ ---------- */
+
+{q:"神経系の構成について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["自律神経系には求心性神経線維は含まれない",true,""],
+  ["中枢神経系は脳と脊髄からなる",false,"教科書どおりの記述なので、正しい。"],
+  ["体性神経系は動物性機能に関与する",false,"教科書どおりの記述なので、正しい。"],
+  ["末梢神経系は体性神経系と自律神経系に分類される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"<b>体性・自律のどちらの神経にも</b>、求心性神経線維と遠心性神経線維が含まれている。自律神経系にも内臓求心性神経がある。（教科書 P31、図3・6）"},
+
+{q:"連合野の機能について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["前頭前野は知覚と空間の認知を担う",true,""],
+  ["運動前野は運動の統合中枢であり、損傷により失行症が生じる",false,"教科書どおりの記述なので、正しい。"],
+  ["前言語野はブローカ野であり、損傷により運動性失語症が生じる",false,"教科書どおりの記述なので、正しい。"],
+  ["側頭連合野には聴覚に関した言語中枢があり、損傷により感覚性失語症が生じる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"前頭前野は<b>創造・意欲の中枢／人格の統合</b>を担い、損傷では人格変容が生じる。知覚・空間の認知を担うのは頭頂連合野。（表3・2、教科書 P33）"},
+
+{q:"ブローカ野の障害について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["人の話を理解できなくなる",true,""],
+  ["話し方が遅くなる",false,"教科書どおりの記述なので、正しい。"],
+  ["構音に障害が生じる",false,"教科書どおりの記述なので、正しい。"],
+  ["運動性失語症と呼ばれる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"ブローカ野の障害では、<b>人の話を理解したり発声をしたりすることには問題がない</b>。理解が損なわれるのはウェルニッケ野の障害（感覚性失語症）。（教科書 P34）"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"大脳皮質の感覚野と部位の組合せで正しいのはどれか。",hosoku:true,
+ choices:[
+  ["視覚野 － 後頭葉",true,""],
+  ["聴覚野 － 頭頂葉",false,"聴覚野があるのは側頭葉。"],
+  ["体性感覚野 － 前頭葉",false,"体性感覚野があるのは頭頂葉（中心後回）。"],
+  ["運動野 － 側頭葉",false,"運動野があるのは前頭葉（中心前回）。"]],
+ exp:"補足知識（資料外）。教科書の本文には葉の名称が出てこないが、国試ではこの形で繰り返し問われる。<b>視覚野＝後頭葉／聴覚野＝側頭葉／体性感覚野＝頭頂葉（中心後回）／運動野＝前頭葉（中心前回）</b>。"},
+
+{q:"ヒトの一次運動野の体部位再現について正しいのはどれか。",hosoku:true,
+ choices:[
+  ["下肢の領域は手の領域より内側にある",true,""],
+  ["体幹の領域は顔の領域より外側にある",false,"顔（頭部）のほうが外側にあるので、内外が逆。"],
+  ["ブローカ野は口の領域の中にある",false,"ブローカ野は一次運動野ではなく前頭連合野にある。"],
+  ["発声に関わる領域は体幹の領域より狭い",false,"発声に関わる領域は体幹の領域より広い。"]],
+ exp:"補足知識（資料外）。中心前回の上内側から下外側へ、<b>下肢 → 体幹 → 上肢 → 頭部</b>の順に再現される。細かい運動をする部位ほど広い領域を占める。"},
+
+{q:"大脳皮質の第Ⅴ層が発達しているのはどれか。",hosoku:true,
+ choices:[
+  ["一次運動野",true,""],
+  ["一次視覚野",false,"後頭葉にある感覚性の領野で、錐体細胞層が特に発達しているわけではない。"],
+  ["一次聴覚野",false,"側頭葉にある感覚性の領野。"],
+  ["一次体性感覚野",false,"頭頂葉にある感覚性の領野。"]],
+ exp:"補足知識（資料外）。<b>一次運動野</b>の第Ⅴ層には、運動指令を出す大錐体細胞（ベッツ細胞）が存在する。運動の出力を担う領野なので錐体細胞層がよく発達している。"},
+
+{q:"高次脳機能に含まれるのはどれか。",hosoku:true,
+ choices:[
+  ["言語",true,""],
+  ["伸張反射",false,"脊髄内で起こる脊髄反射であり、脳の統合機能ではない。"],
+  ["聴覚",false,"感覚機能であり、高次脳機能には含まれない。"],
+  ["味覚",false,"感覚機能であり、高次脳機能には含まれない。"]],
+ exp:"補足知識（資料外）。高次脳機能は脳の統合機能で、<b>言語・意思・思考・学習・記憶</b>などを含む。教科書も「人間らしく生きるための思考や言語機能などの機能」を高次機能としている。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.kihon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.kihon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.kihon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
