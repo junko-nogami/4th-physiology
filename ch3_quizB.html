@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3章 パートB 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#3a4a8c;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#b8c2e8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#b8c2e8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#3a4a8c;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#3a4a8c;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(58,74,140,.13);color:#2e3c73}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#3a4a8c;background:#f2f4fb}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #3a4a8c;background:#3a4a8c;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#2e3c73}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#3a4a8c;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#3a4a8c;background:#f2f4fb}
+.mode .nm{font-size:16px;font-weight:600;color:#3a4a8c;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#3a4a8c;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#2e3c73;background:rgba(58,74,140,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#3a4a8c;background:rgba(58,74,140,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第3章 神経の生理｜パートB 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第3章 神経の生理 ｜ A-3 活動電位の伝導／A-4 シナプス伝達／A-5 神経伝達物質</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第3章 P26下段〜P30 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 落としちゃダメな基本・頻出問題（🎯基本／ドボンモードでは💣ドボン！）
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。kihon とは併用しない
+   exp … 正解時に見せる「なぜ正しいか」
+
+   🎯基本の付け方：過去問（10章 神経）での出題頻度を基準にした。
+   跳躍伝導6回／神経伝達物質6回／伝導の3原則5回／シナプス伝達の特徴4回／
+   伝導速度と太さ3回／可塑性3回／発散と収束1回／軸索輸送0回 */
+const PICK=5;
+const POOL=[
+
+/* ---------- A-3 活動電位の伝導 ---------- */
+
+{q:"細胞体に発生した活動電位が軸索に沿って移動することを何というか。",
+ choices:[
+  ["伝導",true,""],
+  ["伝達",false,"シナプスを越えて次のニューロンへ信号が渡ることを指す語。軸索内を進むことではない。"],
+  ["加重",false,"複数のシナプス後電位が時間的・空間的に足し合わされることを指す語。"],
+  ["可塑性",false,"シナプスの使用頻度に応じて伝達効率が変化することを指す語。"]],
+ exp:"軸索に沿って活動電位が移動することを<b>伝導</b>という。シナプスを越えて次のニューロンへ渡るのは「伝達」で、区別して覚える。（教科書 P26）"},
+
+{q:"軸索での伝導中に、活動電位が減衰したり消滅したりしないことを何というか。",kihon:true,
+ choices:[
+  ["不減衰伝導",true,""],
+  ["絶縁性伝導",false,"神経束内で隣接する軸索へ乗り移ったり干渉したりしないことを指す原則。"],
+  ["両方向性伝導",false,"軸索自体は方向性をもたず、活動電位が両方向に伝導しうることを指す原則。"],
+  ["跳躍伝導",false,"有髄神経で、ランビエ絞輪から絞輪へ飛び飛びに伝導すること。"]],
+ exp:"伝導の3原則のひとつ。一度発生した活動電位は大きさ（振幅）が変わらずに伝わる。これを<b>不減衰伝導</b>という。（教科書 P26）"},
+
+{q:"生体内において、感覚神経の活動電位が伝導する方向はどれか。",
+ choices:[
+  ["末梢から中枢へ",true,""],
+  ["中枢から末梢へ",false,"運動神経の伝導方向。感覚神経とは向きが逆。"],
+  ["両方向へ同時に",false,"取り出した神経を使った実験で認められる性質で、生体内での向きではない。"],
+  ["方向は決まっていない",false,"軸索自体は方向性をもたないが、生体内では伝導方向が決まっている。"]],
+ exp:"軸索自体は方向性をもたないが、生体内では伝導方向が決まっており、<b>感覚神経は末梢から中枢へ</b>、運動神経は中枢から末梢へ伝導する。（教科書 P26）"},
+
+{q:"無髄神経の伝導で、近くの静止部を脱分極させる電流を何というか。",
+ choices:[
+  ["局所電流",true,""],
+  ["活動電位",false,"膜電位の大きな一過性の変化そのものを指す語で、電流の名称ではない。"],
+  ["軸索流",false,"軸索内を流れ、神経伝達物質や老廃物の輸送を担うもの。"],
+  ["平衡電位",false,"濃度勾配による力と電位勾配による力が釣り合ったときの電位のこと。"]],
+ exp:"興奮部から静止部へ細胞内を流れ、静止部の膜から細胞外へ出て、細胞外を静止部から興奮部へ戻る電流を<b>局所電流</b>と呼ぶ。この外向き電流が近くの静止部を脱分極させ、閾膜電位に達すると活動電位が発生する。（教科書 P27）"},
+
+{q:"有髄神経で、活動電位がランビエ絞輪部だけに発生し、絞輪から絞輪へ飛び飛びに伝わることを何というか。",kihon:true,
+ choices:[
+  ["跳躍伝導",true,""],
+  ["不減衰伝導",false,"伝導中に活動電位が減衰・消滅しないことを指す原則。"],
+  ["絶縁性伝導",false,"隣接する軸索へ乗り移ったり干渉したりしないことを指す原則。"],
+  ["軸索輸送",false,"細胞体と神経終末のあいだで物質を運ぶしくみのこと。"]],
+ exp:"有髄神経では活動電位が<b>ランビエ絞輪部だけ</b>に発生し、絞輪から絞輪へ飛び飛びに伝導する。これを<b>跳躍伝導</b>といい、無髄神経に比べて伝導が非常に速い。（教科書 P27）"},
+
+{q:"神経の伝導速度について正しいのはどれか。",kihon:true,
+ choices:[
+  ["線維の直径が大きいほど速い",true,""],
+  ["線維の直径が小さいほど速い",false,"関係が逆になっている。"],
+  ["線維の直径とは関係しない",false,"伝導速度は髄鞘の有無と線維の太さで決まる。"],
+  ["無髄神経のほうが有髄神経より速い",false,"跳躍伝導が起こる分、有髄神経のほうが速い。"]],
+ exp:"有髄・無髄いずれでも<b>直径が大きいほど伝導速度は速い</b>。さらに有髄神経は、細くても無髄神経に比べれば伝導が速い。（教科書 P27）"},
+
+{q:"伝導速度が最も速い神経線維はどれか。",kihon:true,
+ choices:[
+  ["Aα線維",true,""],
+  ["Aδ線維",false,"有髄で直径2〜5μm、12〜30m/秒。温・冷・痛覚を伝える感覚神経。"],
+  ["B線維",false,"有髄で直径3μm未満、3〜15m/秒。自律神経の節前線維。"],
+  ["C線維",false,"無髄で直径0.5〜1μm、0.5〜2m/秒。表中で最も遅い。"]],
+ exp:"<b>Aα線維</b>は直径15〜20μm、伝導速度70〜120m/秒で最速。骨格筋を支配する運動神経と、Ⅰa・Ⅰbの感覚神経が含まれる。（表3・1、教科書 P28）"},
+
+{q:"自律神経の節後線維にあたるのはどれか。",kihon:true,
+ choices:[
+  ["C線維（無髄）",true,""],
+  ["Aα線維",false,"有髄で最速の線維。骨格筋を支配する運動神経とⅠa・Ⅰbの感覚神経が含まれる。"],
+  ["Aγ線維",false,"有髄で15〜30m/秒。錘内筋線維を支配する運動神経。"],
+  ["B線維",false,"有髄で3〜15m/秒。自律神経の線維だが、担当するのは節前の側。"]],
+ exp:"自律神経は<b>節前線維＝B（有髄）</b>、<b>節後線維＝C（無髄）</b>。C線維は表3・1で唯一の無髄線維で、伝導速度も最も遅い（0.5〜2m/秒）。（表3・1、教科書 P28）"},
+
+/* ---------- A-4 シナプスにおける興奮伝達 ---------- */
+
+{q:"シナプスでの信号伝達は、何を介して行われるか。",kihon:true,
+ choices:[
+  ["化学物質（神経伝達物質）",true,""],
+  ["局所電流",false,"無髄神経の軸索で、隣接部を次々に脱分極させる電流のこと。"],
+  ["軸索流",false,"軸索内を流れ、物質の輸送を担うもの。"],
+  ["電位依存性Na⁺チャネル",false,"膜電位の変化によって開閉し、活動電位の上昇相をつくるチャネル。"]],
+ exp:"シナプスでの信号伝達は<b>化学物質（神経伝達物質）</b>を介して行われる。信号を送る側がシナプス前ニューロン、受ける側がシナプス後ニューロン。（教科書 P28）"},
+
+{q:"興奮性シナプスで、シナプス後ニューロンに生じるのはどれか。",kihon:true,
+ choices:[
+  ["小さな脱分極",true,""],
+  ["過分極",false,"抑制性シナプスで生じる変化。向きが逆。"],
+  ["不応期",false,"活動電位の発生直後にみられる、次の刺激に反応しにくい期間のこと。"],
+  ["再分極",false,"活動電位がピークから静止膜電位レベルへ戻る変化のこと。"]],
+ exp:"興奮性シナプスではシナプス後ニューロンに小さな<b>脱分極</b>が、抑制性シナプスでは<b>過分極</b>が生ずる。（教科書 P28）"},
+
+{q:"興奮性シナプス後電位（EPSP）の発生時に、シナプス後膜から細胞内へ流入するイオンはどれか。",kihon:true,
+ choices:[
+  ["Na⁺",true,""],
+  ["Cl⁻",false,"抑制性シナプス後電位（IPSP）の発生時に流入するイオン。"],
+  ["Ca²⁺",false,"シナプス前終末に流入し、伝達物質の放出の引き金となるイオン。"],
+  ["K⁺",false,"細胞内に多く、静止膜電位の形成や活動電位の再分極に関わるイオン。"]],
+ exp:"神経伝達物質がシナプス後膜の受容体に結合してチャネルが開き、<b>Na⁺が細胞内へ流入</b>する。その結果、一過性の脱分極が起こる。これが<b>EPSP</b>。（教科書 P28、図3・4）"},
+
+{q:"抑制性シナプス後電位（IPSP）の発生時に、細胞内へ流入するイオンはどれか。",
+ choices:[
+  ["Cl⁻",true,""],
+  ["Na⁺",false,"興奮性シナプス後電位（EPSP）の発生時に流入するイオン。"],
+  ["Ca²⁺",false,"シナプス前終末に流入し、伝達物質の放出の引き金となるイオン。"],
+  ["K⁺",false,"細胞内に多く、静止膜電位の形成や活動電位の再分極に関わるイオン。"]],
+ exp:"抑制性の伝達物質が受容体に結合するとCl⁻チャネルが開く。細胞内Cl⁻濃度は細胞外に比べ通常は低いので<b>Cl⁻が流入</b>し、一過性の過分極が生じる。これが<b>IPSP</b>。（教科書 P28、図3・4）"},
+
+{q:"シナプス前終末で、神経伝達物質の放出の引き金となるイオンはどれか。",
+ choices:[
+  ["Ca²⁺",true,""],
+  ["Na⁺",false,"シナプス後膜の受容体のチャネルから流入し、EPSPを生じさせるイオン。"],
+  ["K⁺",false,"細胞内に多く、静止膜電位の形成や活動電位の再分極に関わるイオン。"],
+  ["Cl⁻",false,"抑制性シナプスで流入し、IPSPを生じさせるイオン。"]],
+ exp:"活動電位が神経終末に到達すると<b>電位依存性Ca²⁺チャネル</b>が開口し、細胞外に多いCa²⁺が流入する。この流入が刺激となってシナプス小胞内の伝達物質がシナプス間隙に放出される。（教科書 P28、図3・4）"},
+
+{q:"シナプス間の情報の伝達効率が、そのシナプスの使用頻度に応じて変化することを何というか。",kihon:true,
+ choices:[
+  ["シナプスの可塑性",true,""],
+  ["加重",false,"複数のシナプス後電位が時間的・空間的に足し合わされることを指す語。"],
+  ["発散",false,"1個のシナプス前ニューロンが多数のシナプス後ニューロンへ情報を伝えるかたち。"],
+  ["収束",false,"多数のシナプス前ニューロンが1個のシナプス後ニューロンへ結合するかたち。"]],
+ exp:"<b>シナプスの可塑性</b>は、記憶や学習の基盤になっていると考えられている。（教科書 P29）"},
+
+/* ---------- A-5 神経伝達物質と受容体 ---------- */
+
+{q:"抑制性の神経伝達物質はどれか。",kihon:true,
+ choices:[
+  ["GABA（γ-アミノ酪酸）",true,""],
+  ["アセチルコリン",false,"興奮性伝達物質。運動ニューロン、交感神経節前、副交感神経の節前・節後で分泌される。"],
+  ["ノルアドレナリン",false,"興奮性伝達物質。交感神経節後ニューロン、青斑核ニューロンで分泌される。"],
+  ["サブスタンスP",false,"興奮性伝達物質。脊髄で分泌される。"]],
+ exp:"抑制性伝達物質は、脳や脊髄などで分泌される<b>GABA（γ-アミノ酪酸）</b>と、脊髄で分泌される<b>グリシン</b>。ほかの3つは興奮性伝達物質。（教科書 P30）"},
+
+{q:"交感神経節後ニューロンで分泌される神経伝達物質はどれか。",kihon:true,
+ choices:[
+  ["ノルアドレナリン",true,""],
+  ["アセチルコリン",false,"運動ニューロン、交感神経の節前、副交感神経の節前・節後で分泌される伝達物質。"],
+  ["GABA（γ-アミノ酪酸）",false,"脳や脊髄などで分泌される抑制性伝達物質。"],
+  ["グリシン",false,"脊髄で分泌される抑制性伝達物質。"]],
+ exp:"アセチルコリンは運動ニューロン・交感神経節前・副交感神経の節前および節後で分泌される。<b>交感神経の節後だけがノルアドレナリン</b>という点が問われやすい。（教科書 P30）"},
+
+{q:"神経伝達物質が合成される場所はどれか。",
+ choices:[
+  ["細胞体",true,""],
+  ["シナプス前終末",false,"合成された伝達物質が送られて蓄えられる場所であり、合成の場ではない。"],
+  ["ランビエ絞輪",false,"有髄線維で髄鞘が途切れ、軸索の細胞膜が露出した部分のこと。"],
+  ["シナプス間隙",false,"シナプス前終末とシナプス後膜のあいだのすきまのこと。"]],
+ exp:"神経伝達物質は<b>細胞体で合成</b>され、シナプス前終末へ送られる。逆に終末で生じた老廃物は細胞体へ戻される。この過程が軸索輸送。（教科書 P30）"},
+
+/* ---------- ⚠ 誤りを選ぶ ---------- */
+
+{q:"活動電位の伝導について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["神経束内では、隣接する軸索へ興奮が乗り移る",true,""],
+  ["伝導中に減衰したり消滅したりしない",false,"教科書どおりの記述なので、正しい。"],
+  ["軸索自体は方向性をもたない",false,"教科書どおりの記述なので、正しい。"],
+  ["取り出した神経では両方向に伝導しうる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"隣接する軸索へ乗り移ったり干渉したりすることなく伝導するのが<b>絶縁性伝導</b>。「乗り移る」という記述が誤り。（教科書 P26）"},
+
+{q:"神経線維の種類について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["B線維は無髄である",true,""],
+  ["C線維は無髄である",false,"教科書どおりの記述なので、正しい。"],
+  ["Aα線維には骨格筋を支配する運動神経が含まれる",false,"教科書どおりの記述なので、正しい。"],
+  ["Aδ線維は温・冷・痛覚を伝える",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"<b>B線維（自律神経の節前線維）は有髄</b>である。表3・1で無髄なのはC線維だけ。（表3・1、教科書 P28）"},
+
+{q:"シナプス伝達について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["IPSPはEPSPを強める方向にはたらく",true,""],
+  ["興奮性シナプスでは小さな脱分極が生じる",false,"教科書どおりの記述なので、正しい。"],
+  ["シナプス小胞から神経伝達物質が放出される",false,"教科書どおりの記述なので、正しい。"],
+  ["1個のシナプス後ニューロンには興奮性と抑制性のシナプスが無数に結合する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"IPSPはEPSPを<b>打ち消す</b>方向へはたらくことで、活動電位の発生を抑制する。「強める」が誤り。（教科書 P28）"},
+
+{q:"化学シナプス伝達の特徴として誤っているのはどれか。",gori:true,hosoku:true,
+ choices:[
+  ["両方向性に伝達される",true,""],
+  ["シナプス遅延がある",false,"国試で繰り返し問われている特徴で、正しい。"],
+  ["疲労しやすい",false,"国試で繰り返し問われている特徴で、正しい。"],
+  ["薬物の影響を受けやすい",false,"国試で繰り返し問われている特徴で、正しい。"]],
+ exp:"補足知識（資料外）。シナプス伝達は前ニューロンから後ニューロンへの<b>一方向性</b>である。伝導（軸索内）は両方向性でありうるのに対し、伝達（シナプス）は一方向。この違いが狙われる。"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"太い神経線維にあてはまるのはどれか。",hosoku:true,
+ choices:[
+  ["圧迫による麻痺を起こしやすい",true,""],
+  ["局所麻酔が速く効く",false,"細い線維ほど当てはまる性質で、太い線維では逆。"],
+  ["電気刺激に対する閾値が高い",false,"太い線維では閾値はむしろ低い。"],
+  ["興奮の伝導速度が遅い",false,"直径が大きいほど伝導速度は速いので、逆になっている。"]],
+ exp:"補足知識（資料外）。太い線維は<b>伝導速度が速く、閾値が低く、圧迫に弱い</b>。一方、局所麻酔は細い線維ほど効きやすい。過去問で繰り返し問われている。"},
+
+{q:"有髄線維の髄鞘を除去したときに起こる変化はどれか。",hosoku:true,
+ choices:[
+  ["跳躍伝導の消失",true,""],
+  ["神経伝導速度の上昇",false,"髄鞘がなくなれば無髄線維に近づくため、変化の向きが逆。"],
+  ["両側性伝導の消失",false,"両側性伝導は有髄・無髄いずれにもみられる性質で、髄鞘の有無と無関係。"],
+  ["シナプス遅延の消失",false,"シナプス伝達に伴う遅れのことで、軸索の髄鞘とは無関係。"]],
+ exp:"補足知識（資料外）。髄鞘を除去すると無髄線維から類推される状態となり、<b>跳躍伝導が消えて伝導速度は低下</b>する。不応期・両側性伝導・全か無かの法則は有髄・無髄ともにみられる。"},
+
+{q:"シナプス伝達の可塑性を示すのはどれか。",hosoku:true,
+ choices:[
+  ["長期増強（LTP）",true,""],
+  ["シナプス遅延",false,"興奮がシナプスを通過するのに要する時間のこと。"],
+  ["周辺抑制",false,"刺激された狭い部分の感覚を浮き立たせるため、その周囲の感覚情報が抑制されるしくみ。"],
+  ["加重",false,"多数のシナプス前線維の興奮によってシナプス後電位が大きくなること。"]],
+ exp:"補足知識（資料外）。<b>長期増強（LTP）</b>は、シナプス前ニューロンの反復刺激によって伝達機能の増強が数時間〜数日持続する現象。海馬でよく知られ、可塑性の代表例として問われる。"},
+
+{q:"興奮性の神経伝達物質として働くのはどれか。",hosoku:true,
+ choices:[
+  ["グルタミン酸",true,""],
+  ["グリシン",false,"脊髄で分泌される抑制性伝達物質。"],
+  ["γ-アミノ酪酸",false,"脳や脊髄などで分泌される抑制性伝達物質。"],
+  ["一酸化窒素",false,"血管拡張物質として知られる物質。"]],
+ exp:"補足知識（資料外）。<b>グルタミン酸</b>は脳に広く分布する代表的な興奮性伝達物質だが、教科書の一覧には載っていない。国試では頻出。"},
+
+{q:"カテコールアミンはどれか。",hosoku:true,
+ choices:[
+  ["ドパミン",true,""],
+  ["セロトニン",false,"中枢神経系ではたらく伝達物質だが、カテコールアミンには分類されない。"],
+  ["γ-アミノ酪酸",false,"抑制性伝達物質。カテコールアミンには分類されない。"],
+  ["アセチルコリン",false,"興奮性伝達物質。カテコールアミンには分類されない。"]],
+ exp:"補足知識（資料外）。カテコールアミンは<b>ドパミン・ノルアドレナリン・アドレナリン</b>の3つ。"},
+
+/* ---------- やや難・その他 ---------- */
+
+{q:"活動電位が進行方向にしか伝導しない理由はどれか。",
+ choices:[
+  ["進行方向の逆側が不応期にあるため",true,""],
+  ["局所電流が逆側には流れないため",false,"局所電流は逆側にも同様に流れている。"],
+  ["髄鞘が逆側への伝導を遮断するため",false,"髄鞘の有無にかかわらず、無髄神経でも一方向にしか進まない。"],
+  ["逆側にはNa⁺チャネルが存在しないため",false,"軸索膜には連続してチャネルが存在している。"]],
+ exp:"局所電流は進行方向の逆側にも同様に流れる。しかし逆側は直前に興奮したばかりで<b>不応期</b>にあるため活動電位が発生しない。パートAで学んだ不応期が「一度通った道を逆戻りしない」しくみとしてはたらいている。（教科書 P27）"},
+
+{q:"シナプス後ニューロンに活動電位が生じるのはどのようなときか。",
+ choices:[
+  ["興奮性と抑制性のシナプス後電位が時間的・空間的に加重し、膜電位が閾値に達したとき",true,""],
+  ["1個の興奮性シナプスにEPSPが1回生じたとき",false,"1個のEPSPは小さな脱分極にすぎず、それだけでは閾値に届かない。"],
+  ["抑制性シナプスにIPSPが生じたとき",false,"IPSPは過分極を起こし、活動電位の発生を抑える方向にはたらく。"],
+  ["シナプス前終末にCa²⁺が流入したとき",false,"伝達物質が放出される段階であり、シナプス後ニューロンの膜電位が決まる段階ではない。"]],
+ exp:"個々のシナプスが生む脱分極と過分極の<b>総和</b>としての膜電位が閾値に達するかどうかで決まる。（教科書 P29）"},
+
+{q:"ニューロン間のシナプス結合のうち、発散の説明として正しいのはどれか。",
+ choices:[
+  ["1個のシナプス前ニューロンが枝分かれし、多数のシナプス後ニューロンへ情報を伝える",true,""],
+  ["多数のシナプス前ニューロンが1個のシナプス後ニューロンに結合する",false,"収束の説明。向きが逆になっている。"],
+  ["興奮性シナプスと抑制性シナプスが同時にはたらく",false,"シナプスの種類の話であり、結合のかたちの分類ではない。"],
+  ["使用頻度に応じて伝達効率が変化する",false,"シナプスの可塑性の説明。"]],
+ exp:"1つの情報が広がっていくかたちが<b>発散</b>、多くの情報が1つにまとめられるかたちが<b>収束</b>。（教科書 P29、図3・5）"},
+
+{q:"軸索輸送の速度はおよそどれくらいか。",
+ choices:[
+  ["40cm/日",true,""],
+  ["40cm/分",false,"実際の速度よりはるかに速く、桁が合わない。"],
+  ["40m/日",false,"実際の速度よりはるかに速く、桁が合わない。"],
+  ["4cm/年",false,"実際の速度よりはるかに遅く、桁が合わない。"]],
+ exp:"細胞体で合成された伝達物質を終末へ送り、終末の老廃物を細胞体へ戻す過程が<b>軸索輸送</b>で、軸索内を流れる<b>軸索流</b>がその役割を担う。速度は<b>40cm/日</b>くらい。（教科書 P30）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.kihon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.kihon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.kihon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>

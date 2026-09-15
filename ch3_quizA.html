@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3章 パートA 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#3a4a8c;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#b8c2e8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#b8c2e8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#3a4a8c;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#3a4a8c;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(58,74,140,.13);color:#2e3c73}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#3a4a8c;background:#f2f4fb}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #3a4a8c;background:#3a4a8c;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#2e3c73}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#3a4a8c;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#3a4a8c;background:#f2f4fb}
+.mode .nm{font-size:16px;font-weight:600;color:#3a4a8c;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#3a4a8c;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#2e3c73;background:rgba(58,74,140,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#3a4a8c;background:rgba(58,74,140,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第3章 神経の生理｜パートA 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第3章 神経の生理 ｜ A-1 神経系の構成要素／A-2 静止膜電位・活動電位</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第3章 P23〜26 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 落としちゃダメな基本問題（🎯基本／ドボンモードでは💣ドボン！）
+   gori  :true … 「誤っているのはどれか」形式。設問の上に ⚠ 誤りを選ぶ タグが出る
+                  gori問題では、true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。kihon とは併用しない
+   exp … 正解時に見せる「なぜ正しいか」 */
+const PICK=5;
+const POOL=[
+
+/* ---------- A-1 神経系の構成要素 ---------- */
+
+{q:"神経系を構成する細胞は、ニューロンと何に大きく分けられるか。",kihon:true,
+ choices:[
+  ["グリア細胞（支持細胞）",true,""],
+  ["上皮細胞",false,"からだの表面や管の内面をおおう細胞で、神経系を構成する2大分類には含まれない。"],
+  ["線維芽細胞",false,"結合組織でコラーゲンなどをつくる細胞。神経系の構成細胞の分類には用いない。"],
+  ["内皮細胞",false,"血管の内面をおおう細胞。神経系の構成細胞の分類には用いない。"]],
+ exp:"神経系を構成する細胞は、<b>ニューロン（神経細胞）</b>と<b>グリア細胞（支持細胞）</b>に大きく分けられる。（教科書 P23）"},
+
+{q:"ニューロンを物理的に支持・保護し、中枢神経では血管系を取り巻いているグリア細胞はどれか。",kihon:true,
+ choices:[
+  ["アストロサイト（星状膠細胞）",true,""],
+  ["シュワン細胞",false,"末梢神経で髄鞘をつくるグリア細胞。血管系を取り巻くはたらきでは説明されていない。"],
+  ["オリゴデンドロサイト（稀突起膠細胞）",false,"中枢神経で髄鞘をつくるグリア細胞。役割が異なる。"],
+  ["ニューロン",false,"神経系の情報処理そのものを担う細胞で、支持細胞（グリア細胞）ではない。"]],
+ exp:"<b>アストロサイト（星状膠細胞）</b>はグリア細胞の1つで、ニューロンを物理的に支持し保護している。中枢神経では血管系を取り巻いている。（教科書 P23、図3・1a）"},
+
+{q:"ニューロンの構成要素として正しいのはどれか。",kihon:true,
+ choices:[
+  ["細胞体・樹状突起・1本の軸索",true,""],
+  ["細胞体・樹状突起・複数の軸索",false,"軸索の本数が誤り。ニューロンの軸索は1本と決まっている。"],
+  ["細胞体・髄鞘・ランビエ絞輪",false,"髄鞘とランビエ絞輪は有髄線維の軸索に付随する構造で、ニューロンの基本構成要素の並びではない。"],
+  ["細胞体・軸索・効果器",false,"効果器は筋や分泌腺など信号を受け取る側であり、ニューロンの一部ではない。"]],
+ exp:"ニューロンは、核を含む<b>細胞体</b>のほか、<b>樹状突起</b>と<b>1本の軸索</b>（神経線維）で構成される。軸索が「1本」であることが要点。（教科書 P23）"},
+
+{q:"周辺のニューロンから信号を受け取り、細胞体へ伝えるのはどれか。",kihon:true,
+ choices:[
+  ["樹状突起",true,""],
+  ["軸索",false,"細胞体から他のニューロンや効果器へ信号を送り出す側の構造で、向きが逆。"],
+  ["髄鞘",false,"有髄線維で軸索を覆う、電気を通しにくい構造。信号を受け取る役割はもたない。"],
+  ["ランビエ絞輪",false,"髄鞘の切れ目で軸索の細胞膜が露出した部分。信号を受け取る役割はもたない。"]],
+ exp:"<b>樹状突起</b>は木のように枝分かれしており、周辺のニューロンから信号を受け取って細胞体へ伝える。送り出す側は軸索。（教科書 P23）"},
+
+{q:"末梢神経で髄鞘を構成する細胞はどれか。",kihon:true,
+ choices:[
+  ["シュワン細胞",true,""],
+  ["オリゴデンドロサイト（稀突起膠細胞）",false,"髄鞘をつくる細胞だが、担当するのは中枢神経の側。"],
+  ["アストロサイト（星状膠細胞）",false,"ニューロンを支持・保護し、中枢神経では血管系を取り巻くグリア細胞。髄鞘はつくらない。"],
+  ["線維芽細胞",false,"結合組織でコラーゲンなどをつくる細胞で、神経系の髄鞘形成には関与しない。"]],
+ exp:"髄鞘を構成する細胞は、<b>末梢神経ではシュワン細胞</b>、中枢神経ではオリゴデンドロサイト（稀突起膠細胞）。末梢と中枢をセットで覚える。（教科書 P23）"},
+
+{q:"有髄線維について誤っているのはどれか。",gori:true,
+ choices:[
+  ["軸索は隙間なく完全に髄鞘で覆われている",true,""],
+  ["髄鞘は電気を通しにくい",false,"教科書どおりの記述なので、正しい。"],
+  ["1〜2mmの間隔で軸索の細胞膜が露出している",false,"教科書どおりの記述なので、正しい。"],
+  ["軸索の細胞膜が露出した部分をランビエ絞輪と呼ぶ",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"有髄線維の軸索は髄鞘で覆われているが、<b>完全に覆われているわけではない</b>。1〜2mmの間隔で細胞膜が露出しており、その露出部分が<b>ランビエ絞輪</b>である。（教科書 P23）"},
+
+{q:"中枢神経で髄鞘を構成する細胞はどれか。",
+ choices:[
+  ["オリゴデンドロサイト（稀突起膠細胞）",true,""],
+  ["シュワン細胞",false,"髄鞘をつくる細胞だが、担当するのは末梢神経の側。"],
+  ["アストロサイト（星状膠細胞）",false,"ニューロンを支持・保護し、中枢神経では血管系を取り巻くグリア細胞。髄鞘はつくらない。"],
+  ["線維芽細胞",false,"結合組織でコラーゲンなどをつくる細胞で、神経系の髄鞘形成には関与しない。"]],
+ exp:"髄鞘を構成する細胞は、末梢神経ではシュワン細胞、<b>中枢神経ではオリゴデンドロサイト（稀突起膠細胞）</b>。（教科書 P23）"},
+
+{q:"感覚受容器で生み出された情報は、何と呼ばれる電気信号の形で中枢神経系へ伝えられるか。",
+ choices:[
+  ["活動電位（インパルス）",true,""],
+  ["静止膜電位",false,"細胞が興奮していない静止状態の膜電位のことで、情報を運ぶ信号そのものではない。"],
+  ["平衡電位",false,"あるイオンについて、濃度勾配による力と電位勾配による力が釣り合ったときの電位。"],
+  ["閾値",false,"活動電位が発生するかどうかの境目となる膜電位のレベルであり、信号の名称ではない。"]],
+ exp:"感覚受容器で生み出された情報は、<b>活動電位（インパルス）</b>と呼ばれる電気信号の形で中枢神経系へ伝えられる。（教科書 P23）"},
+
+/* ---------- A-2 静止膜電位・活動電位 ---------- */
+
+{q:"細胞内液に多く含まれるイオンはどれか。",kihon:true,
+ choices:[
+  ["K⁺（カリウムイオン）",true,""],
+  ["Na⁺（ナトリウムイオン）",false,"細胞外液に多いイオン。細胞内液では少ない。"],
+  ["Ca²⁺（カルシウムイオン）",false,"細胞膜にチャネルはあるが、細胞内液に多いイオンとしては挙げられていない。"],
+  ["Cl⁻（塩化物イオン）",false,"細胞外に多い陰イオン。教科書の膜電位の説明では、マイナスイオンは内外で同じ濃度として扱われている。"]],
+ exp:"細胞外液では<b>Na⁺が多くK⁺が少なく</b>、細胞内液では<b>K⁺が多くNa⁺が少ない</b>。この濃度差が膜電位の土台になる。（教科書 P24）"},
+
+{q:"細胞内外のイオンの濃度差をつくり出しているのはどれか。",kihon:true,
+ choices:[
+  ["Na⁺-K⁺ポンプ",true,""],
+  ["電位依存性Na⁺チャネル",false,"膜電位の変化によって開閉し、活動電位の上昇相をつくるチャネル。濃度差そのものを生み出す装置ではない。"],
+  ["平衡電位",false,"濃度勾配と電位勾配が釣り合ったときの電位を指す用語で、装置やしくみの名称ではない。"],
+  ["ランビエ絞輪",false,"有髄線維で髄鞘が途切れ、軸索の細胞膜が露出した部分のこと。"]],
+ exp:"細胞内外のイオン濃度差は、<b>Na⁺-K⁺ポンプ</b>などがはたらくことで生まれる。国家試験でも「静止膜電位の形成に関与するのはナトリウムポンプ」として繰り返し問われている。（教科書 P24）"},
+
+{q:"静止状態の膜電位（静止膜電位）はどれか。",kihon:true,
+ choices:[
+  ["−40〜−80mV",true,""],
+  ["＋40〜＋80mV",false,"符号が逆。静止膜電位は外に対して内がマイナスになる。"],
+  ["0mV",false,"細胞内外に電位差がない状態を指し、静止膜電位の値ではない。"],
+  ["−150〜−200mV",false,"教科書に示された範囲から大きく外れており、桁が合わない。"]],
+ exp:"静止状態の膜電位は<b>−40〜−80mV</b>の負の電位（外に対して内がマイナス）を示し、これを<b>静止膜電位</b>と呼ぶ。（教科書 P24）"},
+
+{q:"静止膜電位の形成に主に関係するイオンはどれか。",kihon:true,
+ choices:[
+  ["K⁺（カリウムイオン）",true,""],
+  ["Na⁺（ナトリウムイオン）",false,"静止状態ではこのイオンのチャネルは閉じている。活動電位の上昇相で主役になる側。"],
+  ["Ca²⁺（カルシウムイオン）",false,"静止状態ではこのイオンのチャネルも閉じており、静止膜電位の形成には関与しない。"],
+  ["Cl⁻（塩化物イオン）",false,"教科書の膜電位の説明では、マイナスイオンは内外で同じ濃度として扱われている。"]],
+ exp:"ある種の<b>K⁺チャネルは常に開いている</b>ため、細胞内に多いK⁺が濃度勾配に従って細胞外へ流出し、細胞内が負に傾く。静止状態ではNa⁺・Ca²⁺チャネルは閉じているので、静止膜電位はK⁺の平衡電位に近くなる。（教科書 P25）"},
+
+{q:"K⁺の平衡電位の説明として正しいのはどれか。",
+ choices:[
+  ["K⁺を細胞外へ流出させる力と、細胞内へ引き止める力が釣り合ったときの電位",true,""],
+  ["K⁺チャネルがすべて閉じたときの電位",false,"ある種のK⁺チャネルは静止状態でも常に開いており、前提が成り立たない。"],
+  ["Na⁺の流入が最大になったときの電位",false,"活動電位の上昇相で起こる現象であり、平衡電位の定義ではない。"],
+  ["膜電位が0mVになったときの電位",false,"細胞内外に電位差がない状態を指すもので、平衡電位の定義ではない。"]],
+ exp:"流出させる力が<b>濃度勾配</b>、細胞内へ引き止める力が<b>電位勾配</b>。この2つが釣り合ったときの電位が<b>平衡電位</b>である。（教科書 P25）"},
+
+{q:"静止膜電位を基準として、正の方向へ膜電位が変化することを何というか。",kihon:true,
+ choices:[
+  ["脱分極",true,""],
+  ["過分極",false,"静止膜電位より負の方向へ変化すること。向きが逆。"],
+  ["再分極",false,"活動電位のピークから静止膜電位のレベルへ戻る変化のこと。"],
+  ["不応期",false,"活動電位の発生直後にみられる、次の刺激に反応しにくい期間のこと。"]],
+ exp:"静止膜電位を基準に、<b>正の方向への変化が脱分極</b>、負の方向への変化が過分極。（教科書 P25）"},
+
+{q:"活動電位について誤っているのはどれか。",gori:true,
+ choices:[
+  ["幅（時間経過）は約1秒である",true,""],
+  ["振幅は約100mVである",false,"教科書どおりの記述なので、正しい。"],
+  ["ニューロンや筋細胞で発生する",false,"教科書どおりの記述なので、正しい。"],
+  ["活動電位の発生を興奮とも呼ぶ",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"活動電位の幅（時間経過）は<b>約1ミリ秒</b>であり、約1秒では桁が3つ違う。1秒もかかっていては、すばやい情報伝達が成り立たない。（教科書 P26、図3・2）"},
+
+{q:"活動電位の上昇相（脱分極相）で起こるのはどれか。",kihon:true,
+ choices:[
+  ["Na⁺が細胞外から細胞内へ流入する",true,""],
+  ["K⁺が細胞内から細胞外へ流出する",false,"活動電位の下降相（再分極相）で起こる現象。相が逆。"],
+  ["Ca²⁺が細胞内へ流入する",false,"教科書では、活動電位の上昇相をつくる主役としては説明されていない。"],
+  ["Na⁺チャネルが閉じる（不活性になる）",false,"活動電位がピークに達したあとに起こる変化で、タイミングが逆。"]],
+ exp:"活動電位は、<b>Na⁺チャネルの開口とNa⁺の細胞内への流入</b>が鍵となる。流入がさらに脱分極を招き、膜電位を急速に立ち上げる。（教科書 P26）"},
+
+{q:"活動電位の下降相（再分極相）で起こるのはどれか。",
+ choices:[
+  ["K⁺が細胞内から細胞外へ流出する",true,""],
+  ["Na⁺が細胞外から細胞内へ流入する",false,"活動電位の上昇相（脱分極相）で起こる現象。相が逆。"],
+  ["Na⁺チャネルが開口する頻度が上がる",false,"上昇相で起こる変化。ピークに達するとNa⁺チャネルは閉じる。"],
+  ["Ca²⁺チャネルが開く",false,"教科書では、活動電位の下降相をつくるしくみとしては説明されていない。"]],
+ exp:"ピークでNa⁺チャネルが閉じ、同時に<b>通常開いているものとは別のK⁺チャネルが開いてK⁺が細胞外へ流出</b>する。正の電荷が持ち出され、膜電位は静止膜電位レベルへ戻る。（教科書 P26）"},
+
+{q:"Na⁺-K⁺ポンプについて誤っているのはどれか。",gori:true,
+ choices:[
+  ["Na⁺を細胞内へ3分子汲み入れる",true,""],
+  ["K⁺を細胞内へ2分子汲み入れる",false,"教科書どおりの記述なので、正しい。"],
+  ["細胞内外のイオンの濃度差を生み出す",false,"教科書どおりの記述なので、正しい。"],
+  ["再分極の過程でも正の電荷を細胞外へ運び出す",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"Na⁺-K⁺ポンプは<b>Na⁺を3分子 細胞外へ</b>、<b>K⁺を2分子 細胞内へ</b>運ぶ。Na⁺の向きが逆になっている点が誤り。（教科書 P26）"},
+
+{q:"閾値に達すれば刺激の強さと無関係に一定の大きさの活動電位が生じることを何というか。",kihon:true,
+ choices:[
+  ["全か無かの法則",true,""],
+  ["不応期",false,"活動電位の発生直後にみられる、次の刺激に反応しにくい期間のこと。"],
+  ["オーバーシュート",false,"活動電位で膜電位が0mVを超えて正の電位になる部分を指す用語。"],
+  ["平衡電位",false,"濃度勾配による力と電位勾配による力が釣り合ったときの電位のこと。"]],
+ exp:"活動電位は脱分極が<b>閾値</b>に達しなければ発生せず、達すれば刺激の強さとは無関係に一定の大きさで生じる。これを<b>全か無かの法則</b>という。（教科書 P26）"},
+
+{q:"膜電位変化そのものによって開閉が制御されるイオンチャネルを何と呼ぶか。",
+ choices:[
+  ["電位依存性チャネル",true,""],
+  ["Na⁺-K⁺ポンプ",false,"イオンを能動的に汲み出し・汲み入れして濃度差を保つしくみで、チャネルの分類名ではない。"],
+  ["興奮性膜",false,"活動電位を発生しうる細胞の細胞膜を指す呼び方で、チャネルの分類名ではない。"],
+  ["平衡電位",false,"濃度勾配による力と電位勾配による力が釣り合ったときの電位のこと。"]],
+ exp:"Na⁺チャネルとK⁺チャネルの開閉は<b>膜電位変化そのもの</b>に制御される。この種のイオンチャネルを<b>電位依存性チャネル</b>と呼ぶ。（教科書 P26）"},
+
+{q:"刺激の強さと持続時間は、神経情報としてどのように伝えられるか。",
+ choices:[
+  ["活動電位の発生頻度の違いに置き換えられる",true,""],
+  ["活動電位の振幅の大小に置き換えられる",false,"全か無かの法則により、1発の活動電位の大きさは刺激の強さと無関係に一定である。"],
+  ["活動電位の持続時間の長短に置き換えられる",false,"活動電位1発の幅は約1ミリ秒でほぼ一定であり、情報を担う変数ではない。"],
+  ["静止膜電位の深さに置き換えられる",false,"静止膜電位は細胞が興奮していないときの電位であり、刺激の強さを表すものではない。"]],
+ exp:"1発の活動電位の大きさは一定（全か無かの法則）なので、刺激の強さや持続時間は<b>活動電位の発生頻度</b>の違い（インパルス列）に置き換えられて伝えられる。（教科書 P26）"},
+
+{q:"活動電位の発生直後にみられる、次の刺激に対してまったく興奮しない期間を何というか。",kihon:true,
+ choices:[
+  ["絶対不応期",true,""],
+  ["相対不応期",false,"まったく興奮しないのではなく、興奮しにくい期間のこと。"],
+  ["過分極",false,"膜電位が静止膜電位より負の方向へ行き過ぎる変化のことで、期間の名称ではない。"],
+  ["オーバーシュート",false,"活動電位で膜電位が0mVを超えて正の電位になる部分を指す用語。"]],
+ exp:"不応期は、次に起こる刺激に対して①まったく興奮しない<b>絶対不応期</b>と、②興奮しにくい<b>相対不応期</b>からなる。（教科書 P26）"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"神経細胞や骨格筋細胞に限ると、静止膜電位はおよそ何mVか。",hosoku:true,
+ choices:[
+  ["−70mV前後",true,""],
+  ["−20mV前後",false,"代表的な興奮性細胞の静止膜電位としては浅すぎる値。"],
+  ["0mV",false,"細胞内外に電位差がない状態を指し、静止膜電位の値ではない。"],
+  ["＋30mV前後",false,"符号が逆。静止膜電位は外に対して内がマイナスになる。"]],
+ exp:"補足知識（資料外）。教科書の<b>−40〜−80mV</b>は、平滑筋や非興奮性細胞（赤血球・グリア細胞など）まで含めた幅である。神経細胞・骨格筋細胞・心筋細胞といった代表的な興奮性細胞に限ると<b>−70〜−90mV</b>程度で、国家試験もこの範囲で問われる。"},
+
+{q:"活動電位を発生しないのはどれか。",hosoku:true,
+ choices:[
+  ["グリア細胞",true,""],
+  ["感覚神経",false,"活動電位の伝導によって興奮を伝えている。"],
+  ["心筋線維",false,"持続の長い活動電位を発生する。"],
+  ["骨格筋線維",false,"活動電位の発生が収縮の引き金となる。"]],
+ exp:"補足知識（資料外）。教科書は「活動電位はニューロンや筋細胞で発生する」と述べている。<b>グリア細胞は支持細胞</b>であり、活動電位を発生せず、情報伝達には直接関与しない。国家試験で出題例がある。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.kihon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.kihon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.kihon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
