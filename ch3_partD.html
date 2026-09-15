@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3章 神経の生理 パートD｜生理学スライド</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#3a4a8c;padding:14px 28px}
+.hd .ch{font-size:11px;color:#b8c2e8;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.hd .tt{font-size:20px;font-weight:500;color:#fff}
+.bd{padding:20px 28px 16px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.box{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:12px}
+.row{display:block;font-size:14px;line-height:1.9;color:#222;padding:5px 0;border-bottom:1px solid #e5e7eb}
+.row:last-child{border-bottom:none}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:#3a4a8c;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
+.tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;color:#3a4a8c;white-space:nowrap;min-width:110px}
+.tbl.sm{font-size:12px}
+.tbl.sm th{font-size:11px;padding:7px 7px}
+.tbl.sm td{padding:6px 7px;line-height:1.6}
+.tbl.sm td:first-child{min-width:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
+.tf{background:rgba(58,74,140,.12);color:#3a4a8c}
+.tb{background:rgba(168,96,46,.14);color:#a8602e}
+.blank{display:inline-block;min-width:72px;border-bottom:2.5px solid #3a4a8c;border-radius:3px 3px 0 0;cursor:pointer;text-align:center;padding:0 5px;transition:all .22s;position:relative;vertical-align:baseline}
+.blank::after{content:"？";font-size:12px;color:#3a4a8c;opacity:.45;position:absolute;left:50%;transform:translateX(-50%)}
+.blank span{visibility:hidden;font-weight:600;color:#3a4a8c;font-size:14px;opacity:0;transition:opacity .22s;display:inline-block}
+.blank.on{border-bottom-color:transparent;background:rgba(58,74,140,.1);border-radius:4px;padding:1px 7px}
+.blank.on::after{display:none}
+.blank.on span{visibility:visible;opacity:1}
+.blank:not(.on):hover{background:rgba(58,74,140,.07)}
+.ctrl{display:flex;align-items:center;gap:8px;padding:10px 28px 12px;background:#f8f9fb;border-top:1px solid #e5e7eb;flex-wrap:wrap}
+.btn{padding:7px 15px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:#3a4a8c;color:#fff;border-color:#3a4a8c}
+.btnp:hover{background:#2f3d73}
+.cnt{font-size:11px;color:#888;margin-left:auto}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
+.dot.a{background:#3a4a8c}
+.pg{font-size:11px;color:#888;margin-left:auto}
+</style>
+</head>
+<body>
+<h1>生理学 第3章 神経の生理｜パートD：睡眠と覚醒・脳波・学習と記憶</h1>
+<div class="slide">
+  <div id="sc"></div>
+  <div class="ctrl">
+    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="all()">すべて表示</button>
+    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
+    <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+<script>
+const S=[
+{t:"睡眠と覚醒",ch:"第3章 神経の生理 ｜ C-4 睡眠と覚醒",type:"p",
+rows:[
+{t:"ヒトは，[睡眠] と [覚醒] を交互に繰り返して生きている．この生体リズムは，からだや脳機能を維持するうえで重要な行動基盤である．",b:["睡眠","覚醒"]},
+{t:"[覚醒] 状態では，外的刺激に対して迅速に反応でき，周りの環境変化にすぐに適応できる．",b:["覚醒"]},
+{t:"一方，[睡眠] 時では，反応性が著しく低下するものの，強い刺激があれば覚醒状態へすぐに戻れる．",b:["睡眠"]},
+{t:"睡眠と覚醒の違いは，[意識レベル] の違いであると一般的には理解できる．",b:["意識レベル"]},
+{t:"睡眠は [ノンレム睡眠] と [レム睡眠] に分けることができる．",b:["ノンレム睡眠","レム睡眠"]},
+]},
+{t:"ノンレム睡眠とレム睡眠",ch:"第3章 神経の生理 ｜ C-4 睡眠と覚醒",type:"two",
+left:{label:"ノンレム睡眠",tag:"tf",rows:[
+{t:"[ぐっすり] 眠っている状態である．",b:["ぐっすり"]},
+{t:"脳もからだも [休んで] いて，感覚刺激に対する反応性が低い．",b:["休んで"]},
+{t:"眠りの深さは [4つ] のステージ（ステージ1〜4）に分類される．",b:["4つ"]},
+{t:"このうち [ステージ3，4] は，デルタ波（δ波）と呼ばれる徐波性脳波が観察されるため，[徐波睡眠] ともいわれる．",b:["ステージ3，4","徐波睡眠"]},
+]},
+right:{label:"レム睡眠",tag:"tb",rows:[
+{t:"[急速な眼球運動]（rapid eye movement，REM睡眠の語源）が観察される．",b:["急速な眼球運動"]},
+{t:"姿勢を維持する [抗重力筋] が弛緩し，呼吸・血圧・心拍の変動が [激しい]．",b:["抗重力筋","激しい"]},
+{t:"男性では [陰茎が勃起] していることが多い．",b:["陰茎が勃起"]},
+{t:"[夢] を見ていることが多く，脳が [活発] に活動していると考えられている．",b:["夢","活発"]},
+]}},
+{t:"睡眠のサイクル",ch:"第3章 神経の生理 ｜ C-4 睡眠と覚醒",type:"p",
+rows:[
+{t:"ノンレム睡眠とレム睡眠のサイクルは，入眠後に [何回か] 繰り返される．",b:["何回か"]},
+{t:"入眠後の時間が長くなると，眠りの深度やサイクルは徐々に [浅く短く] なり，やがて [覚醒] を迎える．",b:["浅く短く","覚醒"]},
+]},
+{t:"脳波とは",ch:"第3章 神経の生理 ｜ C-5 脳波でみる睡眠",type:"p",
+rows:[
+{t:"ノンレム睡眠とレム睡眠は，睡眠中に測定した [脳波] の律動動態の違いをもとに区別されたものである．",b:["脳波"]},
+{t:"脳波（electroencephalogram：[EEG]）とは，[頭皮] の上に非侵襲的に設置した電極で脳の神経活動を電気信号として記録する電気生理学的手法の1つである．",b:["EEG","頭皮"]},
+{t:"記録される脳波活動は，脳内の多数のニューロン群が [律動的]（リズミカル）に活動したものの [集合電位] である．",b:["律動的","集合電位"]},
+{t:"脳波の周期性と振幅の大きさは，[覚醒水準] や [睡眠の深度] などで大きく変わる．",b:["覚醒水準","睡眠の深度"]},
+]},
+{t:"脳波の周波数帯",ch:"第3章 神経の生理 ｜ C-5 脳波でみる睡眠",type:"tbl",
+cols:["脳波","周波数","主に現れる状態"],
+rows:[
+["[β]（ベータ）波","[14Hz以上]","覚醒時，[レム睡眠]"],
+["[α]（アルファ）波","[8〜13Hz]","覚醒時"],
+["[θ]（シータ）波","[4〜7Hz]","ノンレム睡眠 [ステージ1]，レム睡眠"],
+["[δ]（デルタ）波","[3Hz以下]","ノンレム睡眠 [ステージ3，4]（徐波睡眠）"],
+]},
+{t:"ノンレム睡眠とレム睡眠の脳波",ch:"第3章 神経の生理 ｜ C-5 脳波でみる睡眠",type:"two",
+left:{label:"ノンレム睡眠の脳波",tag:"tf",rows:[
+{t:"[睡眠徐波]（δ波）と呼ばれる [高電位]・[低周波] の脳波パターン（振幅が大きく律動パターンがゆっくりとした脳波）の出現でレム睡眠と区別される．",b:["睡眠徐波","高電位","低周波"]},
+{t:"ノンレム睡眠では，特徴的な脳波波形が出現する［[紡錘波] や [K複合波]（K-コンプレックス）など］．",b:["紡錘波","K複合波"]},
+]},
+right:{label:"レム睡眠の脳波",tag:"tb",rows:[
+{t:"脳波律動は [覚醒状態] のそれとよく似ている．",b:["覚醒状態"]},
+{t:"しかし眠りは [深く]，なかなか起きない．",b:["深く"]},
+{t:"すなわち脳活動は覚醒状態に近いにもかかわらず眠りが深いのである．",b:[]},
+{t:"このためレム睡眠は [逆説睡眠] ともいわれる．",b:["逆説睡眠"]},
+]}},
+{t:"学習と記憶",ch:"第3章 神経の生理 ｜ C-6 学習と記憶",type:"p",
+rows:[
+{t:"ヒトは，新しい環境に身を置くと，それに適応して効率のよい行動をとるようになる．これが [学習] である．",b:["学習"]},
+{t:"つまり学習とは，「[経験] に基づいて長期的または永続的に [行動を変化] させること」と考えられる．",b:["経験","行動を変化"]},
+{t:"その基盤は [脳の可塑性] である．",b:["脳の可塑性"]},
+{t:"学習は [記憶] と強い関係性をもつ．記憶とは，過去の事柄（経験）や学習した内容を [保持] するはたらきだからである．",b:["記憶","保持"]},
+{t:"経験したことのすべてが記憶として保持されるわけではない．経験したことは一部が意識に上り，さらにそのごく一部のみが [記憶痕跡]（エングラム）として脳内に蓄えられる．",b:["記憶痕跡"]},
+]},
+{t:"学習の種別① 非連合学習",ch:"第3章 神経の生理 ｜ C-6 学習と記憶",type:"p",
+rows:[
+{t:"学習は [非連合学習] と [連合学習] の2つに分けられる．",b:["非連合学習","連合学習"]},
+{t:"非連合学習は，[1つ] のシンプルで単純な刺激で生じる学習である．[慣れ] と [増感] がこれにあたる．",b:["1つ","慣れ","増感"]},
+{t:"ある方向から音を突然聞かされたとき，その方向へ頭や眼を反射性に向けてしまう．このような反射反応を [定位反応] という．",b:["定位反応"]},
+{t:"しかし，この刺激が繰り返されると，そちらにはもはや振り向かなくなる．これを「[慣れ]」という．神経系が特定の刺激に [反応しなくなる] 一種の学習形態である．",b:["慣れ","反応しなくなる"]},
+{t:"一方，強い刺激，たとえば痛みを伴う [侵害性刺激] などが繰り返されると，その感度が [増し]，反応が徐々に強くなる．これを「[増感]」という．",b:["侵害性刺激","増し","増感"]},
+]},
+{t:"学習の種別② 連合学習",ch:"第3章 神経の生理 ｜ C-6 学習と記憶",type:"two",
+left:{label:"古典的条件づけ",tag:"tf",rows:[
+{t:"[連合] した2つの刺激で得られる学習である．[パブロフ] がイヌを用いて行った条件反射の実験で示され，パブロフ型条件づけとも呼ばれる．",b:["連合","パブロフ"]},
+{t:"イヌにベル音の刺激（[条件刺激]）を与え，その後すぐに食餌（[無条件刺激]）を与えることを繰り返すと，ベル音を聞かせるだけで [唾液] を出すようになる．",b:["条件刺激","無条件刺激","唾液"]},
+{t:"条件づけが成立したあと，ベル音を鳴らしているのに食餌刺激を与えないでいると，この効果は次第に弱まる．これを「[消去]」という．",b:["消去"]},
+{t:"類似した条件刺激を与えても条件反射は成立する．これを「[汎化]」という．",b:["汎化"]},
+]},
+right:{label:"オペラント条件づけ",tag:"tb",rows:[
+{t:"ある行動（レバー押しなど）を起こしたときにだけ食餌（[報酬]）を与えたり，高強度の電気刺激などの [罰] を与えたりすると，その行動が [強化] される．",b:["報酬","罰","強化"]},
+{t:"[報酬] 刺激の場合は，行動が起こる確率が [高く] なる（[正の強化]）．",b:["報酬","高く","正の強化"]},
+{t:"[罰] 刺激の場合は，行動が起こる確率が [低下] する（[負の強化]）．",b:["罰","低下","負の強化"]},
+]}},
+{t:"記憶の種別",ch:"第3章 神経の生理 ｜ C-6 学習と記憶",type:"tbl",
+cols:["種別","内容"],
+rows:[
+["[短期記憶]","電話番号を覚えてかけるときのように，[数秒間から数分間] の短時間だけ持続する記憶．経験した刺激は [そのままの形] で想起される"],
+["短期記憶の部位","[大脳辺縁系]，特に [海馬] が重要な役割を果たしている"],
+["[長期記憶]","自分の名前や出身学校名など，保持している期間が長い [半永久的] な記憶．経験した刺激が長期にわたって保持されると，その間に内容が [修飾され変容] していく"],
+["長期記憶の成立","この間に [大脳皮質] に記憶痕跡として固定され長期記憶となる"],
+["長期記憶の部位","大脳の [広範囲] にわたる．言語の意味としての長期記憶は [ウェルニッケ野] が関与．技術や運動などの長期記憶は [小脳]・大脳基底核・[前運動野] などの運動に関連する領域が関与"],
+["両者の関係","長期記憶は短期記憶の [単なる延長ではない]"],
+]},
+{t:"記憶形成の神経メカニズム",ch:"第3章 神経の生理 ｜ C-6 学習と記憶",type:"p",
+rows:[
+{t:"記憶の形成は，中枢神経内での [シナプス] の機能的・形態的変化と，それに基づく [神経ネットワーク] の新たな形成が基盤になっている．",b:["シナプス","神経ネットワーク"]},
+{t:"シナプスの機能的変化は，記憶に関わる繰り返される神経入力の変化を通じて，その [伝達物質の放出量] を可塑的に変化させる．",b:["伝達物質の放出量"]},
+{t:"すなわち，脳の神経ネットワーク内で，その電気信号を [通りやすく] したり [通りにくく] したりすることで，その情報が脳内に蓄えられて記憶が形成されると考えられる．",b:["通りやすく","通りにくく"]},
+{t:"※パートBで学んだ [シナプスの可塑性] が，ここで記憶と学習の基盤としてはたらいている．",b:["シナプスの可塑性"]},
+]},
+{t:"パートDまとめ",ch:"第3章 神経の生理 ｜ パートDまとめ",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["睡眠の分類","[ノンレム睡眠]（脳もからだも休む）／[レム睡眠]（急速眼球運動）"],
+["ノンレム睡眠","[4つ] のステージ．ステージ3・4＝δ波が出る [徐波睡眠]"],
+["レム睡眠","抗重力筋が [弛緩]／呼吸・血圧・心拍の変動が激しい／[夢] を見ることが多い"],
+["レム睡眠の脳波","[覚醒状態] に似ているのに眠りは深い → [逆説睡眠]"],
+["脳波","[EEG]．多数のニューロン群の律動的活動の [集合電位]"],
+["β波","[14Hz以上]．覚醒時とレム睡眠"],
+["α波","[8〜13Hz]．覚醒時"],
+["θ波","[4〜7Hz]．ノンレム睡眠ステージ1，レム睡眠"],
+["δ波","[3Hz以下]．ノンレム睡眠ステージ3・4"],
+["ノンレム睡眠の特徴波","[紡錘波]・[K複合波]"],
+["学習","経験に基づいて行動を変化させること．基盤は [脳の可塑性]"],
+["非連合学習","[慣れ]（反応しなくなる）／[増感]（反応が強くなる）"],
+["連合学習","[古典的条件づけ]（パブロフ）／[オペラント条件づけ]（報酬と罰）"],
+["古典的条件づけ","消去＝効果が弱まる／[汎化]＝類似刺激でも成立"],
+["オペラント条件づけ","報酬→確率が高まる（[正の強化]）／罰→確率が下がる（[負の強化]）"],
+["短期記憶","数秒〜数分．[海馬] が重要"],
+["長期記憶","半永久的．[大脳皮質] に記憶痕跡として固定．短期記憶の単なる延長ではない"],
+["記憶の基盤","[シナプス] の機能的・形態的変化と神経ネットワークの形成"],
+]},
+];
+let cur=0,bs=[];
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function buildSlide(i){
+  const s=S[i];bs=[];
+  let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
+  if(s.type==="p"){
+    h+=`<div class="sec">重要事項</div><div class="box">`;
+    s.rows.forEach(r=>{
+      let t=r.t;
+      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
+      h+=`<span class="row">${t}</span>`;
+    });
+    h+=`</div>`;
+  }else if(s.type==="tbl"){
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl${s.small?" sm":""}"><thead><tr>`;
+    s.cols.forEach(c=>h+=`<th>${c}</th>`);
+    h+=`</tr></thead><tbody>`;
+    s.rows.forEach(row=>{
+      h+=`<tr>`;
+      row.forEach(cell=>{
+        const t=cell.replace(/\[([^\[\]]+)\]/g,(m,a)=>{
+          const id="b"+bs.length;bs.push({id,on:false});return bl(id,a);
+        });
+        h+=`<td>${t}</td>`;
+      });
+      h+=`</tr>`;
+    });
+    h+=`</tbody></table></div>`;
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];
+      const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{
+        let t=r.t;
+        r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
+        h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${t}</p>`;
+      });
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById("sc").innerHTML=h;
+  upd();bldNav();
+}
+function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
+function all(){bs.forEach(b=>rb(b.id));}
+function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
+function bldNav(){
+  let h="";
+  S.forEach((_,i)=>h+=`<div class="dot${i===cur?" a":""}" onclick="go(${i})"></div>`);
+  h+=`<span class="pg">${cur+1} / ${S.length}</span>`;
+  document.getElementById("nav").innerHTML=h;
+}
+buildSlide(0);
+</script>
+</body>
+</html>
