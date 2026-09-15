@@ -76,7 +76,9 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 <script>
 /* ===== 問題プール（教科書 第3章 P26下段〜P30 ベース）=====
    choices: [表示文, 正解フラグ, その選択肢が何かの説明]
-   kihon :true … 落としちゃダメな基本・頻出問題（🎯基本／ドボンモードでは💣ドボン！）
+   kihon :true … 🎯基本。通常モードで「ここは重要」と示す印。プールの4〜6割が目安
+   dobon :true … 💣ドボン。ドボンモードで外すと即終了。プールの15〜20%に絞る
+   （旧）kihon :true … 落としちゃダメな基本・頻出問題（🎯基本／ドボンモードでは💣ドボン！）
    gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
    hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。kihon とは併用しない
    exp … 正解時に見せる「なぜ正しいか」
@@ -121,7 +123,7 @@ const POOL=[
   ["平衡電位",false,"濃度勾配による力と電位勾配による力が釣り合ったときの電位のこと。"]],
  exp:"興奮部から静止部へ細胞内を流れ、静止部の膜から細胞外へ出て、細胞外を静止部から興奮部へ戻る電流を<b>局所電流</b>と呼ぶ。この外向き電流が近くの静止部を脱分極させ、閾膜電位に達すると活動電位が発生する。（教科書 P27）"},
 
-{q:"有髄神経で、活動電位がランビエ絞輪部だけに発生し、絞輪から絞輪へ飛び飛びに伝わることを何というか。",kihon:true,
+{q:"有髄神経で、活動電位がランビエ絞輪部だけに発生し、絞輪から絞輪へ飛び飛びに伝わることを何というか。",kihon:true,dobon:true,
  choices:[
   ["跳躍伝導",true,""],
   ["不減衰伝導",false,"伝導中に活動電位が減衰・消滅しないことを指す原則。"],
@@ -155,7 +157,7 @@ const POOL=[
 
 /* ---------- A-4 シナプスにおける興奮伝達 ---------- */
 
-{q:"シナプスでの信号伝達は、何を介して行われるか。",kihon:true,
+{q:"シナプスでの信号伝達は、何を介して行われるか。",kihon:true,dobon:true,
  choices:[
   ["化学物質（神経伝達物質）",true,""],
   ["局所電流",false,"無髄神経の軸索で、隣接部を次々に脱分極させる電流のこと。"],
@@ -205,7 +207,7 @@ const POOL=[
 
 /* ---------- A-5 神経伝達物質と受容体 ---------- */
 
-{q:"抑制性の神経伝達物質はどれか。",kihon:true,
+{q:"抑制性の神経伝達物質はどれか。",kihon:true,dobon:true,
  choices:[
   ["GABA（γ-アミノ酪酸）",true,""],
   ["アセチルコリン",false,"興奮性伝達物質。運動ニューロン、交感神経節前、副交感神経の節前・節後で分泌される。"],
@@ -213,7 +215,7 @@ const POOL=[
   ["サブスタンスP",false,"興奮性伝達物質。脊髄で分泌される。"]],
  exp:"抑制性伝達物質は、脳や脊髄などで分泌される<b>GABA（γ-アミノ酪酸）</b>と、脊髄で分泌される<b>グリシン</b>。ほかの3つは興奮性伝達物質。（教科書 P30）"},
 
-{q:"交感神経節後ニューロンで分泌される神経伝達物質はどれか。",kihon:true,
+{q:"交感神経節後ニューロンで分泌される神経伝達物質はどれか。",kihon:true,dobon:true,
  choices:[
   ["ノルアドレナリン",true,""],
   ["アセチルコリン",false,"運動ニューロン、交感神経の節前、副交感神経の節前・節後で分泌される伝達物質。"],
@@ -231,7 +233,7 @@ const POOL=[
 
 /* ---------- ⚠ 誤りを選ぶ ---------- */
 
-{q:"活動電位の伝導について誤っているのはどれか。",kihon:true,gori:true,
+{q:"活動電位の伝導について誤っているのはどれか。",kihon:true,dobon:true,gori:true,
  choices:[
   ["神経束内では、隣接する軸索へ興奮が乗り移る",true,""],
   ["伝導中に減衰したり消滅したりしない",false,"教科書どおりの記述なので、正しい。"],
@@ -359,7 +361,7 @@ function home(){
         </button>
         <button class="mode dob" onclick="start('dobon')">
           <div class="nm">💣 ドボンチャレンジ</div>
-          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
         </button>
       </div>
     </div>`;
@@ -373,12 +375,14 @@ function render(){
   answered=false; qmiss=0;
   const item=drawn[idx];
   const opts=shuffle(item.choices);
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
   document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
   document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
   const L=["ア","イ","ウ","エ","オ"];
-  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
   if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
   if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
   // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
@@ -393,7 +397,7 @@ function pick(el,ok){
   if(answered)return;
   if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
   const item=drawn[idx];
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   const selText=el.querySelector("span:last-child").textContent;
   const selChoice=item.choices.find(c=>c[0]===selText);
   const exp=document.getElementById("exp");
@@ -421,7 +425,7 @@ function pick(el,ok){
     answered=true;
     el.classList.add("wrong");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
-    if(item.kihon){ dead=true; }
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
     exp.className="exp show ng";
     document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
     document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;

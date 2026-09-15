@@ -76,7 +76,9 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 <script>
 /* ===== 問題プール（教科書 第3章 P23〜26 ベース）=====
    choices: [表示文, 正解フラグ, その選択肢が何かの説明]
-   kihon :true … 落としちゃダメな基本問題（🎯基本／ドボンモードでは💣ドボン！）
+   kihon :true … 🎯基本。通常モードで「ここは重要」と示す印。プールの4〜6割が目安
+   dobon :true … 💣ドボン。ドボンモードで外すと即終了。プールの15〜20%に絞る
+   （旧）kihon :true … 落としちゃダメな基本問題（🎯基本／ドボンモードでは💣ドボン！）
    gori  :true … 「誤っているのはどれか」形式。設問の上に ⚠ 誤りを選ぶ タグが出る
                   gori問題では、true が付くのは「誤っている記述」＝選ぶべき選択肢
    hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。kihon とは併用しない
@@ -160,7 +162,7 @@ const POOL=[
   ["Cl⁻（塩化物イオン）",false,"細胞外に多い陰イオン。教科書の膜電位の説明では、マイナスイオンは内外で同じ濃度として扱われている。"]],
  exp:"細胞外液では<b>Na⁺が多くK⁺が少なく</b>、細胞内液では<b>K⁺が多くNa⁺が少ない</b>。この濃度差が膜電位の土台になる。（教科書 P24）"},
 
-{q:"細胞内外のイオンの濃度差をつくり出しているのはどれか。",kihon:true,
+{q:"細胞内外のイオンの濃度差をつくり出しているのはどれか。",kihon:true,dobon:true,
  choices:[
   ["Na⁺-K⁺ポンプ",true,""],
   ["電位依存性Na⁺チャネル",false,"膜電位の変化によって開閉し、活動電位の上昇相をつくるチャネル。濃度差そのものを生み出す装置ではない。"],
@@ -176,7 +178,7 @@ const POOL=[
   ["−150〜−200mV",false,"教科書に示された範囲から大きく外れており、桁が合わない。"]],
  exp:"静止状態の膜電位は<b>−40〜−80mV</b>の負の電位（外に対して内がマイナス）を示し、これを<b>静止膜電位</b>と呼ぶ。（教科書 P24）"},
 
-{q:"静止膜電位の形成に主に関係するイオンはどれか。",kihon:true,
+{q:"静止膜電位の形成に主に関係するイオンはどれか。",kihon:true,dobon:true,
  choices:[
   ["K⁺（カリウムイオン）",true,""],
   ["Na⁺（ナトリウムイオン）",false,"静止状態ではこのイオンのチャネルは閉じている。活動電位の上昇相で主役になる側。"],
@@ -208,7 +210,7 @@ const POOL=[
   ["活動電位の発生を興奮とも呼ぶ",false,"教科書どおりの記述なので、正しい。"]],
  exp:"活動電位の幅（時間経過）は<b>約1ミリ秒</b>であり、約1秒では桁が3つ違う。1秒もかかっていては、すばやい情報伝達が成り立たない。（教科書 P26、図3・2）"},
 
-{q:"活動電位の上昇相（脱分極相）で起こるのはどれか。",kihon:true,
+{q:"活動電位の上昇相（脱分極相）で起こるのはどれか。",kihon:true,dobon:true,
  choices:[
   ["Na⁺が細胞外から細胞内へ流入する",true,""],
   ["K⁺が細胞内から細胞外へ流出する",false,"活動電位の下降相（再分極相）で起こる現象。相が逆。"],
@@ -232,7 +234,7 @@ const POOL=[
   ["再分極の過程でも正の電荷を細胞外へ運び出す",false,"教科書どおりの記述なので、正しい。"]],
  exp:"Na⁺-K⁺ポンプは<b>Na⁺を3分子 細胞外へ</b>、<b>K⁺を2分子 細胞内へ</b>運ぶ。Na⁺の向きが逆になっている点が誤り。（教科書 P26）"},
 
-{q:"閾値に達すれば刺激の強さと無関係に一定の大きさの活動電位が生じることを何というか。",kihon:true,
+{q:"閾値に達すれば刺激の強さと無関係に一定の大きさの活動電位が生じることを何というか。",kihon:true,dobon:true,
  choices:[
   ["全か無かの法則",true,""],
   ["不応期",false,"活動電位の発生直後にみられる、次の刺激に反応しにくい期間のこと。"],
@@ -302,7 +304,7 @@ function home(){
         </button>
         <button class="mode dob" onclick="start('dobon')">
           <div class="nm">💣 ドボンチャレンジ</div>
-          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
         </button>
       </div>
     </div>`;
@@ -316,12 +318,14 @@ function render(){
   answered=false; qmiss=0;
   const item=drawn[idx];
   const opts=shuffle(item.choices);
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
   document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
   document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
   const L=["ア","イ","ウ","エ","オ"];
-  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
   if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
   if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
   // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
@@ -336,7 +340,7 @@ function pick(el,ok){
   if(answered)return;
   if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
   const item=drawn[idx];
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   const selText=el.querySelector("span:last-child").textContent;
   const selChoice=item.choices.find(c=>c[0]===selText);
   const exp=document.getElementById("exp");
@@ -364,7 +368,7 @@ function pick(el,ok){
     answered=true;
     el.classList.add("wrong");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
-    if(item.kihon){ dead=true; }
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
     exp.className="exp show ng";
     document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
     document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;

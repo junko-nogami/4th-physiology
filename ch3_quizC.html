@@ -76,7 +76,9 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 <script>
 /* ===== 問題プール（教科書 第3章 P30下段〜P34上段 ベース）=====
    choices: [表示文, 正解フラグ, その選択肢が何かの説明]
-   kihon :true … 落としちゃダメな基本・頻出問題（🎯基本／ドボンモードでは💣ドボン！）
+   kihon :true … 🎯基本。通常モードで「ここは重要」と示す印。プールの4〜6割が目安
+   dobon :true … 💣ドボン。ドボンモードで外すと即終了。プールの15〜20%に絞る
+   （旧）kihon :true … 落としちゃダメな基本・頻出問題（🎯基本／ドボンモードでは💣ドボン！）
    gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
    hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。kihon とは併用しない
    exp … 正解時に見せる「なぜ正しいか」
@@ -183,7 +185,7 @@ const POOL=[
 
 /* ---------- C-2 大脳皮質の機能局在 ---------- */
 
-{q:"大脳皮質が部位ごとに異なる機能をもつことを何というか。",kihon:true,
+{q:"大脳皮質が部位ごとに異なる機能をもつことを何というか。",kihon:true,dobon:true,
  choices:[
   ["機能局在",true,""],
   ["体部位再現",false,"一次運動野を電気刺激すると、からだの部位に対応した運動が再現されることを指す語。"],
@@ -249,7 +251,7 @@ const POOL=[
   ["運動前野",false,"前頭連合野の一部で、運動の統合中枢。"]],
  exp:"<b>頭頂連合野</b>は視覚と体性感覚に関連する領域からの情報を受ける。損傷すると、物を手で触ってもそれが何かがわからなくなる。（教科書 P33）"},
 
-{q:"ブローカ野について正しいのはどれか。",kihon:true,
+{q:"ブローカ野について正しいのはどれか。",kihon:true,dobon:true,
  choices:[
   ["前頭連合野にある運動性言語中枢である",true,""],
   ["側頭連合野にある感覚性言語中枢である",false,"ウェルニッケ野の説明。"],
@@ -257,7 +259,7 @@ const POOL=[
   ["後頭部にあり視覚情報を処理する",false,"視覚野の説明。"]],
  exp:"<b>ブローカ野＝前頭連合野の運動性言語中枢</b>。ウェルニッケ野からの情報を受けて言語のパターンをつくり、運動性皮質にその情報を出力すると考えられている。（教科書 P34）"},
 
-{q:"ウェルニッケ野の障害で起こるのはどれか。",kihon:true,
+{q:"ウェルニッケ野の障害で起こるのはどれか。",kihon:true,dobon:true,
  choices:[
   ["音は聞こえるが意味を理解できなくなる",true,""],
   ["音そのものが聞こえなくなる",false,"聴覚そのものが失われる状態で、言語中枢の障害の説明ではない。"],
@@ -307,7 +309,7 @@ const POOL=[
   ["側頭連合野には聴覚に関した言語中枢があり、損傷により感覚性失語症が生じる",false,"教科書どおりの記述なので、正しい。"]],
  exp:"前頭前野は<b>創造・意欲の中枢／人格の統合</b>を担い、損傷では人格変容が生じる。知覚・空間の認知を担うのは頭頂連合野。（表3・2、教科書 P33）"},
 
-{q:"ブローカ野の障害について誤っているのはどれか。",kihon:true,gori:true,
+{q:"ブローカ野の障害について誤っているのはどれか。",kihon:true,dobon:true,gori:true,
  choices:[
   ["人の話を理解できなくなる",true,""],
   ["話し方が遅くなる",false,"教科書どおりの記述なので、正しい。"],
@@ -369,7 +371,7 @@ function home(){
         </button>
         <button class="mode dob" onclick="start('dobon')">
           <div class="nm">💣 ドボンチャレンジ</div>
-          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
         </button>
       </div>
     </div>`;
@@ -383,12 +385,14 @@ function render(){
   answered=false; qmiss=0;
   const item=drawn[idx];
   const opts=shuffle(item.choices);
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
   document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
   document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
   const L=["ア","イ","ウ","エ","オ"];
-  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
   if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
   if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
   // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
@@ -403,7 +407,7 @@ function pick(el,ok){
   if(answered)return;
   if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
   const item=drawn[idx];
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   const selText=el.querySelector("span:last-child").textContent;
   const selChoice=item.choices.find(c=>c[0]===selText);
   const exp=document.getElementById("exp");
@@ -431,7 +435,7 @@ function pick(el,ok){
     answered=true;
     el.classList.add("wrong");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
-    if(item.kihon){ dead=true; }
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
     exp.className="exp show ng";
     document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
     document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;

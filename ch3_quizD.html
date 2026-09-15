@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3章 パートD 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#3a4a8c;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#b8c2e8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#b8c2e8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#3a4a8c;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#3a4a8c;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(58,74,140,.13);color:#2e3c73}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#3a4a8c;background:#f2f4fb}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #3a4a8c;background:#3a4a8c;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#2e3c73}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#3a4a8c;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#3a4a8c;background:#f2f4fb}
+.mode .nm{font-size:16px;font-weight:600;color:#3a4a8c;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#3a4a8c;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#2e3c73;background:rgba(58,74,140,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#3a4a8c;background:rgba(58,74,140,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第3章 神経の生理｜パートD 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第3章 神経の生理 ｜ C-4 睡眠と覚醒／C-5 脳波でみる睡眠／C-6 学習と記憶</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第3章 P34中段〜P37上段 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本。通常モードで「ここは重要」と示す印。プールの4〜6割が目安
+   dobon :true … 💣ドボン。ドボンモードで外すと即終了になる問題。プールの15%前後に絞る
+                  ★kihon とは別フラグ。多すぎると「絶対間違えちゃダメ」感が薄れるため、
+                  🎯基本の中でも過去問頻度が特に高いものだけに付ける
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。kihon とは併用しない
+   exp … 正解時に見せる「なぜ正しいか」
+
+   過去問（10章 神経／(10)脳波・(11)覚醒と睡眠）での出題頻度：
+   脳波の周波数帯4回／レム睡眠の特徴3回／α波の出現条件3回／海馬と記憶2回／睡眠中の自律神経1回
+   ※α波の出現条件（安静閉眼・後頭部）は教科書に記述がないため📘に回している */
+const PICK=5;
+const POOL=[
+
+/* ---------- C-4 睡眠と覚醒 ---------- */
+
+{q:"睡眠は何と何に分けられるか。",kihon:true,
+ choices:[
+  ["ノンレム睡眠とレム睡眠",true,""],
+  ["徐波睡眠と逆説睡眠",false,"徐波睡眠はノンレム睡眠ステージ3・4の別名、逆説睡眠はレム睡眠の別名。どちらも上位の2分類ではない。"],
+  ["深睡眠と浅睡眠",false,"眠りの深さを表す言い方であって、教科書の分類名ではない。"],
+  ["非連合睡眠と連合睡眠",false,"非連合・連合は学習の分類に使う語で、睡眠の分類ではない。"]],
+ exp:"睡眠は<b>ノンレム睡眠</b>と<b>レム睡眠</b>に分けることができる。（教科書 P34、図3・9）"},
+
+{q:"ノンレム睡眠の眠りの深さは、いくつのステージに分類されるか。",kihon:true,
+ choices:[
+  ["4つ",true,""],
+  ["2つ",false,"教科書が示すステージ数より少ない。"],
+  ["3つ",false,"教科書が示すステージ数より少ない。"],
+  ["5つ",false,"教科書が示すステージ数より多い。"]],
+ exp:"ノンレム睡眠の深さは<b>ステージ1〜4</b>の4つに分類される。（教科書 P34）"},
+
+{q:"徐波睡眠とよばれるのはどのステージか。",kihon:true,dobon:true,
+ choices:[
+  ["ステージ3、4",true,""],
+  ["ステージ1、2",false,"眠りの浅い段階で、δ波はまだ主体ではない。"],
+  ["ステージ1のみ",false,"最も浅い段階で、θ波がみられる。"],
+  ["レム睡眠",false,"脳波律動が覚醒状態に似ている段階で、徐波睡眠とは逆の特徴。"]],
+ exp:"ノンレム睡眠の<b>ステージ3、4</b>では、デルタ波（δ波）と呼ばれる徐波性脳波が観察されるため<b>徐波睡眠</b>ともいわれる。（教科書 P34）"},
+
+{q:"レム睡眠の特徴として正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["姿勢を維持する抗重力筋が弛緩する",true,""],
+  ["脳もからだも休んでいて感覚刺激への反応性が低い",false,"ノンレム睡眠の特徴。"],
+  ["呼吸・血圧・心拍が安定している",false,"レム睡眠ではこれらの変動が激しい。"],
+  ["夢を見ることはほとんどない",false,"レム睡眠では夢を見ていることが多い。"]],
+ exp:"レム睡眠では急速な眼球運動（rapid eye movement）が観察され、姿勢を維持する<b>抗重力筋が弛緩</b>し、呼吸・血圧・心拍の変動が激しい。夢を見ていることが多く、脳が活発に活動していると考えられている。（教科書 P34）"},
+
+{q:"睡眠と覚醒の違いは、一般的に何の違いとして理解できるか。",
+ choices:[
+  ["意識レベルの違い",true,""],
+  ["脳の重量の違い",false,"脳の重さは睡眠・覚醒で変わるものではない。"],
+  ["体温の違い",false,"睡眠時に体温は低下するが、両者を区別する基本的な指標としては挙げられていない。"],
+  ["呼吸数の違い",false,"睡眠時に変化はあるが、両者を区別する基本的な指標としては挙げられていない。"]],
+ exp:"覚醒状態では外的刺激に対して迅速に反応でき、睡眠時では反応性が著しく低下する。この違いは一般に<b>意識レベル</b>の違いとして理解できる。（教科書 P34）"},
+
+/* ---------- C-5 脳波でみる睡眠 ---------- */
+
+{q:"覚醒時にみられる脳波はどれか。",kihon:true,
+ choices:[
+  ["α波",true,""],
+  ["δ波",false,"ノンレム睡眠のステージ3・4で出現する徐波。"],
+  ["θ波",false,"ノンレム睡眠ステージ1とレム睡眠で出現する脳波。"],
+  ["紡錘波",false,"ノンレム睡眠に特徴的に出現する波形。"]],
+ exp:"<b>α波（8〜13Hz）</b>は覚醒時に出現する。β波（14Hz以上）も覚醒時にみられる。（図3・10、教科書 P35）"},
+
+{q:"周波数が最も高い脳波はどれか。",kihon:true,
+ choices:[
+  ["β波（14Hz以上）",true,""],
+  ["α波（8〜13Hz）",false,"覚醒時にみられるが、β波より周波数は低い。"],
+  ["θ波（4〜7Hz）",false,"ノンレム睡眠ステージ1とレム睡眠でみられる。"],
+  ["δ波（3Hz以下）",false,"最も周波数が低く、徐波睡眠でみられる。"]],
+ exp:"周波数は<b>β＞α＞θ＞δ</b>の順に低くなる。β波は14Hz以上で、覚醒時とレム睡眠でみられる。（図3・10、教科書 P35）"},
+
+{q:"周波数が最も低い脳波はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["δ波（3Hz以下）",true,""],
+  ["β波（14Hz以上）",false,"4つの中で最も周波数が高い脳波。"],
+  ["α波（8〜13Hz）",false,"覚醒時にみられる脳波。"],
+  ["θ波（4〜7Hz）",false,"δ波より周波数は高い。"]],
+ exp:"<b>δ波は3Hz以下</b>で最も周波数が低く、振幅が大きい（高電位・低周波）。ノンレム睡眠ステージ3・4で出現する。（図3・10、教科書 P35）"},
+
+{q:"ノンレム睡眠のステージ3・4で出現する脳波はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["δ波",true,""],
+  ["α波",false,"覚醒時に出現する脳波。"],
+  ["β波",false,"覚醒時とレム睡眠で出現する脳波。"],
+  ["θ波",false,"ノンレム睡眠ステージ1とレム睡眠で出現する脳波。"]],
+ exp:"ステージ3・4で<b>δ波</b>（睡眠徐波）が出現するため、この段階は徐波睡眠とよばれる。（教科書 P34、図3・10）"},
+
+{q:"ノンレム睡眠に特徴的な脳波波形はどれか。",kihon:true,
+ choices:[
+  ["紡錘波とK複合波",true,""],
+  ["α波とβ波",false,"どちらも覚醒時にみられる脳波で、ノンレム睡眠に特徴的な波形ではない。"],
+  ["急速眼球運動",false,"レム睡眠でみられる現象で、脳波の波形ではない。"],
+  ["定位反応",false,"音がした方向に反射性に頭や眼を向ける反応のことで、脳波の波形ではない。"]],
+ exp:"ノンレム睡眠では、<b>紡錘波</b>や<b>K複合波（K-コンプレックス）</b>などの特徴的な脳波波形が出現する。（教科書 P35）"},
+
+{q:"レム睡眠が逆説睡眠ともよばれる理由はどれか。",kihon:true,
+ choices:[
+  ["脳波律動は覚醒状態に似ているのに、眠りは深くなかなか起きないから",true,""],
+  ["脳波は覚醒時とまったく異なるのに、すぐ目覚めるから",false,"レム睡眠の脳波は覚醒状態に似ているので、前半が事実と合わない。"],
+  ["高電位・低周波の脳波が出現するから",false,"それはノンレム睡眠（徐波睡眠）の脳波の特徴。"],
+  ["眠りが浅くすぐ覚醒するから",false,"レム睡眠は眠りが深く、なかなか起きない。"]],
+ exp:"レム睡眠では脳活動が覚醒状態に近いにもかかわらず眠りが深い。この矛盾から<b>逆説睡眠</b>ともいわれる。（教科書 P35）"},
+
+{q:"脳波（EEG）の説明として正しいのはどれか。",
+ choices:[
+  ["頭皮の上に非侵襲的に設置した電極で、脳の神経活動を電気信号として記録する",true,""],
+  ["頭蓋骨を開いて脳に電極を刺入して記録する",false,"脳波は非侵襲的な手法であり、電極を刺入するものではない。"],
+  ["血流の変化を画像として記録する",false,"脳血流を画像化する検査の説明で、脳波とは別の手法。"],
+  ["脳脊髄液の成分を分析する",false,"髄液検査の説明で、電気生理学的手法ではない。"]],
+ exp:"脳波は頭皮上の電極で記録する電気生理学的手法の1つ。記録される脳波活動は、脳内の多数のニューロン群が律動的（リズミカル）に活動したものの<b>集合電位</b>である。（教科書 P34）"},
+
+{q:"θ波が出現するのはどれか。",
+ choices:[
+  ["ノンレム睡眠ステージ1とレム睡眠",true,""],
+  ["覚醒時のみ",false,"覚醒時に出現するのはα波とβ波。"],
+  ["ノンレム睡眠ステージ3・4",false,"この段階で出現するのはδ波。"],
+  ["覚醒時とレム睡眠",false,"この組み合わせで出現するのはβ波。"]],
+ exp:"θ波は4〜7Hzで、<b>ノンレム睡眠ステージ1</b>と<b>レム睡眠</b>で出現する。（図3・10、教科書 P35）"},
+
+/* ---------- C-6 学習と記憶 ---------- */
+
+{q:"学習は何と何の2つに分けられるか。",kihon:true,
+ choices:[
+  ["非連合学習と連合学習",true,""],
+  ["慣れと増感",false,"どちらも非連合学習の中身であり、1つ下の階層。"],
+  ["古典的条件づけとオペラント条件づけ",false,"どちらも連合学習の中身であり、1つ下の階層。"],
+  ["短期学習と長期学習",false,"短期・長期は記憶の分類に使う語で、学習の分類ではない。"]],
+ exp:"学習は<b>非連合学習</b>と<b>連合学習</b>の2つに分けられる。非連合学習＝慣れ・増感、連合学習＝古典的条件づけ・オペラント条件づけ。（教科書 P36）"},
+
+{q:"学習の基盤となるのはどれか。",
+ choices:[
+  ["脳の可塑性",true,""],
+  ["全か無かの法則",false,"活動電位の発生に関する原則で、学習の基盤を説明する語ではない。"],
+  ["不減衰伝導",false,"軸索での伝導の原則のひとつ。"],
+  ["血液脳関門",false,"血液中の物質がニューロンへ影響することを防ぐしくみ。"]],
+ exp:"学習とは「経験に基づいて長期的または永続的に行動を変化させること」で、その基盤は<b>脳の可塑性</b>である。パートBで学んだシナプスの可塑性がここではたらいている。（教科書 P35）"},
+
+{q:"「慣れ」の説明として正しいのはどれか。",
+ choices:[
+  ["刺激が繰り返されると、神経系が特定の刺激に反応しなくなる",true,""],
+  ["侵害性刺激が繰り返されると、感度が増して反応が強くなる",false,"「増感」の説明で、反応の変化の向きが逆。"],
+  ["連合した2つの刺激で学習が成立する",false,"連合学習の説明。慣れは非連合学習。"],
+  ["報酬によって行動が強化される",false,"オペラント条件づけの説明。"]],
+ exp:"音がした方向へ反射性に頭や眼を向ける反応を定位反応というが、その刺激が繰り返されるともう振り向かなくなる。これが<b>慣れ</b>で、非連合学習のひとつ。（教科書 P36）"},
+
+{q:"「増感」の説明として正しいのはどれか。",
+ choices:[
+  ["侵害性刺激などが繰り返されると、感度が増して反応が徐々に強くなる",true,""],
+  ["刺激が繰り返されると反応しなくなる",false,"「慣れ」の説明で、反応の変化の向きが逆。"],
+  ["類似した条件刺激でも条件反射が成立する",false,"「汎化」の説明で、連合学習に関する語。"],
+  ["報酬を与えると行動の起こる確率が高くなる",false,"「正の強化」の説明で、オペラント条件づけに関する語。"]],
+ exp:"痛みを伴う侵害性刺激などが繰り返されると感度が増し、反応が徐々に強くなる。これが<b>増感</b>。慣れと増感がそろって非連合学習を構成する。（教科書 P36）"},
+
+{q:"イヌを用いた条件反射の実験で古典的条件づけを示したのはだれか。",kihon:true,
+ choices:[
+  ["パブロフ",true,""],
+  ["ブロードマン",false,"組織構造に基づいて大脳皮質の脳地図を作成した人物。"],
+  ["ブローカ",false,"前頭連合野にある運動性言語中枢に名を残す人物。"],
+  ["ウェルニッケ",false,"側頭連合野にある感覚性言語中枢に名を残す人物。"]],
+ exp:"古典的条件づけは<b>パブロフ</b>がイヌを用いて行った条件反射の実験で示され、パブロフ型条件づけとも呼ばれる。（教科書 P36）"},
+
+{q:"パブロフの実験で、ベル音にあたるのはどれか。",
+ choices:[
+  ["条件刺激",true,""],
+  ["無条件刺激",false,"食餌がこれにあたる。もともと唾液分泌を引き起こす刺激。"],
+  ["報酬",false,"オペラント条件づけで、行動のあとに与えられるもの。"],
+  ["罰",false,"オペラント条件づけで、行動の確率を下げるために与えられるもの。"]],
+ exp:"ベル音が<b>条件刺激</b>、食餌が<b>無条件刺激</b>。ベル音はそもそも唾液分泌を生じさせるものではないが、食餌刺激と連合させることで学習が成立する。（教科書 P36）"},
+
+{q:"条件づけが成立したあと、ベル音を鳴らしても食餌を与えずにいると効果が次第に弱まる。これを何というか。",
+ choices:[
+  ["消去",true,""],
+  ["汎化",false,"類似した条件刺激でも条件反射が成立することを指す語。"],
+  ["増感",false,"侵害性刺激の繰り返しで反応が強くなることを指す、非連合学習の語。"],
+  ["慣れ",false,"刺激の繰り返しで反応しなくなることを指す、非連合学習の語。"]],
+ exp:"条件づけの効果が次第に弱まることを<b>消去</b>という。（教科書 P36）"},
+
+{q:"類似した条件刺激を与えても条件反射が成立することを何というか。",
+ choices:[
+  ["汎化",true,""],
+  ["消去",false,"条件刺激だけを与え続けて効果が弱まることを指す語。"],
+  ["強化",false,"オペラント条件づけで、行動が起こりやすく（または起こりにくく）なることを指す語。"],
+  ["定位反応",false,"音がした方向へ反射性に頭や眼を向ける反応のこと。"]],
+ exp:"ベル音の周波数や音の大きさを少し変えた刺激を与えても条件反射は成立する。これを<b>汎化</b>という。（教科書 P36）"},
+
+{q:"報酬を与えることで行動の起こる確率が高くなることを何というか。",
+ choices:[
+  ["正の強化",true,""],
+  ["負の強化",false,"罰刺激によって行動の起こる確率が低下すること。向きが逆。"],
+  ["消去",false,"古典的条件づけで、条件づけの効果が次第に弱まること。"],
+  ["汎化",false,"古典的条件づけで、類似した条件刺激でも条件反射が成立すること。"]],
+ exp:"報酬刺激の場合は行動が起こる確率が高くなり（<b>正の強化</b>）、罰刺激の場合は確率が低下する（<b>負の強化</b>）。どちらもオペラント条件づけ。（教科書 P36）"},
+
+{q:"短期記憶に重要な役割を果たしている部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["海馬",true,""],
+  ["大脳皮質",false,"長期記憶が記憶痕跡として固定される場所。"],
+  ["小脳",false,"技術や運動などの長期記憶に関与する領域のひとつ。"],
+  ["ウェルニッケ野",false,"言語の意味としての長期記憶に関与する領域。"]],
+ exp:"短期記憶には大脳辺縁系、特に<b>海馬</b>が重要な役割を果たしている。短期記憶は数秒間から数分間の短時間だけ持続し、経験した刺激はそのままの形で想起される。（教科書 P36）"},
+
+{q:"長期記憶が記憶痕跡として固定される場所はどれか。",kihon:true,
+ choices:[
+  ["大脳皮質",true,""],
+  ["海馬",false,"短期記憶に重要な役割を果たす部位。"],
+  ["視床下部",false,"間脳の一部で、自律機能やホルモン分泌の調節に関わる。"],
+  ["延髄",false,"脳幹の一部で、呼吸や循環の中枢がある。"]],
+ exp:"経験した刺激が長期にわたって保持される間に内容が修飾され変容していき、この間に<b>大脳皮質</b>に記憶痕跡として固定され長期記憶となる。（教科書 P36）"},
+
+{q:"技術や運動などの長期記憶に関与する部位はどれか。",
+ choices:[
+  ["小脳・大脳基底核・前運動野",true,""],
+  ["海馬・扁桃体",false,"大脳辺縁系の部位で、短期記憶や情動に関わる。"],
+  ["ウェルニッケ野",false,"言語の意味としての長期記憶に関与する領域。"],
+  ["視床下部",false,"自律機能やホルモン分泌の調節に関わる部位。"]],
+ exp:"技術や運動などの長期記憶には、<b>小脳・大脳基底核・前運動野</b>などの運動に関連する領域が関与する。（教科書 P36〜37）"},
+
+/* ---------- ⚠ 誤りを選ぶ ---------- */
+
+{q:"レム睡眠について誤っているのはどれか。",kihon:true,dobon:true,gori:true,
+ choices:[
+  ["呼吸・血圧・心拍は安定している",true,""],
+  ["急速な眼球運動が観察される",false,"教科書どおりの記述なので、正しい。"],
+  ["姿勢を維持する抗重力筋が弛緩する",false,"教科書どおりの記述なので、正しい。"],
+  ["夢を見ていることが多い",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"レム睡眠では呼吸・血圧・心拍の<b>変動が激しい</b>。安定しているという記述が誤り。（教科書 P34）"},
+
+{q:"脳波について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["δ波は高電位・高周波の脳波である",true,""],
+  ["頭皮の上に設置した電極で非侵襲的に記録する",false,"教科書どおりの記述なので、正しい。"],
+  ["多数のニューロン群が律動的に活動したものの集合電位である",false,"教科書どおりの記述なので、正しい。"],
+  ["周期性と振幅の大きさは覚醒水準や睡眠の深度で大きく変わる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"δ波（睡眠徐波）は<b>高電位・低周波</b>。振幅が大きく、律動パターンがゆっくりとした脳波である。（教科書 P34〜35）"},
+
+{q:"記憶について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["長期記憶は短期記憶が単に延長したものである",true,""],
+  ["短期記憶は数秒間から数分間の短時間だけ持続する",false,"教科書どおりの記述なので、正しい。"],
+  ["短期記憶には海馬が重要な役割を果たす",false,"教科書どおりの記述なので、正しい。"],
+  ["言語の意味としての長期記憶にはウェルニッケ野が関与する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"教科書は「長期記憶は短期記憶の<b>単なる延長ではない</b>」と明記している。（教科書 P36〜37）"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"安静閉眼時に出現し、開眼によって抑制される脳波はどれか。",hosoku:true,
+ choices:[
+  ["α波",true,""],
+  ["β波",false,"精神活動時に出現する低振幅速波で、開眼時にはむしろこちらが現れる。"],
+  ["θ波",false,"ノンレム睡眠ステージ1やレム睡眠で出現する脳波。"],
+  ["δ波",false,"深睡眠時に出現する高振幅徐波で、安静覚醒時には出現しない。"]],
+ exp:"補足知識（資料外）。教科書には「α波は覚醒時」としか書かれていないが、国試では<b>安静閉眼時</b>という条件で問われる。開眼するとα波が消えてβ波に変わる現象を<b>αブロッキング</b>という。"},
+
+{q:"成人の安静閉眼時脳波で、α波の振幅が最も大きい部位はどれか。",hosoku:true,
+ choices:[
+  ["後頭部",true,""],
+  ["前頭部",false,"α波も出現するが、振幅が最大になる部位ではない。"],
+  ["側頭部",false,"α波も出現するが、振幅が最大になる部位ではない。"],
+  ["頭頂部",false,"α波も出現するが、振幅が最大になる部位ではない。"]],
+ exp:"補足知識（資料外）。安静閉眼時のα波は全体に出現するが、<b>後頭部</b>で振幅が最も大きい。"},
+
+{q:"覚醒時より睡眠時に顕著に認められるのはどれか。",hosoku:true,
+ choices:[
+  ["メラトニン分泌亢進",true,""],
+  ["血圧上昇",false,"睡眠中は副交感神経優位となり、血圧はむしろ下降する。"],
+  ["体温上昇",false,"睡眠中は体温がむしろ低下する。"],
+  ["カテコールアミン分泌亢進",false,"交感神経の伝達物質であり、睡眠中は分泌が低下する。"]],
+ exp:"補足知識（資料外）。睡眠中は副交感神経が優位となり、血圧下降・体温低下が起こる。松果体ホルモンの<b>メラトニン</b>は夜間に分泌量が高く、日内リズムの調節に関わる。"},
+
+{q:"レム睡眠は一晩におよそ何回みられるか。",hosoku:true,
+ choices:[
+  ["3〜4回",true,""],
+  ["1回",false,"実際より少ない。"],
+  ["10回",false,"実際より多い。"],
+  ["20回",false,"実際より大幅に多い。"]],
+ exp:"補足知識（資料外）。レム睡眠は約<b>90分周期</b>で一晩に<b>3〜4回</b>出現し、特に早朝の目ざめ前に多くみられる。教科書も「入眠後に何回か繰り返される」と述べている。"},
+
+{q:"海馬が長期保存に必須の場所とされる記憶はどれか。",hosoku:true,
+ choices:[
+  ["陳述記憶",true,""],
+  ["手続き記憶",false,"技術や運動の記憶で、小脳・大脳基底核などが関与する。"],
+  ["短期記憶のみ",false,"海馬は短期記憶にも関わるが、設問が問うている分類名ではない。"],
+  ["感覚記憶",false,"ごく短時間の感覚情報の保持を指す語。"]],
+ exp:"補足知識（資料外）。記憶は<b>陳述記憶</b>と<b>手続き記憶</b>に大きく分けられ、意識的に呼び出せる陳述記憶の長期保存には海馬が必須とされる。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
