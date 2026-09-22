@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第5章 感覚の生理 パートB｜生理学スライド</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#9e3450;padding:14px 28px}
+.hd .ch{font-size:11px;color:#e8b3c1;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.hd .tt{font-size:20px;font-weight:500;color:#fff}
+.bd{padding:20px 28px 16px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.box{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:12px}
+.row{display:block;font-size:14px;line-height:1.9;color:#222;padding:5px 0;border-bottom:1px solid #e5e7eb}
+.row:last-child{border-bottom:none}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:#9e3450;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
+.tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;color:#9e3450;white-space:nowrap;min-width:110px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
+.tf{background:rgba(158,52,80,.12);color:#9e3450}
+.tb{background:rgba(40,90,140,.12);color:#285a8c}
+.blank{display:inline-block;min-width:72px;border-bottom:2.5px solid #9e3450;border-radius:3px 3px 0 0;cursor:pointer;text-align:center;padding:0 5px;transition:all .22s;position:relative;vertical-align:baseline}
+.blank::after{content:"？";font-size:12px;color:#9e3450;opacity:.45;position:absolute;left:50%;transform:translateX(-50%)}
+.blank span{visibility:hidden;font-weight:600;color:#9e3450;font-size:14px;opacity:0;transition:opacity .22s;display:inline-block}
+.blank.on{border-bottom-color:transparent;background:rgba(158,52,80,.1);border-radius:4px;padding:1px 7px}
+.blank.on::after{display:none}
+.blank.on span{visibility:visible;opacity:1}
+.blank:not(.on):hover{background:rgba(158,52,80,.07)}
+.ctrl{display:flex;align-items:center;gap:8px;padding:10px 28px 12px;background:#f8f9fb;border-top:1px solid #e5e7eb;flex-wrap:wrap}
+.btn{padding:7px 15px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:#9e3450;color:#fff;border-color:#9e3450}
+.btnp:hover{background:#84293f}
+.cnt{font-size:11px;color:#888;margin-left:auto}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
+.dot.a{background:#9e3450}
+.pg{font-size:11px;color:#888;margin-left:auto}
+</style>
+</head>
+<body>
+<h1>生理学 第5章 感覚の生理｜パートB：特殊感覚</h1>
+<div class="slide">
+  <div id="sc"></div>
+  <div class="ctrl">
+    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="showAll()">すべて表示</button>
+    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
+    <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+<script>
+const S=[
+{t:"視覚①：眼球の構造と遠近調節",ch:"第5章 感覚の生理 ｜ B-1 視覚",type:"p",
+rows:[
+{t:"外界の光は，[角膜]→眼房→[水晶体]→[硝子体] を通って網膜に達する．",b:["角膜","水晶体","硝子体"]},
+{t:"見る距離に合わせて焦点を自動的に合わせることを [遠近調節] という．水晶体の彎曲度を反射性に変えて行う．",b:["遠近調節"]},
+{t:"遠くを見るとき：[毛様体筋] は弛緩し，水晶体は [毛様体小帯] に引っ張られて薄くなる．",b:["毛様体筋","毛様体小帯"]},
+{t:"近くを見るとき：[副交感神経] が興奮 → 毛様体筋が [収縮] → 毛様体小帯が弛緩 → 水晶体が自らの弾力で [膨らむ]．",b:["副交感神経","収縮","膨らむ"]},
+]},
+{t:"視覚②：屈折の異常と矯正",ch:"第5章 感覚の生理 ｜ B-1 視覚",type:"tbl",
+cols:["種類","焦点の位置と矯正"],
+rows:[
+["正視眼","毛様体筋が収縮しなくても網膜上に焦点を結ぶ"],
+["近視","眼球の前後径が長い／屈折率が大きい → 網膜の [前方] で焦点．[凹レンズ] で矯正"],
+["遠視","眼球の前後径が短い／屈折率が小さい → 網膜の [後方] で焦点．[凸レンズ] で矯正"],
+["乱視","[角膜] 面が完全な球形でないため生じることが多い．[円柱レンズ] で矯正"],
+],
+blanks:["前方","凹レンズ","後方","凸レンズ","角膜","円柱レンズ"]
+},
+{t:"視覚③：虹彩と瞳孔",ch:"第5章 感覚の生理 ｜ B-1 視覚",type:"two",
+left:{label:"瞳孔括約筋",rows:[
+{t:"瞳孔の周囲に [輪状] に分布．",b:["輪状"]},
+{t:"[副交感神経]（動眼神経）の支配．",b:["副交感神経"]},
+{t:"収縮すると [縮瞳]．",b:["縮瞳"]},
+]},
+right:{label:"瞳孔散大筋",rows:[
+{t:"瞳孔縁から [放射状] に分布．",b:["放射状"]},
+{t:"[交感神経] の支配．",b:["交感神経"]},
+{t:"収縮すると [散瞳]．",b:["散瞳"]},
+]}
+},
+{t:"視覚④：瞳孔の反射",ch:"第5章 感覚の生理 ｜ B-1 視覚",type:"p",
+rows:[
+{t:"縮瞳反射には [対光反射] と [輻輳反射]（近距離反射）がある．",b:["対光反射","輻輳反射"]},
+{t:"対光反射：光が強くなると瞳孔が縮小する．片眼だけに光を当てても両眼が縮瞳する（[共感性反射]）．",b:["共感性反射"]},
+{t:"対光反射の経路：視細胞 → [視神経] → 両側の [動眼神経副核]（E-W核）→ 動眼神経の副交感神経 → [瞳孔括約筋]．",b:["視神経","動眼神経副核","瞳孔括約筋"]},
+{t:"輻輳反射：[近距離] の物体を見たときに瞳孔が縮小する．",b:["近距離"]},
+{t:"瞳孔の左右不同や対光反射障害は [中脳] の障害でみられることがある．",b:["中脳"]},
+]},
+{t:"視覚⑤：網膜の構造",ch:"第5章 感覚の生理 ｜ B-1 視覚",type:"p",
+rows:[
+{t:"網膜は厚さ約0.2 mmの膜で，最外層は [色素上皮層]．その内側に視細胞，[双極細胞]，[神経節細胞] の層が続く．",b:["色素上皮層","双極細胞","神経節細胞"]},
+{t:"情報の流れ：視細胞 → 双極細胞 → 神経節細胞．[アマクリン細胞] や [水平細胞] がこの経路を調節する．",b:["アマクリン細胞","水平細胞"]},
+{t:"神経節細胞の線維は [視神経乳頭] に集まって視神経となり，眼球を出る．",b:["視神経乳頭"]},
+{t:"視神経乳頭のやや耳側に [黄斑] があり，その中央のくぼみを [中心窩] という．",b:["黄斑","中心窩"]},
+]},
+{t:"視覚⑥：杆体と錐体",ch:"第5章 感覚の生理 ｜ B-1 視覚",type:"two",
+left:{label:"杆体",rows:[
+{t:"網膜の [周辺] に多い．",b:["周辺"]},
+{t:"視物質は [ロドプシン]．",b:["ロドプシン"]},
+{t:"感度が非常に [高い]．暗い場所で機能する．",b:["高い"]},
+{t:"[ビタミンA] 欠乏でロドプシンが減少 → [夜盲症]．",b:["ビタミンA","夜盲症"]},
+]},
+right:{label:"錐体",rows:[
+{t:"[中心窩] 付近に集中．",b:["中心窩"]},
+{t:"視物質は [錐体オプシン]．",b:["錐体オプシン"]},
+{t:"感度は低く，明るい場所で働く．",b:[]},
+{t:"赤・緑・青の [3] 種類があり，反応の割合で [色覚] が決まる．",b:["3","色覚"]},
+]}
+},
+{t:"視覚⑦：色・順応・視細胞の電気的反応",ch:"第5章 感覚の生理 ｜ B-1 視覚",type:"p",
+rows:[
+{t:"色は [色相]・[彩度]・[明度] の3要素で特徴づけられる．赤・緑・青を [三原色] という．",b:["色相","彩度","明度","三原色"]},
+{t:"[暗順応]：暗い所で視物質が増え感受性が上がる．合成に時間がかかり [数十分] 必要．",b:["暗順応","数十分"]},
+{t:"[明順応]：明るい所で視物質が減り感受性が下がる．[数分間] で完了する．",b:["明順応","数分間"]},
+{t:"網膜に光を当てると，視細胞の電位は [負] の方向に変化する（[過分極] 性応答）．",b:["負","過分極"]},
+]},
+{t:"視覚⑧：視覚伝導路",ch:"第5章 感覚の生理 ｜ B-1 視覚",type:"p",
+rows:[
+{t:"左右の視神経は [視交叉] で合流する．",b:["視交叉"]},
+{t:"[鼻側] の半数は交叉して対側へ，[耳側] の半数は交叉せず同側へ向かう．",b:["鼻側","耳側"]},
+{t:"視神経は視床の [外側膝状体] に投射し，そこから大脳皮質 [後頭葉] の一次視覚野へ投射する．",b:["外側膝状体","後頭葉"]},
+{t:"このため，右半分の視野は [左側] の，左半分の視野は右側の一次視覚野に入力する．",b:["左側"]},
+]},
+{t:"視覚⑨：視力と視野",ch:"第5章 感覚の生理 ｜ B-1 視覚",type:"p",
+rows:[
+{t:"視力：2点を識別できる最小の視角の [逆数] で表す．[ランドルト環] で測定する．",b:["逆数","ランドルト環"]},
+{t:"視力は [中心窩] で結像したときにもっとも大きく，照明が暗いと低下する．",b:["中心窩"]},
+{t:"視野（片眼・白色光）：内側（鼻側）65°，外側（耳側）[100°]，上方65°，下方75°．",b:["100°"]},
+{t:"色彩光で測った視野は，白色光より [狭い]．",b:["狭い"]},
+{t:"視神経乳頭には網膜がないため見えない点があり，これを [盲斑]（盲点）という．",b:["盲斑"]},
+]},
+{t:"聴覚①：音の特性と耳の構造",ch:"第5章 感覚の生理 ｜ B-2 聴覚",type:"p",
+rows:[
+{t:"耳は外耳・中耳・内耳に分かれる．外耳・中耳は [伝音部]，内耳の蝸牛は [感音部]．",b:["伝音部","感音部"]},
+{t:"音の高さは [周波数]（Hz），大きさは [デシベル]（dB）で表す．ヒトの可聴域は約 [20〜20,000] Hz．",b:["周波数","デシベル","20〜20,000"]},
+{t:"日常会話は250〜4,000 Hz，普通の会話の声は約 [60] dB．",b:["60"]},
+{t:"外耳道は約2.5 cmの管．中耳の鼓室は [耳管] で咽頭とつながり，嚥下やあくびで開いて気圧を調整する．",b:["耳管"]},
+{t:"耳小骨：鼓膜 → [ツチ骨] → [キヌタ骨] → [アブミ骨] → 前庭窓（蝸牛）．",b:["ツチ骨","キヌタ骨","アブミ骨"]},
+]},
+{t:"聴覚②：蝸牛とコルチ器",ch:"第5章 感覚の生理 ｜ B-2 聴覚",type:"p",
+rows:[
+{t:"蝸牛は [2と3/4] 回転のうずまき．内部は前庭階・[蝸牛管]・鼓室階の3つに分かれる．",b:["2と3/4","蝸牛管"]},
+{t:"蝸牛管には [内リンパ] 液，前庭階と鼓室階には [外リンパ] 液が満ちている．",b:["内リンパ","外リンパ"]},
+{t:"基底膜の上に [コルチ器] がのっている．",b:["コルチ器"]},
+{t:"[内有毛細胞]（1列）は音の振動を受容して脳へ伝え，[外有毛細胞]（3〜5列）は感度を調節する．",b:["内有毛細胞","外有毛細胞"]},
+{t:"有毛細胞の上にはゼリー状の [蓋膜] が横たわる．",b:["蓋膜"]},
+]},
+{t:"聴覚③：音の伝わり方と聴覚伝導路",ch:"第5章 感覚の生理 ｜ B-2 聴覚",type:"p",
+rows:[
+{t:"鼓膜と前庭窓の面積比（約17:1）と耳小骨のテコ比（約1.3:1）で，音圧は約 [22] 倍に増幅される．",b:["22"]},
+{t:"基底膜に生じる振動波を [進行波] という．",b:["進行波"]},
+{t:"前庭窓側で [高い] 音，蝸牛頂側で [低い] 音を受容する．",b:["高い","低い"]},
+{t:"伝導路：蝸牛神経 → 蝸牛神経核 → 上オリーブ核 → [下丘] → 視床 [内側膝状体] → 大脳皮質聴覚野．",b:["下丘","内側膝状体"]},
+{t:"音の方向を感知することを [音源定位] という．左右方向は両耳の音の時間・強度・高低の差が手がかり．",b:["音源定位"]},
+]},
+{t:"平衡感覚：半規管と耳石器",ch:"第5章 感覚の生理 ｜ B-3 平衡感覚",type:"two",
+left:{label:"半規管",rows:[
+{t:"外側・前・後の [3] つ．互いに直角に交わる．",b:["3"]},
+{t:"膨大部の [膨大部頂]（クプラ）に有毛細胞の感覚毛が入る．",b:["膨大部頂"]},
+{t:"内リンパ液の流れで [回転加速度] を感知する．",b:["回転加速度"]},
+]},
+right:{label:"耳石器（球形嚢・卵形嚢）",rows:[
+{t:"[平衡斑] の上を平衡石膜が覆い，[平衡石]（耳石）がのる．",b:["平衡斑","平衡石"]},
+{t:"重力などの [直線加速度] を感知する．",b:["直線加速度"]},
+{t:"立位で球形嚢は [垂直] 方向，卵形嚢は [水平] 方向を感受．",b:["垂直","水平"]},
+]}
+},
+{t:"平衡感覚の伝導路",ch:"第5章 感覚の生理 ｜ B-3 平衡感覚",type:"p",
+rows:[
+{t:"平衡感覚は [前庭感覚] とも呼ばれ，内耳の前庭器官で感受される．",b:["前庭感覚"]},
+{t:"前庭器官の信号は [前庭神経] で延髄の [前庭神経核] 群へ伝わり，視床を経て大脳皮質へ送られる．",b:["前庭神経","前庭神経核"]},
+{t:"前庭神経核群から眼筋神経核・脊髄・小脳へも投射し，[前庭脊髄反射] や [前庭動眼反射] として作用する．",b:["前庭脊髄反射","前庭動眼反射"]},
+{t:"前庭器官が強く刺激されると，めまい，吐き気，[眼振] が起こる．",b:["眼振"]},
+]},
+{t:"味覚①：味の種類と受容器",ch:"第5章 感覚の生理 ｜ B-4 味覚",type:"p",
+rows:[
+{t:"基本の味は甘味・塩味・酸味・苦味・[うま味] の [5] つ．",b:["うま味","5"]},
+{t:"閾値は苦味や酸味に対して [低く]，甘味に対して高い．",b:["低く"]},
+{t:"感覚受容器は [味蕾] で，そのほとんどが舌の [乳頭] にある．",b:["味蕾","乳頭"]},
+{t:"乳頭には糸状乳頭，[茸状乳頭]，葉状乳頭，[有郭乳頭] の4種類がある．",b:["茸状乳頭","有郭乳頭"]},
+{t:"味蕾は [加齢] とともに減少し，感受性も下がる．",b:["加齢"]},
+]},
+{t:"味覚②：味覚の伝導路",ch:"第5章 感覚の生理 ｜ B-4 味覚",type:"tbl",
+cols:["神経","担当部位"],
+rows:[
+["[顔面神経]（鼓索神経）","舌の前 [3分の2]（茸状乳頭）"],
+["[舌咽神経]","舌の後ろ3分の1（葉状乳頭・有郭乳頭）"],
+["[迷走神経]","咽頭・喉頭部"],
+["中枢の経路","延髄の [孤束核] → 視床 → 大脳皮質味覚野"],
+],
+blanks:["顔面神経","3分の2","舌咽神経","迷走神経","孤束核"]
+},
+{t:"嗅覚",ch:"第5章 感覚の生理 ｜ B-5 嗅覚",type:"p",
+rows:[
+{t:"嗅覚は味覚に比べて閾値が非常に [低い]．ただしヒトはイヌなどより鈍感である．",b:["低い"]},
+{t:"嗅覚は [順応] が早く，すぐににおいを感じなくなる．",b:["順応"]},
+{t:"嗅覚受容器の [嗅細胞] は，鼻腔の奥の [嗅上皮] にある．",b:["嗅細胞","嗅上皮"]},
+{t:"嗅細胞の軸索は [嗅神経] となって頭蓋腔に入り，[嗅球] に終わる．",b:["嗅神経","嗅球"]},
+{t:"嗅球からは最終的に [前頭眼窩野]（嗅覚野）へ投射する．",b:["前頭眼窩野"]},
+]},
+{t:"パートBまとめ",ch:"第5章 感覚の生理 ｜ パートBまとめ",type:"tbl",
+cols:["感覚","重要ポイント"],
+rows:[
+["視覚","近くを見る：毛様体筋 [収縮]．視覚野は [後頭葉]．杆体＝暗所，錐体＝色覚"],
+["聴覚","音圧は約22倍に増幅．前庭窓側で [高い] 音．内側膝状体を経由"],
+["平衡感覚","半規管＝[回転加速度]，耳石器＝直線加速度"],
+["味覚","舌前2/3＝[顔面神経]，後ろ1/3＝舌咽神経．延髄の孤束核"],
+["嗅覚","閾値が低く，順応が早い．嗅細胞 → [嗅球]"],
+],
+blanks:["収縮","後頭葉","高い","回転加速度","顔面神経","嗅球"]
+},
+];
+let cur=0,bs=[];
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function buildSlide(i){
+  const s=S[i];bs=[];
+  let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
+  if(s.type==="p"){
+    h+=`<div class="sec">重要事項</div><div class="box">`;
+    s.rows.forEach(r=>{
+      let t=r.t;
+      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
+      h+=`<span class="row">${t}</span>`;
+    });
+    h+=`</div>`;
+  }else if(s.type==="tbl"){
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    s.cols.forEach(c=>h+=`<th>${c}</th>`);
+    h+=`</tr></thead><tbody>`;
+    s.rows.forEach(row=>{
+      h+=`<tr>`;
+      row.forEach(cell=>{
+        let t=cell;
+        if(s.blanks)s.blanks.forEach(a=>{
+          if(t.includes("["+a+"]")){const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));}
+        });
+        h+=`<td>${t}</td>`;
+      });
+      h+=`</tr>`;
+    });
+    h+=`</tbody></table></div>`;
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];
+      const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{
+        let t=r.t;
+        r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
+        h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${t}</p>`;
+      });
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById("sc").innerHTML=h;
+  upd();bldNav();
+}
+function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
+function showAll(){bs.forEach(b=>rb(b.id));}
+function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
+function bldNav(){
+  let h="";
+  S.forEach((_,i)=>h+=`<div class="dot${i===cur?" a":""}" onclick="go(${i})"></div>`);
+  h+=`<span class="pg">${cur+1} / ${S.length}</span>`;
+  document.getElementById("nav").innerHTML=h;
+}
+buildSlide(0);
+</script>
+</body>
+</html>
