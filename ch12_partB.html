@@ -47,7 +47,7 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
   <div id="sc"></div>
   <div class="ctrl">
     <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
-    <button class="btn" onclick="all()">すべて表示</button>
+    <button class="btn" onclick="showAll()">すべて表示</button>
     <button class="btn" onclick="rst()">リセット</button>
     <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
     <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
@@ -163,7 +163,7 @@ function buildSlide(i){
 }
 function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
 function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
-function all(){bs.forEach(b=>rb(b.id));}
+function showAll(){bs.forEach(b=>rb(b.id));}
 function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
 function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
 function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
