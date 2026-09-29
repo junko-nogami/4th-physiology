@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第6章 パートA 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#1a3a5c;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#7eb3d8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#7eb3d8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#1a3a5c;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#1a3a5c;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(26,58,92,.13);color:#15324f}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#1a3a5c;background:#eef3f8}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #1a3a5c;background:#1a3a5c;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#15324f}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#1a3a5c;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#1a3a5c;background:#eef3f8}
+.mode .nm{font-size:16px;font-weight:600;color:#1a3a5c;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#1a3a5c;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#15324f;background:rgba(26,58,92,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#1a3a5c;background:rgba(26,58,92,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第6章 内分泌｜パートA：内分泌の基礎・脳下垂体 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第6章 内分泌 ｜ A 内分泌腺とホルモン／B-1〜3 視床下部・下垂体</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第6章 P83〜92 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本。通常モードで「ここは重要」と示す印。プールの4〜6割が目安
+   dobon :true … 💣ドボン。ドボンモードで外すと即終了。プールの15〜20%に絞る
+   （旧）kihon :true … 落としちゃダメな基本問題（🎯基本／ドボンモードでは💣ドボン！）
+   gori  :true … 「誤っているのはどれか」形式。設問の上に ⚠ 誤りを選ぶ タグが出る
+                  gori問題では、true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。kihon とは併用しない
+   exp … 正解時に見せる「なぜ正しいか」 */
+const PICK=5;
+const POOL=[
+
+/* ---------- A-1 内分泌腺とホルモン ---------- */
+
+{q:"ホルモンが標的器官へ運ばれる主な経路はどれか。",kihon:true,
+ choices:[
+  ["血液",true,""],
+  ["リンパ液",false,"組織の間から集められてリンパ管を流れる液。ホルモンを標的器官へ運ぶ主な経路ではない。"],
+  ["消化液",false,"消化管の中へ分泌される液。導管を通して出す外分泌の産物であり、ホルモンの運搬路ではない。"],
+  ["脳脊髄液",false,"脳室やくも膜下腔を満たす液。全身の標的器官へホルモンを運ぶ経路ではない。"]],
+ exp:"ホルモンは内分泌腺でつくられて<b>血管の中へ分泌</b>され、<b>血液</b>によって標的器官へ運ばれ、その細胞（標的細胞）にのみ作用する。（教科書 P83）"},
+
+{q:"神経細胞で分泌されたホルモンが血流で運ばれ、標的細胞に作用することを何というか。",
+ choices:[
+  ["神経分泌",true,""],
+  ["自己分泌（オートクリン）",false,"分泌した細胞自身にそのホルモンが作用すること。"],
+  ["傍分泌（パラクリン）",false,"隣接する細胞へ主に作用すること。血流には乗らない。"],
+  ["外分泌",false,"導管を通して体の表面や消化管の中へ分泌すること（汗腺・唾液腺など）。"]],
+ exp:"神経細胞で分泌されるホルモンが血流で標的細胞へ運ばれて作用することを<b>神経分泌</b>と呼ぶ。視床下部で産生されるバソプレシンやオキシトシンがその代表。（教科書 P84）"},
+
+{q:"ホルモンを分泌する臓器はどれか。",kihon:true,
+ choices:[
+  ["心臓",true,""],
+  ["脾臓",false,"血液をろ過する臓器で、教科書のホルモン分泌臓器には挙げられていない。国試でも「ホルモンを産生しない臓器」として出題される。"],
+  ["膀胱",false,"尿をためる臓器で、ホルモンの分泌は行わない。"],
+  ["胆のう",false,"胆汁を濃縮・貯蔵する臓器で、ホルモンの分泌は行わない。"]],
+ exp:"内分泌腺のほか、胃・十二指腸・<b>心臓</b>・肺・肝臓・筋・脂肪組織などでもホルモンやホルモン様物質が分泌される。（教科書 P84）"},
+
+{q:"ステロイドホルモンはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["エストロゲン",true,""],
+  ["アドレナリン",false,"アミノ酸（チロシン）から合成されるアミノ酸誘導体ホルモン（カテコールアミン）。"],
+  ["インスリン",false,"アミノ酸がペプチド結合した構造をもつペプチドホルモン。"],
+  ["オキシトシン",false,"アミノ酸がペプチド結合した構造をもつペプチドホルモン。"]],
+ exp:"ステロイドホルモンはコレステロールからつくられ、代表は<b>副腎皮質ホルモン</b>と<b>性ホルモン</b>（エストロゲン・テストステロンなど）。（教科書 P86、表6・1）"},
+
+{q:"ステロイドホルモンの原料はどれか。",kihon:true,
+ choices:[
+  ["コレステロール",true,""],
+  ["アミノ酸",false,"アミノ酸誘導体ホルモンやペプチドホルモンの原料。"],
+  ["トリグリセリド",false,"グリセロールと脂肪酸からなる中性脂肪。ステロイド骨格をもたず、ステロイドホルモンの原料ではない。"],
+  ["ヨウ素",false,"甲状腺ホルモンの合成に必要な元素。"]],
+ exp:"ステロイドホルモンは<b>コレステロール</b>からつくられる（プレグネノロン→プロゲステロン→アルドステロン・コルチゾル・テストステロンなど）。（教科書 P86〜87、図6・3）"},
+
+{q:"アミノ酸誘導体ホルモンはどれか。",
+ choices:[
+  ["サイロキシン",true,""],
+  ["コルチゾル",false,"コレステロールからつくられるステロイドホルモン（副腎皮質ホルモン）。"],
+  ["バソプレシン",false,"アミノ酸がペプチド結合した構造をもつペプチドホルモン。"],
+  ["アルドステロン",false,"コレステロールからつくられるステロイドホルモン（副腎皮質ホルモン）。"]],
+ exp:"アミノ酸誘導体ホルモン（アミン型ホルモン）の代表は、<b>カテコールアミン</b>（アドレナリン・ノルアドレナリン）と<b>甲状腺ホルモン</b>（サイロキシンなど）。（教科書 P86）"},
+
+{q:"ホルモンと化学的分類の組合せで誤っているのはどれか。",gori:true,
+ choices:[
+  ["バソプレシン ― ステロイドホルモン",true,""],
+  ["アドレナリン ― アミノ酸誘導体ホルモン",false,"教科書どおりの組合せなので、正しい。"],
+  ["オキシトシン ― ペプチドホルモン",false,"教科書どおりの組合せなので、正しい。"],
+  ["アルドステロン ― ステロイドホルモン",false,"教科書どおりの組合せなので、正しい。"]],
+ exp:"バソプレシンは<b>ペプチドホルモン</b>（オキシトシンと同じ）。ステロイドホルモンは副腎皮質ホルモンと性ホルモン。（教科書 P86）"},
+
+{q:"負のフィードバックの説明で正しいのはどれか。",kihon:true,
+ choices:[
+  ["最終産物が上位の内分泌腺に作用し、分泌を抑制する",true,""],
+  ["最終産物が上位の内分泌腺に作用し、分泌を促進する",false,"分泌を促進し合うしくみは、正のフィードバックの説明。"],
+  ["標的器官の受容体の数を増やす",false,"フィードバックは分泌量の調節のしくみであり、受容体の数を増やすことではない。"],
+  ["ホルモンの作用が持続し、受容体の感受性が低下する",false,"ホルモンが持続的に作用して効果が低下する現象（脱感作）の説明。"]],
+ exp:"最終産物が上位（上流）の内分泌腺に作用して分泌を<b>抑制</b>するしくみを<b>負のフィードバック</b>と呼ぶ。大部分のホルモンはこれによる調節を受けている。（教科書 P86）"},
+
+{q:"正のフィードバックの例として正しいのはどれか。",
+ choices:[
+  ["排卵時の黄体形成ホルモン（LH）とエストロゲン",true,""],
+  ["甲状腺ホルモンと甲状腺刺激ホルモン",false,"甲状腺ホルモンが増えると甲状腺刺激ホルモンが抑えられる関係で、負のフィードバックの例。"],
+  ["コルチゾルと副腎皮質刺激ホルモン",false,"コルチゾルが増えると副腎皮質刺激ホルモンが抑えられる関係で、負のフィードバックの例。"],
+  ["インスリンと血糖値",false,"血糖値が上がるとインスリンが分泌され、血糖値を下げる関係。増加を打ち消す向きの調節である。"]],
+ exp:"排卵時には<b>LHとエストロゲン</b>がお互いに分泌を刺激し合い、LHが急激に上昇する（<b>LHサージ</b>）。これが排卵を誘発する。正のフィードバック関係にあるのは排卵時のみ。（教科書 P88）"},
+
+{q:"コルチゾルの分泌量が最も多い時間帯はどれか。",
+ choices:[
+  ["早朝〜午前",true,""],
+  ["正午ごろ",false,"コルチゾルの分泌量は起床後から徐々に低下していく途中の時間帯。"],
+  ["夕方",false,"コルチゾルの分泌量が低くなっていく時間帯。"],
+  ["深夜",false,"コルチゾルの分泌量が最も低い時間帯。"]],
+ exp:"多くのホルモンは<b>日内リズム</b>（サーカディアンリズム）に基づいて分泌量が変化する。コルチゾルは<b>早朝から起床時に高く</b>、夕方から就寝時に低くなる。体内時計の中心は視床下部の視交叉上核。（教科書 P88、P95、図6・5a）"},
+
+{q:"受容体が細胞内（細胞質・核内）にあるホルモンはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["アルドステロン",true,""],
+  ["インスリン",false,"ペプチドホルモン。受容体は細胞膜にある。"],
+  ["アドレナリン",false,"アミノ酸誘導体ホルモン（カテコールアミン）。受容体は細胞膜にある。"],
+  ["バソプレシン",false,"ペプチドホルモン。受容体は細胞膜にある。"]],
+ exp:"<b>ステロイドホルモン</b>（アルドステロンなど）は細胞質や<b>核内の受容体</b>と結合し、DNAの転写を調節する。ペプチドホルモンの多くと一部のアミノ酸誘導体ホルモンは<b>細胞膜受容体</b>と結合する。（教科書 P88、図6・6）"},
+
+{q:"受容体が細胞内にあるホルモンはどれか。",hosoku:true,
+ choices:[
+  ["サイロキシン（甲状腺ホルモン）",true,""],
+  ["インスリン",false,"ペプチドホルモン。受容体は細胞膜にある。"],
+  ["アドレナリン",false,"アミノ酸誘導体ホルモンだが、受容体は細胞膜にある（カテコールアミン）。"],
+  ["グルカゴン",false,"ペプチドホルモン。受容体は細胞膜にある。"]],
+ exp:"補足知識（資料外）。甲状腺ホルモンはアミノ酸誘導体ホルモンだが、脂溶性で細胞膜を通り抜け、ステロイドホルモンと同じく<b>細胞内（核内）の受容体</b>と結合する。同じアミノ酸誘導体でも、カテコールアミンの受容体は細胞膜にある。国家試験で出題例がある。"},
+
+{q:"細胞膜受容体と結合したホルモンが、細胞内に生み出す物質はどれか。",
+ choices:[
+  ["サイクリックAMP（セカンドメッセンジャー）",true,""],
+  ["DNA",false,"遺伝情報を担う物質。核内受容体と結合したホルモンは、その転写を調節する。"],
+  ["コレステロール",false,"ステロイドホルモンの原料となる物質。"],
+  ["グリコーゲン",false,"肝臓や筋にたくわえられるグルコースの貯蔵形。"]],
+ exp:"ペプチドホルモンの多くや一部のアミノ酸誘導体ホルモンは細胞膜受容体と結合し、<b>サイクリックAMP</b>などの<b>セカンドメッセンジャー</b>を生み出して下流の情報伝達系を活性化する。（教科書 P88）"},
+
+{q:"ホルモンが持続的に作用し、受容体の数の減少や感受性の低下が起こることを何というか。",
+ choices:[
+  ["脱感作",true,""],
+  ["許容効果",false,"他のホルモンの作用を増強する効果のこと。"],
+  ["負のフィードバック",false,"最終産物が上位の内分泌腺に作用して分泌を抑制するしくみ。"],
+  ["拮抗作用",false,"2つのホルモンが互いに逆向きにはたらくこと（例：インスリンとグルカゴン）。"]],
+ exp:"標的細胞にホルモンが持続的に作用すると、受容体の数の減少や感受性の低下が起こり、ホルモンの効果が低下する。この現象を<b>脱感作</b>と呼ぶ。（教科書 P88）"},
+
+/* ---------- A-2 視床下部・下垂体 ---------- */
+
+{q:"視床下部で産生されるホルモンはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["バソプレシン",true,""],
+  ["成長ホルモン",false,"下垂体前葉で産生・分泌されるホルモン。"],
+  ["プロラクチン",false,"下垂体前葉で産生・分泌されるホルモン。"],
+  ["甲状腺刺激ホルモン",false,"下垂体前葉で産生・分泌されるホルモン。"]],
+ exp:"<b>バソプレシンとオキシトシン</b>は<b>視床下部</b>の神経分泌細胞（室傍核・視索上核）で産生され、神経軸索を通って<b>下垂体後葉</b>から放出される（下垂体後葉ホルモン）。（教科書 P90〜91、図6・7）"},
+
+{q:"視床下部と下垂体前葉を連絡している血管はどれか。",
+ choices:[
+  ["下垂体門脈",true,""],
+  ["内頸動脈",false,"下垂体へ血液を送る動脈の1つだが、視床下部と前葉を連絡する血管ではない。"],
+  ["大脳動脈輪",false,"脳底で動脈が輪状につながった部分。視床下部と前葉を連絡する血管ではない。"],
+  ["下垂体柄",false,"視床下部と下垂体をつなぐ柄の部分で、血管の名称ではない。"]],
+ exp:"下垂体と視床下部は<b>下垂体柄</b>でつながり、下垂体前葉と視床下部は<b>下垂体門脈</b>で連絡している。視床下部ホルモンはこの血流で前葉へ届く。（教科書 P91、図6・7）"},
+
+{q:"下垂体前葉から分泌されるホルモンはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["プロラクチン",true,""],
+  ["オキシトシン",false,"視床下部で産生され、下垂体後葉から放出されるホルモン。"],
+  ["サイロキシン",false,"甲状腺から分泌されるホルモン。"],
+  ["ノルアドレナリン",false,"副腎髄質から分泌されるホルモン（神経伝達物質でもある）。"]],
+ exp:"下垂体前葉ホルモンは、<b>ACTH・GH・TSH・PRL（プロラクチン）・FSH・LH</b>の6つ。後葉からはバソプレシンとオキシトシンが放出される。（教科書 P85、表6・1）"},
+
+{q:"下垂体前葉ホルモンとその作用の組合せで誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["プロラクチン ― 子宮筋の収縮",true,""],
+  ["甲状腺刺激ホルモン ― 甲状腺ホルモンの分泌促進",false,"教科書どおりの組合せなので、正しい。"],
+  ["副腎皮質刺激ホルモン ― グルココルチコイドの合成促進",false,"教科書どおりの組合せなので、正しい。"],
+  ["黄体形成ホルモン ― 排卵の誘発と黄体の形成",false,"教科書どおりの組合せなので、正しい。"]],
+ exp:"子宮筋を収縮させるのは、下垂体<b>後葉</b>ホルモンの<b>オキシトシン</b>。プロラクチンは乳腺の発育や乳汁の産生を促す。（教科書 P92）"},
+
+{q:"視床下部ホルモンによる分泌調節を受けないのはどれか。",kihon:true,
+ choices:[
+  ["オキシトシン",true,""],
+  ["プロラクチン",false,"視床下部のプロラクチン放出ホルモン（PRH）と放出抑制ホルモン（PIH）で調節される。"],
+  ["甲状腺刺激ホルモン",false,"視床下部の甲状腺刺激ホルモン放出ホルモン（TRH）で分泌が促進される。"],
+  ["副腎皮質刺激ホルモン",false,"視床下部の副腎皮質刺激ホルモン放出ホルモン（CRH）で放出が促される。"]],
+ exp:"視床下部ホルモンの役割は<b>下垂体前葉ホルモン</b>の分泌の促進・抑制。<b>オキシトシン</b>は視床下部で産生されて下垂体<b>後葉</b>から放出されるホルモンであり、視床下部ホルモンによる調節は受けない。（教科書 P90〜91）"},
+
+{q:"寒冷曝露時に分泌が増加する視床下部ホルモンはどれか。",
+ choices:[
+  ["甲状腺刺激ホルモン放出ホルモン（TRH）",true,""],
+  ["副腎皮質刺激ホルモン放出ホルモン（CRH）",false,"ACTHの放出を促す視床下部ホルモン。ストレス反応に関与する。"],
+  ["性腺刺激ホルモン放出ホルモン（GnRH）",false,"LHやFSHの分泌を促す視床下部ホルモン。"],
+  ["成長ホルモン放出抑制ホルモン（GHIH）",false,"成長ホルモンの分泌を抑える視床下部ホルモン（ソマトスタチン）。"]],
+ exp:"<b>TRH</b>は下垂体前葉からの甲状腺刺激ホルモン（TSH）の分泌を促進し、<b>寒冷曝露時に分泌が増加</b>する。甲状腺ホルモンは熱産生を高める。（教科書 P91）"},
+
+{q:"成長ホルモンの分泌を抑制する視床下部ホルモンはどれか。",
+ choices:[
+  ["ソマトスタチン",true,""],
+  ["プロラクチン放出ホルモン",false,"プロラクチンの放出を促す視床下部ホルモン。"],
+  ["甲状腺刺激ホルモン放出ホルモン",false,"甲状腺刺激ホルモンの分泌を促す視床下部ホルモン。"],
+  ["副腎皮質刺激ホルモン放出ホルモン",false,"副腎皮質刺激ホルモンの放出を促す視床下部ホルモン。"]],
+ exp:"成長ホルモン放出抑制ホルモン（GHIH）は<b>ソマトスタチン</b>とも呼ばれる。視床下部のほか消化管や膵臓でも産生され、膵臓ではインスリンやグルカゴンの分泌を抑制する。（教科書 P91）"},
+
+{q:"成長ホルモンの作用で正しいのはどれか。",kihon:true,
+ choices:[
+  ["血糖値を上昇させる",true,""],
+  ["血糖値を低下させる",false,"成長ホルモンの作用とは逆向き。血糖値を下げられるホルモンは1つしかない。"],
+  ["筋でのタンパク質合成を抑制する",false,"成長ホルモンは筋でのタンパク質合成をさかんにする。向きが逆。"],
+  ["乳汁の射出を促す",false,"下垂体後葉ホルモンの作用（射乳反射）。"]],
+ exp:"成長ホルモンは骨や体細胞の成長を促進し、<b>筋でのタンパク質合成</b>をさかんにする。また糖質・脂質・タンパク質の代謝を高め、<b>血糖値を上昇</b>させる。（教科書 P92）"},
+
+{q:"成長ホルモンの分泌を増加させる条件として誤っているのはどれか。",gori:true,
+ choices:[
+  ["高血糖",true,""],
+  ["運動",false,"教科書どおりの記述なので、正しい。"],
+  ["熟睡",false,"教科書どおりの記述なので、正しい。"],
+  ["絶食",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"成長ホルモン放出ホルモン（GHRH）は、ストレス・運動・睡眠（熟睡時）・絶食・<b>低血糖</b>・アミノ酸負荷・タンパク質摂取などで分泌が増加する。高血糖ではない。（教科書 P91）"},
+
+{q:"バソプレシンの分泌が増加するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["血漿浸透圧の上昇",true,""],
+  ["循環血液量の増加",false,"血液量が増えた状態では、水を体内に保持する必要がない。分泌が増えるのは血液量が減ったとき。"],
+  ["血圧の上昇",false,"血圧が高い状態では、水を保持して血圧を支える必要がない。"],
+  ["大量の飲水",false,"体液が薄まる（浸透圧が下がる）ため、分泌はむしろ抑えられる。"]],
+ exp:"多量の発汗・出血・嘔吐などで<b>体液の塩分濃度（浸透圧）が上昇</b>したとき、また出血で血液量が減少したときに分泌され、腎臓での水の再吸収を促す。（教科書 P92）"},
+
+{q:"バソプレシンの主な作用はどれか。",kihon:true,
+ choices:[
+  ["腎臓での水の再吸収の促進",true,""],
+  ["腎臓でのNa⁺の再吸収の促進",false,"副腎皮質のミネラルコルチコイド（アルドステロン）の作用。"],
+  ["尿量の増加",false,"向きが逆。水の再吸収が進むと尿は濃くなり、量は減る。"],
+  ["子宮筋の収縮",false,"同じ下垂体後葉から放出される、もう一方のホルモンの作用。"]],
+ exp:"バソプレシンは腎臓での<b>水の再吸収</b>を促し、尿を濃く、量を少なくする。この抗利尿作用が主な作用なので<b>抗利尿ホルモン（ADH）</b>とも呼ばれる。大量では細動脈を収縮させて血圧を上げる。（教科書 P92）"},
+
+{q:"オキシトシンの作用はどれか。",kihon:true,
+ choices:[
+  ["乳汁の射出",true,""],
+  ["乳汁の産生",false,"下垂体前葉のプロラクチンの作用。"],
+  ["乳腺の発育",false,"プロラクチンやエストロゲン・プロゲステロンの作用。"],
+  ["腎臓での水の再吸収の促進",false,"同じ下垂体後葉から放出されるバソプレシンの作用。"]],
+ exp:"オキシトシンは乳頭や乳輪に触れると分泌が急増し、<b>乳汁を射出</b>させる（<b>射乳反射</b>）。分娩時には分泌量が増え、<b>子宮筋の収縮</b>頻度を増加させる。（教科書 P92）"},
+
+{q:"オキシトシンの作用を増強するのはどれか。",
+ choices:[
+  ["エストロゲン",true,""],
+  ["プロゲステロン",false,"オキシトシンの作用を抑制するホルモン。妊娠中は子宮筋の感受性を下げて流産を防ぐ。"],
+  ["プロラクチン",false,"乳汁の産生を促すホルモン。オキシトシンの作用を増強するとは書かれていない。"],
+  ["コルチゾル",false,"副腎皮質のグルココルチコイド。オキシトシンの作用の調節には挙げられていない。"]],
+ exp:"オキシトシンの作用は<b>エストロゲンで増強</b>され、<b>プロゲステロンで抑制</b>される。（教科書 P92）"},
+
+{q:"プロラクチンの作用はどれか。",kihon:true,
+ choices:[
+  ["乳腺の発育促進",true,""],
+  ["子宮内膜の増殖",false,"エストロゲンの作用。"],
+  ["基礎体温の上昇",false,"プロゲステロンの作用。"],
+  ["排卵の誘発",false,"黄体形成ホルモン（LH）の作用。"]],
+ exp:"プロラクチン（PRL）は<b>乳腺の発育</b>にはたらき、成熟した乳腺で乳汁の産生と導管内への放出を促す。過剰なPRLはGnRHの産生と分泌を抑制する。（教科書 P92）"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"成人で成長ホルモンの分泌が過剰になると生じるのはどれか。",hosoku:true,
+ choices:[
+  ["先端巨大症",true,""],
+  ["巨人症",false,"骨端線が閉じる前の成長期に成長ホルモンが過剰になった場合に生じる。"],
+  ["低身長症",false,"成長期に成長ホルモンが不足した場合に生じる。"],
+  ["クレチン症",false,"小児期の甲状腺ホルモン不足で生じる。"]],
+ exp:"補足知識（資料外）。成長ホルモンが成長期に過剰なら<b>巨人症</b>、成人で過剰なら<b>先端巨大症</b>、成長期に不足すると<b>低身長症</b>となる。"},
+
+{q:"成長ホルモンの作用を仲介し、成長軟骨に作用する物質はどれか。",hosoku:true,
+ choices:[
+  ["IGF-1（インスリン様成長因子-1）",true,""],
+  ["インスリン",false,"膵臓β細胞から分泌される血糖降下ホルモン。成長軟骨への作用の仲介役ではない。"],
+  ["カルシトニン",false,"甲状腺から分泌され、骨吸収を抑えるホルモン。"],
+  ["エリスロポエチン",false,"腎臓から分泌され、赤血球の産生を促すホルモン。"]],
+ exp:"補足知識（資料外）。成長ホルモンは肝臓などで<b>IGF-1</b>（ソマトメジンC）の産生を促し、IGF-1が成長期の<b>成長軟骨</b>に作用して骨を伸ばす。"}
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
