@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 運動の生理 補足｜反射の中枢と用語の整理</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#1e4d7b;padding:14px 28px}
+.hd .ch{font-size:11px;color:#c4d9f0;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.hd .tt{font-size:20px;font-weight:500;color:#fff}
+.bd{padding:20px 28px 16px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.box{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:12px}
+.row{display:block;font-size:14px;line-height:1.9;color:#222;padding:5px 0;border-bottom:1px solid #e5e7eb}
+.row:last-child{border-bottom:none}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:#1e4d7b;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
+.tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;color:#1e4d7b;white-space:nowrap;min-width:110px}
+.tbl.wide td:first-child{white-space:normal;min-width:88px}
+.kw{font-weight:700;color:#1e4d7b}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
+.tf{background:rgba(30,77,123,.12);color:#1e4d7b}
+.tb{background:rgba(26,92,122,.12);color:#1a5c7a}
+.blank{display:inline-block;min-width:72px;border-bottom:2.5px solid #1e4d7b;border-radius:3px 3px 0 0;cursor:pointer;text-align:center;padding:0 5px;transition:all .22s;position:relative;vertical-align:baseline}
+.blank::after{content:"？";font-size:12px;color:#1e4d7b;opacity:.45;position:absolute;left:50%;transform:translateX(-50%)}
+.blank span{visibility:hidden;font-weight:600;color:#1e4d7b;font-size:14px;opacity:0;transition:opacity .22s;display:inline-block}
+.blank.on{border-bottom-color:transparent;background:rgba(30,77,123,.1);border-radius:4px;padding:1px 7px}
+.blank.on::after{display:none}
+.blank.on span{visibility:visible;opacity:1}
+.blank:not(.on):hover{background:rgba(30,77,123,.07)}
+.ctrl{display:flex;align-items:center;gap:8px;padding:10px 28px 12px;background:#f8f9fb;border-top:1px solid #e5e7eb;flex-wrap:wrap}
+.btn{padding:7px 15px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:#1e4d7b;color:#fff;border-color:#1e4d7b}
+.btnp:hover{background:#163a5c}
+.cnt{font-size:11px;color:#888;margin-left:auto}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
+.dot.a{background:#1e4d7b}
+.pg{font-size:11px;color:#888;margin-left:auto}
+</style>
+</head>
+<body>
+<h1>生理学 第4章 運動の生理｜補足：反射の中枢と用語の整理（運動学7章より）</h1>
+<div class="slide">
+  <div id="sc"></div>
+  <div class="ctrl">
+    <button class="btn" onclick="nextBlank()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="showAll()">すべて表示</button>
+    <button class="btn" onclick="resetAll()">リセット</button>
+    <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
+    <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+<script>
+const S=[
+{t:"この補足について",ch:"📘 補足知識（資料外）｜ 運動学 第7章 p.57-63",type:"p",
+rows:[
+"このパートは{{生理学}}の教科書（第4章）には載っていない内容である．出典は{{運動学}}の教科書 {{第7章}}「反射と随意運動」．",
+"運動学では，反射を{{反射中枢の部位}}によって {{脊髄}}／{{延髄・橋}}／{{中脳}}／{{大脳皮質}} の4つのレベルに分類している．",
+"生理学4章では「C 脊髄による反射」「D 脳幹による運動調節」という節の見出しで示されるだけで，個々の反射の中枢は{{明記されていない}}．特に脳幹については{{延髄}}なのか{{中脳}}なのかの区別がない．",
+"また，同じ反射が生理学と運動学で{{別の名前・表記}}で出てくることがある（最後から2枚目に対照表をまとめた）．",
+]},
+{t:"反射弓と反射の分類",ch:"📘 補足｜ A-1,2 反射弓・反射の種類",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["反射弓の5要素","① [受容器]　② [求心路]　③ [反射中枢]　④ [遠心路]　⑤ [効果器]（図7・1）"],
+["最終共通路","[脊髄前角] にあるα運動ニューロン．すべての運動経路の [発信起点] となる．"],
+["単シナプス反射","反射中枢が [1個] の求心性ニューロンと [1個] の遠心性ニューロンとの結合からなる．代表例は [伸張反射]．"],
+["多シナプス反射","複雑な反射になるほど，反射弓を構成する [シナプスの数] が多くなる．"],
+["分類は7通り","① 刺激の種類　② [受容器の存在する部位]　③ シナプスの数　④ [反射中枢が存在する部位]　⑤ 応答する筋　⑥ [応答運動パターン]　⑦ 反射の合目的性"],
+["膝蓋腱反射を7通りに","刺激の種類＝[伸張反射]／受容器の部位＝[深部反射]／シナプス数＝[単シナプス反射]／反射中枢＝[脊髄反射]／応答筋＝[大腿四頭筋反射]／応答パターン＝[膝の伸展反射]"],
+["イェンドラシック検査","膝蓋腱反射を調べるとき，体の前で両手を組ませて側方へ強く引かせると同時に腱を叩打すると，[より強い応答] が得られる．"],
+]},
+{t:"反射中枢の4つのレベル",ch:"📘 補足｜ A-3 反射中枢の部位による分類",type:"tbl",
+cols:["中枢","代表的な反射・反応"],
+rows:[
+["[脊髄]","伸張反射，屈筋反射，[交差性反射]，陽性支持反応・陰性支持反応，[ひっかき反射]"],
+["[延髄・橋]","[緊張性頸反射]（ATNR・STNR），[緊張性迷路反射]（TLR，中枢は延髄），頸から起こる [立ち直り反射]"],
+["[中脳]","[迷路] から起こる立ち直り反射，[体表] に加わる刺激から起こる立ち直り反射（[赤核] レベル）"],
+["[大脳皮質]","[眼] から起こる立ち直り反射（[後頭葉]），踏み直り反応，[跳び直り反応]，足踏み反応"],
+["階層性","下位中枢は上位中枢から [興奮性] あるいは [抑制性] の制御を受けている．上位中枢からの抑制を除去すると，その [解放現象] として下位に中枢をもつ反射運動は一般に [増強]・[顕在化] される．"],
+["反射が複雑になる方向","反射中枢が [脊髄] から [大脳] へと上位中枢に移行するにしたがって複雑になる．"],
+["連鎖反射（連鎖反応）","1つの反射運動が次の反射運動の [刺激] となり，反射が連続すること．"],
+]},
+{t:"切断レベルと残る反射（図7・2）",ch:"📘 補足｜ 中枢の所在を知る方法（動物実験）",type:"tbl",
+cols:["残っている最上位","出てくるもの"],
+rows:[
+["考え方","上位中枢を徐々に{{切断・除去・破壊}}していったとき，反射が{{残存}}する最も下位のレベルが，その反射の中枢である．"],
+["脊髄のみ","{{脊髄反射}}のみ（伸張反射・屈筋反射・交差性反射・ひっかき反射）"],
+["延髄・橋まで","＋ {{緊張性頸反射}}，{{緊張性迷路反射}}，頸からの立ち直り反射"],
+["中脳まで","＋ 迷路性・体表性の{{立ち直り反射}}（立ち直り反射が揃う）"],
+["間脳（視床）まで","＋ {{正常な姿勢}}が保てる"],
+["大脳皮質まで","＋ {{眼}}からの立ち直り反射，踏み直り・跳び直り・足踏み反応"],
+["注意","立ち直り反射が{{揃う}}ことと，{{正常な姿勢}}が保てることは別である．中脳までで立ち直り反射は出るが，間脳が加わって初めて各反射が{{統合}}され姿勢が完成する．"],
+["見出しの「視床」","「中脳と視床が関与する反射」の視床は，立ち直り反射の中枢という意味ではなく，この{{切断レベル}}の区分による呼び方である（本文に視床の説明はない）．"],
+]},
+{t:"脊髄反射①　伸張反射と屈筋反射",ch:"📘 補足｜ A-3-1 脊髄に中枢をもつ反射",type:"tbl",
+cols:["反射","内容"],
+rows:[
+["伸張反射","筋が伸展されると，筋に存在する張力受容器の [筋紡錘] も同時に引き伸ばされて興奮する．そのインパルスが求心路である [Ia群線維] を経由して脊髄に伝達され，同筋のα運動ニューロンに [単シナプス] 性に伝えられる（図7・3）．"],
+["代表例","[膝蓋腱反射]，[アキレス腱反射] など．"],
+["相反性神経支配","Ia群線維からの求心性インパルスは，同筋とその共同筋のα運動ニューロンには [促通性] に働き，[拮抗筋] にはシナプス [1個] を介して [抑制性] に働く．"],
+["筋紡錘の感受性","[γ運動ニューロン] の支配によって調節されている．"],
+["屈筋反射","四肢の皮膚に [疼痛] 刺激が加わると，その肢は [屈曲] して体幹に引き寄せられる．このとき同肢の [伸筋] は相反性神経支配で弛緩している．"],
+["屈筋反射の経路","α運動ニューロンに直接シナプス結合するのではなく，[介在神経細胞]（介在ニューロン）を介しているので [多シナプス反射] である．"],
+["屈筋反射の別名","刺激から四肢を遠ざけるという [合目的性] から，[逃避反射] または [侵害反射] でもある．"],
+]},
+{t:"脊髄反射②　支持反応と交差性反射",ch:"📘 補足｜ A-3-1 脊髄に中枢をもつ反射",type:"tbl",
+cols:["反射","内容"],
+rows:[
+["陽性支持反応","脊髄を脳から切り離した動物の [足底] を刺激したり，足の [骨間筋] を他動的に伸展すると，肢全体が伸展して [棒のよう] になる．"],
+["陰性支持反応","この状態から刺激を除去したり，[趾（指）] を他動的に [底屈] させると，肢全体が [弛緩] する．"],
+["交差性伸展反射","屈筋反射で刺激が十分に強いときは，同肢の屈曲と同時に [対側肢] に [伸展] が起こる．"],
+["そのしくみ","屈筋反射を起こす求心性ニューロンの [側枝] が，対側肢のα運動ニューロンには [逆の線維結合] をしていることによる（[二重相反性神経支配]）．"],
+["交差性屈曲反射","刺激が加えられる肢の対側肢をあらかじめ [伸展位] に保持しておくと，刺激によって伸展ではなく [屈曲] 運動が起こる．"],
+["反射逆転","このように，刺激が加えられる前の [肢位] で反射運動の応答パターンが [逆転] する現象．肢位変化による求心性インパルスが脊髄内で [反射路の切替] を行うために起こる．"],
+]},
+{t:"脊髄節反射と脊髄節間反射",ch:"📘 補足｜ A-3-1-e",type:"two",
+left:{label:"脊髄節反射",rows:[
+"反射弓が脊髄の [同じレベル] の髄節内，あるいは [短い] 髄節間にある．",
+"[伸張反射]，[屈筋反射]，[交差性反射] がこれにあたる．",
+]},
+right:{label:"脊髄節間反射（長脊髄反射）",rows:[
+"反射路が脊髄の [長い] 髄節にわたって存在する．",
+"代表例は [ひっかき反射]．",
+"[脊髄動物]（実験的に脳を脊髄から切り離した動物）の [肩] や [背部] を刺激すると，[同側] 後肢でその部位を引っ掻くような [律動的] な運動が起こる．",
+"刺激体節部位からの入力が [後肢体節部位] の運動ニューロンに伝達されて応答運動が起こる．",
+]}},
+{t:"延髄・橋①　緊張性頸反射",ch:"📘 補足｜ A-3-2 延髄・橋が関与する反射",type:"tbl",
+cols:["反射","肢位の変化"],
+rows:[
+["非対称性緊張性頸反射（ATNR）","頭部を体幹に対して [左右に回旋] すると，[顔面の向いた側] の四肢が [伸展] し，[後頭側] の四肢が [屈曲] する．[フェンシングの構え] のような姿勢となる（図7・4）．"],
+["対称性緊張性頸反射（STNR）","頭部を [前屈] させると上肢（動物では前肢）が [屈曲] し，下肢（後肢）が [伸展] する．頭部を [後屈] させると上肢が [伸展] し，下肢が [屈曲] する（図7・5）．"],
+["規定されるもの","[頭部と体幹の関係] で四肢の [肢位] が規定される．"],
+["出現と消失","これらの反射は [乳幼児期] に現れ，次第に [消失] する．"],
+["成人でみられる場面","[努力] を伴う運動や [スポーツ] の場面で，この反射に支配された姿勢がみられることがある．"],
+]},
+{t:"延髄・橋②　緊張性迷路反射と立ち直り反射",ch:"📘 補足｜ A-3-2 延髄・橋が関与する反射",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["緊張性迷路反射（TLR）","空間における [頭部] と [重力方向] との関係の変化で起こる．"],
+["TLRの受容器","前庭器にある [卵形嚢] と [球形嚢]．"],
+["TLRの反射中枢","[延髄] にある．"],
+["背臥位のとき","口裂線が水平面に対して [45°上方] に傾いたとき．四肢の [伸筋群] の緊張が [最大] となって四肢がつっぱった状態となる．"],
+["腹臥位のとき","口裂線が水平面に対して [45°下方] に傾いたとき．[伸筋] の緊張が [最小] となって四肢は [弛緩] した状態になる（図7・6）．"],
+["頸から起こり体幹に作用する立ち直り反射","頭部を回旋したとき，[体幹] が頭部に対して正しい位置となるように引き続いて [回旋] する姿勢反射．"],
+["その刺激・受容器・中枢","刺激＝頸部に加わる [非対称な力]／受容器＝頸部筋にある [深部感覚受容器]／反射中枢＝[延髄上部から橋] の部分．"],
+]},
+{t:"中脳と視床が関与する反射",ch:"📘 補足｜ A-3-3",type:"two",
+left:{label:"迷路から起こり頭部に作用する立ち直り反射",rows:[
+"空間で体幹がどのような位置にあっても，頭部を常に正しい位置（[垂直位]）に保つための反射．",
+"感覚受容器の [迷路] からの [重力] との位置関係の情報が，反射中枢のある [中脳] に送られる．",
+]},
+right:{label:"体表に加わる刺激から起こる立ち直り反射",rows:[
+"床から体表面に加わる [非対称] の刺激によって，頭部を [垂直位] に挙上したり，[体幹] を起き上がらせたりする反射．",
+"頭部・[体幹]・[四肢] に作用する．",
+"反射中枢は中脳の [赤核] レベルにある．",
+]}},
+{t:"大脳皮質が関与する反射・反応",ch:"📘 補足｜ A-3-4",type:"tbl",
+cols:["反射・反応","内容"],
+rows:[
+["眼から起こり頭部に作用する立ち直り反射","[視覚] から頭部を正しい位置に保持させる立ち直り反射．反射中枢は [後頭葉] にある．"],
+["踏み直り反応","[視覚性] と [非視覚性] の2種類がある．"],
+["（視覚性）","身体を空間に支えて床に近づけると，足をのばして体重を支えるための [準備姿勢] となる．[視覚] 刺激による．"],
+["（非視覚性）","[目かくし] をして [手背] や [足底] を机などの角に触れさせると，机上に手や足を乗せる動きが起こる（[手・足の台乗せ反応]）．[皮膚] 刺激による．"],
+["跳び直り反応","[一側肢] で立たせておいて体幹を [前後左右] に押して重心を移動させると，同肢で [跳んで] 新たな安定を得る．"],
+["足踏み反応","立位で身体を急激に [側方] にずらして重心位置を [水平移動] させると，ずらされた側の肢を [踏み出して] 身体を支持する．"],
+["このほかに","新生児から乳幼児期にみられる多くの [原始反射] といわれるものがある（消長は運動発達の章で詳記）．"],
+]},
+{t:"生理学と運動学で呼び名が違う語",ch:"📘 補足｜ 用語対照表",type:"tbl",
+cols:["生理学 第4章","運動学 第7章"],
+rows:[
+["緊張性頸反射（顔が向いた側が伸展）","{{非対称性}}緊張性頸反射（{{ATNR}}）　※対称性（STNR）は生理学には記載なし"],
+["前庭脊髄反射（緊張性迷路反射）","緊張性迷路反射（{{TLR}}）　※中枢は{{延髄}}と明記"],
+["屈曲反射（引っ込め反射）","{{屈筋}}反射（屈曲反射，逃避反射，{{侵害反射}}）"],
+["交叉性伸展反射","交{{差}}性伸展反射　※漢字が異なる．さらに{{交差性屈曲反射}}も記載"],
+["相反神経支配","相反{{性}}神経支配　※交差性では{{二重相反性神経支配}}"],
+["立ち直り反射（1つにまとめて記載）","{{頸}}から／{{迷路}}から／{{体表}}から／{{眼}}から の4つに分けて記載"],
+["（記載なし）","{{陽性・陰性支持反応}}，{{ひっかき反射}}，{{反射逆転}}，踏み直り・跳び直り・足踏み反応"],
+["最終共通路","最終共通路　※{{同じ}}"],
+]},
+{t:"補足パートまとめ",ch:"📘 補足｜ まとめ",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["脊髄","伸張反射，{{屈筋反射}}，交差性反射，{{支持反応}}，ひっかき反射"],
+["延髄・橋","ATNR，STNR，{{TLR}}（中枢は{{延髄}}），頸から起こる立ち直り反射（{{延髄上部〜橋}}）"],
+["中脳","迷路から起こる立ち直り反射，体表から起こる立ち直り反射（{{赤核}}レベル）"],
+["大脳皮質","眼から起こる立ち直り反射（{{後頭葉}}），踏み直り・跳び直り・足踏み反応"],
+["ATNRの肢位","顔が向いた側が{{伸展}}，後頭側が{{屈曲}}（フェンシングの構え）"],
+["STNRの肢位","頭部{{前屈}} → 上肢屈曲・下肢伸展／頭部{{後屈}} → 上肢伸展・下肢屈曲"],
+["TLRの肢位","背臥位（口裂線{{45°上方}}）で伸筋緊張が{{最大}}／腹臥位（{{45°下方}}）で{{最小}}"],
+["脊髄節反射／節間反射","伸張・屈筋・交差性＝{{脊髄節反射}}／ひっかき反射＝{{脊髄節間反射}}（長脊髄反射）"],
+["反射逆転","刺激前の{{肢位}}で応答パターンが逆転する現象"],
+["階層性","上位中枢からの抑制が外れると，下位の反射は{{増強・顕在化}}される（{{解放現象}}）"],
+]}
+];
+let cur=0,bs=[];
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="revealBlank('${id}')"><span>${ans}</span></span>`;}
+function fill(t){t=t.replace(/\{\{([^{}]+)\}\}/g,'<span class="kw">$1</span>');return t.replace(/\[([^\[\]]+)\]/g,(m,a)=>{const id="b"+bs.length;bs.push({id,on:false});return bl(id,a);});}
+function buildSlide(i){
+  const s=S[i];bs=[];
+  let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
+  if(s.type==="p"){
+    h+=`<div class="sec">重要事項</div><div class="box">`;
+    s.rows.forEach(r=>{h+=`<span class="row">${fill(r)}</span>`;});
+    h+=`</div>`;
+  }else if(s.type==="tbl"){
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl${s.cols.length>2?' wide':''}"><thead><tr>`;
+    s.cols.forEach(c=>h+=`<th>${c}</th>`);
+    h+=`</tr></thead><tbody>`;
+    s.rows.forEach(row=>{h+=`<tr>`;row.forEach(cell=>{h+=`<td>${fill(cell)}</td>`;});h+=`</tr>`;});
+    h+=`</tbody></table></div>`;
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${fill(r)}</p>`;});
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById("sc").innerHTML=h;
+  upd();bldNav();
+}
+function revealBlank(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nextBlank(){const u=bs.find(x=>!x.on);if(u){revealBlank(u.id);const el=document.getElementById(u.id);if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}}
+function showAll(){bs.forEach(b=>revealBlank(b.id));}
+function resetAll(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=bs.length?d+"/"+bs.length+" 表示済み":"参照用スライド（カッコなし）";}
+function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
+function bldNav(){
+  let h="";
+  S.forEach((_,i)=>h+=`<div class="dot${i===cur?" a":""}" onclick="go(${i})"></div>`);
+  h+=`<span class="pg">${cur+1} / ${S.length}</span>`;
+  document.getElementById("nav").innerHTML=h;
+}
+buildSlide(0);
+</script>
+</body>
+</html>

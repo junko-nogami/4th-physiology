@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 運動の生理 パートC1｜生理学スライド</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#1e4d7b;padding:14px 28px}
+.hd .ch{font-size:11px;color:#c4d9f0;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.hd .tt{font-size:20px;font-weight:500;color:#fff}
+.bd{padding:20px 28px 16px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.box{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:12px}
+.row{display:block;font-size:14px;line-height:1.9;color:#222;padding:5px 0;border-bottom:1px solid #e5e7eb}
+.row:last-child{border-bottom:none}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:#1e4d7b;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
+.tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;color:#1e4d7b;white-space:nowrap;min-width:110px}
+.tbl.wide td:first-child{white-space:normal;min-width:88px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
+.tf{background:rgba(30,77,123,.12);color:#1e4d7b}
+.tb{background:rgba(26,92,122,.12);color:#1a5c7a}
+.blank{display:inline-block;min-width:72px;border-bottom:2.5px solid #1e4d7b;border-radius:3px 3px 0 0;cursor:pointer;text-align:center;padding:0 5px;transition:all .22s;position:relative;vertical-align:baseline}
+.blank::after{content:"？";font-size:12px;color:#1e4d7b;opacity:.45;position:absolute;left:50%;transform:translateX(-50%)}
+.blank span{visibility:hidden;font-weight:600;color:#1e4d7b;font-size:14px;opacity:0;transition:opacity .22s;display:inline-block}
+.blank.on{border-bottom-color:transparent;background:rgba(30,77,123,.1);border-radius:4px;padding:1px 7px}
+.blank.on::after{display:none}
+.blank.on span{visibility:visible;opacity:1}
+.blank:not(.on):hover{background:rgba(30,77,123,.07)}
+.ctrl{display:flex;align-items:center;gap:8px;padding:10px 28px 12px;background:#f8f9fb;border-top:1px solid #e5e7eb;flex-wrap:wrap}
+.btn{padding:7px 15px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:#1e4d7b;color:#fff;border-color:#1e4d7b}
+.btnp:hover{background:#163a5c}
+.cnt{font-size:11px;color:#888;margin-left:auto}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
+.dot.a{background:#1e4d7b}
+.pg{font-size:11px;color:#888;margin-left:auto}
+</style>
+</head>
+<body>
+<h1>生理学 第4章 運動の生理｜パートC1：受容器と伸張反射</h1>
+<div class="slide">
+  <div id="sc"></div>
+  <div class="ctrl">
+    <button class="btn" onclick="nextBlank()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="showAll()">すべて表示</button>
+    <button class="btn" onclick="resetAll()">リセット</button>
+    <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
+    <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+<script>
+const S=[
+{t:"反射と反射弓",ch:"第4章 運動の生理 ｜ C 脊髄による反射と調節",type:"p",
+rows:[
+"熱いものに触れると手が思わず引っ込む．これは，特定の [感覚入力] に対して特定の動作が [意識] とは無関係に起こるためである．これを [反射] という．",
+"反射を引き起こす刺激はからだの [内側] でも起こる．たとえば腹痛があると腹筋が収縮してお腹を押さえてうずくまる．このときにみられる腹筋の収縮は [筋性防御] と呼ばれる反射である．",
+"反射を起こす経路は [反射弓] と呼ばれる．",
+"反射弓は，① [受容器]　② [求心性神経]　③ [反射中枢]（反射に関わる中枢神経系）　④ [遠心性神経]　⑤ [効果器] で構成される（図3・13参照）．",
+]},
+{t:"2つの感覚受容器",ch:"第4章 運動の生理 ｜ C-1 受容器",type:"two",
+left:{label:"筋紡錘",rows:[
+"筋の [長さ] を監視する感覚受容器．",
+"錘外筋と [並列] に接続している（図4・4）．",
+"求心性線維は [Ia群線維]（一次終末）と [II群線維]（二次終末）．",
+]},
+right:{label:"ゴルジ腱器官",rows:[
+"腱にはたらく [張力] を監視する感覚受容器．",
+"筋の [腱束] に，筋と [直列] に配置されている（図4・4）．",
+"求心性線維は [Ib群線維]．",
+]}},
+{t:"筋紡錘の構造",ch:"第4章 運動の生理 ｜ C-1-a① 筋紡錘の構造",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["形","骨格筋の中にある，両端が細く中央部が太い [紡錘形] の受容器．"],
+["位置","収縮して力を発生する筋線維（[錘外筋]）と [並列] に位置する．"],
+["構成","結合組織の袋に包まれた数本の筋線維（[錘内筋]）で構成される．錘内筋の両端は [錘外筋線維] と融合している．"],
+["錘内筋の種類","[核袋線維] と [核鎖線維] に分けられる．どちらも [中央部] には収縮能がない．"],
+["γ運動ニューロン","[遠心性神経]．錘内筋の [両端] に終止し，錘内筋を収縮させることで [感度] を調節している．"],
+["感度調節の意義","筋がどのような長さになっても，この機能のお陰で筋紡錘は筋の長さを [適正に検出] できる．"],
+["感覚終末","中央部にはらせん状の終末（[一次終末]）をつくる [Ia群線維]，その両側に終止する [II群線維] の終末（[二次終末]）がある．"],
+]},
+{t:"筋紡錘のはたらき",ch:"第4章 運動の生理 ｜ C-1-a② 筋紡錘のはたらき",type:"p",
+rows:[
+"筋紡錘の役割は，筋の [伸展度] と [伸展速度] を検知して，その情報を脊髄とより上位の中枢へ送ることである．",
+"筋が伸展して筋紡錘が引き伸ばされると，[求心性神経] の活動が活発になる．",
+"[Ia群線維] の活動は，筋の [伸展速度] を特によく反映する．",
+"それに対して [II群線維] の活動は，筋が伸ばされたときの筋の [長さ] を忠実に反映する．",
+]},
+{t:"ゴルジ腱器官",ch:"第4章 運動の生理 ｜ C-1-b ゴルジ腱器官",type:"p",
+rows:[
+"筋の [腱束] に，筋と [直列] に配置されている．",
+"筋が発生する（筋に加わる）[張力] を検出する．",
+"ゴルジ腱器官からは [Ib群線維] が [脊髄] に信号を送っている．",
+]},
+{t:"伸張反射とは",ch:"第4章 運動の生理 ｜ C-2-a 伸張反射とは",type:"p",
+rows:[
+"筋の [長さ] を一定に保とうはたらく反射である．",
+"たとえば，まっすぐ立っているとき，からだが前へ傾くとふくらはぎの [下腿三頭筋] が引き伸ばされる．",
+"すると [伸張反射] が生じて下腿三頭筋を [収縮] させ，傾いたからだを元に戻す．",
+"伸張反射は，姿勢を保持するときにはたらく筋（[抗重力筋]）でよく発達している．",
+]},
+{t:"伸張反射のメカニズム（膝蓋腱反射）",ch:"第4章 運動の生理 ｜ C-2-b 伸張反射のメカニズム",type:"tbl",
+cols:["段階","内容"],
+rows:[
+["膝蓋腱反射とは","ひざ小僧の下（[膝蓋腱]）をたたくと [膝関節の伸展] が生じる反射である（図4・5）．"],
+["①","膝蓋腱をたたくと [大腿四頭筋] が伸ばされる．"],
+["②","[筋紡錘] に信号が発生する．"],
+["③","その信号は [Ia群線維] を伝わって [脊髄] へ送られる．"],
+["④","このIa群線維は，伸展された筋を支配する [α運動ニューロン] へシナプスを介して接続し，それを [興奮] させる．"],
+["⑤","α運動ニューロンが興奮することで，伸展された筋が [収縮] する．"],
+["⑥","筋を元の長さに戻そうとする．その結果，[下肢が挙上] する．"],
+["速さの理由","伝導速度が神経線維の中でもっとも速い（[100 m/秒]）[Ia群線維] によって引き起こされる．"],
+["反射の型","脊髄でIa群線維とα運動ニューロンが [介在神経を介さず] にシナプスを形成する，もっとも簡単な [単シナプス反射] である．"],
+]},
+{t:"相動性伸張反射と緊張性伸張反射",ch:"第4章 運動の生理 ｜ C-2-c",type:"two",
+left:{label:"相動性伸張反射",rows:[
+"筋が [伸展されつつある] ときだけ起こる．",
+"上述した [膝蓋腱反射] はその一例である．",
+"[脳出血] などでは亢進する．これを [痙縮] と呼ぶ．",
+"痙縮では，反射性収縮が繰り返される [クローヌス] を伴う場合もある．",
+"臨床では，このほか [上腕二頭筋反射]，上腕三頭筋反射，[アキレス腱反射] などで調べる．",
+]},
+right:{label:"緊張性伸張反射",rows:[
+"[伸展が続く] 間，持続する．",
+"[上位] からの指令に異常が起こることで発生する．",
+"[パーキンソン病] などでは亢進する．",
+"特に強い場合を [固縮] という．",
+]}},
+{t:"逆転伸張反射",ch:"第4章 運動の生理 ｜ C-2-d 逆転伸張反射",type:"p",
+rows:[
+"地面でジャンプして着地をするとき，からだを支えるために [抗重力筋] で伸張反射が現れる．",
+"しかし，屋根などのあまりに高いところから飛び降りる場合は，伸張反射はかえって [抑制] されてしまう．",
+"これは [ゴルジ腱器官] からの [Ib群線維] の信号で [抑制性介在ニューロン] を介して [α運動ニューロン] に抑制作用がはたらくからである（図4・5）．これを [逆転伸張反射] と呼ぶ．",
+"逆転伸張反射は，筋に [過大な張力] がかかることを防ぐ [安全装置] である．",
+"また，固縮が起こっているような関節を他動的に屈曲しようとすると，あるところで抵抗が突然なくなって楽に屈曲する．この動きは [折りたたみナイフ現象] と呼ばれる．これにも [Ib群線維] からの信号による [自己抑制] が関係している．",
+]},
+{t:"α−γ連関",ch:"第4章 運動の生理 ｜ C-2-e α−γ連関",type:"p",
+rows:[
+"随意運動や反射でα運動ニューロンが活動して [錘外筋] が収縮すると，筋紡錘が [短縮] されることで錘内筋が緩み，筋紡錘の活動が [抑制] されてしまうと考えられる．",
+"ところが実際にはそうはならない．",
+"これは，α運動ニューロンが活動するときには [γ運動ニューロン] が同時に興奮して，中枢神経系からの指令を受け取った錘内筋の [両端] が収縮し，錘外筋の [新たな長さ] に適した [感度調節] が行われるためである．",
+"α運動ニューロンと [γ運動ニューロン] が同時に活動するこのような現象を [α−γ連関] という．",
+]},
+{t:"相反神経支配",ch:"第4章 運動の生理 ｜ C-2-f 相反神経支配",type:"p",
+rows:[
+"上腕二頭筋を収縮させて腕を曲げると，伸筋の [上腕三頭筋] が伸ばされる．もし伸筋に [伸張反射] がはたらけば，腕を曲げる動作が妨げられることになる．しかし実際にはそうはならない．",
+"ある関節の [屈筋] が収縮するとき，その筋を支配するα運動ニューロンには上位脳から [興奮性] の信号が送られる．",
+"同時に，[拮抗筋]（伸筋）のα運動ニューロンには [抑制性ニューロン] を介して抑制性の信号が送られ，伸張反射が [起こらない] ようになる（図4・6）．",
+"つまり，ある関節を曲げるとき，屈筋に「[収縮しろ（曲げろ）]」との信号が送られると同時に，拮抗筋である伸筋には「[収縮するな（伸ばすな）]」との信号が送られる．これを [相反神経支配] と呼ぶ．",
+"なお，抑制性ニューロンは上位脳からの信号のほか，[筋紡錘] からの信号も受けて拮抗筋の収縮を制御している．",
+]},
+{t:"パートC1まとめ",ch:"第4章 運動の生理 ｜ パートC1まとめ",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["反射弓","[受容器] → 求心性神経 → [反射中枢] → 遠心性神経 → [効果器]"],
+["筋紡錘","筋の [長さ] を監視．錘外筋と [並列]．[Ia群]（伸展速度）と [II群]（長さ）"],
+["錘内筋","[核袋線維] と [核鎖線維]．両端に [γ運動ニューロン] が終止し感度を調節"],
+["ゴルジ腱器官","[張力] を監視．筋と [直列]．[Ib群線維]"],
+["伸張反射","筋の長さを一定に保つ．[抗重力筋] で発達．[単シナプス反射]"],
+["膝蓋腱反射","[大腿四頭筋] の伸展 → 筋紡錘 → [Ia群線維] → α運動ニューロン → 収縮 → 下肢挙上"],
+["相動性／緊張性","相動性の亢進＝[痙縮]（脳出血など）／緊張性の亢進＝[固縮]（[パーキンソン病] など）"],
+["逆転伸張反射","[Ib群線維] → 抑制性介在ニューロン → α運動ニューロンを抑制．[折りたたみナイフ現象]"],
+["α−γ連関","α運動ニューロンと [γ運動ニューロン] が同時に活動し，感度調節を保つ"],
+["相反神経支配","屈筋に「収縮しろ」，[拮抗筋] に「収縮するな」の信号が同時に送られる"],
+]}
+];
+let cur=0,bs=[];
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="revealBlank('${id}')"><span>${ans}</span></span>`;}
+function fill(t){return t.replace(/\[([^\[\]]+)\]/g,(m,a)=>{const id="b"+bs.length;bs.push({id,on:false});return bl(id,a);});}
+function buildSlide(i){
+  const s=S[i];bs=[];
+  let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
+  if(s.type==="p"){
+    h+=`<div class="sec">重要事項</div><div class="box">`;
+    s.rows.forEach(r=>{h+=`<span class="row">${fill(r)}</span>`;});
+    h+=`</div>`;
+  }else if(s.type==="tbl"){
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl${s.cols.length>2?' wide':''}"><thead><tr>`;
+    s.cols.forEach(c=>h+=`<th>${c}</th>`);
+    h+=`</tr></thead><tbody>`;
+    s.rows.forEach(row=>{h+=`<tr>`;row.forEach(cell=>{h+=`<td>${fill(cell)}</td>`;});h+=`</tr>`;});
+    h+=`</tbody></table></div>`;
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${fill(r)}</p>`;});
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById("sc").innerHTML=h;
+  upd();bldNav();
+}
+function revealBlank(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nextBlank(){const u=bs.find(x=>!x.on);if(u){revealBlank(u.id);const el=document.getElementById(u.id);if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}}
+function showAll(){bs.forEach(b=>revealBlank(b.id));}
+function resetAll(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
+function bldNav(){
+  let h="";
+  S.forEach((_,i)=>h+=`<div class="dot${i===cur?" a":""}" onclick="go(${i})"></div>`);
+  h+=`<span class="pg">${cur+1} / ${S.length}</span>`;
+  document.getElementById("nav").innerHTML=h;
+}
+buildSlide(0);
+</script>
+</body>
+</html>
