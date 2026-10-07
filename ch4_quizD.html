@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 運動の生理 パートD 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ch:#1E4D7B;--chd:#163a5c;--ok:#1F9D6B;--ng:#D0483F;--hos:#8a6314}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em;text-align:center;line-height:1.6}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:var(--ch);padding:14px 28px;display:flex;align-items:center;gap:12px}
+.hd .ch{font-size:11px;color:#c4d9f0;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .rt{margin-left:auto;font-size:12px;color:#c4d9f0;text-align:right;white-space:nowrap;line-height:1.5}
+.bd{padding:22px 28px 20px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;margin-bottom:8px}
+.tags{margin-bottom:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;margin:0 6px 6px 0}
+.t-ki{background:rgba(30,77,123,.12);color:var(--ch)}
+.t-do{background:rgba(208,72,63,.13);color:var(--ng)}
+.t-go{background:rgba(154,85,10,.13);color:#9a550a}
+.t-ho{background:rgba(138,99,20,.13);color:var(--hos)}
+.q{font-size:16px;line-height:1.85;color:#111;font-weight:600;margin-bottom:16px}
+.q .err{color:var(--ng)}
+.ch-list{display:flex;flex-direction:column;gap:9px}
+.c{display:block;width:100%;text-align:left;font-family:inherit;font-size:14.5px;line-height:1.7;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:8px;padding:12px 15px;cursor:pointer;transition:background .15s,border-color .15s}
+.c:hover:not(:disabled){background:#eef1f6;border-color:#c7d2e0}
+.c:disabled{cursor:default}
+.c.ng{background:rgba(208,72,63,.07);border-color:rgba(208,72,63,.45);color:#8c3b35}
+.c.ok{background:rgba(31,157,107,.09);border-color:rgba(31,157,107,.5);color:#146b4a}
+.c.mute{opacity:.5}
+.fb{margin-top:16px;border-radius:8px;padding:14px 16px;font-size:14px;line-height:1.85;border:1px solid}
+.fb.ok{background:rgba(31,157,107,.07);border-color:rgba(31,157,107,.3)}
+.fb.ng{background:rgba(208,72,63,.06);border-color:rgba(208,72,63,.28)}
+.fb .ttl{font-weight:700;margin-bottom:5px}
+.fb.ok .ttl{color:#146b4a}
+.fb.ng .ttl{color:#a53b33}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.btn{padding:9px 18px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:13px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:var(--ch);color:#fff;border-color:var(--ch)}
+.btnp:hover{background:var(--chd)}
+.cnt{font-size:11.5px;color:#888;margin-left:auto}
+.start{padding:30px 28px 28px;text-align:center}
+.start .lead{font-size:14px;color:#444;line-height:1.95;margin-bottom:22px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:430px;margin:0 auto}
+.mbtn{font-family:inherit;cursor:pointer;border-radius:10px;padding:16px 18px;text-align:left;border:1.5px solid #d8dde5;background:#fff;transition:border-color .15s,background .15s}
+.mbtn:hover{border-color:var(--ch);background:#f6f9fc}
+.mbtn .mt{font-size:16px;font-weight:700;color:var(--ch);margin-bottom:4px}
+.mbtn.dob .mt{color:var(--ng)}
+.mbtn .md{font-size:12.5px;color:#666;line-height:1.7}
+.legend{margin-top:24px;font-size:11.5px;color:#777;line-height:2;text-align:left;max-width:430px;margin-left:auto;margin-right:auto;border-top:1px solid #e5e7eb;padding-top:14px}
+.res{padding:34px 28px 30px;text-align:center}
+.res .big{font-size:30px;font-weight:700;color:var(--ch);margin-bottom:8px}
+.res .big.ng{color:var(--ng)}
+.res .sub{font-size:14px;color:#555;line-height:2.1}
+.res .perfect{margin-top:14px;font-size:18px;font-weight:700;color:var(--ok)}
+@media(max-width:560px){
+ .bd{padding:18px 16px 16px}.hd{padding:12px 16px}.ctrl{padding:11px 16px 13px}
+ .hd .tt{font-size:16px}.q{font-size:15px}.c{font-size:14px}.start{padding:24px 16px}
+ .res{padding:26px 16px}
+}
+</style>
+</head>
+<body>
+<h1>生理学 第4章 運動の生理｜パートD 確認テスト（脳幹による運動調節）</h1>
+<div class="slide" id="app"></div>
+
+<script>
+/* ===== 問題プール ===== */
+const POOL=[
+{q:"姿勢反射が成り立つために不可欠な部位はどれか。",kihon:true,dobon:true,
+ choices:[
+ ["脳幹",true,""],
+ ["脊髄",false,"伸張反射や屈曲反射の中枢となる部位である。"],
+ ["一次運動野",false,"随意運動の指令を出す大脳皮質の領域である。"],
+ ["大脳基底核",false,"協調した滑らかな動作に関与する部位である。"]],
+ exp:"ヒトや動物が姿勢を保持するためには全身の筋−骨格系が協調してはたらく必要があり、そのはたらきの基礎となる反射が姿勢反射である。姿勢反射には脳幹が不可欠である（P53）。"},
+
+{q:"頸反射の入力となる信号はどこから送られるか。",kihon:true,
+ choices:[
+ ["頸筋の筋紡錘",true,""],
+ ["内耳の耳石器",false,"頭部の重力方向に対する傾きを検出する器官である。"],
+ ["内耳の半規管",false,"頭部の回転や傾きを検出する器官である。"],
+ ["眼球の網膜",false,"視覚情報を受け取る部分である。"]],
+ exp:"頸反射とは、体幹に対して頭部がねじれると四肢の筋緊張が変化するもので、頸筋の固有受容器（筋紡錘）からの信号が入力となる（P53）。"},
+
+{q:"緊張性頸反射で、顔が向いた側の上下肢に起こることはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["伸展する",true,""],
+ ["屈曲する",false,"反対側の上下肢に起こる反応である。"],
+ ["上肢だけが屈曲する",false,"顔が向いた側と反対側の反応が混ざっている。"],
+ ["左右とも同じように弛緩する",false,"左右で異なるパターンが現れる。"]],
+ exp:"新生児の顔を他動的に横に向けると、顔が向いた側の上下肢は伸展し、反対側が屈曲する。これを緊張性頸反射と呼ぶ（P53、図4・9）。"},
+
+{q:"緊張性頸反射がはっきりみられるのはどのような場合か。",
+ choices:[
+ ["生後4〜6ヵ月の新生児や、病的な状態",true,""],
+ ["生後2〜3年の幼児で、神経系が成熟したあと",false,"成熟とともに目立たなくなる。"],
+ ["健康な成人が安静にしているとき",false,"安静時にはっきり現れるものではない。"],
+ ["高齢者が歩行しているとき",false,"加齢によって現れるものではない。"]],
+ exp:"緊張性頸反射は4〜6ヵ月の新生児や病的な状態でははっきりみられる（P53）。"},
+
+{q:"正常な成人で、頸反射と同じパターンの姿勢が現れるのはどのような場面か。",
+ choices:[
+ ["ボールを片手でキャッチするときなど、速い動きの中",true,""],
+ ["椅子に座って静止しているとき",false,"静止した姿勢では現れない。"],
+ ["眠っているとき",false,"睡眠中に現れるものではない。"],
+ ["目を閉じてまっすぐ立っているとき",false,"速い動きを伴わない場面である。"]],
+ exp:"正常な成人でも、ボールを片手でキャッチするときなど速い動きの中に、頸反射と同じパターンの姿勢が現れることがある（P53、図4・10）。"},
+
+{q:"頸反射について誤っているのはどれか。",gori:true,
+ choices:[
+ ["体幹に対して頭部がねじれると、頸部の筋だけが緊張する",true,""],
+ ["入力となるのは頸筋の固有受容器からの信号である",false,"教科書どおりの記述なので、正しい。"],
+ ["顔が向いた側と反対側で、四肢に異なるパターンが現れる",false,"教科書どおりの記述なので、正しい。"],
+ ["病的な状態でははっきりみられる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"頸反射とは、体幹に対して頭部がねじれると四肢の筋緊張が変化するものである。変化するのは頸部の筋ではなく四肢の筋緊張である（P53）。"},
+
+{q:"立位のときに床が急に傾いて頭部が傾いたとき、傾いた側の下側の上下肢に起こることはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["伸展する",true,""],
+ ["屈曲する",false,"上側の上下肢に起こる反応である。"],
+ ["弛緩して脱力する",false,"からだの安定を保つ方向にはたらかない。"],
+ ["上肢だけが屈曲する",false,"上側と下側の反応が入れ替わっている。"]],
+ exp:"傾いた頭部の下側の上下肢は伸展し、上側の上下肢は屈曲することで、からだの安定を保とうとする（P53、図4・11②）。"},
+
+{q:"前庭器官のうち、頭部の重力方向に対する傾きを検出するのはどれか。",kihon:true,
+ choices:[
+ ["耳石器",true,""],
+ ["半規管",false,"頭部の回転を検出する器官である。"],
+ ["蝸牛",false,"音を受け取る内耳の器官である。"],
+ ["筋紡錘",false,"筋の長さを監視する骨格筋内の受容器である。"]],
+ exp:"立位のときに床が急に傾くと頭部も傾くので、前庭器官のうちの耳石器が頭部の重力方向に対する傾きを検出する（P53）。"},
+
+{q:"頭が地面に向かって傾いたとき、頭を起き上がらせる反射の経路で正しいのはどれか。",kihon:true,
+ choices:[
+ ["半規管 → 前庭神経核 → 頸筋の運動ニューロン",true,""],
+ ["耳石器 → 脊髄前角 → 四肢の運動ニューロン",false,"頭を起こす経路になっていない。"],
+ ["頸筋の筋紡錘 → 前庭神経核 → 眼筋の運動ニューロン",false,"入力も出力も異なっている。"],
+ ["網膜 → 視覚野 → 頸筋の運動ニューロン",false,"視覚から始まる経路になっている。"]],
+ exp:"頭が地面に向かって傾くと半規管が検出し、その信号は前庭神経核を介して頸筋の運動ニューロンに送られ、頭を起き上がらせる反射を起こす。これを前庭頸反射と呼ぶ（P54、図4・12）。"},
+
+{q:"前庭反射の別名はどれか。",
+ choices:[
+ ["迷路反射",true,""],
+ ["深部反射",false,"腱をたたいて起こる反射の総称である。"],
+ ["表在反射",false,"皮膚への刺激で起こる反射の総称である。"],
+ ["自律神経反射",false,"内臓のはたらきを調節する反射の総称である。"]],
+ exp:"前庭反射は、内耳の前庭器官（迷路とも呼ぶ）からの信号を受けてはたらく反射である（P53）。"},
+
+{q:"前庭反射について誤っているのはどれか。",gori:true,
+ choices:[
+ ["頸筋の固有受容器からの信号を受けてはたらく",true,""],
+ ["頭部が傾くと、四肢の筋緊張が変化する",false,"教科書どおりの記述なので、正しい。"],
+ ["頭部が傾くと、地面に対して頭部が水平になるように首をひねる反応も起こる",false,"教科書どおりの記述なので、正しい。"],
+ ["首がひねられることで、引き続き別の姿勢反射が起こる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"前庭反射は、内耳の前庭器官（迷路）からの信号を受けてはたらく反射である。頸筋の固有受容器（筋紡錘）が入力となるのは頸反射のほうである（P53）。"},
+
+{q:"頭が右に20°回転したとき、眼球はどう動くか。",kihon:true,
+ choices:[
+ ["左に20°動く",true,""],
+ ["右に20°動く",false,"頭と同じ向きでは視界が安定しない。"],
+ ["左に40°動く",false,"回転した角度を補うようには動いていない。"],
+ ["動かずに正面を向いたままになる",false,"補償する動きが起こらないことになる。"]],
+ exp:"頭が動いたときに、それを補償して眼球が動くのが前庭動眼反射である。頭が右に20°回転すると、半規管で検出された信号により眼球は左に20°動く（P55）。"},
+
+{q:"立ち直り反射のはたらきはどれか。",kihon:true,
+ choices:[
+ ["頭部や体幹をまっすぐに保つ",true,""],
+ ["頭が動いても視界がぶれないようにする",false,"眼球を動かす反射のはたらきである。"],
+ ["侵害刺激を受けた肢を引っ込める",false,"侵害刺激に対して起こる反射のはたらきである。"],
+ ["筋に過大な張力がかかるのを防ぐ",false,"張力に対する安全装置のはたらきである。"]],
+ exp:"立ち直り反射は、頭部や体幹をまっすぐに保つための反射である。極端な例では、ネコを背位にして落としてもきちんと四肢で床に立つ（P54〜55）。"},
+
+{q:"立ち直り反射で協働する入力の組合せで正しいのはどれか。",
+ choices:[
+ ["頭部の傾き・体のねじれ・視覚",true,""],
+ ["頭部の傾き・筋の張力・聴覚",false,"腱の受容器と音の情報は関与しない。"],
+ ["体のねじれ・皮膚の痛み・味覚",false,"侵害刺激と味の情報は関与しない。"],
+ ["筋の長さ・関節の角度・嗅覚",false,"においの情報は関与しない。"]],
+ exp:"立ち直り反射には、頭部の傾き（迷路）、体のねじれ（体性感覚）、視覚入力への反応が協働する（P55）。"},
+
+{q:"立ち直り反射の中枢があるとされる部位はどれか。",hosoku:true,
+ choices:[
+ ["中脳",true,""],
+ ["延髄",false,"咀嚼・嚥下・呼吸などの中枢がある部位である。"],
+ ["脊髄",false,"伸張反射や屈曲反射の中枢がある部位である。"],
+ ["小脳",false,"運動の学習や協調にかかわる部位である。"]],
+ exp:"補足知識（資料外）。運動学では姿勢反射を調節されるレベルで分類し、緊張性頸反射・緊張性迷路反射は延髄・橋（脳幹）レベル、立ち直り反射は中脳レベルとされる。生理学の教科書は「姿勢反射には脳幹が不可欠」とまとめるだけで、この分類は載せていない（P53〜55）。"},
+
+{q:"歩行の基本的なパターンを生み出しているのはどこか。",kihon:true,
+ choices:[
+ ["脊髄",true,""],
+ ["一次運動野",false,"随意運動の指令を出す大脳皮質の領域である。"],
+ ["小脳",false,"運動の学習や協調にかかわる部位である。"],
+ ["大脳基底核",false,"協調した滑らかな動作に関与する部位である。"]],
+ exp:"歩行の基本的なパターンは脊髄で生み出される。脊髄には、それぞれの肢をリズミカルに動かし、各肢を協調的に動かすための神経機構がある（P55）。"},
+
+{q:"脊髄にあって、それぞれの肢をリズミカルに動かし、各肢を協調させる神経機構を何と呼ぶか。",kihon:true,
+ choices:[
+ ["セントラルパターンジェネレータ",true,""],
+ ["反射弓",false,"反射が成立する経路全体の名称である。"],
+ ["最終共通路",false,"運動の信号が最後に集まるα運動ニューロンの別名である。"],
+ ["前庭神経核",false,"前庭器官からの信号を受け取る脳幹の神経核である。"]],
+ exp:"脊髄には、それぞれの肢をリズミカルに動かし、各肢を協調的に動かすための神経機構（セントラルパターンジェネレータ）がある（P55）。"},
+
+{q:"歩行を開始・終了させる信号を脊髄に送っているのはどこか。",kihon:true,
+ choices:[
+ ["脳幹",true,""],
+ ["脊髄後角",false,"感覚情報が入ってくる部位である。"],
+ ["筋紡錘",false,"筋の長さを監視する受容器である。"],
+ ["大脳辺縁系",false,"情動行動や本能行動に重要な役割を果たす部位である。"]],
+ exp:"脳幹には、脊髄の機構に信号を送って歩行を開始・終了させる部位がある（P55）。"},
+
+{q:"歩行について誤っているのはどれか。",gori:true,
+ choices:[
+ ["歩行の基本的なプログラムは生まれつき備わっておらず、歩行練習によって獲得される",true,""],
+ ["全身の筋を一定の順序で協調的に動かす必要がある",false,"教科書どおりの記述なので、正しい。"],
+ ["支持点が連続的に変化する中で、からだの姿勢を維持する運動である",false,"教科書どおりの記述なので、正しい。"],
+ ["歩行の成立には、神経系の成熟が重要である",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"一卵性双生児の一方だけに歩行トレーニングをしても、2人ともほぼ同じ時期に歩き始める。このことから、歩行の基本的なプログラムは生まれながらに備わっていることがわかる（P55）。"},
+
+{q:"大脳皮質がない動物をトレッドミルに乗せて脳幹を電気刺激すると、どうなるか。",
+ choices:[
+ ["歩行を始める",true,""],
+ ["まったく動かない",false,"大脳皮質がなくても起こる運動である。"],
+ ["四肢が同時に伸展して硬直する",false,"電気刺激で硬直が起こるという実験ではない。"],
+ ["屈曲反射だけが起こる",false,"侵害刺激に対する反応の話になっている。"]],
+ exp:"大脳皮質がない動物（除脳動物）でも、トレッドミルに乗せて脳幹を電気刺激すると歩行を始める。歩行のパターンが脊髄にあり、脳幹がその開始にかかわることを示している（P55）。"},
+
+{q:"咀嚼・嚥下・呼吸・嘔吐などの運動のプログラムが存在するのはどこか。",kihon:true,dobon:true,
+ choices:[
+ ["脳幹（主として延髄）",true,""],
+ ["脊髄前角",false,"骨格筋の収縮を支配する運動ニューロンがある部位である。"],
+ ["小脳",false,"運動の学習や協調にかかわる部位である。"],
+ ["大脳皮質連合野",false,"随意運動の意図が生まれる領域である。"]],
+ exp:"咀嚼、嚥下、呼吸、嘔吐などの生きるために不可欠な運動のプログラムも生まれながらに備わっており、これらの神経機構は脳幹（主として延髄）に存在する（P55）。"},
+
+{q:"脳幹による運動調節について誤っているのはどれか。",gori:true,
+ choices:[
+ ["歩行の基本的なパターンは脳幹で生み出される",true,""],
+ ["姿勢反射には脳幹が不可欠である",false,"教科書どおりの記述なので、正しい。"],
+ ["嚥下や嘔吐の神経機構は主として延髄に存在する",false,"教科書どおりの記述なので、正しい。"],
+ ["脳幹は歩行を開始・終了させる信号を送っている",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"歩行の基本的なパターンを生み出しているのは脊髄である。脳幹はその機構に信号を送って歩行を開始・終了させる（P55）。"},
+
+{q:"姿勢反射のうち、大脳皮質レベルで調節されるとされるのはどれか。",hosoku:true,
+ choices:[
+ ["踏み直り反射",true,""],
+ ["緊張性頸反射",false,"新生児や病的な状態ではっきりみられる反射である。"],
+ ["緊張性迷路反射",false,"頭部の傾きに対して四肢が一定のパターンで動く反射である。"],
+ ["交叉性伸展反射",false,"対側肢が伸展して体を支える反射である。"]],
+ exp:"補足知識（資料外）。運動学では姿勢反射を調節されるレベルで分類する。脊髄レベル＝屈曲反射・交叉性伸展反射・陽性支持反射、延髄・橋（脳幹）レベル＝緊張性頸反射・緊張性迷路反射、中脳レベル＝立ち直り反射、大脳皮質レベル＝踏み直り反射・跳び直り反射・平衡反応、とされる。生理学の教科書は「姿勢反射には脳幹が不可欠」とまとめるだけで、この分類は載せていない（P53〜55）。"},
+
+{q:"前庭動眼反射が障害されると起こることはどれか。",hosoku:true,
+ choices:[
+ ["頭を動かしたときに視界がぶれる",true,""],
+ ["頭を動かしても眼球がまったく動かせなくなる",false,"眼球運動そのものが失われるわけではない。"],
+ ["明るいところで瞳孔が縮まなくなる",false,"光に対する瞳孔の反応は別の反射による。"],
+ ["まぶたを閉じることができなくなる",false,"眼瞼の運動は別の神経が担う。"]],
+ exp:"補足知識（資料外）。前庭動眼反射は頭の動きを補償して眼球を動かし、視界を安定させる反射なので、障害されると頭を動かしたときに像がぶれる。教科書は正常なはたらきのみを説明している（P55）。"}
+];
+
+/* ===== エンジン ===== */
+const N_Q=5;
+const app=document.getElementById("app");
+let mode="normal",qs=[],idx=0,miss=0,firstOK=0,streak=0,dead=false,locked=false;
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function qHTML(t){return esc(t).replace(/誤っている/g,'<span class="err">誤っている</span>');}
+
+function start(){
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートD</div><div class="tt">確認テスト：脳幹による運動調節</div></div></div>
+  <div class="start">
+    <div class="lead">全${POOL.length}問のプールから、毎回ランダムに${N_Q}問が出題されます。<br>問題の順番も選択肢の並びも、開くたびに変わります。</div>
+    <div class="modes">
+      <button class="mbtn" onclick="begin('normal')">
+        <div class="mt">通常モード</div>
+        <div class="md">間違えても、残りの選択肢から選び直せます。正解するまで進めて、最後に一発正解率とミス回数が出ます。ふだんの学習用。</div>
+      </button>
+      <button class="mbtn dob" onclick="begin('dobon')">
+        <div class="mt">💣 ドボンチャレンジ</div>
+        <div class="md">選び直しはできません。💣が付いた問題を外すと、その場で終了。何問連続で正解できるかに挑戦します。</div>
+      </button>
+    </div>
+    <div class="legend">
+      🎯 基本 … 落としてはいけない基本・頻出問題<br>
+      💣 ドボン … ドボンチャレンジで外すと終了する最重要問題<br>
+      ⚠ 誤りを選ぶ … 「誤っているのはどれか」形式<br>
+      📘 補足（資料外） … 教科書には載っていない国試頻出テーマ
+    </div>
+  </div>`;
+}
+
+function begin(m){
+  mode=m;qs=shuffle(POOL).slice(0,N_Q);idx=0;miss=0;firstOK=0;streak=0;dead=false;
+  render();
+}
+
+function render(){
+  const it=qs[idx];
+  locked=false;it._tried=[];it._done=false;
+  const isDob=(mode==="dobon"&&it.dobon);
+  let tags="";
+  if(isDob)tags+='<span class="tag t-do">💣 ドボン</span>';
+  else if(it.kihon)tags+='<span class="tag t-ki">🎯 基本</span>';
+  if(it.gori)tags+='<span class="tag t-go">⚠ 誤りを選ぶ</span>';
+  if(it.hosoku)tags+='<span class="tag t-ho">📘 補足（資料外）</span>';
+
+  it._order=shuffle(it.choices.map((c,i)=>i));
+  let cs="";
+  it._order.forEach((ci,pos)=>{
+    cs+=`<button class="c" id="c${pos}" onclick="pick(${pos})">${esc(it.choices[ci][0])}</button>`;
+  });
+
+  app.innerHTML=`
+  <div class="hd">
+    <div><div class="ch">第4章 運動の生理 ｜ パートD 確認テスト</div>
+    <div class="tt">${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}</div></div>
+    <div class="rt">第 ${idx+1} 問 / ${qs.length}問${mode==="dobon"?"<br>連続正解 "+streak:"<br>ミス "+miss}</div>
+  </div>
+  <div class="bd">
+    <div class="tags">${tags||'<span class="tag t-ki" style="visibility:hidden">-</span>'}</div>
+    <div class="q">${qHTML(it.q)}</div>
+    <div class="ch-list">${cs}</div>
+    <div id="fb"></div>
+  </div>
+  <div class="ctrl" id="ctrl"><span class="cnt">選択肢をクリックすると判定されます</span></div>`;
+}
+
+function pick(pos){
+  if(locked)return;
+  const it=qs[idx];
+  const ci=it._order[pos];
+  const c=it.choices[ci];
+  const btn=document.getElementById("c"+pos);
+  const isDob=(mode==="dobon"&&it.dobon);
+
+  if(c[1]){ /* 正解 */
+    locked=true;
+    btn.classList.add("ok");
+    disableAll();
+    if(it._tried.length===0){firstOK++;}
+    if(mode==="dobon"){streak++;}
+    showFB(true,"正解！",it.exp);
+    nextBtn();
+    return;
+  }
+  /* 不正解 */
+  it._tried.push(ci);
+  if(mode==="normal"){
+    miss++;
+    btn.classList.add("ng");btn.disabled=true;
+    showFB(false,"もう一度",`選んだのは「${esc(c[0])}」。${esc(c[2])}<br>正解はほかの選択肢にあります。もう一度選んでください。`);
+    document.querySelector(".rt").innerHTML=`第 ${idx+1} 問 / ${qs.length}問<br>ミス ${miss}`;
+  }else{
+    locked=true;miss++;
+    btn.classList.add("ng");
+    disableAll();
+    showFB(false,isDob?"💣 ドボン！":"不正解",
+      `選んだのは「${esc(c[0])}」。${esc(c[2])}<br><br><b>解説：</b>${esc(it.exp)}`);
+    if(isDob){dead=true;}
+    nextBtn();
+  }
+}
+
+function disableAll(){document.querySelectorAll(".c").forEach(b=>{b.disabled=true;if(!b.classList.contains("ok")&&!b.classList.contains("ng"))b.classList.add("mute");});}
+
+function showFB(ok,title,body){
+  document.getElementById("fb").innerHTML=
+   `<div class="fb ${ok?"ok":"ng"}"><div class="ttl">${title}</div><div>${ok?esc(body):body}</div></div>`;
+}
+
+function nextBtn(){
+  const last=(idx===qs.length-1);
+  document.getElementById("ctrl").innerHTML=
+   (dead||last)
+   ? `<button class="btn btnp" onclick="result()">結果を見る ▶</button><span class="cnt">${dead?"ドボンのため終了":"これが最後の問題です"}</span>`
+   : `<button class="btn btnp" onclick="next()">次の問題へ ▶</button><span class="cnt">${idx+2} 問目 / 全${qs.length}問</span>`;
+}
+
+function next(){idx++;render();}
+
+function result(){
+  const ans=dead?idx+1:qs.length;
+  let body="";
+  if(mode==="normal"){
+    const rate=Math.round(firstOK/qs.length*100);
+    body=`<div class="big">${firstOK} / ${qs.length} 問</div>
+      <div class="sub">一発正解率　<b>${rate}%</b><br>総ミス回数　<b>${miss} 回</b></div>
+      ${miss===0?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }else{
+    body=`<div class="big${dead?" ng":""}">${streak} 問連続正解</div>
+      <div class="sub">${dead?"💣 ドボン問題を外したため終了しました。":`全${qs.length}問を走りきりました。`}<br>
+      ${streak===qs.length?"":"出題された "+ans+" 問中 "+streak+" 問正解"}</div>
+      ${streak===qs.length?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートD 確認テスト</div>
+  <div class="tt">結果（${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}）</div></div></div>
+  <div class="res">${body}</div>
+  <div class="ctrl">
+    <button class="btn btnp" onclick="begin('${mode}')">もう一度（別の問題）▶</button>
+    <button class="btn" onclick="start()">モードを選び直す</button>
+    <span class="cnt">全${POOL.length}問のプールから出題</span>
+  </div>`;
+}
+start();
+</script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 運動の生理 パートC1 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ch:#1E4D7B;--chd:#163a5c;--ok:#1F9D6B;--ng:#D0483F;--hos:#8a6314}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em;text-align:center;line-height:1.6}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:var(--ch);padding:14px 28px;display:flex;align-items:center;gap:12px}
+.hd .ch{font-size:11px;color:#c4d9f0;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .rt{margin-left:auto;font-size:12px;color:#c4d9f0;text-align:right;white-space:nowrap;line-height:1.5}
+.bd{padding:22px 28px 20px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;margin-bottom:8px}
+.tags{margin-bottom:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;margin:0 6px 6px 0}
+.t-ki{background:rgba(30,77,123,.12);color:var(--ch)}
+.t-do{background:rgba(208,72,63,.13);color:var(--ng)}
+.t-go{background:rgba(154,85,10,.13);color:#9a550a}
+.t-ho{background:rgba(138,99,20,.13);color:var(--hos)}
+.q{font-size:16px;line-height:1.85;color:#111;font-weight:600;margin-bottom:16px}
+.q .err{color:var(--ng)}
+.ch-list{display:flex;flex-direction:column;gap:9px}
+.c{display:block;width:100%;text-align:left;font-family:inherit;font-size:14.5px;line-height:1.7;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:8px;padding:12px 15px;cursor:pointer;transition:background .15s,border-color .15s}
+.c:hover:not(:disabled){background:#eef1f6;border-color:#c7d2e0}
+.c:disabled{cursor:default}
+.c.ng{background:rgba(208,72,63,.07);border-color:rgba(208,72,63,.45);color:#8c3b35}
+.c.ok{background:rgba(31,157,107,.09);border-color:rgba(31,157,107,.5);color:#146b4a}
+.c.mute{opacity:.5}
+.fb{margin-top:16px;border-radius:8px;padding:14px 16px;font-size:14px;line-height:1.85;border:1px solid}
+.fb.ok{background:rgba(31,157,107,.07);border-color:rgba(31,157,107,.3)}
+.fb.ng{background:rgba(208,72,63,.06);border-color:rgba(208,72,63,.28)}
+.fb .ttl{font-weight:700;margin-bottom:5px}
+.fb.ok .ttl{color:#146b4a}
+.fb.ng .ttl{color:#a53b33}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.btn{padding:9px 18px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:13px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:var(--ch);color:#fff;border-color:var(--ch)}
+.btnp:hover{background:var(--chd)}
+.cnt{font-size:11.5px;color:#888;margin-left:auto}
+.start{padding:30px 28px 28px;text-align:center}
+.start .lead{font-size:14px;color:#444;line-height:1.95;margin-bottom:22px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:430px;margin:0 auto}
+.mbtn{font-family:inherit;cursor:pointer;border-radius:10px;padding:16px 18px;text-align:left;border:1.5px solid #d8dde5;background:#fff;transition:border-color .15s,background .15s}
+.mbtn:hover{border-color:var(--ch);background:#f6f9fc}
+.mbtn .mt{font-size:16px;font-weight:700;color:var(--ch);margin-bottom:4px}
+.mbtn.dob .mt{color:var(--ng)}
+.mbtn .md{font-size:12.5px;color:#666;line-height:1.7}
+.legend{margin-top:24px;font-size:11.5px;color:#777;line-height:2;text-align:left;max-width:430px;margin-left:auto;margin-right:auto;border-top:1px solid #e5e7eb;padding-top:14px}
+.res{padding:34px 28px 30px;text-align:center}
+.res .big{font-size:30px;font-weight:700;color:var(--ch);margin-bottom:8px}
+.res .big.ng{color:var(--ng)}
+.res .sub{font-size:14px;color:#555;line-height:2.1}
+.res .perfect{margin-top:14px;font-size:18px;font-weight:700;color:var(--ok)}
+@media(max-width:560px){
+ .bd{padding:18px 16px 16px}.hd{padding:12px 16px}.ctrl{padding:11px 16px 13px}
+ .hd .tt{font-size:16px}.q{font-size:15px}.c{font-size:14px}.start{padding:24px 16px}
+ .res{padding:26px 16px}
+}
+</style>
+</head>
+<body>
+<h1>生理学 第4章 運動の生理｜パートC1 確認テスト（受容器と伸張反射）</h1>
+<div class="slide" id="app"></div>
+
+<script>
+/* ===== 問題プール ===== */
+const POOL=[
+{q:"反射とはどのような反応か。",
+ choices:[
+ ["特定の感覚入力に対して、特定の動作が意識とは無関係に起こる反応",true,""],
+ ["大脳皮質で計画してから実行される、意識的な動作",false,"意識を介して行われるため、反射には含まれない。"],
+ ["学習をくり返すことで無意識にできるようになった動作",false,"学習によって自動化された随意運動である。"],
+ ["疲労した筋が、刺激がなくても勝手に収縮する現象",false,"刺激に対する反応ではない。"]],
+ exp:"熱いものに触れると手が思わず引っ込む。これは特定の感覚入力に対して特定の動作が意識とは無関係に起こるためで、これを反射という（P47）。"},
+
+{q:"反射弓を構成する5つの要素の組合せで正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["受容器・求心性神経・反射中枢・遠心性神経・効果器",true,""],
+ ["受容器・遠心性神経・反射中枢・求心性神経・効果器",false,"2つの神経が並ぶ順序が入れ替わっている。"],
+ ["受容器・求心性神経・大脳皮質・遠心性神経・効果器",false,"反射が必ず大脳皮質を経由するわけではない。"],
+ ["受容器・求心性神経・反射中枢・遠心性神経・感覚器",false,"最後に位置するのは反応を起こす器官である。"]],
+ exp:"反射を起こす経路を反射弓と呼び、①受容器 ②求心性神経 ③反射中枢（反射に関わる中枢神経系）④遠心性神経 ⑤効果器 で構成される（P47）。"},
+
+{q:"反射弓において、反射中枢の直前にあるのはどれか。",
+ choices:[
+ ["求心性神経",true,""],
+ ["遠心性神経",false,"反射中枢から効果器へ向かう側の神経である。"],
+ ["効果器",false,"反射弓の最後に位置する、反応を起こす器官である。"],
+ ["受容器",false,"反射弓の最初に位置し、刺激を受け取る部分である。"]],
+ exp:"反射弓は受容器 → 求心性神経 → 反射中枢 → 遠心性神経 → 効果器の順に構成される（P47）。"},
+
+{q:"受容器と求心性線維の組合せで誤っているのはどれか。",gori:true,
+ choices:[
+ ["ゴルジ腱器官 ── Ia群線維",true,""],
+ ["筋紡錘の一次終末 ── Ia群線維",false,"教科書どおりの組合せなので、正しい。"],
+ ["筋紡錘の二次終末 ── II群線維",false,"教科書どおりの組合せなので、正しい。"],
+ ["筋紡錘 ── 脊髄より上位の中枢へも情報を送る",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"ゴルジ腱器官からはIb群線維が脊髄に信号を送っている（P48、図4・4）。"},
+
+{q:"筋紡錘が検出しているのはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["筋の伸展度と伸展速度",true,""],
+ ["筋が発生する張力",false,"腱にある別の受容器が検出している。"],
+ ["関節が曲がっている角度",false,"関節包や靱帯の受容器がかかわる。"],
+ ["筋の内部の温度",false,"筋紡錘が検出する対象ではない。"]],
+ exp:"筋紡錘の役割は、筋の伸展度と伸展速度を検知して、その情報を脊髄とより上位の中枢へ送ることである（P47）。"},
+
+{q:"筋が発生する張力を検出する受容器はどれか。",kihon:true,dobon:true,
+ choices:[
+ ["ゴルジ腱器官",true,""],
+ ["筋紡錘",false,"筋の長さの変化を監視する受容器である。"],
+ ["パチニ小体",false,"皮膚などにある振動・圧の受容器である。"],
+ ["自由神経終末",false,"痛みなどの侵害刺激を受け取る終末である。"]],
+ exp:"ゴルジ腱器官は筋の腱束に筋と直列に配置されており、筋が発生する（筋に加わる）張力を検出する（P48）。"},
+
+{q:"筋紡錘とゴルジ腱器官の配置の組合せで正しいのはどれか。",kihon:true,
+ choices:[
+ ["筋紡錘は筋線維と並列、ゴルジ腱器官は筋と直列",true,""],
+ ["筋紡錘は筋と直列、ゴルジ腱器官は筋線維と並列",false,"2つの配置が入れ替わっている。"],
+ ["どちらも筋線維と並列に位置する",false,"張力を検出する側の配置が違う。"],
+ ["どちらも筋と直列に位置する",false,"長さを検出する側の配置が違う。"]],
+ exp:"筋紡錘は錘外筋と並列に、ゴルジ腱器官は直列に接続している（図4・4）。並列だから長さの変化を、直列だから張力を検出できる。"},
+
+{q:"錘内筋を支配している神経はどれか。",kihon:true,dobon:true,
+ choices:[
+ ["γ運動ニューロン",true,""],
+ ["α運動ニューロン",false,"錘外筋を支配し、筋の収縮を起こす遠心性神経である。"],
+ ["Ia群線維",false,"筋紡錘の中央部から出る求心性の線維である。"],
+ ["Ib群線維",false,"腱の受容器から脊髄へ信号を送る求心性の線維である。"]],
+ exp:"γ運動ニューロン（遠心性神経）は錘内筋の両端に終止し、錘内筋を収縮させることで感度を調節している（P47）。"},
+
+{q:"錘内筋線維の種類の組合せで正しいのはどれか。",
+ choices:[
+ ["核袋線維と核鎖線維",true,""],
+ ["核袋線維と錘外筋線維",false,"錘外筋線維は筋紡錘の外側にある、収縮して力を発生する線維である。"],
+ ["一次終末線維と二次終末線維",false,"終末は線維の種類ではなく、感覚神経の終わり方の呼び名である。"],
+ ["白筋線維と赤筋線維",false,"代謝特性による骨格筋線維の分け方である（第2章P16）。"]],
+ exp:"錘内筋は核袋線維と核鎖線維に分けられる。どちらも中央部には収縮能がない（P47）。"},
+
+{q:"核袋線維・核鎖線維の中央部について正しいのはどれか。",
+ choices:[
+ ["収縮能がない",true,""],
+ ["両端よりも強く収縮する",false,"中央部は収縮する部分ではない。"],
+ ["α運動ニューロンの支配を受けて収縮する",false,"錘内筋を支配しているのはα運動ニューロンではない。"],
+ ["腱と直接つながっている",false,"錘内筋の両端は錘外筋線維と融合している。"]],
+ exp:"核袋線維も核鎖線維も中央部には収縮能がない。この中央部に感覚神経の終末がある（P47）。"},
+
+{q:"筋紡錘の中央部にらせん状の終末をつくる線維はどれか。",kihon:true,
+ choices:[
+ ["Ia群線維",true,""],
+ ["II群線維",false,"中央部の両側に終止し、二次終末をつくる線維である。"],
+ ["Ib群線維",false,"腱にある受容器から脊髄へ信号を送る線維である。"],
+ ["γ運動線維",false,"錘内筋の両端に終止する遠心性の線維である。"]],
+ exp:"筋紡錘の中央部にはらせん状の終末（一次終末）をつくるIa群線維と、その両側に終止するII群線維の終末（二次終末）がある（P47）。"},
+
+{q:"II群線維の活動がよく反映しているのはどれか。",
+ choices:[
+ ["筋が伸ばされたときの筋の長さ",true,""],
+ ["筋の伸展の速さ",false,"別の求心性線維の活動がこれをよく反映する。"],
+ ["腱にかかる張力の大きさ",false,"腱の受容器から送られる情報である。"],
+ ["筋が収縮したときの発熱量",false,"筋紡錘が検出する対象ではない。"]],
+ exp:"Ia群線維の活動は筋の伸展速度を特によく反映するのに対し、II群線維の活動は、筋が伸ばされたときの筋の長さを忠実に反映する（P47）。"},
+
+{q:"γ運動ニューロンのはたらきとして正しいのはどれか。",kihon:true,
+ choices:[
+ ["錘内筋を収縮させ、筋紡錘の感度を調節する",true,""],
+ ["錘外筋を収縮させ、関節を動かす張力を発生させる",false,"これは別の運動ニューロンのはたらきである。"],
+ ["腱にかかる張力を中枢へ伝える",false,"遠心性神経であり、情報を伝える向きが逆である。"],
+ ["筋紡錘からの信号を抑制して反射を止める",false,"感度を下げるためだけの神経ではない。"]],
+ exp:"γ運動ニューロンが錘内筋を収縮させることで、筋がどのような長さになっても筋紡錘が筋の長さを適正に検出できる（P47）。"},
+
+{q:"伸張反射の反射弓に含まれないのはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["Ib群線維",true,""],
+ ["筋紡錘",false,"伸張反射の受容器であり、反射弓に含まれる。"],
+ ["Ia群線維",false,"伸張反射の求心路であり、反射弓に含まれる。"],
+ ["α運動ニューロン",false,"伸張反射の遠心路であり、反射弓に含まれる。"]],
+ exp:"伸張反射は、筋紡錘→Ia群線維→脊髄前角のα運動ニューロン→錘外筋の収縮という経路で起こる。Ib群線維は腱の受容器から出る線維で、この経路には含まれない（P48）。"},
+
+{q:"伸張反射について正しいのはどれか。",kihon:true,
+ choices:[
+ ["脊髄で介在神経を介さずにシナプスを形成する、もっとも簡単な反射である",true,""],
+ ["反射中枢は延髄にある",false,"中枢はもっと下位にある。"],
+ ["求心路はIb群線維である",false,"腱の受容器から出る線維が求心路になっている。"],
+ ["効果器は錘内筋である",false,"実際に張力を出す筋が効果器になる。"]],
+ exp:"伸張反射は、脊髄でIa群線維とα運動ニューロンが介在神経を介さずにシナプスを形成する、もっとも簡単な単シナプス反射である（P49）。"},
+
+{q:"膝蓋腱をたたいたときに起こる経過の順序で正しいのはどれか。",kihon:true,
+ choices:[
+ ["筋紡錘の興奮 → Ia群線維 → α運動ニューロン → 大腿四頭筋の収縮",true,""],
+ ["筋紡錘の興奮 → Ib群線維 → 介在ニューロン → 大腿四頭筋の収縮",false,"求心路と経路のとり方が違っている。"],
+ ["ゴルジ腱器官の興奮 → Ia群線維 → α運動ニューロン → 大腿四頭筋の収縮",false,"最初に興奮する受容器が違っている。"],
+ ["筋紡錘の興奮 → Ia群線維 → 一次運動野 → 大腿四頭筋の収縮",false,"大脳皮質を経由する経路ではない。"]],
+ exp:"膝蓋腱をたたくと大腿四頭筋が伸ばされ、筋紡錘に信号が発生し、Ia群線維を伝わって脊髄へ送られ、α運動ニューロンを興奮させて筋が収縮し、下肢が挙上する（P48、図4・5）。"},
+
+{q:"伸張反射のはたらきとして正しいのはどれか。",kihon:true,
+ choices:[
+ ["筋の長さを一定に保つ",true,""],
+ ["筋に過大な張力がかかるのを防ぐ",false,"別の反射が担っている安全装置のはたらきである。"],
+ ["侵害刺激から手足を遠ざける",false,"侵害刺激に対して起こる反射のはたらきである。"],
+ ["関節を他動的に曲げやすくする",false,"反射が抑制されたときに起こる現象である。"]],
+ exp:"伸張反射は筋の長さを一定に保とうとしてはたらく反射で、姿勢を保持するときにはたらく筋（抗重力筋）でよく発達している（P48）。"},
+
+{q:"伸張反射の求心路となる線維の伝導速度について正しいのはどれか。",
+ choices:[
+ ["神経線維の中でもっとも速く、約100 m/秒である",true,""],
+ ["およそ1 m/秒で、神経線維の中では遅いほうである",false,"無髄線維に近い値である。"],
+ ["線維の太さによらず一定である",false,"伝導速度は線維の太さに依存する。"],
+ ["速度が遅いほど、素早い姿勢の立て直しに適している",false,"速いほうが素早い動作に適している。"]],
+ exp:"傾いたからだを元に戻すには素早い動作が要求される。伝導速度が神経線維の中でもっとも速い（100 m/秒）Ia群線維によって伸張反射が引き起こされることは理にかなっている（P48）。"},
+
+{q:"筋が伸展されつつあるときだけ起こる伸張反射はどれか。",kihon:true,
+ choices:[
+ ["相動性伸張反射",true,""],
+ ["緊張性伸張反射",false,"伸展が続く間、持続して起こるほうの反射である。"],
+ ["逆転伸張反射",false,"張力がかかりすぎたときに収縮を抑えるほうの反射である。"],
+ ["交叉性伸展反射",false,"反対側の肢が伸展して体を支える反射である。"]],
+ exp:"伸張反射は、筋が伸展されつつあるときだけ起こる相動性伸張反射と、伸展が続く間持続する緊張性伸張反射に分けられる。膝蓋腱反射は前者の一例である（P49）。"},
+
+{q:"脳出血などで相動性伸張反射が亢進した状態を何と呼ぶか。",
+ choices:[
+ ["痙縮",true,""],
+ ["弛緩",false,"筋の緊張が失われた状態である。"],
+ ["強縮",false,"活動電位がくり返し生じて単収縮が融合した状態である（第2章P17）。"],
+ ["攣縮",false,"筋が不随意に短時間収縮する現象である。"]],
+ exp:"脳出血などでは相動性伸張反射が亢進する。これを痙縮と呼び、反射性収縮がくり返されるクローヌスを伴う場合もある（P49）。"},
+
+{q:"パーキンソン病などでみられる、緊張性伸張反射の亢進が特に強い状態を何と呼ぶか。",
+ choices:[
+ ["固縮",true,""],
+ ["クローヌス",false,"反射性収縮がくり返し起こる現象である。"],
+ ["低緊張",false,"筋の緊張が低下した状態である。"],
+ ["不動",false,"関節が動かない状態を指す一般的な語で、反射の名称ではない。"]],
+ exp:"緊張性伸張反射は上位からの指令に異常が起こることで発生する。パーキンソン病などでは亢進し、特に強い場合を固縮という（P49）。"},
+
+{q:"筋に過大な張力がかかったときに、その筋の収縮を抑えるようにはたらく反射はどれか。",kihon:true,
+ choices:[
+ ["逆転伸張反射",true,""],
+ ["伸張反射",false,"筋が伸ばされたときに、その筋を収縮させる反射である。"],
+ ["屈曲反射",false,"侵害刺激を受けた肢を引っ込める反射である。"],
+ ["相反神経支配",false,"拮抗筋の収縮を抑えて関節をスムーズに動かすしくみである。"]],
+ exp:"逆転伸張反射は、筋に過大な張力がかかることを防ぐ安全装置である。ゴルジ腱器官からのIb群線維の信号で、抑制性介在ニューロンを介してα運動ニューロンに抑制作用がはたらく（P49）。"},
+
+{q:"逆転伸張反射の経路で正しいのはどれか。",kihon:true,
+ choices:[
+ ["Ib群線維 → 抑制性介在ニューロン → α運動ニューロンの抑制",true,""],
+ ["Ia群線維 → 抑制性介在ニューロン → α運動ニューロンの抑制",false,"求心路が筋紡錘から出る線維になっている。"],
+ ["Ib群線維 → α運動ニューロンへ直接 → 筋の収縮",false,"介在ニューロンを介さず、しかも作用の向きが逆である。"],
+ ["Ia群線維 → γ運動ニューロン → 錘内筋の収縮",false,"筋紡錘の感度調節の話になっている。"]],
+ exp:"ゴルジ腱器官からのIb群線維の信号が、抑制性介在ニューロンを介してα運動ニューロンに抑制作用をはたらかせる（P49、図4・5）。"},
+
+{q:"高いところから飛び降りたときに、伸張反射がかえって抑制されるのはなぜか。",
+ choices:[
+ ["筋にかかる過大な張力を腱の受容器が検出し、抑制がはたらくため",true,""],
+ ["筋紡錘が短縮して、求心性の信号が出なくなるため",false,"着地のときに筋紡錘が信号を出さなくなるわけではない。"],
+ ["α運動ニューロンが疲労して興奮できなくなるため",false,"疲労によるものではない。"],
+ ["大脳皮質から意識的に反射を止めているため",false,"意識的な制御によるものではない。"]],
+ exp:"地面でジャンプして着地するときは抗重力筋で伸張反射が現れるが、屋根などのあまりに高いところから飛び降りる場合は、ゴルジ腱器官からのIb群線維の信号による抑制がはたらく（P49）。"},
+
+{q:"関節を他動的に曲げようとすると、あるところで抵抗が突然なくなって楽に屈曲する現象を何と呼ぶか。",
+ choices:[
+ ["折りたたみナイフ現象",true,""],
+ ["クローヌス",false,"反射性収縮がくり返し起こる現象である。"],
+ ["痙縮",false,"相動性伸張反射が亢進した状態である。"],
+ ["筋性防御",false,"腹腔内の炎症などで腹壁が硬くなる反射である。"]],
+ exp:"固縮が起こっているような関節を他動的に屈曲しようとすると、あるところで抵抗が突然なくなって楽に屈曲する。この動きが折りたたみナイフに似ていることから名づけられた。Ib群線維からの信号による自己抑制が関係している（P49）。"},
+
+{q:"α−γ連関について正しいのはどれか。",kihon:true,
+ choices:[
+ ["α運動ニューロンとγ運動ニューロンが同時に活動する現象である",true,""],
+ ["α運動ニューロンが活動するとγ運動ニューロンが抑制される現象である",false,"同時に興奮するところが要点である。"],
+ ["γ運動ニューロンだけが単独で活動する現象である",false,"2つが同時に活動することを指す語である。"],
+ ["錘外筋と腱が同時に伸ばされる現象である",false,"神経どうしの関係を指す語である。"]],
+ exp:"α運動ニューロンが活動して錘外筋が収縮すると筋紡錘の活動が抑制されそうに思えるが、実際にはγ運動ニューロンが同時に興奮して錘内筋の両端が収縮し、新たな長さに適した感度調節が行われる（P50）。"},
+
+{q:"腕を曲げるとき、拮抗筋である伸筋に送られる信号はどれか。",kihon:true,
+ choices:[
+ ["抑制性ニューロンを介した「収縮するな」という信号",true,""],
+ ["上位脳からの「収縮しろ」という興奮性の信号",false,"これでは腕を曲げる動作が妨げられてしまう。"],
+ ["γ運動ニューロンを介した「感度を上げろ」という信号",false,"拮抗筋の収縮を止めるしくみの話ではない。"],
+ ["Ib群線維を介した「張力を上げろ」という信号",false,"Ib群線維は求心性で、抑制の側にはたらく。"]],
+ exp:"ある関節の屈筋が収縮するとき、拮抗筋（伸筋）のα運動ニューロンには抑制性ニューロンを介して抑制性の信号が送られ、伸張反射が起こらないようになる。これを相反神経支配と呼ぶ（P50）。"},
+
+{q:"筋紡錘とゴルジ腱器官について誤っているのはどれか。",gori:true,
+ choices:[
+ ["ゴルジ腱器官は筋と並列に位置し、筋の長さを検出する",true,""],
+ ["筋紡錘は両端が細く中央部が太い紡錘形の受容器である",false,"教科書どおりの記述なので、正しい。"],
+ ["錘内筋の両端は錘外筋線維と融合している",false,"教科書どおりの記述なので、正しい。"],
+ ["筋が伸展して筋紡錘が引き伸ばされると、求心性神経の活動が活発になる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"ゴルジ腱器官は筋の腱束に筋と直列に配置され、筋が発生する張力を検出する。長さを監視しているのは筋紡錘のほうである（P47〜48、図4・4）。"},
+
+{q:"伸張反射とその調節について誤っているのはどれか。",gori:true,
+ choices:[
+ ["相反神経支配では、関節を曲げるときに屈筋と伸筋が同時に収縮する",true,""],
+ ["伸張反射は姿勢を保持するときにはたらく筋でよく発達している",false,"教科書どおりの記述なので、正しい。"],
+ ["逆転伸張反射は、筋に過大な張力がかかることを防ぐ安全装置である",false,"教科書どおりの記述なので、正しい。"],
+ ["抑制性ニューロンは、上位脳からの信号のほか筋紡錘からの信号も受けている",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"相反神経支配では、屈筋に「収縮しろ」の信号が送られると同時に、拮抗筋である伸筋には「収縮するな」の信号が送られる。おかげで腕をスムーズに曲げることができる（P50）。"},
+
+{q:"ゴルジ腱器官からの信号によって、同じ筋のα運動ニューロンが抑制されるしくみを何と呼ぶか。",hosoku:true,
+ choices:[
+ ["自原抑制",true,""],
+ ["拮抗抑制",false,"収縮する筋の拮抗筋側が抑制されるしくみの呼び名である。"],
+ ["周囲抑制",false,"刺激された部位の周囲の感覚情報が抑えられるしくみである。"],
+ ["反回抑制",false,"運動ニューロンの枝が介在ニューロンを介して自らを抑えるしくみである。"]],
+ exp:"補足知識（資料外）。教科書はこの現象を「逆転伸張反射」「自己抑制」として説明しており、自原抑制という語は使っていない。なお、収縮する筋の拮抗筋側が抑えられるしくみは拮抗抑制と呼ばれ、教科書では相反神経支配として説明されている（P49〜50）。"},
+
+{q:"除脳固縮でみられるのはどれか。",hosoku:true,
+ choices:[
+ ["抗重力筋の緊張の亢進",true,""],
+ ["伸張反射の消失",false,"反射は消えるのではなく強まる。"],
+ ["屈曲反射の亢進",false,"亢進するのは姿勢を保つ側の筋の緊張である。"],
+ ["筋緊張の全般的な低下",false,"緊張は高まる方向に変化する。"]],
+ exp:"補足知識（資料外）。脳幹の一部を切断すると上位からの抑制がはずれて緊張性伸張反射が亢進し、抗重力筋の緊張が強まる。教科書に除脳固縮の記載はないが、緊張性伸張反射の亢進として理解できる（P49）。"}
+];
+
+/* ===== エンジン ===== */
+const N_Q=5;
+const app=document.getElementById("app");
+let mode="normal",qs=[],idx=0,miss=0,firstOK=0,streak=0,dead=false,locked=false;
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function qHTML(t){return esc(t).replace(/誤っている/g,'<span class="err">誤っている</span>');}
+
+function start(){
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートC1</div><div class="tt">確認テスト：受容器と伸張反射</div></div></div>
+  <div class="start">
+    <div class="lead">全${POOL.length}問のプールから、毎回ランダムに${N_Q}問が出題されます。<br>問題の順番も選択肢の並びも、開くたびに変わります。</div>
+    <div class="modes">
+      <button class="mbtn" onclick="begin('normal')">
+        <div class="mt">通常モード</div>
+        <div class="md">間違えても、残りの選択肢から選び直せます。正解するまで進めて、最後に一発正解率とミス回数が出ます。ふだんの学習用。</div>
+      </button>
+      <button class="mbtn dob" onclick="begin('dobon')">
+        <div class="mt">💣 ドボンチャレンジ</div>
+        <div class="md">選び直しはできません。💣が付いた問題を外すと、その場で終了。何問連続で正解できるかに挑戦します。</div>
+      </button>
+    </div>
+    <div class="legend">
+      🎯 基本 … 落としてはいけない基本・頻出問題<br>
+      💣 ドボン … ドボンチャレンジで外すと終了する最重要問題<br>
+      ⚠ 誤りを選ぶ … 「誤っているのはどれか」形式<br>
+      📘 補足（資料外） … 教科書には載っていない国試頻出テーマ
+    </div>
+  </div>`;
+}
+
+function begin(m){
+  mode=m;qs=shuffle(POOL).slice(0,N_Q);idx=0;miss=0;firstOK=0;streak=0;dead=false;
+  render();
+}
+
+function render(){
+  const it=qs[idx];
+  locked=false;it._tried=[];it._done=false;
+  const isDob=(mode==="dobon"&&it.dobon);
+  let tags="";
+  if(isDob)tags+='<span class="tag t-do">💣 ドボン</span>';
+  else if(it.kihon)tags+='<span class="tag t-ki">🎯 基本</span>';
+  if(it.gori)tags+='<span class="tag t-go">⚠ 誤りを選ぶ</span>';
+  if(it.hosoku)tags+='<span class="tag t-ho">📘 補足（資料外）</span>';
+
+  it._order=shuffle(it.choices.map((c,i)=>i));
+  let cs="";
+  it._order.forEach((ci,pos)=>{
+    cs+=`<button class="c" id="c${pos}" onclick="pick(${pos})">${esc(it.choices[ci][0])}</button>`;
+  });
+
+  app.innerHTML=`
+  <div class="hd">
+    <div><div class="ch">第4章 運動の生理 ｜ パートC1 確認テスト</div>
+    <div class="tt">${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}</div></div>
+    <div class="rt">第 ${idx+1} 問 / ${qs.length}問${mode==="dobon"?"<br>連続正解 "+streak:"<br>ミス "+miss}</div>
+  </div>
+  <div class="bd">
+    <div class="tags">${tags||'<span class="tag t-ki" style="visibility:hidden">-</span>'}</div>
+    <div class="q">${qHTML(it.q)}</div>
+    <div class="ch-list">${cs}</div>
+    <div id="fb"></div>
+  </div>
+  <div class="ctrl" id="ctrl"><span class="cnt">選択肢をクリックすると判定されます</span></div>`;
+}
+
+function pick(pos){
+  if(locked)return;
+  const it=qs[idx];
+  const ci=it._order[pos];
+  const c=it.choices[ci];
+  const btn=document.getElementById("c"+pos);
+  const isDob=(mode==="dobon"&&it.dobon);
+
+  if(c[1]){ /* 正解 */
+    locked=true;
+    btn.classList.add("ok");
+    disableAll();
+    if(it._tried.length===0){firstOK++;}
+    if(mode==="dobon"){streak++;}
+    showFB(true,"正解！",it.exp);
+    nextBtn();
+    return;
+  }
+  /* 不正解 */
+  it._tried.push(ci);
+  if(mode==="normal"){
+    miss++;
+    btn.classList.add("ng");btn.disabled=true;
+    showFB(false,"もう一度",`選んだのは「${esc(c[0])}」。${esc(c[2])}<br>正解はほかの選択肢にあります。もう一度選んでください。`);
+    document.querySelector(".rt").innerHTML=`第 ${idx+1} 問 / ${qs.length}問<br>ミス ${miss}`;
+  }else{
+    locked=true;miss++;
+    btn.classList.add("ng");
+    disableAll();
+    showFB(false,isDob?"💣 ドボン！":"不正解",
+      `選んだのは「${esc(c[0])}」。${esc(c[2])}<br><br><b>解説：</b>${esc(it.exp)}`);
+    if(isDob){dead=true;}
+    nextBtn();
+  }
+}
+
+function disableAll(){document.querySelectorAll(".c").forEach(b=>{b.disabled=true;if(!b.classList.contains("ok")&&!b.classList.contains("ng"))b.classList.add("mute");});}
+
+function showFB(ok,title,body){
+  document.getElementById("fb").innerHTML=
+   `<div class="fb ${ok?"ok":"ng"}"><div class="ttl">${title}</div><div>${ok?esc(body):body}</div></div>`;
+}
+
+function nextBtn(){
+  const last=(idx===qs.length-1);
+  document.getElementById("ctrl").innerHTML=
+   (dead||last)
+   ? `<button class="btn btnp" onclick="result()">結果を見る ▶</button><span class="cnt">${dead?"ドボンのため終了":"これが最後の問題です"}</span>`
+   : `<button class="btn btnp" onclick="next()">次の問題へ ▶</button><span class="cnt">${idx+2} 問目 / 全${qs.length}問</span>`;
+}
+
+function next(){idx++;render();}
+
+function result(){
+  const ans=dead?idx+1:qs.length;
+  let body="";
+  if(mode==="normal"){
+    const rate=Math.round(firstOK/qs.length*100);
+    body=`<div class="big">${firstOK} / ${qs.length} 問</div>
+      <div class="sub">一発正解率　<b>${rate}%</b><br>総ミス回数　<b>${miss} 回</b></div>
+      ${miss===0?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }else{
+    body=`<div class="big${dead?" ng":""}">${streak} 問連続正解</div>
+      <div class="sub">${dead?"💣 ドボン問題を外したため終了しました。":`全${qs.length}問を走りきりました。`}<br>
+      ${streak===qs.length?"":"出題された "+ans+" 問中 "+streak+" 問正解"}</div>
+      ${streak===qs.length?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートC1 確認テスト</div>
+  <div class="tt">結果（${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}）</div></div></div>
+  <div class="res">${body}</div>
+  <div class="ctrl">
+    <button class="btn btnp" onclick="begin('${mode}')">もう一度（別の問題）▶</button>
+    <button class="btn" onclick="start()">モードを選び直す</button>
+    <span class="cnt">全${POOL.length}問のプールから出題</span>
+  </div>`;
+}
+start();
+</script>
+</body>
+</html>

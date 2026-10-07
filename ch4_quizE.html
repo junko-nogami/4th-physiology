@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 運動の生理 パートE 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ch:#1E4D7B;--chd:#163a5c;--ok:#1F9D6B;--ng:#D0483F;--hos:#8a6314}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em;text-align:center;line-height:1.6}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:var(--ch);padding:14px 28px;display:flex;align-items:center;gap:12px}
+.hd .ch{font-size:11px;color:#c4d9f0;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .rt{margin-left:auto;font-size:12px;color:#c4d9f0;text-align:right;white-space:nowrap;line-height:1.5}
+.bd{padding:22px 28px 20px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;margin-bottom:8px}
+.tags{margin-bottom:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;margin:0 6px 6px 0}
+.t-ki{background:rgba(30,77,123,.12);color:var(--ch)}
+.t-do{background:rgba(208,72,63,.13);color:var(--ng)}
+.t-go{background:rgba(154,85,10,.13);color:#9a550a}
+.t-ho{background:rgba(138,99,20,.13);color:var(--hos)}
+.q{font-size:16px;line-height:1.85;color:#111;font-weight:600;margin-bottom:16px}
+.q .err{color:var(--ng)}
+.ch-list{display:flex;flex-direction:column;gap:9px}
+.c{display:block;width:100%;text-align:left;font-family:inherit;font-size:14.5px;line-height:1.7;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:8px;padding:12px 15px;cursor:pointer;transition:background .15s,border-color .15s}
+.c:hover:not(:disabled){background:#eef1f6;border-color:#c7d2e0}
+.c:disabled{cursor:default}
+.c.ng{background:rgba(208,72,63,.07);border-color:rgba(208,72,63,.45);color:#8c3b35}
+.c.ok{background:rgba(31,157,107,.09);border-color:rgba(31,157,107,.5);color:#146b4a}
+.c.mute{opacity:.5}
+.fb{margin-top:16px;border-radius:8px;padding:14px 16px;font-size:14px;line-height:1.85;border:1px solid}
+.fb.ok{background:rgba(31,157,107,.07);border-color:rgba(31,157,107,.3)}
+.fb.ng{background:rgba(208,72,63,.06);border-color:rgba(208,72,63,.28)}
+.fb .ttl{font-weight:700;margin-bottom:5px}
+.fb.ok .ttl{color:#146b4a}
+.fb.ng .ttl{color:#a53b33}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.btn{padding:9px 18px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:13px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:var(--ch);color:#fff;border-color:var(--ch)}
+.btnp:hover{background:var(--chd)}
+.cnt{font-size:11.5px;color:#888;margin-left:auto}
+.start{padding:30px 28px 28px;text-align:center}
+.start .lead{font-size:14px;color:#444;line-height:1.95;margin-bottom:22px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:430px;margin:0 auto}
+.mbtn{font-family:inherit;cursor:pointer;border-radius:10px;padding:16px 18px;text-align:left;border:1.5px solid #d8dde5;background:#fff;transition:border-color .15s,background .15s}
+.mbtn:hover{border-color:var(--ch);background:#f6f9fc}
+.mbtn .mt{font-size:16px;font-weight:700;color:var(--ch);margin-bottom:4px}
+.mbtn.dob .mt{color:var(--ng)}
+.mbtn .md{font-size:12.5px;color:#666;line-height:1.7}
+.legend{margin-top:24px;font-size:11.5px;color:#777;line-height:2;text-align:left;max-width:430px;margin-left:auto;margin-right:auto;border-top:1px solid #e5e7eb;padding-top:14px}
+.res{padding:34px 28px 30px;text-align:center}
+.res .big{font-size:30px;font-weight:700;color:var(--ch);margin-bottom:8px}
+.res .big.ng{color:var(--ng)}
+.res .sub{font-size:14px;color:#555;line-height:2.1}
+.res .perfect{margin-top:14px;font-size:18px;font-weight:700;color:var(--ok)}
+@media(max-width:560px){
+ .bd{padding:18px 16px 16px}.hd{padding:12px 16px}.ctrl{padding:11px 16px 13px}
+ .hd .tt{font-size:16px}.q{font-size:15px}.c{font-size:14px}.start{padding:24px 16px}
+ .res{padding:26px 16px}
+}
+</style>
+</head>
+<body>
+<h1>生理学 第4章 運動の生理｜パートE 確認テスト（高次運動機能）</h1>
+<div class="slide" id="app"></div>
+
+<script>
+/* ===== 問題プール ===== */
+const POOL=[
+{q:"随意運動の指令（意図）が生まれるのはどこか。",kihon:true,
+ choices:[
+ ["大脳皮質連合野",true,""],
+ ["一次運動野",false,"生まれた指令を受けて、運動を計画・実行する領域である。"],
+ ["脊髄前角",false,"骨格筋の収縮を支配する運動ニューロンがある部位である。"],
+ ["小脳核",false,"小脳皮質で処理された情報を脳幹や視床へ送る核である。"]],
+ exp:"大脳皮質連合野で生まれた随意運動の指令（意図）は、大脳皮質の中でも運動に関係する領域へ伝えられる（P55、図4・13）。"},
+
+{q:"一次運動野のはたらきはどれか。",kihon:true,
+ choices:[
+ ["さまざまな身体部位の運動を計画し、実行する",true,""],
+ ["感覚情報を統合して、意図そのものを生み出す",false,"指令が生まれるのは連合野である。"],
+ ["実際の運動とのずれを修正して、運動を調節する",false,"別の部位が担う役割である。"],
+ ["不要な運動を抑制し、筋トーヌスを調節する",false,"別の部位が担う役割である。"]],
+ exp:"一次運動野には、さまざまな身体部位の運動を計画し実行するはたらきがある（P55）。"},
+
+{q:"一次運動野を電気刺激したときに、からだの特定の部位に筋収縮が起こることを何と呼ぶか。",kihon:true,dobon:true,
+ choices:[
+ ["体部位再現",true,""],
+ ["運動補償",false,"実際の運動とのずれを修正するはたらきの呼び名である。"],
+ ["空間座標変換",false,"視覚の空間情報をもとに体部位の位置を変換するはたらきである。"],
+ ["他人の手徴候",false,"やりたくもない動作をしてしまう症状の呼び名である。"]],
+ exp:"一次運動野を電気刺激すると、からだの特定の部位に筋収縮が起こる。これを体部位再現と呼ぶ（P55）。"},
+
+{q:"一次運動野で、ある部位の再現領域の広さは何に関係するか。",kihon:true,dobon:true,
+ choices:[
+ ["その部位の運動の巧緻性",true,""],
+ ["その部位の筋の総重量",false,"筋の大きさで領域の広さが決まるわけではない。"],
+ ["その部位から脊髄までの距離",false,"距離は領域の広さと関係しない。"],
+ ["その部位の皮膚の感覚の鋭さ",false,"感覚ではなく運動の細かさが関係する。"]],
+ exp:"再現部位の広さは、その部位の運動の巧緻性に関係する（P55）。"},
+
+{q:"ヒトの一次運動野で、再現領域が特に広いのはどれか。",kihon:true,
+ choices:[
+ ["手・手指や、口唇・舌",true,""],
+ ["体幹",false,"細かい動きが少なく、領域は狭い。"],
+ ["大腿",false,"大きな筋だが、領域は狭い。"],
+ ["殿部",false,"巧緻性が低く、領域は狭い。"]],
+ exp:"ヒトでは手や手指の動きに関する領域のほか、言語に関係する手・口唇・舌の皮質領域が特に広い。これらの運動に多くの一次運動野ニューロンが関係している（P55、図4・14）。"},
+
+{q:"一次運動野の体部位再現で、中心前回の内側（頭頂部に近い側）に再現されているのはどれか。",
+ choices:[
+ ["下肢",true,""],
+ ["顔面",false,"外側に再現されている部位である。"],
+ ["舌",false,"もっとも外側に近い側に再現されている部位である。"],
+ ["口唇",false,"外側に再現されている部位である。"]],
+ exp:"体部位再現図では、内側から外側に向かって下肢・体幹・上肢・頭部の順に再現されている（P56、図4・14）。"},
+
+{q:"屈曲反射が、屈曲しないようあらかじめ意識すると抑制できることが示しているのはどれか。",
+ choices:[
+ ["脊髄レベルで起こる反射の回路も、大脳皮質からの信号を受けている",true,""],
+ ["屈曲反射はもともと脊髄を介さない反射である",false,"脊髄を介して起こる反射である。"],
+ ["反射はすべて意思で自由に止められる",false,"すべての反射にあてはまるわけではない。"],
+ ["一次運動野は反射の中枢そのものである",false,"反射中枢を担っているわけではない。"]],
+ exp:"反射は意思で変化させることができる。このことから、脊髄レベルで起こる反射の回路も大脳皮質からの信号を受けているといえる（P56）。"},
+
+{q:"一次運動野の体部位再現図が、身体各部の大きさをゆがめた人の形に見えることから付けられた呼び名はどれか。",hosoku:true,
+ choices:[
+ ["ホムンクルス",true,""],
+ ["セントラルパターンジェネレータ",false,"脊髄にある歩行のリズムをつくる神経機構である。"],
+ ["ペンフィールドの連合野",false,"このような名称の領域はない。"],
+ ["モトゲニクス",false,"このような用語はない。"]],
+ exp:"補足知識（資料外）。巧緻性の高い部位ほど領域が広いため、図にすると手や口が極端に大きい人の形になる。これをホムンクルスと呼ぶ。教科書は「体部位再現図」としており、この呼び名は使っていない（P56、図4・14）。"},
+
+{q:"運動前野が重要な役割を果たしていると考えられるのはどれか。",kihon:true,
+ choices:[
+ ["視覚や聴覚などの感覚情報をもとに行う運動の遂行",true,""],
+ ["自ら意図して行う運動の企画・計画",false,"隣接する別の領域が担うと考えられている。"],
+ ["実際の運動とのずれの修正",false,"大脳皮質以外の部位が担う役割である。"],
+ ["不要な運動の抑制と筋トーヌスの調節",false,"大脳の奥深くにある核群が担う役割である。"]],
+ exp:"運動前野は、視覚や聴覚などの感覚情報をもとに行う運動の遂行で重要な役割を果たすと考えられている（P57）。"},
+
+{q:"手の麻痺がないにもかかわらず、鏡を見ながらネクタイを締められなくなる症状が生じるのは、どこが損傷されたときか。",
+ choices:[
+ ["運動前野",true,""],
+ ["補足運動野",false,"自分から運動を開始することが困難になる領域である。"],
+ ["帯状皮質運動野",false,"じっと動かず言葉を発しなくなる領域である。"],
+ ["一次運動野",false,"損傷されると運動そのものの実行が障害される。"]],
+ exp:"運動前野が損傷されると、手の麻痺がないにもかかわらず、鏡を見ながらネクタイを締められなくなるなどの症状が生じる（P57）。"},
+
+{q:"運動前野が、視覚で得られる空間情報をもとに行っていると考えられているのはどれか。",
+ choices:[
+ ["運動時の体部位の空間座標変換",true,""],
+ ["運動の順序の学習",false,"大脳の奥深くにある核群が担うとされる役割である。"],
+ ["筋トーヌスの調節",false,"大脳の奥深くにある核群が担うとされる役割である。"],
+ ["実際の運動状況とのずれの修正",false,"脳幹の後部を覆う部位が担う役割である。"]],
+ exp:"運動前野は、視覚で得られる空間情報をもとに、運動時の体部位の空間座標変換を行っていると考えられている（P57）。"},
+
+{q:"補足運動野が関係していると考えられているのはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["自ら意図して行う運動の企画・計画",true,""],
+ ["視覚や聴覚の情報をもとに行う運動の遂行",false,"隣接する別の領域が担うと考えられている。"],
+ ["運動の実行そのものと体部位再現",false,"中心前回にある領域のはたらきである。"],
+ ["感覚情報を小脳核へ中継すること",false,"大脳皮質の役割ではない。"]],
+ exp:"補足運動野が損傷されると、催促されればできるものの自分から運動を開始することが困難になる。このことから、自ら意図して行う運動の企画・計画と関係していると考えられている（P57）。"},
+
+{q:"メガネを外すときに右手で外す一方で、左手でかけ直すといった、やりたくもない動作を行ってしまう症状を何と呼ぶか。",
+ choices:[
+ ["他人の手徴候",true,""],
+ ["失行",false,"運動機能が保たれているのに、目的の動作ができなくなる症状である。"],
+ ["企図振戦",false,"運動を始めると手がふるえる症状である。"],
+ ["固縮",false,"緊張性伸張反射の亢進が特に強い状態である。"]],
+ exp:"補足運動野が損傷されると、やりたくもない動作を行ってしまう。これを他人の手徴候と呼ぶ（P57）。"},
+
+{q:"補足運動野が損傷されたときにみられるのはどれか。",
+ choices:[
+ ["左右の手を使ってリズムをとることがうまくできなくなる",true,""],
+ ["鏡を見ながらネクタイを締められなくなる",false,"隣接する別の領域の損傷でみられる症状である。"],
+ ["指を鼻にもっていくと、鼻に届かなかったり行き過ぎたりする",false,"脳幹の後部を覆う部位の障害でみられる。"],
+ ["安静時でも手がふるえ、動作が緩慢になる",false,"大脳の奥深くにある核群の障害でみられる。"]],
+ exp:"補足運動野が損傷されると、発語と運動発現が乏しくなり、左右の手を使ってリズムをとることがうまくできなくなる（P57）。"},
+
+{q:"運動前野や補足運動野への電気刺激について正しいのはどれか。",kihon:true,
+ choices:[
+ ["一次運動野より強い刺激が必要で、より複雑な運動が誘発される",true,""],
+ ["一次運動野より弱い刺激で、より単純な運動が誘発される",false,"刺激の強さも誘発される運動も逆である。"],
+ ["電気刺激しても運動はまったく誘発されない",false,"体部位再現は観察できる。"],
+ ["一次運動野と同じ強さの刺激で、同じ運動が誘発される",false,"必要な刺激も誘発される運動も異なる。"]],
+ exp:"体部位再現は運動前野や補足運動野への電気刺激でも観察できる。ただし運動を誘発するには一次運動野を刺激するときよりも強い刺激が必要で、より複雑な運動が誘発される（P57）。"},
+
+{q:"帯状皮質運動野について正しいのはどれか。",
+ choices:[
+ ["補足運動野に隣接し、強い情動を伴う運動時に活動する",true,""],
+ ["一次運動野に隣接し、体部位再現の中心となる",false,"位置もはたらきも異なる。"],
+ ["損傷されると筋力が失われて動けなくなる",false,"筋力はあるのに動かなくなる。"],
+ ["視覚情報をもとにした運動の遂行を担う",false,"隣接する別の領域が担うと考えられている。"]],
+ exp:"帯状皮質運動野は補足運動野に隣接する領域で、損傷されると筋力があるにもかかわらずじっと動かず言葉を発しなくなったり、動作が勝手に起こったりする。強い情動を伴う運動時に活動することがヒトで確認されている（P57）。"},
+
+{q:"大脳皮質の運動関連領域について誤っているのはどれか。",gori:true,
+ choices:[
+ ["帯状皮質運動野が損傷されると、筋力が失われて動かせなくなる",true,""],
+ ["運動前野は、感覚情報をもとに行う運動の遂行で重要な役割を果たす",false,"教科書どおりの記述なので、正しい。"],
+ ["補足運動野が損傷されると、発語と運動発現が乏しくなる",false,"教科書どおりの記述なので、正しい。"],
+ ["帯状皮質運動野は、報酬結果に基づく行動調節に関わるとの報告もある",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"帯状皮質運動野が損傷されると、筋力があるにもかかわらずじっと動かず言葉を発しなくなったり、動作が勝手に起こったりする（P57）。"},
+
+{q:"大脳基底核に含まれないのはどれか。",kihon:true,
+ choices:[
+ ["視床",true,""],
+ ["尾状核",false,"大脳基底核に含まれ、被殻と合わせて呼ばれることがある核である。"],
+ ["淡蒼球",false,"外節と内節に分かれ、大脳基底核に含まれる核である。"],
+ ["黒質",false,"大脳基底核に含まれ、ドーパミンニューロンをもつ核である。"]],
+ exp:"大脳基底核には尾状核、被殻、淡蒼球（外節と内節）、視床下核、黒質が含まれる（P57、図4・1）。"},
+
+{q:"線条体を構成するのはどれか。",kihon:true,
+ choices:[
+ ["尾状核と被殻",true,""],
+ ["被殻と淡蒼球",false,"別の呼び名でまとめられる組合せである。"],
+ ["淡蒼球と黒質",false,"この2つをまとめて呼ぶ名称はない。"],
+ ["視床下核と黒質",false,"この2つをまとめて呼ぶ名称はない。"]],
+ exp:"尾状核と被殻は発生学的に同じ起源であり、機能的にもまとまっていることから、合わせて線条体と呼ばれる（P57）。"},
+
+{q:"レンズ核を構成するのはどれか。",
+ choices:[
+ ["被殻と淡蒼球",true,""],
+ ["尾状核と被殻",false,"別の呼び名でまとめられる組合せである。"],
+ ["尾状核と淡蒼球",false,"この2つをまとめて呼ぶ名称はない。"],
+ ["被殻と視床下核",false,"この2つをまとめて呼ぶ名称はない。"]],
+ exp:"被殻と淡蒼球は合わせてレンズ核と呼ばれる。ただし機能はそれぞれ異なる（P57）。"},
+
+{q:"大脳基底核について誤っているのはどれか。",gori:true,
+ choices:[
+ ["まとめて呼ばれる核どうしは、機能も同じである",true,""],
+ ["運動に深く関係する神経核の一群の総称である",false,"教科書どおりの記述なので、正しい。"],
+ ["大脳の奥深くに位置する",false,"教科書どおりの記述なので、正しい。"],
+ ["運動の動機づけや認知、学習などにも関係する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"被殻と淡蒼球はレンズ核と呼ばれるが、機能はそれぞれ異なる。呼び名がまとまっていても機能が同じとは限らない（P57）。"},
+
+{q:"大脳基底核のはたらきとして正しいのはどれか。",kihon:true,
+ choices:[
+ ["望ましい運動の遂行と、不要な運動の抑制",true,""],
+ ["骨格筋へ直接の収縮指令を送ること",false,"筋へ指令を送るのは脊髄の運動ニューロンである。"],
+ ["筋の長さを監視して中枢へ伝えること",false,"骨格筋内の受容器のはたらきである。"],
+ ["歩行のリズムそのものを生み出すこと",false,"脊髄にある神経機構のはたらきである。"]],
+ exp:"大脳基底核は、運動の順序の学習、運動の強さの調節、望ましい運動の遂行と不要な運動の抑制、筋トーヌスの調節など運動に直接関係し、大脳皮質の活動を補助・制御する協調的な役割を担う（P57）。"},
+
+{q:"パーキンソン病を引き起こすのは、どの部位の障害か。",kihon:true,dobon:true,
+ choices:[
+ ["黒質のドーパミンニューロン",true,""],
+ ["淡蒼球内節のニューロン",false,"大脳基底核に含まれるが、この病気の原因としては挙げられていない。"],
+ ["小脳皮質のニューロン",false,"障害されると運動時に異常が現れる部位である。"],
+ ["視床の中継ニューロン",false,"感覚や運動の情報を中継する部位である。"]],
+ exp:"黒質のドーパミンニューロンの障害によってパーキンソン病が引き起こされる（P57）。"},
+
+{q:"大脳基底核の障害でみられるのはどれか。",hosoku:true,
+ choices:[
+ ["筋緊張の異常",true,""],
+ ["バビンスキー反射",false,"錐体路が障害されたときに出現する反射である。"],
+ ["視野の欠損",false,"視覚の経路が障害されたときにみられる症状である。"],
+ ["感覚性失語",false,"側頭葉の言語領域が障害されたときにみられる症状である。"]],
+ exp:"補足知識（資料外）。大脳基底核の障害では、筋緊張の異常、運動緩慢、不随意運動を特徴とする多彩な運動失調症状が現れる。教科書はパーキンソン病を挙げるにとどめ、症状名は示していない（P57）。"},
+
+{q:"小脳はどこを覆っているか。",
+ choices:[
+ ["脳幹の後部",true,""],
+ ["大脳の前部",false,"前頭葉がある側であり、小脳の位置ではない。"],
+ ["脊髄の全長",false,"小脳が覆っている範囲ではない。"],
+ ["間脳の内側",false,"視床や視床下部がある部位である。"]],
+ exp:"小脳は脳幹の後部を覆っている（P58）。"},
+
+{q:"小脳について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["運動ニューロンへの直接的な情報伝達をほとんど行わない",true,""],
+ ["骨格筋のα運動ニューロンへ直接指令を送る",false,"直接の伝達はほとんど行っていない。"],
+ ["感覚情報の処理にはほとんど関わらない",false,"感覚情報の処理に深く関わっている。"],
+ ["障害されても運動にはまったく影響しない",false,"平衡機能や姿勢調節に異常をきたす。"]],
+ exp:"小脳は感覚情報の処理に深く関わっている一方で、運動ニューロンへの直接的な情報伝達をほとんど行わない。しかし障害が起こると平衡機能、姿勢調節、自発運動調節などに異常をきたす（P58）。"},
+
+{q:"小脳の障害でみられる特徴はどれか。",kihon:true,
+ choices:[
+ ["安静にしている限り異常はみられないが、運動を始めると異常がはっきり現れる",true,""],
+ ["安静時にこそ異常がはっきり現れ、運動を始めると消える",false,"現れ方が逆である。"],
+ ["安静時にも運動時にも同じ程度に異常が現れる",false,"運動時に目立つという特徴が失われる。"],
+ ["異常は睡眠中にだけ現れる",false,"睡眠中に限って現れるものではない。"]],
+ exp:"大脳基底核と異なり、小脳の障害では安静にしている限り異常はみられない。しかし運動をひとたび始めると異常がはっきり現れる（P58）。"},
+
+{q:"小脳が障害された人が、人差し指を鼻にもっていく動作をするとどうなるか。",
+ choices:[
+ ["指が鼻に届かなかったり、行き過ぎたりする",true,""],
+ ["指がまったく動かせなくなる",false,"運動そのものができなくなるわけではない。"],
+ ["指が鼻に触れた瞬間に反射的に引っ込む",false,"侵害刺激に対する反応の話になっている。"],
+ ["安静時と変わらず、正確に鼻に届く",false,"異常が現れるのは運動を始めてからである。"]],
+ exp:"人差し指を鼻にもっていく動作を行うと、指が鼻に届かなかったり、行き過ぎたりする（P58）。この検査は指鼻試験と呼ばれ、臨床では自分の鼻と検者の指を交互に触る鼻指鼻試験も用いられる（検査名は教科書には記載なし）。"},
+
+{q:"小脳が担っているとされる役割はどれか。",kihon:true,
+ choices:[
+ ["実際の運動状況と現在の運動の状態を比較して、ずれを修正する",true,""],
+ ["不要な運動を抑制し、筋トーヌスを調節する",false,"大脳の奥深くにある核群の役割である。"],
+ ["運動の指令そのものを生み出す",false,"大脳皮質連合野が担う役割である。"],
+ ["歩行のリズムを生み出す",false,"脊髄にある神経機構のはたらきである。"]],
+ exp:"小脳は、感覚系で得られる実際の運動状況と現在の運動の状態を比較してずれを修正することで、理想的な運動状態を常につくる。つまり運動が正確に機能するよう調節（チューニング）する役割を担う（運動補償）（P58）。"},
+
+{q:"ピアノやサッカーを練習して上手になることは、小脳のどのはたらきの例か。",kihon:true,
+ choices:[
+ ["運動学習",true,""],
+ ["運動協調",false,"複数の部位の動きをまとめるはたらきの呼び名である。"],
+ ["体部位再現",false,"電気刺激で特定部位に筋収縮が起こることである。"],
+ ["空間座標変換",false,"視覚の空間情報をもとに体部位の位置を変換するはたらきである。"]],
+ exp:"ピアノやサッカーを練習して上手になるといった運動学習も、小脳のはたらきの例である（P58）。"},
+
+{q:"小脳について誤っているのはどれか。",gori:true,
+ choices:[
+ ["小脳の皮質には、からだの情報だけが届けられる",true,""],
+ ["小脳核を介して脳幹や視床のいろいろな場所へ情報が伝わる",false,"教科書どおりの記述なので、正しい。"],
+ ["障害が起こると平衡機能や姿勢調節に異常をきたす",false,"教科書どおりの記述なので、正しい。"],
+ ["意図した運動の企画・計画にも関わっている",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"小脳の皮質には、からだの情報（力・速度・位置情報など）、外界の情報（触・視・聴覚情報）、内部情報（認知、ゴール、課題、運動指令など）といったあらゆる種類の感覚が届けられる（P58）。"},
+
+{q:"小脳の機能として適切でないのはどれか。",hosoku:true,
+ choices:[
+ ["情動行動の発現",true,""],
+ ["協調運動の調節",false,"小脳の代表的なはたらきである。"],
+ ["身体の平衡保持",false,"小脳の障害で異常をきたす機能である。"],
+ ["熟練した運動の記憶",false,"練習によって上達することに関わるはたらきである。"]],
+ exp:"補足知識（資料外）。情動行動の発現は大脳辺縁系や視床下部が関与し、小脳のはたらきではない。国試でくり返し問われている。教科書は小脳の正常なはたらきのみを説明している（P58）。"},
+
+{q:"運動学習に関係する部位について正しいのはどれか。",
+ choices:[
+ ["小脳だけでなく、大脳皮質や大脳基底核も関係する",true,""],
+ ["小脳だけが関係する",false,"複数の部位が相互に関わっている。"],
+ ["大脳皮質だけが関係する",false,"複数の部位が相互に関わっている。"],
+ ["脊髄だけが関係する",false,"複数の部位が相互に関わっている。"]],
+ exp:"各機能には図4・15に示した部位だけが関係するわけではない。運動学習には小脳だけでなく大脳皮質や大脳基底核も関係し、運動協調には大脳基底核だけでなく大脳皮質や小脳も深く関係する。多くの部位が相互に信号をやりとりすることで、ヒトの運動は成り立っている（P58）。"}
+];
+
+/* ===== エンジン ===== */
+const N_Q=5;
+const app=document.getElementById("app");
+let mode="normal",qs=[],idx=0,miss=0,firstOK=0,streak=0,dead=false,locked=false;
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function qHTML(t){return esc(t).replace(/誤っている/g,'<span class="err">誤っている</span>');}
+
+function start(){
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートE</div><div class="tt">確認テスト：高次運動機能</div></div></div>
+  <div class="start">
+    <div class="lead">全${POOL.length}問のプールから、毎回ランダムに${N_Q}問が出題されます。<br>問題の順番も選択肢の並びも、開くたびに変わります。</div>
+    <div class="modes">
+      <button class="mbtn" onclick="begin('normal')">
+        <div class="mt">通常モード</div>
+        <div class="md">間違えても、残りの選択肢から選び直せます。正解するまで進めて、最後に一発正解率とミス回数が出ます。ふだんの学習用。</div>
+      </button>
+      <button class="mbtn dob" onclick="begin('dobon')">
+        <div class="mt">💣 ドボンチャレンジ</div>
+        <div class="md">選び直しはできません。💣が付いた問題を外すと、その場で終了。何問連続で正解できるかに挑戦します。</div>
+      </button>
+    </div>
+    <div class="legend">
+      🎯 基本 … 落としてはいけない基本・頻出問題<br>
+      💣 ドボン … ドボンチャレンジで外すと終了する最重要問題<br>
+      ⚠ 誤りを選ぶ … 「誤っているのはどれか」形式<br>
+      📘 補足（資料外） … 教科書には載っていない国試頻出テーマ
+    </div>
+  </div>`;
+}
+
+function begin(m){
+  mode=m;qs=shuffle(POOL).slice(0,N_Q);idx=0;miss=0;firstOK=0;streak=0;dead=false;
+  render();
+}
+
+function render(){
+  const it=qs[idx];
+  locked=false;it._tried=[];it._done=false;
+  const isDob=(mode==="dobon"&&it.dobon);
+  let tags="";
+  if(isDob)tags+='<span class="tag t-do">💣 ドボン</span>';
+  else if(it.kihon)tags+='<span class="tag t-ki">🎯 基本</span>';
+  if(it.gori)tags+='<span class="tag t-go">⚠ 誤りを選ぶ</span>';
+  if(it.hosoku)tags+='<span class="tag t-ho">📘 補足（資料外）</span>';
+
+  it._order=shuffle(it.choices.map((c,i)=>i));
+  let cs="";
+  it._order.forEach((ci,pos)=>{
+    cs+=`<button class="c" id="c${pos}" onclick="pick(${pos})">${esc(it.choices[ci][0])}</button>`;
+  });
+
+  app.innerHTML=`
+  <div class="hd">
+    <div><div class="ch">第4章 運動の生理 ｜ パートE 確認テスト</div>
+    <div class="tt">${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}</div></div>
+    <div class="rt">第 ${idx+1} 問 / ${qs.length}問${mode==="dobon"?"<br>連続正解 "+streak:"<br>ミス "+miss}</div>
+  </div>
+  <div class="bd">
+    <div class="tags">${tags||'<span class="tag t-ki" style="visibility:hidden">-</span>'}</div>
+    <div class="q">${qHTML(it.q)}</div>
+    <div class="ch-list">${cs}</div>
+    <div id="fb"></div>
+  </div>
+  <div class="ctrl" id="ctrl"><span class="cnt">選択肢をクリックすると判定されます</span></div>`;
+}
+
+function pick(pos){
+  if(locked)return;
+  const it=qs[idx];
+  const ci=it._order[pos];
+  const c=it.choices[ci];
+  const btn=document.getElementById("c"+pos);
+  const isDob=(mode==="dobon"&&it.dobon);
+
+  if(c[1]){ /* 正解 */
+    locked=true;
+    btn.classList.add("ok");
+    disableAll();
+    if(it._tried.length===0){firstOK++;}
+    if(mode==="dobon"){streak++;}
+    showFB(true,"正解！",it.exp);
+    nextBtn();
+    return;
+  }
+  /* 不正解 */
+  it._tried.push(ci);
+  if(mode==="normal"){
+    miss++;
+    btn.classList.add("ng");btn.disabled=true;
+    showFB(false,"もう一度",`選んだのは「${esc(c[0])}」。${esc(c[2])}<br>正解はほかの選択肢にあります。もう一度選んでください。`);
+    document.querySelector(".rt").innerHTML=`第 ${idx+1} 問 / ${qs.length}問<br>ミス ${miss}`;
+  }else{
+    locked=true;miss++;
+    btn.classList.add("ng");
+    disableAll();
+    showFB(false,isDob?"💣 ドボン！":"不正解",
+      `選んだのは「${esc(c[0])}」。${esc(c[2])}<br><br><b>解説：</b>${esc(it.exp)}`);
+    if(isDob){dead=true;}
+    nextBtn();
+  }
+}
+
+function disableAll(){document.querySelectorAll(".c").forEach(b=>{b.disabled=true;if(!b.classList.contains("ok")&&!b.classList.contains("ng"))b.classList.add("mute");});}
+
+function showFB(ok,title,body){
+  document.getElementById("fb").innerHTML=
+   `<div class="fb ${ok?"ok":"ng"}"><div class="ttl">${title}</div><div>${ok?esc(body):body}</div></div>`;
+}
+
+function nextBtn(){
+  const last=(idx===qs.length-1);
+  document.getElementById("ctrl").innerHTML=
+   (dead||last)
+   ? `<button class="btn btnp" onclick="result()">結果を見る ▶</button><span class="cnt">${dead?"ドボンのため終了":"これが最後の問題です"}</span>`
+   : `<button class="btn btnp" onclick="next()">次の問題へ ▶</button><span class="cnt">${idx+2} 問目 / 全${qs.length}問</span>`;
+}
+
+function next(){idx++;render();}
+
+function result(){
+  const ans=dead?idx+1:qs.length;
+  let body="";
+  if(mode==="normal"){
+    const rate=Math.round(firstOK/qs.length*100);
+    body=`<div class="big">${firstOK} / ${qs.length} 問</div>
+      <div class="sub">一発正解率　<b>${rate}%</b><br>総ミス回数　<b>${miss} 回</b></div>
+      ${miss===0?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }else{
+    body=`<div class="big${dead?" ng":""}">${streak} 問連続正解</div>
+      <div class="sub">${dead?"💣 ドボン問題を外したため終了しました。":`全${qs.length}問を走りきりました。`}<br>
+      ${streak===qs.length?"":"出題された "+ans+" 問中 "+streak+" 問正解"}</div>
+      ${streak===qs.length?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートE 確認テスト</div>
+  <div class="tt">結果（${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}）</div></div></div>
+  <div class="res">${body}</div>
+  <div class="ctrl">
+    <button class="btn btnp" onclick="begin('${mode}')">もう一度（別の問題）▶</button>
+    <button class="btn" onclick="start()">モードを選び直す</button>
+    <span class="cnt">全${POOL.length}問のプールから出題</span>
+  </div>`;
+}
+start();
+</script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 パートA 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#1e4d7b;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#c4d9f0;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#c4d9f0;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#1e4d7b;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#1e4d7b;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(30,77,123,.13);color:#163a5c}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#1e4d7b;background:#eef3f9}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #1e4d7b;background:#1e4d7b;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#163a5c}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#1e4d7b;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#1e4d7b;background:#eef3f9}
+.mode .nm{font-size:16px;font-weight:600;color:#1e4d7b;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#1e4d7b;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#163a5c;background:rgba(30,77,123,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#1e4d7b;background:rgba(30,77,123,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第4章 運動の生理｜パートA 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ A 運動の調節</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第4章 P43〜P45 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本。通常モードで「ここは重要」と示す印。プールの4〜6割が目安
+   dobon :true … 💣ドボン。ドボンモードで外すと即終了になる問題。プールの15%前後に絞る
+                  ★kihon とは別フラグ。🎯基本の中でも過去問頻度が特に高いものだけに付ける
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。kihon とは併用しない
+   exp … 正解時に見せる「なぜ正しいか」
+
+   過去問（10章 神経／14章 筋肉）での出題頻度（パートAの範囲に関係するもの）：
+   大脳皮質の運動関連領域9回／脳幹の中枢所在8回／大脳基底核7回／小脳7回／
+   錐体路・錐体交叉・内包5回／視床下部5回／α運動ニューロン3回／脊髄の歩行パターン1回
+   ※一次運動野の体部位再現・大脳基底核の障害・小脳の障害は教科書P55〜58（パートE）の範囲なので入れていない
+   ※脊髄反射は「1つではない」と認識させるため、同じ設問で答えの違う問題を複数入れている
+   ※ダミーには脊髄反射を入れない（同じ設問どうしで答えがぶつからないようにするため） */
+const PICK=5;
+const POOL=[
+
+/* ---------- A-1 運動の3つのカテゴリー（P43） ---------- */
+
+{q:"咀嚼は、運動の3つのカテゴリーのうちどれにあたるか。",
+ choices:[
+  ["生まれつき備わったプログラムで、無意識的・自動的に行われる運動",true,""],
+  ["反射",false,"刺激に対して意識と無関係に起こる運動。熱いものに触れて手を引っ込めるなど。"],
+  ["ある目的のために意識的に行われる運動",false,"目的をもって意識して行う運動。"],
+  ["学習によってはじめて獲得される運動",false,"練習で身につける運動。咀嚼は生まれつき備わっている。"]],
+ exp:"<b>咀嚼</b>は歩行・起立と同じく、開始と終了は意識的だが、<b>生まれつき備わっているプログラム</b>で無意識的・自動的に行われる。（教科書 P43）"},
+
+{q:"運動のカテゴリーとその例の組合せで正しいのはどれか。",
+ choices:[
+  ["生まれつきのプログラムで自動的に行われる運動 ― 起立",true,""],
+  ["反射 ― 練習して身につけた自転車の運転",false,"自転車の運転は、意識的に行っていた運動が学習で自動化したもの。"],
+  ["意識的に行われる運動 ― 目の前に物が急に近づいたとき、まぶたを閉じる",false,"刺激に対して無意識に起こる反射。"],
+  ["学習によって自動化された運動 ― 歩行",false,"歩行は練習で身につけるものではなく、生まれつき備わったプログラムによる運動。"]],
+ exp:"運動は①<b>反射</b>（熱いものに触れて手を引っ込めるなど）、②<b>生まれつき備わったプログラムで無意識的・自動的に行われる運動</b>（歩行・起立・咀嚼）、③<b>意識的に行われる運動</b>に分けられる。③は学習によって<b>自動化</b>されることがある（自転車の運転など）。（教科書 P43）"},
+
+{q:"骨格筋の収縮に不可欠な信号を送るのはどれか。",
+ choices:[
+  ["運動神経",true,""],
+  ["感覚神経",false,"受容器からの情報を中枢へ伝える神経。"],
+  ["自律神経",false,"内臓・血管・腺のはたらきを調節する神経。"],
+  ["内分泌系",false,"ホルモンによって全身の器官を調節するしくみ。"]],
+ exp:"運動するということは骨格筋を収縮させること。その収縮には<b>運動神経</b>から送られる信号が不可欠なので、運動が起こるときには神経（脳）がいつもはたらいている。（教科書 P43）"},
+
+{q:"意識的に行われる運動が、学習によって無意識に行えるようになることを何というか。",
+ choices:[
+  ["自動化",true,""],
+  ["反射",false,"生まれつき備わった、刺激に対して無意識に起こる運動。"],
+  ["協調",false,"複数の筋をタイミングよく連動させること。"],
+  ["階層化",false,"脳部位が上位・下位の層をなして組織されていること。"]],
+ exp:"③の意識的な運動も、<b>学習</b>することで無意識化（<b>自動化</b>）される。（教科書 P43）"},
+
+{q:"運動の目的や意識に応じて変化するとされるのはどれか。",
+ choices:[
+  ["反射の大きさ",true,""],
+  ["反射中枢の位置",false,"反射中枢の場所は決まっており、目的や意識で移動しない。"],
+  ["α運動ニューロンの数",false,"細胞の数が目的や意識で増減することはない。"],
+  ["錐体交叉の割合",false,"伝導路の構造で決まっており、目的や意識で変化しない。"]],
+ exp:"<b>反射の大きさ</b>も、運動の目的や意識に応じて変化する。日常動作は3つのカテゴリーの運動が組み合わさって成り立つ。（教科書 P43）"},
+
+/* ---------- A-2 脊髄（P44） ---------- */
+
+{q:"骨格筋の収縮を支配するα運動ニューロンの細胞体があるのはどこか。",kihon:true,
+ choices:[
+  ["脊髄前角",true,""],
+  ["脊髄側角",false,"胸髄・腰髄にあり、交感神経の節前ニューロンの細胞体がある部位。"],
+  ["後根神経節",false,"感覚ニューロンの細胞体が集まった部位。"],
+  ["脊髄白質",false,"伝導路の線維が通る部分で、細胞体の集まりではない。"]],
+ exp:"<b>脊髄前角</b>には<b>α運動ニューロン</b>の細胞体がある。α運動ニューロンは骨格筋の収縮を支配する。（教科書 P44）"},
+
+{q:"歩行の基本的な運動パターンをつくる神経機構があるのはどれか。",kihon:true,
+ choices:[
+  ["脊髄",true,""],
+  ["延髄",false,"呼吸や循環など、生命維持に不可欠な中枢がある部位。"],
+  ["小脳",false,"協調した滑らかな動作や運動の学習に不可欠な部位。"],
+  ["大脳辺縁系",false,"情動行動・本能行動に重要な役割を果たす部位。"]],
+ exp:"脊髄前角は反射中枢として機能するほか、<b>歩行の基本的な運動パターン</b>をつくる神経機構がある。（教科書 P44）"},
+
+{q:"脊髄前角が反射中枢としてはたらく反射はどれか。",kihon:true,
+ choices:[
+  ["伸張反射",true,""],
+  ["対光反射",false,"光で瞳孔が縮小する反射で、中枢は中脳にある。"],
+  ["嚥下反射",false,"飲み込みの反射で、中枢は延髄にある。"],
+  ["角膜反射",false,"角膜に触れるとまばたきが起こる反射で、中枢は橋にある。"]],
+ exp:"<b>伸張反射</b>は脊髄前角を反射中枢とする代表的な脊髄反射。脊髄反射はほかにもいくつもある。（教科書 P44・P47）"},
+
+{q:"脊髄前角が反射中枢としてはたらく反射はどれか。",kihon:true,
+ choices:[
+  ["屈曲反射",true,""],
+  ["対光反射",false,"光で瞳孔が縮小する反射で、中枢は中脳にある。"],
+  ["前庭動眼反射",false,"頭が動いたとき、視線がぶれないよう眼球が反対に動く反射で、中枢は脳幹にある。"],
+  ["立ち直り反射",false,"傾いた頭や体をまっすぐに戻す反射で、中枢は中脳にある。"]],
+ exp:"画びょうを踏んだときに足を引っ込める<b>屈曲反射</b>（引っ込め反射）は、脊髄内でいくつかのニューロンを介して起こる脊髄反射。（教科書 P51）"},
+
+{q:"脊髄前角が反射中枢としてはたらく反射はどれか。",
+ choices:[
+  ["交叉性伸展反射",true,""],
+  ["嚥下反射",false,"飲み込みの反射で、中枢は延髄にある。"],
+  ["角膜反射",false,"角膜に触れるとまばたきが起こる反射で、中枢は橋にある。"],
+  ["立ち直り反射",false,"傾いた頭や体をまっすぐに戻す反射で、中枢は中脳にある。"]],
+ exp:"屈曲反射が起こったとき、反対側の肢が伸展して体重を支える反射が<b>交叉性伸展反射</b>。脊髄で起こる。なお運動学の教科書では「交<b>差</b>性伸展反射」と書くが、同じ反射である。（教科書 P52）"},
+
+{q:"脊髄前角が反射中枢としてはたらく反射はどれか。",
+ choices:[
+  ["筋性防御",true,""],
+  ["対光反射",false,"光で瞳孔が縮小する反射で、中枢は中脳にある。"],
+  ["前庭動眼反射",false,"頭が動いたとき、視線がぶれないよう眼球が反対に動く反射で、中枢は脳幹にある。"],
+  ["嚥下反射",false,"飲み込みの反射で、中枢は延髄にある。"]],
+ exp:"腹腔内の炎症で腹壁が硬くなる<b>筋性防御</b>は、炎症で刺激された腹膜と同じ脊髄分節の運動ニューロンが反射的に活動して起こる。脊髄反射のひとつ。（教科書 P52）"},
+
+/* ---------- A-3 脳幹（P44） ---------- */
+
+{q:"脳幹の運動核が担う運動はどれか。",kihon:true,
+ choices:[
+  ["発声・嚥下や、頭部・顔面の運動",true,""],
+  ["上肢・下肢の随意運動",false,"皮質脊髄路を経て、脊髄前角のα運動ニューロンが担う。"],
+  ["歩行の基本的な運動パターン",false,"脊髄にある神経機構がつくる。"],
+  ["内臓平滑筋の収縮",false,"自律神経系が調節する。"]],
+ exp:"脳幹には、<b>運動核</b>と呼ばれる遠心性神経の起点にあたるニューロン群がある。運動核は<b>発声・嚥下</b>のほか、<b>頭部や顔面</b>の運動を担う。（教科書 P44）"},
+
+{q:"脳幹にあり、随意運動のはたらきを反射的に助ける伝導路の起点となるのはどれか。",kihon:true,
+ choices:[
+  ["前庭核",true,""],
+  ["尾状核",false,"大脳の奥深くにある、大脳基底核の一部。"],
+  ["視床下部",false,"間脳にあり、情動行動・本能行動やホルモン分泌に関わる。"],
+  ["脊髄前角",false,"α運動ニューロンの細胞体がある脊髄の部位。"]],
+ exp:"脳幹では<b>赤核・網様体・前庭核・視蓋</b>を起点とした伝導路が構成され、これらが随意運動のはたらきを反射的に助けている。（教科書 P44）"},
+
+{q:"延髄について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["呼吸や循環など、生命維持に不可欠な機能を担う中枢がある",true,""],
+  ["運動の学習に不可欠な部位である",false,"大脳基底核と小脳のはたらき。"],
+  ["情動行動・本能行動に重要な役割を果たす",false,"視床下部と大脳辺縁系のはたらき。"],
+  ["体温調節の中枢がある",false,"体温調節の中枢は視床下部にある。"]],
+ exp:"脳幹には呼吸や循環など生命維持に不可欠な機能を担う中枢がある。これらの中枢は主に<b>延髄</b>にあり、障害を受けると呼吸が停止し生命を失う。（教科書 P44、3章 P41）"},
+
+/* ---------- A-4 大脳皮質（P44） ---------- */
+
+{q:"大脳皮質の運動関連領域に含まれないのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["一次体性感覚野",true,""],
+  ["補足運動野",false,"運動関連領域のひとつ。"],
+  ["運動前野",false,"運動関連領域のひとつ。"],
+  ["帯状皮質運動野",false,"運動関連領域のひとつ。"]],
+ exp:"大脳皮質の運動関連領域は、<b>一次運動野・補足運動野・運動前野・帯状皮質運動野</b>など。一次体性感覚野は感覚の領域。（教科書 P44）"},
+
+/* ---------- A-5 その他の領域（P45） ---------- */
+
+{q:"協調した滑らかな動作や運動の学習に不可欠なのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["大脳基底核と小脳",true,""],
+  ["視床下部と大脳辺縁系",false,"摂食・飲水・性行動などの情動行動、本能行動に重要な部位。"],
+  ["脊髄と脳幹",false,"反射中枢や生命維持の中枢がある部位。"],
+  ["一次運動野と運動前野",false,"大脳皮質の運動関連領域。"]],
+ exp:"協調した滑らかな動作や<b>運動の学習</b>のためには、<b>大脳基底核</b>と<b>小脳</b>が不可欠である。（教科書 P45）"},
+
+{q:"摂食や飲水などの本能行動に重要な役割を果たすのはどれか。",
+ choices:[
+  ["視床下部",true,""],
+  ["小脳",false,"協調した滑らかな動作や運動の学習に関わる部位。"],
+  ["脊髄",false,"反射中枢や、歩行の基本パターンをつくる神経機構がある部位。"],
+  ["一次運動野",false,"大脳皮質の運動関連領域。"]],
+ exp:"摂食・飲水・性行動などの情動行動、本能行動には、<b>視床下部</b>と大脳辺縁系が重要な役割を果たす。（教科書 P45）"},
+
+{q:"運動に関わる脳部位の組織について正しいのはどれか。",
+ choices:[
+  ["階層的に組織されていて、上位層が関係するほど複雑な運動を滑らかに行える",true,""],
+  ["階層的に組織されていて、下位層が関係するほど複雑な運動を滑らかに行える",false,"上位と下位の関係が逆。"],
+  ["各部位はそれぞれ独立しており、互いに関係せず運動を制御する",false,"教科書は階層的な組織と述べている。"],
+  ["大脳皮質だけで運動のすべてを制御している",false,"反射や歩行パターンのように、脊髄・脳幹が担う運動もある。"]],
+ exp:"脳部位は<b>階層的</b>に組織されていて、<b>上位層</b>が関係するほど複雑な運動を滑らかに行うことが可能になる。（教科書 P45）"},
+
+/* ---------- A-6 伝導路（P45） ---------- */
+
+{q:"運動関連領域（主として一次運動野）から脊髄前角のα運動ニューロンへつながる下行性伝導路はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["皮質脊髄路",true,""],
+  ["脊髄視床路",false,"温度覚・痛覚などを視床へ伝える上行性の伝導路。"],
+  ["後索－内側毛帯路",false,"触圧覚や深部感覚を伝える上行性の伝導路。"],
+  ["脊髄小脳路",false,"運動や姿勢の情報を小脳へ伝える上行性の伝導路。"]],
+ exp:"脳の運動関連領域から脊髄前角のα運動ニューロンへつながる下行性伝導路を<b>皮質脊髄路</b>と呼ぶ。（教科書 P45、図4・2）"},
+
+{q:"随意運動の指令を出す上位の運動ニューロンで、皮質脊髄路の始まりとなるのはどれか。",kihon:true,
+ choices:[
+  ["錐体細胞",true,""],
+  ["α運動ニューロン",false,"脊髄前角にあり、骨格筋を直接支配する下位の運動ニューロン。"],
+  ["プルキンエ細胞",false,"小脳皮質にあるニューロン。"],
+  ["運動核のニューロン",false,"脳幹にあり、遠心性神経の起点となるニューロン群。"]],
+ exp:"皮質脊髄路は、大脳皮質の<b>錐体細胞</b>から始まる。大脳皮質から脊髄までの伝導路で、大脳皮質側のニューロンを<b>上位運動ニューロン</b>、骨格筋を直接支配する脊髄前角のα運動ニューロンを<b>下位運動ニューロン</b>と呼ぶ（この呼び方は教科書P43〜45にはないが、国試や臨床でよく使う）。（教科書 P45）"},
+
+{q:"皮質脊髄路の主な起点となる一次運動野は、ブロードマンの何野にあたるか。",kihon:true,
+ choices:[
+  ["4野",true,""],
+  ["3野",false,"中心後回にあり、一次体性感覚野の一部。"],
+  ["17野",false,"後頭葉にある一次視覚野。"],
+  ["22野",false,"側頭連合野にあるウェルニッケ野（感覚性言語中枢）。"]],
+ exp:"一次運動野は<b>ブロードマンの4野</b>にあたる。電気刺激すると、からだの部位に対応した運動が再現される（体部位再現）。（3章 パートC、教科書 P32）"},
+
+{q:"皮質脊髄路が「錐体路」とも呼ばれる理由として正しいのはどれか。",kihon:true,
+ choices:[
+  ["軸索が「錐体」と呼ばれる部分で交叉して下行するから",true,""],
+  ["錐体細胞を経由せずに下行するから",false,"皮質脊髄路は錐体細胞から始まる。"],
+  ["錐体外路と並行して下行するから",false,"名前の由来とは関係がない。"],
+  ["伝導路の断面が錐体（円錐）の形をしているから",false,"形に由来する名前ではない。"]],
+ exp:"皮質脊髄路は錐体細胞から始まり、その軸索が「<b>錐体</b>」と呼ばれる部分で交叉して下行するため、<b>錐体路</b>とも呼ばれる。（教科書 P45）"},
+
+{q:"皮質脊髄路が交叉する「錐体」があるのはどこか。",kihon:true,
+ choices:[
+  ["延髄",true,""],
+  ["中脳",false,"脳幹の最上部。錐体交叉の場所ではない。"],
+  ["橋",false,"中脳のすぐ下にある脳幹の部位。錐体交叉の場所ではない。"],
+  ["脊髄",false,"腹側皮質脊髄路の線維が交叉する場所で、「錐体」はない。"]],
+ exp:"錐体は<b>延髄</b>の腹側にあるふくらみ。外側皮質脊髄路の線維の多くがここで対側へ交叉する（錐体交叉）。（教科書 P45、図4・2）"},
+
+{q:"外側皮質脊髄路のうち、対側へ交叉するのはおよそどのくらいか。",kihon:true,dobon:true,
+ choices:[
+  ["約80〜90%",true,""],
+  ["約10〜20%",false,"交叉せずに下行する残りの割合に近い値。"],
+  ["約50%",false,"教科書が示す値と合わない。"],
+  ["100%",false,"すべてが交叉するわけではない。"]],
+ exp:"外側皮質脊髄路は、その約<b>80〜90%</b>が対側へ交叉する。これを<b>錐体交叉</b>という。（教科書 P45）"},
+
+{q:"錐体交叉で交叉しなかった線維が下行する伝導路はどれか。",kihon:true,
+ choices:[
+  ["腹側皮質脊髄路",true,""],
+  ["外側皮質脊髄路",false,"錐体交叉で対側へ交叉した線維が下行する伝導路。"],
+  ["脊髄視床路",false,"温度覚・痛覚などを伝える上行性の伝導路。"],
+  ["後索－内側毛帯路",false,"触圧覚や深部感覚を伝える上行性の伝導路。"]],
+ exp:"錐体交叉で交叉しなかった残りの線維は、<b>腹側皮質脊髄路</b>を下行する。（教科書 P45、図4・2）"},
+
+{q:"錐体交叉で交叉しなかった皮質脊髄路の線維は、最終的にどうなるか。",
+ choices:[
+  ["脊髄で交叉してから、α運動ニューロンに至る",true,""],
+  ["交叉しないまま、同側のα運動ニューロンに至る",false,"最終的には交叉する。"],
+  ["中脳まで戻って交叉する",false,"下行性の伝導路なので、上位へ戻ることはない。"],
+  ["小脳へ向かう",false,"皮質脊髄路は脊髄前角のα運動ニューロンへ向かう。"]],
+ exp:"交叉しなかった線維も、<b>脊髄で交叉</b>してα運動ニューロンに至る。結局、大脳皮質の運動関連領域は主に<b>反対側</b>の骨格筋を支配する。（教科書 P45）"},
+
+{q:"錐体交叉より下の脊髄で、右側の外側皮質脊髄路が損傷した。随意運動が障害されるのはどれか。",kihon:true,
+ choices:[
+  ["右下肢",true,""],
+  ["左下肢",false,"交叉を終えた後の線維なので、損傷側の反対側には影響しない。"],
+  ["顔面",false,"顔面の運動は脳幹の運動核が担い、脊髄の伝導路の損傷では障害されない。"],
+  ["左右の下肢",false,"片側の伝導路の損傷なので、両側には及ばない。"]],
+ exp:"外側皮質脊髄路は、錐体交叉ですでに対側へ交叉を終えている。そのため交叉より下の脊髄で右側が損傷すると、<b>同じ右側</b>の随意運動が障害される。（教科書 P45、図4・2）"},
+
+/* ---------- ⚠ 誤りを選ぶ ---------- */
+
+{q:"皮質脊髄路について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["脊髄後角の感覚ニューロンにつながる",true,""],
+  ["脳の運動関連領域から起こる",false,"教科書どおりの記述なので、正しい。"],
+  ["脊髄を下行する遠心性の伝導路である",false,"教科書どおりの記述なので、正しい。"],
+  ["錐体路とも呼ばれる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"皮質脊髄路がつながるのは、脊髄<b>前角</b>の<b>α運動ニューロン</b>。感覚ニューロンではない。（教科書 P45）"},
+
+{q:"運動について誤っているのはどれか。",gori:true,
+ choices:[
+  ["意識的に行われる運動は、学習しても無意識化されない",true,""],
+  ["運動が起こるときには、神経（脳）がいつもはたらいている",false,"教科書どおりの記述なので、正しい。"],
+  ["歩行は、開始と終了を意識的に行う",false,"教科書どおりの記述なので、正しい。"],
+  ["日常動作は、3つのカテゴリーの運動が組み合わさって成り立つ",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"意識的な運動も、<b>学習</b>することで無意識化（<b>自動化</b>）される。（教科書 P43）"},
+
+{q:"脊髄と脳幹について誤っているのはどれか。",gori:true,
+ choices:[
+  ["脊髄では、上位の脳からの信号がなければ反射は起こらない",true,""],
+  ["脊髄は、頸髄・胸髄・腰髄・仙髄で構成される",false,"教科書どおりの記述なので、正しい。"],
+  ["脳幹の運動核は、遠心性神経の起点にあたるニューロン群である",false,"教科書どおりの記述なので、正しい。"],
+  ["脳幹の網様体を起点とする伝導路は、随意運動を反射的に助ける",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"<b>脊髄前角は反射中枢</b>として機能する。受容器からの入力があれば、脳からの信号がなくても脊髄だけで反射が起こる。（教科書 P44）"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"錐体路に対して、大脳基底核を中心に、筋緊張や不随意的な運動の調節に関わる経路をまとめて何というか。",hosoku:true,
+ choices:[
+  ["錐体外路系",true,""],
+  ["自律神経系",false,"内臓・血管・腺のはたらきを調節する末梢神経系。"],
+  ["上行性網様体賦活系",false,"脳幹の網様体を通り、意識の覚醒を保つ系。"],
+  ["体性感覚系",false,"皮膚や筋・関節からの感覚を伝える系。"]],
+ exp:"補足知識（資料外）。随意運動を伝える<b>錐体路</b>に対し、それ以外の運動の経路をまとめて<b>錐体外路系</b>と呼ぶ。中心となるのは大脳基底核。教科書に「錐体外路」の語は出てこないが、国試では大脳基底核の機能としてこの語で繰り返し問われる。"},
+
+{q:"錐体路が障害されたときに出現する病的反射はどれか。",hosoku:true,
+ choices:[
+  ["バビンスキー反射",true,""],
+  ["伸張反射",false,"筋が伸ばされると、その筋が収縮する正常な反射。"],
+  ["屈曲反射",false,"皮膚への侵害刺激で四肢を引っ込める正常な反射。"],
+  ["対光反射",false,"光で瞳孔が縮小する正常な反射。"]],
+ exp:"補足知識（資料外）。<b>バビンスキー反射</b>は、足底の外側をこすると母趾が背屈し、他の4趾が扇状に開く反応で、<b>錐体路の障害</b>で出現する。大脳基底核や小脳の障害では出現しない点も問われる。"},
+
+{q:"皮質脊髄路が通る大脳内の部位で、損傷すると反対側の運動麻痺が起こるのはどれか。",hosoku:true,
+ choices:[
+  ["内包",true,""],
+  ["小脳",false,"損傷しても運動麻痺は起こらず、運動の協調や平衡が障害される。"],
+  ["視床下部",false,"本能行動やホルモン分泌の調節に関わる間脳の部位。"],
+  ["海馬",false,"短期記憶に重要な大脳辺縁系の部位。"]],
+ exp:"補足知識（資料外）。皮質脊髄路は、大脳皮質 → <b>内包</b> → 中脳 → 橋 → 錐体交叉 → 脊髄と下行する。内包は線維が密集しているため、小さな脳出血・脳梗塞でも広い範囲に麻痺が起こる。錐体交叉より上の障害なので、麻痺は<b>反対側</b>に出る。"},
+
+{q:"脊髄前角が反射中枢としてはたらく反射はどれか。",hosoku:true,
+ choices:[
+  ["ひっかき反射",true,""],
+  ["対光反射",false,"光で瞳孔が縮小する反射で、中枢は中脳にある。"],
+  ["角膜反射",false,"角膜に触れるとまばたきが起こる反射で、中枢は橋にある。"],
+  ["立ち直り反射",false,"傾いた頭や体をまっすぐに戻す反射で、中枢は中脳にある。"]],
+ exp:"補足知識（資料外）。<b>ひっかき反射</b>は、皮膚を刺激されると、その部位を後肢でひっかく反射。脳を切り離した動物でも起こる脊髄反射で、脊髄の複数の髄節にまたがって起こる反射の代表例（運動学で学ぶ）。"},
+
+{q:"脊髄反射のうち、複数の髄節にまたがって起こるものを何というか。",hosoku:true,
+ choices:[
+  ["脊髄節間反射",true,""],
+  ["脊髄節反射",false,"1つの髄節の中で完結する脊髄反射。"],
+  ["脳幹反射",false,"脳幹が反射中枢となる反射。"],
+  ["軸索反射",false,"反射中枢を介さず、感覚神経の軸索の分枝で起こる現象。"]],
+ exp:"補足知識（資料外）。脊髄反射は、1つの髄節の中で完結する<b>脊髄節反射</b>と、複数の髄節にまたがる<b>脊髄節間反射</b>に分けられる（運動学の分類）。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>

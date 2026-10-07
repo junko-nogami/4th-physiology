@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 運動の生理 パートC2 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ch:#1E4D7B;--chd:#163a5c;--ok:#1F9D6B;--ng:#D0483F;--hos:#8a6314}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em;text-align:center;line-height:1.6}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:var(--ch);padding:14px 28px;display:flex;align-items:center;gap:12px}
+.hd .ch{font-size:11px;color:#c4d9f0;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .rt{margin-left:auto;font-size:12px;color:#c4d9f0;text-align:right;white-space:nowrap;line-height:1.5}
+.bd{padding:22px 28px 20px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;margin-bottom:8px}
+.tags{margin-bottom:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;margin:0 6px 6px 0}
+.t-ki{background:rgba(30,77,123,.12);color:var(--ch)}
+.t-do{background:rgba(208,72,63,.13);color:var(--ng)}
+.t-go{background:rgba(154,85,10,.13);color:#9a550a}
+.t-ho{background:rgba(138,99,20,.13);color:var(--hos)}
+.q{font-size:16px;line-height:1.85;color:#111;font-weight:600;margin-bottom:16px}
+.q .err{color:var(--ng)}
+.ch-list{display:flex;flex-direction:column;gap:9px}
+.c{display:block;width:100%;text-align:left;font-family:inherit;font-size:14.5px;line-height:1.7;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:8px;padding:12px 15px;cursor:pointer;transition:background .15s,border-color .15s}
+.c:hover:not(:disabled){background:#eef1f6;border-color:#c7d2e0}
+.c:disabled{cursor:default}
+.c.ng{background:rgba(208,72,63,.07);border-color:rgba(208,72,63,.45);color:#8c3b35}
+.c.ok{background:rgba(31,157,107,.09);border-color:rgba(31,157,107,.5);color:#146b4a}
+.c.mute{opacity:.5}
+.fb{margin-top:16px;border-radius:8px;padding:14px 16px;font-size:14px;line-height:1.85;border:1px solid}
+.fb.ok{background:rgba(31,157,107,.07);border-color:rgba(31,157,107,.3)}
+.fb.ng{background:rgba(208,72,63,.06);border-color:rgba(208,72,63,.28)}
+.fb .ttl{font-weight:700;margin-bottom:5px}
+.fb.ok .ttl{color:#146b4a}
+.fb.ng .ttl{color:#a53b33}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.btn{padding:9px 18px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:13px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:var(--ch);color:#fff;border-color:var(--ch)}
+.btnp:hover{background:var(--chd)}
+.cnt{font-size:11.5px;color:#888;margin-left:auto}
+.start{padding:30px 28px 28px;text-align:center}
+.start .lead{font-size:14px;color:#444;line-height:1.95;margin-bottom:22px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:430px;margin:0 auto}
+.mbtn{font-family:inherit;cursor:pointer;border-radius:10px;padding:16px 18px;text-align:left;border:1.5px solid #d8dde5;background:#fff;transition:border-color .15s,background .15s}
+.mbtn:hover{border-color:var(--ch);background:#f6f9fc}
+.mbtn .mt{font-size:16px;font-weight:700;color:var(--ch);margin-bottom:4px}
+.mbtn.dob .mt{color:var(--ng)}
+.mbtn .md{font-size:12.5px;color:#666;line-height:1.7}
+.legend{margin-top:24px;font-size:11.5px;color:#777;line-height:2;text-align:left;max-width:430px;margin-left:auto;margin-right:auto;border-top:1px solid #e5e7eb;padding-top:14px}
+.res{padding:34px 28px 30px;text-align:center}
+.res .big{font-size:30px;font-weight:700;color:var(--ch);margin-bottom:8px}
+.res .big.ng{color:var(--ng)}
+.res .sub{font-size:14px;color:#555;line-height:2.1}
+.res .perfect{margin-top:14px;font-size:18px;font-weight:700;color:var(--ok)}
+@media(max-width:560px){
+ .bd{padding:18px 16px 16px}.hd{padding:12px 16px}.ctrl{padding:11px 16px 13px}
+ .hd .tt{font-size:16px}.q{font-size:15px}.c{font-size:14px}.start{padding:24px 16px}
+ .res{padding:26px 16px}
+}
+</style>
+</head>
+<body>
+<h1>生理学 第4章 運動の生理｜パートC2 確認テスト（誘発筋電図と複雑な反射）</h1>
+<div class="slide" id="app"></div>
+
+<script>
+/* ===== 問題プール ===== */
+const POOL=[
+{q:"誘発筋電図とはどのような筋電図か。",
+ choices:[
+ ["末梢神経や筋を電気刺激して得られる筋電図",true,""],
+ ["随意収縮をしているときに筋から記録する筋電図",false,"自発的な活動を記録したもので、刺激を加えていない。"],
+ ["安静時に筋から自然に生じる電位を記録した筋電図",false,"刺激を加えずに記録したものである。"],
+ ["脳の電気活動を頭皮から記録したもの",false,"筋ではなく脳の活動の記録である。"]],
+ exp:"末梢神経を刺激することで、伸張反射を模倣した単シナプス反射を誘発できる。このように刺激して得られる筋電図を誘発筋電図と呼ぶ（P51）。"},
+
+{q:"末梢神経を電気刺激したとき、最初に刺激される線維はどれか。",kihon:true,dobon:true,
+ choices:[
+ ["Ia群線維",true,""],
+ ["α運動ニューロンの軸索",false,"閾値が高く、刺激を強めてから刺激される。"],
+ ["Ib群線維",false,"腱の受容器から出る求心性線維である。"],
+ ["γ運動ニューロンの軸索",false,"錘内筋を支配する細い遠心性線維である。"]],
+ exp:"電気刺激をすると、もっとも太いIa群線維が最初に刺激される（P51）。太い線維ほど閾値が低い。"},
+
+{q:"H波（H反射）について正しいのはどれか。",kihon:true,
+ choices:[
+ ["伸張反射を電気刺激によって模倣したものである",true,""],
+ ["ゴルジ腱器官からの信号によって生じる",false,"腱の張力を検出する受容器は関与していない。"],
+ ["中枢内で複数のシナプスを介して生じる",false,"介在神経を介さない経路で生じる。"],
+ ["筋を直接電気刺激することで生じる",false,"刺激しているのは末梢神経である。"]],
+ exp:"末梢神経を刺激するともっとも太いIa群線維が最初に刺激され、伸張反射と同様にα運動ニューロンが興奮して筋電図上にH波が現れる。つまり伸張反射（単シナプス反射）を電気刺激で模倣したものである（P51）。"},
+
+{q:"図4・7の誘発筋電図は、どこを電気刺激して記録したものか。",
+ choices:[
+ ["膝窩部で脛骨神経",true,""],
+ ["肘窩部で正中神経",false,"上肢での刺激部位である。"],
+ ["鼠径部で大腿神経",false,"この図で用いられた部位ではない。"],
+ ["足関節部で腓骨神経",false,"この図で用いられた部位ではない。"]],
+ exp:"図4・7は膝窩部で脛骨神経を電気刺激し、強度を徐々に上げた場合の誘発筋電図である（P51）。"},
+
+{q:"H波について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["脊髄のα運動ニューロンを経由するため、潜時が長い",true,""],
+ ["筋へ直接向かう活動電位によって生じ、潜時が短い",false,"もう一方の波の説明になっている。"],
+ ["刺激を強くするほど振幅が大きくなり続ける",false,"途中から減少に転じる。"],
+ ["反射回路を介さずに生じる",false,"反射を介して生じる波である。"]],
+ exp:"Ia群線維で起こった活動電位は伸張反射と同様にα運動ニューロンを興奮させ、筋電図上に潜時の長いH波が現れる。これをH反射と呼ぶ（P51）。"},
+
+{q:"H波の潜時がM波より長いのはなぜか。",kihon:true,
+ choices:[
+ ["興奮が脊髄まで伝わり、α運動ニューロンを経由してから筋へ戻るため",true,""],
+ ["刺激される線維の伝導速度が、神経線維の中でとくに遅いため",false,"最初に刺激される線維は神経線維の中でもっとも速い。"],
+ ["加える電気刺激の強さが弱いため",false,"刺激の強さは潜時を決める要因ではない。"],
+ ["筋が収縮を始めるまでに時間がかかるため",false,"波が遅れるのは筋の側の事情によるものではない。"]],
+ exp:"H波はIa群線維→脊髄→α運動ニューロン→筋という遠回りの経路をたどるため、筋へ直接向かう活動電位によるM波より潜時が長くなる（P51、図4・7）。"},
+
+{q:"M波について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["刺激が強くなるにつれて振幅が大きくなる",true,""],
+ ["刺激が強くなると振幅が小さくなり、やがて消失する",false,"もう一方の波にあてはまる変化である。"],
+ ["脊髄を経由して生じるため、潜時が長い",false,"脊髄を経由せずに生じる波である。"],
+ ["Ia群線維が刺激されることで生じる",false,"より閾値の高い線維が刺激されて生じる。"]],
+ exp:"強い刺激でα運動ニューロンの軸索も刺激されると、筋に向かう活動電位によって潜時の短いM波が現れる。M波は刺激が強くなるにつれて振幅が大きくなる（P51）。"},
+
+{q:"電気刺激の強度を徐々に上げていったとき、H波の振幅はどのように変化するか。",kihon:true,
+ choices:[
+ ["はじめは大きくなるが、ある強度から減少し、やがて消失する",true,""],
+ ["刺激の強さにかかわらず一定である",false,"刺激強度によって変化する。"],
+ ["はじめから一貫して小さくなり続ける",false,"はじめは大きくなる。"],
+ ["はじめは小さくなるが、途中から大きくなり続ける",false,"変化の向きが逆である。"]],
+ exp:"刺激強度を上げるとH波の振幅は大きくなるが、ある強度まで高まると減少し始め、やがて完全に消失する（P51、図4・7）。"},
+
+{q:"H波の振幅が減少し始めるのはなぜか。",kihon:true,
+ choices:[
+ ["Ia群線維よりも閾値が高いα運動ニューロンの軸索も刺激されるため",true,""],
+ ["Ia群線維が疲労して興奮できなくなるため",false,"線維の疲労によるものではない。"],
+ ["筋紡錘の感度が下がって信号が弱くなるため",false,"電気刺激では受容器を介していない。"],
+ ["脊髄のシナプスが抑制されるため",false,"シナプスの抑制によるものではない。"]],
+ exp:"強い電気刺激によって、Ia群線維よりも閾値が高いα運動ニューロンの軸索も刺激されるためである（P51）。"},
+
+{q:"H波が完全に消失してしまうのはなぜか。",
+ choices:[
+ ["逆行する活動電位と、α運動ニューロンを下行してきた活動電位とが衝突して、両者とも消えるため",true,""],
+ ["刺激がIa群線維に届かなくなるため",false,"強い刺激でも届かなくなることはない。"],
+ ["脊髄の反射中枢が疲労してしまうため",false,"中枢の疲労によるものではない。"],
+ ["筋が強く収縮して電位が記録できなくなるため",false,"記録できなくなるからではない。"]],
+ exp:"逆行する活動電位は、α運動ニューロンを下行してきたH波を起こすはずの活動電位と衝突し、両者ともに消失してしまう（P51）。"},
+
+{q:"α運動ニューロンの軸索が刺激されたときに生じるものはどれか。",
+ choices:[
+ ["筋に向かう活動電位と、正常では起こらない脊髄へ逆行する活動電位",true,""],
+ ["筋に向かう活動電位だけ",false,"正常では起こらないもう一方の活動電位も生じる。"],
+ ["脊髄へ逆行する活動電位だけ",false,"筋に向かう活動電位も同時に生じる。"],
+ ["筋紡錘へ向かう求心性の活動電位",false,"求心性線維ではないので、この向きには生じない。"]],
+ exp:"この刺激により、筋に向かう活動電位と、正常では起こらない脊髄へ逆行する活動電位が生じる（P51）。"},
+
+{q:"H波とM波について誤っているのはどれか。",gori:true,
+ choices:[
+ ["M波はH波より潜時が長い",true,""],
+ ["H波は伸張反射を電気刺激で模倣したものである",false,"教科書どおりの記述なので、正しい。"],
+ ["M波は刺激が強くなるにつれて振幅が大きくなる",false,"教科書どおりの記述なので、正しい。"],
+ ["電気刺激をすると、もっとも太い線維が最初に刺激される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"M波は筋へ直接向かう活動電位によって生じるため潜時が短く、脊髄のα運動ニューロンを経由するH波のほうが潜時は長い（P51）。"},
+
+{q:"H波とM波について正しいのはどれか。",kihon:true,
+ choices:[
+ ["電気刺激を強くしていくと、H波は消失するが、M波は振幅が大きくなる",true,""],
+ ["H波はM波より潜時が短い",false,"脊髄を経由するぶん、時間のかかり方が逆になる。"],
+ ["M波はIa群線維が刺激されることで生じる",false,"より閾値の高い線維が刺激されて生じる波である。"],
+ ["H波は反射回路を介さずに生じる",false,"脊髄を経由して生じる波である。"]],
+ exp:"刺激を強めるとα運動ニューロンの軸索が刺激され、M波の振幅は大きくなる。一方、逆行する活動電位との衝突によってH波はやがて完全に消失する（P51、図4・7）。"},
+
+{q:"膝蓋腱反射の反射中枢がある脊髄分節はどれか。",hosoku:true,
+ choices:[
+ ["L2〜L4",true,""],
+ ["C5〜C6",false,"上腕二頭筋反射の中枢とされる高さである。"],
+ ["C7",false,"上腕三頭筋反射の中枢とされる高さである。"],
+ ["L5〜S2",false,"アキレス腱反射の中枢とされる高さである。"]],
+ exp:"補足知識（資料外）。国試では深部腱反射と中枢の高さの組合せがくり返し問われている。膝蓋腱反射＝L2〜L4、アキレス腱反射＝L5〜S2、上腕二頭筋反射＝C5〜C6、上腕三頭筋反射＝C7。教科書には分節の高さの記載はない。"},
+
+{q:"屈曲反射の別名はどれか。",kihon:true,
+ choices:[
+ ["引っ込め反射",true,""],
+ ["伸展反射",false,"肢を伸ばす向きの反応を指す語である。"],
+ ["立ち直り反射",false,"頭部や体幹をまっすぐに保つための反射である（P54）。"],
+ ["把握反射",false,"手のひらへの刺激で握り込む反射である。"]],
+ exp:"皮膚や筋に侵害刺激が加わると、その部位を引っ込める反射が起こる。これを屈曲反射（引っ込め反射）と呼ぶ（P51〜52）。"},
+
+{q:"屈曲反射のきっかけとなる受容器はどれか。",
+ choices:[
+ ["侵害受容器",true,""],
+ ["筋紡錘",false,"筋の長さの変化を監視する受容器である。"],
+ ["ゴルジ腱器官",false,"筋が発生する張力を検出する受容器である。"],
+ ["半規管",false,"頭部の傾きや回転を検出する内耳の器官である。"]],
+ exp:"侵害受容器で生まれた求心性信号が、脊髄内でいくつかのニューロンを介して運動ニューロンにはたらく（P51〜52）。"},
+
+{q:"屈曲反射が起こるとき、刺激を受けた側で起こることはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["屈筋が緊張し、伸筋が弛緩する",true,""],
+ ["屈筋が弛緩し、伸筋が緊張する",false,"反対側の肢で起こる反応である。"],
+ ["屈筋と伸筋が同時に緊張する",false,"関節が動かず、刺激から遠ざかれない。"],
+ ["屈筋と伸筋がともに弛緩する",false,"肢を引っ込める動きが起こらない。"]],
+ exp:"求心性信号は屈筋を支配する運動ニューロンを興奮させる一方、伸筋を支配する運動ニューロンを抑制する。その結果、関節は屈曲する（P51〜52）。"},
+
+{q:"多シナプス反射はどれか。",hosoku:true,
+ choices:[
+ ["屈曲反射",true,""],
+ ["膝蓋腱反射",false,"介在ニューロンを介さずに起こる反射である。"],
+ ["アキレス腱反射",false,"下腿三頭筋で起こる、介在ニューロンを介さない反射である。"],
+ ["上腕二頭筋反射",false,"上腕二頭筋で起こる、介在ニューロンを介さない反射である。"]],
+ exp:"補足知識（資料外）。中枢内でシナプスを2個以上介する反射を多シナプス反射と呼ぶ。交叉性伸展反射や腹壁反射も該当し、腱反射（伸張反射）は単シナプス反射である。教科書は「いくつかのニューロンを介して」と書いており、多シナプス反射という語は使っていない（P51〜52）。"},
+
+{q:"交叉性伸展反射が起こるとき、刺激を受けた側と反対側で起こることはどれか。",kihon:true,
+ choices:[
+ ["屈筋が弛緩し、伸筋が収縮する",true,""],
+ ["屈筋が収縮し、伸筋が弛緩する",false,"刺激を受けた側で起こる反応である。"],
+ ["屈筋と伸筋が同時に収縮する",false,"体重を支える肢の伸展が起こらない。"],
+ ["どちらの筋にも変化は起こらない",false,"反射が起こっていないことになる。"]],
+ exp:"交叉性伸展反射では、屈曲反射とは逆に、屈筋が弛緩し伸筋が収縮する（P52、図4・8）。"},
+
+{q:"交叉性伸展反射が起こる意味はどれか。",kihon:true,
+ choices:[
+ ["刺激を受けた肢が刺激から遠ざかるとき、反対側で体を支えるため",true,""],
+ ["刺激を受けた肢をより速く引っ込めるため",false,"引っ込める動きそのものを強める反射ではない。"],
+ ["両側の肢を同時に引っ込めて刺激から逃れるため",false,"両側が屈曲すると体を支えられない。"],
+ ["筋に過大な張力がかかるのを防ぐため",false,"張力に対する安全装置のはたらきである。"]],
+ exp:"屈曲反射だけではからだがそちらに傾いて倒れてしまう。そこで対側肢が伸展し、さらに体重をそちらに移す反射が同時に起こる（P52）。"},
+
+{q:"交叉性伸展反射について誤っているのはどれか。",gori:true,
+ choices:[
+ ["屈曲反射が終わったあとに、時間をおいて起こる",true,""],
+ ["侵害刺激がきっかけとなって起こる",false,"教科書どおりの記述なので、正しい。"],
+ ["体重を支えることができるようにはたらく",false,"教科書どおりの記述なので、正しい。"],
+ ["刺激を受けた側とは反対側の肢に現れる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"対側肢が伸展し、体重をそちらに移す反射は、屈曲反射と同時に起こる（P52）。なお生理学では「交叉性伸展反射」、運動学では「交差性伸展反射」と書かれるが、同じ反射である。"},
+
+{q:"腹腔内の急性炎症などで腹壁が緊張して硬くなる反射はどれか。",kihon:true,
+ choices:[
+ ["筋性防御",true,""],
+ ["屈曲反射",false,"侵害刺激を受けた部位を引っ込める反射である。"],
+ ["交叉性伸展反射",false,"対側肢が伸展して体を支える反射である。"],
+ ["立ち直り反射",false,"頭部や体幹をまっすぐに保つための反射である（P54）。"]],
+ exp:"筋性防御は、腹腔内の急性炎症などで腹壁が緊張して硬くなる反射である（P52）。"},
+
+{q:"筋性防御が起こるしくみとして正しいのはどれか。",
+ choices:[
+ ["炎症で刺激された腹膜と同一の脊髄分節の支配を受ける運動ニューロンが、腹壁で反射的に活動する",true,""],
+ ["腹壁の皮膚が直接刺激されて、その部位の筋が収縮する",false,"刺激されているのは皮膚ではない。"],
+ ["大脳皮質が痛みを認識して、意識的に腹壁を硬くする",false,"意識とは無関係に起こる反応である。"],
+ ["腹筋が伸ばされて伸張反射が起こる",false,"筋の伸展がきっかけではない。"]],
+ exp:"炎症で刺激された腹膜と同一の脊髄分節の支配を受ける運動ニューロンが、腹壁で反射的に活動することで起こる（P52）。"},
+
+{q:"急性虫垂炎のときに筋性防御が現れる部位はどれか。",
+ choices:[
+ ["右下腹部",true,""],
+ ["左下腹部",false,"虫垂がある側ではない。"],
+ ["右上腹部",false,"肝臓や胆嚢がある部位である。"],
+ ["心窩部",false,"胃のあたりで、虫垂の位置とは異なる。"]],
+ exp:"急性虫垂炎では右下腹部に筋性防御が現れる（P52）。"},
+
+{q:"筋性防御はどの反射に分類されるか。",hosoku:true,
+ choices:[
+ ["内臓−体性反射",true,""],
+ ["体性−内臓反射",false,"皮膚などへの刺激が内臓のはたらきを変える反射である。"],
+ ["内臓−内臓反射",false,"内臓からの情報が別の内臓のはたらきを調節する反射である。"],
+ ["体性−体性反射",false,"皮膚や筋への刺激で骨格筋が収縮する反射である。"]],
+ exp:"補足知識（資料外）。内臓からの情報が内臓感覚神経（求心路）を介して体性運動神経を興奮させ、筋を収縮させる反射を内臓−体性反射と呼ぶ。教科書には分類名の記載はない（P52）。"},
+
+{q:"複雑な反射について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+ ["屈曲反射では、侵害刺激を受けた側の伸筋を支配する運動ニューロンが興奮する",true,""],
+ ["屈曲反射は、皮膚や筋への侵害刺激によって起こる",false,"教科書どおりの記述なので、正しい。"],
+ ["交叉性伸展反射は、体重を対側へ移すようにはたらく",false,"教科書どおりの記述なので、正しい。"],
+ ["筋性防御は、腹腔内の急性炎症などで腹壁が硬くなる反射である",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"屈曲反射では、屈筋を支配する運動ニューロンが興奮する一方で、伸筋を支配する運動ニューロンは抑制される（P51〜52）。"}
+];
+
+/* ===== エンジン ===== */
+const N_Q=5;
+const app=document.getElementById("app");
+let mode="normal",qs=[],idx=0,miss=0,firstOK=0,streak=0,dead=false,locked=false;
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function qHTML(t){return esc(t).replace(/誤っている/g,'<span class="err">誤っている</span>');}
+
+function start(){
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートC2</div><div class="tt">確認テスト：誘発筋電図と複雑な反射</div></div></div>
+  <div class="start">
+    <div class="lead">全${POOL.length}問のプールから、毎回ランダムに${N_Q}問が出題されます。<br>問題の順番も選択肢の並びも、開くたびに変わります。</div>
+    <div class="modes">
+      <button class="mbtn" onclick="begin('normal')">
+        <div class="mt">通常モード</div>
+        <div class="md">間違えても、残りの選択肢から選び直せます。正解するまで進めて、最後に一発正解率とミス回数が出ます。ふだんの学習用。</div>
+      </button>
+      <button class="mbtn dob" onclick="begin('dobon')">
+        <div class="mt">💣 ドボンチャレンジ</div>
+        <div class="md">選び直しはできません。💣が付いた問題を外すと、その場で終了。何問連続で正解できるかに挑戦します。</div>
+      </button>
+    </div>
+    <div class="legend">
+      🎯 基本 … 落としてはいけない基本・頻出問題<br>
+      💣 ドボン … ドボンチャレンジで外すと終了する最重要問題<br>
+      ⚠ 誤りを選ぶ … 「誤っているのはどれか」形式<br>
+      📘 補足（資料外） … 教科書には載っていない国試頻出テーマ
+    </div>
+  </div>`;
+}
+
+function begin(m){
+  mode=m;qs=shuffle(POOL).slice(0,N_Q);idx=0;miss=0;firstOK=0;streak=0;dead=false;
+  render();
+}
+
+function render(){
+  const it=qs[idx];
+  locked=false;it._tried=[];it._done=false;
+  const isDob=(mode==="dobon"&&it.dobon);
+  let tags="";
+  if(isDob)tags+='<span class="tag t-do">💣 ドボン</span>';
+  else if(it.kihon)tags+='<span class="tag t-ki">🎯 基本</span>';
+  if(it.gori)tags+='<span class="tag t-go">⚠ 誤りを選ぶ</span>';
+  if(it.hosoku)tags+='<span class="tag t-ho">📘 補足（資料外）</span>';
+
+  it._order=shuffle(it.choices.map((c,i)=>i));
+  let cs="";
+  it._order.forEach((ci,pos)=>{
+    cs+=`<button class="c" id="c${pos}" onclick="pick(${pos})">${esc(it.choices[ci][0])}</button>`;
+  });
+
+  app.innerHTML=`
+  <div class="hd">
+    <div><div class="ch">第4章 運動の生理 ｜ パートC2 確認テスト</div>
+    <div class="tt">${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}</div></div>
+    <div class="rt">第 ${idx+1} 問 / ${qs.length}問${mode==="dobon"?"<br>連続正解 "+streak:"<br>ミス "+miss}</div>
+  </div>
+  <div class="bd">
+    <div class="tags">${tags||'<span class="tag t-ki" style="visibility:hidden">-</span>'}</div>
+    <div class="q">${qHTML(it.q)}</div>
+    <div class="ch-list">${cs}</div>
+    <div id="fb"></div>
+  </div>
+  <div class="ctrl" id="ctrl"><span class="cnt">選択肢をクリックすると判定されます</span></div>`;
+}
+
+function pick(pos){
+  if(locked)return;
+  const it=qs[idx];
+  const ci=it._order[pos];
+  const c=it.choices[ci];
+  const btn=document.getElementById("c"+pos);
+  const isDob=(mode==="dobon"&&it.dobon);
+
+  if(c[1]){ /* 正解 */
+    locked=true;
+    btn.classList.add("ok");
+    disableAll();
+    if(it._tried.length===0){firstOK++;}
+    if(mode==="dobon"){streak++;}
+    showFB(true,"正解！",it.exp);
+    nextBtn();
+    return;
+  }
+  /* 不正解 */
+  it._tried.push(ci);
+  if(mode==="normal"){
+    miss++;
+    btn.classList.add("ng");btn.disabled=true;
+    showFB(false,"もう一度",`選んだのは「${esc(c[0])}」。${esc(c[2])}<br>正解はほかの選択肢にあります。もう一度選んでください。`);
+    document.querySelector(".rt").innerHTML=`第 ${idx+1} 問 / ${qs.length}問<br>ミス ${miss}`;
+  }else{
+    locked=true;miss++;
+    btn.classList.add("ng");
+    disableAll();
+    showFB(false,isDob?"💣 ドボン！":"不正解",
+      `選んだのは「${esc(c[0])}」。${esc(c[2])}<br><br><b>解説：</b>${esc(it.exp)}`);
+    if(isDob){dead=true;}
+    nextBtn();
+  }
+}
+
+function disableAll(){document.querySelectorAll(".c").forEach(b=>{b.disabled=true;if(!b.classList.contains("ok")&&!b.classList.contains("ng"))b.classList.add("mute");});}
+
+function showFB(ok,title,body){
+  document.getElementById("fb").innerHTML=
+   `<div class="fb ${ok?"ok":"ng"}"><div class="ttl">${title}</div><div>${ok?esc(body):body}</div></div>`;
+}
+
+function nextBtn(){
+  const last=(idx===qs.length-1);
+  document.getElementById("ctrl").innerHTML=
+   (dead||last)
+   ? `<button class="btn btnp" onclick="result()">結果を見る ▶</button><span class="cnt">${dead?"ドボンのため終了":"これが最後の問題です"}</span>`
+   : `<button class="btn btnp" onclick="next()">次の問題へ ▶</button><span class="cnt">${idx+2} 問目 / 全${qs.length}問</span>`;
+}
+
+function next(){idx++;render();}
+
+function result(){
+  const ans=dead?idx+1:qs.length;
+  let body="";
+  if(mode==="normal"){
+    const rate=Math.round(firstOK/qs.length*100);
+    body=`<div class="big">${firstOK} / ${qs.length} 問</div>
+      <div class="sub">一発正解率　<b>${rate}%</b><br>総ミス回数　<b>${miss} 回</b></div>
+      ${miss===0?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }else{
+    body=`<div class="big${dead?" ng":""}">${streak} 問連続正解</div>
+      <div class="sub">${dead?"💣 ドボン問題を外したため終了しました。":`全${qs.length}問を走りきりました。`}<br>
+      ${streak===qs.length?"":"出題された "+ans+" 問中 "+streak+" 問正解"}</div>
+      ${streak===qs.length?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートC2 確認テスト</div>
+  <div class="tt">結果（${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}）</div></div></div>
+  <div class="res">${body}</div>
+  <div class="ctrl">
+    <button class="btn btnp" onclick="begin('${mode}')">もう一度（別の問題）▶</button>
+    <button class="btn" onclick="start()">モードを選び直す</button>
+    <span class="cnt">全${POOL.length}問のプールから出題</span>
+  </div>`;
+}
+start();
+</script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 運動の生理 パートB 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ch:#1E4D7B;--chd:#163a5c;--ok:#1F9D6B;--ng:#D0483F;--hos:#8a6314}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em;text-align:center;line-height:1.6}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:var(--ch);padding:14px 28px;display:flex;align-items:center;gap:12px}
+.hd .ch{font-size:11px;color:#c4d9f0;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .rt{margin-left:auto;font-size:12px;color:#c4d9f0;text-align:right;white-space:nowrap;line-height:1.5}
+.bd{padding:22px 28px 20px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;margin-bottom:8px}
+.tags{margin-bottom:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;margin:0 6px 6px 0}
+.t-ki{background:rgba(30,77,123,.12);color:var(--ch)}
+.t-do{background:rgba(208,72,63,.13);color:var(--ng)}
+.t-go{background:rgba(154,85,10,.13);color:#9a550a}
+.t-ho{background:rgba(138,99,20,.13);color:var(--hos)}
+.q{font-size:16px;line-height:1.85;color:#111;font-weight:600;margin-bottom:16px}
+.q .err{color:var(--ng)}
+.ch-list{display:flex;flex-direction:column;gap:9px}
+.c{display:block;width:100%;text-align:left;font-family:inherit;font-size:14.5px;line-height:1.7;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:8px;padding:12px 15px;cursor:pointer;transition:background .15s,border-color .15s}
+.c:hover:not(:disabled){background:#eef1f6;border-color:#c7d2e0}
+.c:disabled{cursor:default}
+.c.ng{background:rgba(208,72,63,.07);border-color:rgba(208,72,63,.45);color:#8c3b35}
+.c.ok{background:rgba(31,157,107,.09);border-color:rgba(31,157,107,.5);color:#146b4a}
+.c.mute{opacity:.5}
+.fb{margin-top:16px;border-radius:8px;padding:14px 16px;font-size:14px;line-height:1.85;border:1px solid}
+.fb.ok{background:rgba(31,157,107,.07);border-color:rgba(31,157,107,.3)}
+.fb.ng{background:rgba(208,72,63,.06);border-color:rgba(208,72,63,.28)}
+.fb .ttl{font-weight:700;margin-bottom:5px}
+.fb.ok .ttl{color:#146b4a}
+.fb.ng .ttl{color:#a53b33}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.btn{padding:9px 18px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:13px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:var(--ch);color:#fff;border-color:var(--ch)}
+.btnp:hover{background:var(--chd)}
+.cnt{font-size:11.5px;color:#888;margin-left:auto}
+.start{padding:30px 28px 28px;text-align:center}
+.start .lead{font-size:14px;color:#444;line-height:1.95;margin-bottom:22px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:430px;margin:0 auto}
+.mbtn{font-family:inherit;cursor:pointer;border-radius:10px;padding:16px 18px;text-align:left;border:1.5px solid #d8dde5;background:#fff;transition:border-color .15s,background .15s}
+.mbtn:hover{border-color:var(--ch);background:#f6f9fc}
+.mbtn .mt{font-size:16px;font-weight:700;color:var(--ch);margin-bottom:4px}
+.mbtn.dob .mt{color:var(--ng)}
+.mbtn .md{font-size:12.5px;color:#666;line-height:1.7}
+.legend{margin-top:24px;font-size:11.5px;color:#777;line-height:2;text-align:left;max-width:430px;margin-left:auto;margin-right:auto;border-top:1px solid #e5e7eb;padding-top:14px}
+.res{padding:34px 28px 30px;text-align:center}
+.res .big{font-size:30px;font-weight:700;color:var(--ch);margin-bottom:8px}
+.res .big.ng{color:var(--ng)}
+.res .sub{font-size:14px;color:#555;line-height:2.1}
+.res .perfect{margin-top:14px;font-size:18px;font-weight:700;color:var(--ok)}
+@media(max-width:560px){
+ .bd{padding:18px 16px 16px}.hd{padding:12px 16px}.ctrl{padding:11px 16px 13px}
+ .hd .tt{font-size:16px}.q{font-size:15px}.c{font-size:14px}.start{padding:24px 16px}
+ .res{padding:26px 16px}
+}
+</style>
+</head>
+<body>
+<h1>生理学 第4章 運動の生理｜パートB 確認テスト（運動神経と運動単位）</h1>
+<div class="slide" id="app"></div>
+
+<script>
+/* ===== 問題プール ===== */
+const POOL=[
+{q:"運動単位を構成するものの組合せはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["脊髄前角の運動ニューロンと、それが支配する筋線維",true,""],
+ ["一次運動野の錐体細胞とその軸索",false,"大脳皮質から脊髄へ下行する伝導路の出発点となる細胞である（P45）。"],
+ ["筋紡錘と、そこに終止するγ運動ニューロン",false,"筋の長さを監視する受容器と、その感度を調節する神経である（P47）。"],
+ ["1本の筋線維と、その中に並ぶ筋原線維",false,"筋線維の内部構造であり、神経との組合せではない（第2章P12）。"]],
+ exp:"1つのα運動ニューロンと、それが支配する筋線維群をまとめて運動単位と呼ぶ。張力発生の機能的単位である（P46、図4・3）。"},
+
+{q:"運動に関係する信号が最終的にすべて集まることから、α運動ニューロンにつけられている別名はどれか。",kihon:true,
+ choices:[
+ ["最終共通路",true,""],
+ ["皮質脊髄路",false,"大脳の運動関連領域から脊髄前角へ下行する伝導路の名称である（P45）。"],
+ ["錐体交叉",false,"下行線維の約80〜90%が対側へ乗り換える延髄の部位である（P45）。"],
+ ["反射弓",false,"反射が成立する経路全体を指す名称である（P47）。"]],
+ exp:"運動（筋収縮）に関係する信号は、最終的にはすべてα運動ニューロンへ送られる。このためα運動ニューロンは最終共通路とも呼ばれる（P46）。"},
+
+{q:"筋線維とα運動ニューロンの接合部で、神経側から放出される物質はどれか。",kihon:true,dobon:true,
+ choices:[
+ ["アセチルコリン",true,""],
+ ["ノルアドレナリン",false,"交感神経の節後線維から放出される伝達物質である。"],
+ ["グルタミン酸",false,"中枢神経系の代表的な興奮性伝達物質である。"],
+ ["γ-アミノ酪酸（GABA）",false,"中枢神経系の代表的な抑制性伝達物質である。"]],
+ exp:"筋線維とα運動ニューロンの神経筋接合部では、神経伝達物質としてアセチルコリン（ACh）が放出される（P46）。国試でくり返し問われているところ。"},
+
+{q:"神経支配比について正しいのはどれか。",kihon:true,
+ choices:[
+ ["精密な動きが必要な筋ほど小さい",true,""],
+ ["1本の筋線維が支配を受けるα運動ニューロンの数を表す",false,"筋線維とニューロンの関係が逆になっている。"],
+ ["筋線維の太さ（直径）の平均を表す",false,"この比が表しているのは太さではない。"],
+ ["どの骨格筋でもほぼ一定の値をとる",false,"筋によって数本から数百本まで大きく異なる。"]],
+ exp:"神経支配比とは、1本のα運動ニューロンが支配する筋線維の数である。手や眼筋のように精密な動きが必要な筋では小さく、大きく力強い運動を行う四肢の筋などでは大きい（P46）。"},
+
+{q:"1本の骨格筋線維とα運動ニューロンの関係で正しいのはどれか。",
+ choices:[
+ ["1本の筋線維を支配するα運動ニューロンは1つだけである",true,""],
+ ["1本の筋線維は複数のα運動ニューロンから重複して支配を受ける",false,"教科書がはっきり否定している記述である。"],
+ ["1つのα運動ニューロンが支配できる筋線維は1本だけである",false,"これでは運動単位という機能的なまとまりが成り立たない。"],
+ ["支配するニューロンの数は筋の部位によって1〜3本の間で変わる",false,"そのような記載はない。"]],
+ exp:"1本の筋線維が複数のα運動ニューロンで支配されることはない（P46）。"},
+
+{q:"1つの筋は、何本程度のα運動ニューロンの支配を受けているか。",
+ choices:[
+ ["数十〜数百本",true,""],
+ ["1本",false,"1つの筋がまるごと1つの運動単位になってしまう。"],
+ ["2〜3本",false,"これでは力を細かく調節できない。"],
+ ["数万本",false,"筋線維の本数と取り違えた値である。"]],
+ exp:"1つの筋は数十〜数百本のα運動ニューロンの支配を受けている（P46）。"},
+
+{q:"骨格筋が張力を発生するのは、何を受け取ったときか。",kihon:true,
+ choices:[
+ ["脊髄のα運動ニューロンの活動電位",true,""],
+ ["筋紡錘から送られるIa群線維の信号",false,"筋の伸展を中枢へ伝える求心性の信号である（P47）。"],
+ ["ゴルジ腱器官から送られるIb群線維の信号",false,"筋にかかる張力を中枢へ伝える求心性の信号である（P48）。"],
+ ["腱から筋へ直接伝わる機械的な張力",false,"腱は力を骨に伝える組織で、収縮の指令を出すわけではない。"]],
+ exp:"骨格筋は、脊髄のα運動ニューロンの活動電位を受けて収縮することで張力を発生する（P45〜46、図4・3）。"},
+
+{q:"運動単位の種類とその特徴の組合せで正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+ ["S型 ── 単収縮が遅く、疲労しにくい",true,""],
+ ["FF型 ── α運動ニューロンの伝導速度が遅い",false,"この型の伝導速度は3つの中で最も速い。"],
+ ["FR型 ── 支配する筋線維はタイプIである",false,"この型が支配するのは速筋線維である。"],
+ ["S型 ── 運動単位のサイズが3つの中で最も大きい",false,"この型のサイズは3つの中で最も小さい。"]],
+ exp:"S型は遅筋線維（タイプI）を支配し、単収縮が遅く、サイズが小さく、α運動ニューロンの伝導速度が遅く、疲労しにくい（表4・1）。"},
+
+{q:"FF型の運動単位が支配する筋線維はどれか。",
+ choices:[
+ ["速筋線維（タイプIIx）",true,""],
+ ["遅筋線維（タイプI）",false,"収縮速度が遅く持久性に富む線維で、S型が支配する。"],
+ ["速筋線維（タイプIIa）",false,"収縮速度も疲労耐性も中間で、FR型が支配するものである。"],
+ ["錘内筋線維",false,"筋紡錘の中にあり、γ運動ニューロンの支配を受ける線維である（P47）。"]],
+ exp:"FF型は速筋線維（タイプIIx）からなる。FR型はタイプIIa、S型はタイプIの筋線維を支配する（表4・1）。"},
+
+{q:"単収縮の速さ・運動単位のサイズ・疲労のしやすさが、いずれも中間である運動単位はどれか。",
+ choices:[
+ ["FR型",true,""],
+ ["S型",false,"単収縮が遅く、サイズが小さく、最も疲労しにくい型である。"],
+ ["FF型",false,"単収縮が速く、サイズが大きく、最も疲労しやすい型である。"],
+ ["γ型",false,"運動単位の分類にこのような型はない。"]],
+ exp:"運動単位はS型・FR型・FF型に分けられ、FR型は両者の中間の性質をもつ（表4・1）。"},
+
+{q:"運動単位のタイプについて誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+ ["1つの運動単位は、異なるタイプの筋線維が混ざって構成される",true,""],
+ ["F型はFR型とFF型にさらに分けられる",false,"教科書どおりの記述なので、正しい。"],
+ ["S型は、F型に比べて単収縮が小さい",false,"教科書どおりの記述なので、正しい。"],
+ ["収縮速度が速い運動単位をF型と呼ぶ",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"1つの運動単位を構成する筋線維は、すべて同じタイプである。だからこそ運動単位そのものをタイプに分類できる（P46）。"},
+
+{q:"運動単位のサイズについて正しいのはどれか。",kihon:true,
+ choices:[
+ ["S型・FR型・FF型の順に大きくなる",true,""],
+ ["α運動ニューロンの細胞体の直径のことを指す",false,"「サイズ」が指しているのは細胞の大きさではない。"],
+ ["3つのタイプでほぼ等しい",false,"タイプによって異なることが表4・1に示されている。"],
+ ["支配する筋線維1本あたりの太さを指す",false,"1本の線維の太さを表す言葉ではない。"]],
+ exp:"運動単位が発生する力の大きさを運動単位のサイズと呼び、S型は小さく、FR型、FF型の順に大きくなる（P46）。"},
+
+{q:"骨格筋線維のタイプと運動単位の関係で正しいのはどれか。",kihon:true,
+ choices:[
+ ["同じ運動単位に属する筋線維は、すべて同じタイプである",true,""],
+ ["1つの運動単位の中でのタイプの割合は、筋ごとに決まっている",false,"1つの運動単位の中にタイプの混在があることを前提にした記述である。"],
+ ["運動単位のタイプは、支配する筋線維の本数で決まる",false,"本数（神経支配比）とタイプの分類は別の話である。"],
+ ["筋線維のタイプは運動のたびに切り替わる",false,"1回ごとの運動で入れ替わるものではない。"]],
+ exp:"1つの運動単位を構成する筋線維はすべて同じタイプであり、そのため運動単位もタイプに分類できる（P46）。"},
+
+{q:"筋全体の収縮力を調節する方法として正しいのはどれか。",kihon:true,
+ choices:[
+ ["活動している運動単位の数を変える",true,""],
+ ["筋線維の本数そのものを増減させる",false,"収縮のたびに筋線維の本数が増減することはない。"],
+ ["α運動ニューロンの軸索の太さを変える",false,"軸索の太さはその場で変化しない。"],
+ ["神経筋接合部で放出される伝達物質の種類を変える",false,"骨格筋の接合部で使われる伝達物質は1種類である。"]],
+ exp:"筋全体の力は、①活動している運動単位の数を変える方法と、②それぞれの運動単位で発生する収縮力（α運動ニューロンの活動頻度）を変える方法で調節される（P46〜47）。"},
+
+{q:"活動させる運動単位の数を増やして筋の張力を高めるしくみを何と呼ぶか。",
+ choices:[
+ ["動員（リクルートメント）",true,""],
+ ["加重",false,"複数の入力が重なって膜電位の変化が大きくなる現象である。"],
+ ["強縮",false,"活動電位がくり返し生じ、単収縮が融合した状態である（第2章P17）。"],
+ ["不応期",false,"活動電位の直後、次の刺激に反応できない期間である。"]],
+ exp:"筋全体の力を調節する第1の方法が、活動している運動単位の数を変える動員（リクルートメント）である（P46〜47）。"},
+
+{q:"弱い力を出すときに先に活動する運動単位はどれか。",kihon:true,dobon:true,
+ choices:[
+ ["サイズの小さいS型",true,""],
+ ["サイズの大きいFF型",false,"大きな力が必要になってから動員される型である。"],
+ ["FR型とFF型が同時に",false,"力の大きさにかかわらず同時に働くわけではない。"],
+ ["運動単位が活動する順序は決まっていない",false,"動員の順序には一定の原則がある。"]],
+ exp:"「サイズの原理」により、弱い力を出すときには小さなサイズの運動単位（S型）だけがはたらき、発生させる力を増やすにつれて大きなサイズの運動単位（F型）が動員される（P47）。"},
+
+{q:"弱い力を出すときに、小さなサイズの運動単位から先に活動することが理にかなっている理由はどれか。",kihon:true,
+ choices:[
+ ["弱い力を出す場面では持久力が求められ、疲労しにくい運動単位が適しているため",true,""],
+ ["小さな運動単位ほど伝導速度が速く、素早く反応できるため",false,"小さなサイズの型は、α運動ニューロンの伝導速度は遅い。"],
+ ["小さな運動単位ほど、一度に大きな張力を出せるため",false,"小さなサイズの型が発生する力は小さい。"],
+ ["大きな運動単位は神経支配比が小さく、細かい調節に向かないため",false,"大きな運動単位は神経支配比が大きい。"]],
+ exp:"弱い力を出すときには持久力が要求されるため、疲労しにくい小さなサイズの運動単位を先に活動させることは理にかなっている（P47）。"},
+
+{q:"筋の収縮力の調節について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+ ["サイズの原理では、大きなサイズの運動単位から先に動員される",true,""],
+ ["筋の収縮力は、状況に応じて調節される",false,"教科書どおりの記述なので、正しい。"],
+ ["α運動ニューロンの活動頻度を変えることで収縮力が変わる",false,"教科書どおりの記述なので、正しい。"],
+ ["活動している運動単位の数を増やすと、筋全体の張力は大きくなる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"サイズの原理では、小さなサイズの運動単位から先に活動し、発生させる力を増やすにつれて大きなサイズの運動単位が加わる（P47）。"},
+
+{q:"運動単位について誤っているのはどれか。",gori:true,
+ choices:[
+ ["疲労しにくい運動単位ほど、α運動ニューロンの伝導速度が速い",true,""],
+ ["1つの筋は複数の運動単位から支配を受けている",false,"教科書どおりの記述なので、正しい。"],
+ ["支配する筋線維の数は、運動単位によって異なる",false,"教科書どおりの記述なので、正しい。"],
+ ["発生する力が大きい運動単位ほど、疲労しやすい",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"最も疲労しにくいのはS型だが、S型のα運動ニューロンの伝導速度は遅い。疲労耐性と伝導速度は逆の関係になる（表4・1）。"},
+
+{q:"握力計をゆっくり握り込み、力を徐々に強めていったときに起こることはどれか。",
+ choices:[
+ ["活動する運動単位の数が増え、やがてサイズの大きい運動単位も加わる",true,""],
+ ["先に活動していた運動単位が休み、別の運動単位に交代する",false,"先に働いていた型の活動が止まるわけではない。"],
+ ["α運動ニューロンの活動頻度は一定のまま変わらない",false,"活動頻度も収縮力の調節に使われている。"],
+ ["神経支配比が大きくなり、1本のニューロンが支配する筋線維が増える",false,"支配比は力の入れ方によって変わるものではない。"]],
+ exp:"収縮力は①動員される運動単位の数と②α運動ニューロンの活動頻度で調節され、動員はサイズの原理に従って小さい型から大きい型へと進む（P46〜47）。"},
+
+{q:"α運動ニューロンの伝導速度が最も速い運動単位について、正しいのはどれか。",
+ choices:[
+ ["支配する筋線維の収縮は速く、疲労しやすい",true,""],
+ ["支配する筋線維は持久性に富み、疲労しにくい",false,"伝導速度が最も遅い型にあてはまる特徴である。"],
+ ["運動単位のサイズは3つの中で最も小さい",false,"この型のサイズは3つの中で最も大きい。"],
+ ["弱い力を出すときに最初に動員される",false,"最初に動員されるのはサイズの小さい型である。"]],
+ exp:"伝導速度が最も速いのはFF型で、速筋線維（タイプIIx）を支配し、単収縮が速く大きく、疲労しやすい（表4・1）。"},
+
+{q:"1本のα運動ニューロンが支配する筋線維の数は、外眼筋でおよそ何本とされるか。",hosoku:true,
+ choices:[
+ ["約5本",true,""],
+ ["約50本",false,"指の筋などで示されることのある程度の値である。"],
+ ["約500本",false,"下腿の大きな筋で示される値である。"],
+ ["約5,000本",false,"1本のニューロンが支配する数としては大きすぎる。"]],
+ exp:"補足知識（資料外）。国試では、外眼筋は約5本、腓腹筋は約500本という数値が示されたことがある。教科書には「手や眼筋では小さく、四肢の筋では大きい」という記述のみで、数値は載っていない（P46）。"},
+
+{q:"1つの運動単位に属する筋線維の興奮のしかたで正しいのはどれか。",hosoku:true,
+ choices:[
+ ["同じ運動単位の筋線維は、ほぼ同時に（同期して）興奮する",true,""],
+ ["支配しているニューロンに近い筋線維から順に興奮する",false,"距離によって興奮の順番がつくわけではない。"],
+ ["筋線維ごとに別々のタイミングで興奮する",false,"同じニューロンの枝である以上、ばらばらにはならない。"],
+ ["筋線維の半数ずつが交互に興奮する",false,"そのようなしくみはない。"]],
+ exp:"補足知識（資料外）。1つのα運動ニューロンの軸索が枝分かれしてすべての筋線維に達するため、それらは常に活動を共にする。この性質が、運動単位を「機能的単位」と呼ぶ根拠になっている。"},
+
+{q:"サイズの原理を、α運動ニューロンの側からみた説明として正しいのはどれか。",hosoku:true,
+ choices:[
+ ["細胞体が小さいニューロンほど興奮の閾値が低く、先に活動する",true,""],
+ ["細胞体が大きいニューロンほど閾値が低く、先に活動する",false,"これでは動員の順序が逆になってしまう。"],
+ ["細胞体の大きさと閾値の間に関係はない",false,"大きさと閾値の間には一定の関係がある。"],
+ ["閾値は細胞体ではなく軸索の長さで決まる",false,"軸索の長さで動員の順序が決まるわけではない。"]],
+ exp:"補足知識（資料外）。小径の細胞ほど小さな入力で興奮するため、先に動員される。教科書は運動単位のサイズ（発生する力）で説明しており、細胞体の大きさには触れていない（P47）。"},
+
+{q:"立ったまま長時間作業するときのように、小さな力を出し続ける場面で中心的にはたらいている運動単位はどれか。",kihon:true,
+ choices:[
+ ["S型",true,""],
+ ["FF型",false,"単収縮が速く大きいが、疲労しやすい型である。"],
+ ["FR型",false,"収縮の速さも疲労のしやすさも中間の型である。"],
+ ["力の大きさにかかわらず、3つの型が同じ割合ではたらく",false,"動員される型は、出す力の大きさによって変わる。"]],
+ exp:"サイズの原理により、弱い力を出すときには小さなサイズの運動単位だけがはたらく。この型は疲労しにくいため、力を出し続ける場面に適している（P46〜47、表4・1）。"},
+
+{q:"全力で跳び上がるときのように、短時間に大きな力を出す場面について正しいのはどれか。",
+ choices:[
+ ["大きなサイズの運動単位まで動員されるが、その型は疲労しやすい",true,""],
+ ["小さなサイズの運動単位だけが、活動頻度を上げて対応する",false,"大きな力を出すときには、大きなサイズの型まで加わる。"],
+ ["疲労しにくい型だけが選ばれて動員される",false,"疲労耐性によって動員する型を選んでいるわけではない。"],
+ ["動員される運動単位の数は、弱い力のときと変わらない",false,"力を増やすと動員される数も増える。"]],
+ exp:"サイズの原理では、発生させる力を増やすにつれて大きなサイズの運動単位（F型）が動員される。大きな型ほど疲労しやすいため、大きな力は長くは続かない（P46〜47、表4・1）。"},
+
+{q:"サイズの原理の例外として知られているのはどれか。",hosoku:true,
+ choices:[
+ ["筋が引き伸ばされながら力を発揮する収縮では、速筋線維が優先的に使われることがある",true,""],
+ ["筋が短くなりながら力を発揮する収縮では、はじめから大きな運動単位が動員される",false,"求心性（短縮性）収縮では原則どおりの順序で動員される。"],
+ ["等尺性収縮では、動員の順序が毎回入れ替わる",false,"順序が毎回変わるという報告はない。"],
+ ["疲労が進むと、動員の順序が小さいものから大きいものへと逆転する",false,"もともと小さいものが先なので、これでは逆転にならない。"]],
+ exp:"補足知識（資料外）。通常はサイズの原理に従って小さなサイズの運動単位（S型）から動員されるが、遠心性（伸張性）収縮では速筋線維をもつ大きな運動単位が優先的に動員されるという報告がある。坂道を下る、着地の衝撃を受け止めるといった動作で筋線維が傷つきやすく、遅発性筋痛が起こりやすいことの説明にも使われる。教科書には記載がない（遠心性（伸張性）収縮の定義は第2章P17）。"}
+];
+
+/* ===== エンジン ===== */
+const N_Q=5;
+const app=document.getElementById("app");
+let mode="normal",qs=[],idx=0,miss=0,firstOK=0,streak=0,dead=false,locked=false;
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function qHTML(t){return esc(t).replace(/誤っている/g,'<span class="err">誤っている</span>');}
+
+function start(){
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートB</div><div class="tt">確認テスト：運動神経と運動単位</div></div></div>
+  <div class="start">
+    <div class="lead">全${POOL.length}問のプールから、毎回ランダムに${N_Q}問が出題されます。<br>問題の順番も選択肢の並びも、開くたびに変わります。</div>
+    <div class="modes">
+      <button class="mbtn" onclick="begin('normal')">
+        <div class="mt">通常モード</div>
+        <div class="md">間違えても、残りの選択肢から選び直せます。正解するまで進めて、最後に一発正解率とミス回数が出ます。ふだんの学習用。</div>
+      </button>
+      <button class="mbtn dob" onclick="begin('dobon')">
+        <div class="mt">💣 ドボンチャレンジ</div>
+        <div class="md">選び直しはできません。💣が付いた問題を外すと、その場で終了。何問連続で正解できるかに挑戦します。</div>
+      </button>
+    </div>
+    <div class="legend">
+      🎯 基本 … 落としてはいけない基本・頻出問題<br>
+      💣 ドボン … ドボンチャレンジで外すと終了する最重要問題<br>
+      ⚠ 誤りを選ぶ … 「誤っているのはどれか」形式<br>
+      📘 補足（資料外） … 教科書には載っていない国試頻出テーマ
+    </div>
+  </div>`;
+}
+
+function begin(m){
+  mode=m;qs=shuffle(POOL).slice(0,N_Q);idx=0;miss=0;firstOK=0;streak=0;dead=false;
+  render();
+}
+
+function render(){
+  const it=qs[idx];
+  locked=false;it._tried=[];it._done=false;
+  const isDob=(mode==="dobon"&&it.dobon);
+  let tags="";
+  if(isDob)tags+='<span class="tag t-do">💣 ドボン</span>';
+  else if(it.kihon)tags+='<span class="tag t-ki">🎯 基本</span>';
+  if(it.gori)tags+='<span class="tag t-go">⚠ 誤りを選ぶ</span>';
+  if(it.hosoku)tags+='<span class="tag t-ho">📘 補足（資料外）</span>';
+
+  it._order=shuffle(it.choices.map((c,i)=>i));
+  let cs="";
+  it._order.forEach((ci,pos)=>{
+    cs+=`<button class="c" id="c${pos}" onclick="pick(${pos})">${esc(it.choices[ci][0])}</button>`;
+  });
+
+  app.innerHTML=`
+  <div class="hd">
+    <div><div class="ch">第4章 運動の生理 ｜ パートB 確認テスト</div>
+    <div class="tt">${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}</div></div>
+    <div class="rt">第 ${idx+1} 問 / ${qs.length}問${mode==="dobon"?"<br>連続正解 "+streak:"<br>ミス "+miss}</div>
+  </div>
+  <div class="bd">
+    <div class="tags">${tags||'<span class="tag t-ki" style="visibility:hidden">-</span>'}</div>
+    <div class="q">${qHTML(it.q)}</div>
+    <div class="ch-list">${cs}</div>
+    <div id="fb"></div>
+  </div>
+  <div class="ctrl" id="ctrl"><span class="cnt">選択肢をクリックすると判定されます</span></div>`;
+}
+
+function pick(pos){
+  if(locked)return;
+  const it=qs[idx];
+  const ci=it._order[pos];
+  const c=it.choices[ci];
+  const btn=document.getElementById("c"+pos);
+  const isDob=(mode==="dobon"&&it.dobon);
+
+  if(c[1]){ /* 正解 */
+    locked=true;
+    btn.classList.add("ok");
+    disableAll();
+    if(it._tried.length===0){firstOK++;}
+    if(mode==="dobon"){streak++;}
+    showFB(true,"正解！",it.exp);
+    nextBtn();
+    return;
+  }
+  /* 不正解 */
+  it._tried.push(ci);
+  if(mode==="normal"){
+    miss++;
+    btn.classList.add("ng");btn.disabled=true;
+    showFB(false,"もう一度",`選んだのは「${esc(c[0])}」。${esc(c[2])}<br>正解はほかの選択肢にあります。もう一度選んでください。`);
+    document.querySelector(".rt").innerHTML=`第 ${idx+1} 問 / ${qs.length}問<br>ミス ${miss}`;
+  }else{
+    locked=true;miss++;
+    btn.classList.add("ng");
+    disableAll();
+    showFB(false,isDob?"💣 ドボン！":"不正解",
+      `選んだのは「${esc(c[0])}」。${esc(c[2])}<br><br><b>解説：</b>${esc(it.exp)}`);
+    if(isDob){dead=true;}
+    nextBtn();
+  }
+}
+
+function disableAll(){document.querySelectorAll(".c").forEach(b=>{b.disabled=true;if(!b.classList.contains("ok")&&!b.classList.contains("ng"))b.classList.add("mute");});}
+
+function showFB(ok,title,body){
+  document.getElementById("fb").innerHTML=
+   `<div class="fb ${ok?"ok":"ng"}"><div class="ttl">${title}</div><div>${ok?esc(body):body}</div></div>`;
+}
+
+function nextBtn(){
+  const last=(idx===qs.length-1);
+  document.getElementById("ctrl").innerHTML=
+   (dead||last)
+   ? `<button class="btn btnp" onclick="result()">結果を見る ▶</button><span class="cnt">${dead?"ドボンのため終了":"これが最後の問題です"}</span>`
+   : `<button class="btn btnp" onclick="next()">次の問題へ ▶</button><span class="cnt">${idx+2} 問目 / 全${qs.length}問</span>`;
+}
+
+function next(){idx++;render();}
+
+function result(){
+  const ans=dead?idx+1:qs.length;
+  let body="";
+  if(mode==="normal"){
+    const rate=Math.round(firstOK/qs.length*100);
+    body=`<div class="big">${firstOK} / ${qs.length} 問</div>
+      <div class="sub">一発正解率　<b>${rate}%</b><br>総ミス回数　<b>${miss} 回</b></div>
+      ${miss===0?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }else{
+    body=`<div class="big${dead?" ng":""}">${streak} 問連続正解</div>
+      <div class="sub">${dead?"💣 ドボン問題を外したため終了しました。":`全${qs.length}問を走りきりました。`}<br>
+      ${streak===qs.length?"":"出題された "+ans+" 問中 "+streak+" 問正解"}</div>
+      ${streak===qs.length?'<div class="perfect">✨ ノーミス パーフェクト！</div>':""}`;
+  }
+  app.innerHTML=`
+  <div class="hd"><div><div class="ch">第4章 運動の生理 ｜ パートB 確認テスト</div>
+  <div class="tt">結果（${mode==="dobon"?"💣 ドボンチャレンジ":"通常モード"}）</div></div></div>
+  <div class="res">${body}</div>
+  <div class="ctrl">
+    <button class="btn btnp" onclick="begin('${mode}')">もう一度（別の問題）▶</button>
+    <button class="btn" onclick="start()">モードを選び直す</button>
+    <span class="cnt">全${POOL.length}問のプールから出題</span>
+  </div>`;
+}
+start();
+</script>
+</body>
+</html>
