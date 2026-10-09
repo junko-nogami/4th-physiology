@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第8章 パートA 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#8b2635;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#f0d5d8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#f0d5d8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#8b2635;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#8b2635;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(139,38,53,.12);color:#8b2635}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#8b2635;background:#fbf4f5}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #8b2635;background:#8b2635;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#6b1d29}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#8b2635;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#8b2635;background:#fbf4f5}
+.mode .nm{font-size:16px;font-weight:600;color:#8b2635;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#8b2635;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#6b1d29;background:rgba(139,38,53,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#8b2635;background:rgba(139,38,53,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第8章 血液｜パートA 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第8章 血液 ｜ A 血液の成分と組成（教科書 P115〜120）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第8章 P115〜P120上段 ベース）=====
+   対応スライド：ch8_partA1.html（血漿）＋ ch8_partA2.html（血球）
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本。通常モードで「ここは重要」と示す印。プールの4〜6割が目安
+   dobon :true … 💣ドボン。ドボンモードで外すと即終了になる問題。プールの15〜20%
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）
+   exp … 正解時に見せる「なぜ正しいか」
+
+   内訳：全56問／🎯基本30問（54%）／💣ドボン10問（18%）／⚠誤りを選ぶ3問／📘補足7問
+
+   ★例外：Q「生理食塩水の塩化ナトリウム濃度」は📘補足だが💣ドボンを付けている。
+     資料外だが常識レベルの知識という判断（引き継ぎ資料5節の例外）。🎯は付けていない。
+
+   過去問（2章 血液（生理学）／(1)血液の組成とその働き）での出題頻度：
+   貧血4回／エリスロポエチン3回／膠質浸透圧＝アルブミン2回／血清＝血漿－フィブリノゲン2回／
+   血液成分と機能の組合せ2回／造血器官2回／赤血球の破壊＝脾臓1回／ヘマトクリット1回／血小板1回
+   ※白血球の割合・赤沈・溶血・生理食塩水・チアノーゼ・網赤血球は教科書に記述がないため📘に回している */
+const PICK=5;
+const POOL=[
+
+/* ---------- A-1 血漿（P115〜117） ---------- */
+
+{q:"細胞の周囲を満たしている体液はどれか。",
+ choices:[
+  ["組織液",true,""],
+  ["血液",false,"血管を流れる体液。"],
+  ["リンパ液",false,"リンパ管を流れる体液。"],
+  ["血清",false,"血液が凝固したあとに残る液体。"]],
+ exp:"ヒトの体液は<b>血液</b>（血管）・<b>リンパ液</b>（リンパ管）・<b>組織液</b>（組織の細胞を取り囲む）に分けられ、いずれも細胞の外にある体液（細胞外液）である。（教科書 P115）"},
+
+{q:"血液は体重の約何％を占めるか。",kihon:true,
+ choices:[
+  ["約8％",true,""],
+  ["約3％",false,"教科書が示す値より少ない。"],
+  ["約15％",false,"教科書が示す値より多い。"],
+  ["約25％",false,"教科書が示す値より大幅に多い。"]],
+ exp:"血液は粘り気がある赤色の液体で、<b>体重の約8％</b>を占める。（教科書 P115）"},
+
+{q:"血液のうち液体成分が占める割合はどれか。",kihon:true,
+ choices:[
+  ["55％",true,""],
+  ["45％",false,"細胞成分が占める割合。"],
+  ["75％",false,"図8・1が示す値ではない。"],
+  ["90％",false,"血漿そのものに含まれる水の割合。"]],
+ exp:"血液は<b>血漿（液体成分）55％</b>と<b>血球（細胞成分）45％</b>で構成される。（図8・1、教科書 P115）"},
+
+{q:"血漿の約90％を占めるのはどれか。",
+ choices:[
+  ["水",true,""],
+  ["タンパク質",false,"血漿に含まれるが、大部分を占めるものではない。"],
+  ["電解質",false,"血漿に含まれるが、大部分を占めるものではない。"],
+  ["グルコース",false,"血漿に含まれる栄養素だが、大部分を占めるものではない。"]],
+ exp:"血漿の約90％は<b>水</b>で、そこに電解質、グルコースなどの栄養素や代謝老廃物、タンパク質が含まれる。（図8・1、教科書 P115）"},
+
+{q:"血漿中でもっとも多い陽イオンはどれか。",kihon:true,
+ choices:[
+  ["Na⁺（143 mEq/L）",true,""],
+  ["K⁺（4 mEq/L）",false,"血漿中の濃度は低い陽イオン。"],
+  ["Ca²⁺（5 mEq/L）",false,"血漿中の濃度は低い陽イオン。"],
+  ["Mg²⁺（3 mEq/L）",false,"血漿中の濃度は低い陽イオン。"]],
+ exp:"表8・1より、もっとも多い陽イオンは<b>Na⁺</b>（143 mEq/L）である。（教科書 P116）"},
+
+{q:"血漿中でもっとも多い陰イオンはどれか。",
+ choices:[
+  ["Cl⁻（103 mEq/L）",true,""],
+  ["HCO₃⁻（27 mEq/L）",false,"血漿中に含まれる陰イオンだが、最多ではない。"],
+  ["HPO₄²⁻（2 mEq/L）",false,"血漿中の濃度は低い陰イオン。"],
+  ["SO₄²⁻（1 mEq/L）",false,"血漿中の濃度は低い陰イオン。"]],
+ exp:"表8・1より、もっとも多い陰イオンは<b>Cl⁻</b>（103 mEq/L）である。（教科書 P116）"},
+
+{q:"血漿の浸透圧の維持で大きな役割を果たす電解質の組合せはどれか。",kihon:true,
+ choices:[
+  ["Na⁺ と Cl⁻",true,""],
+  ["K⁺ と Ca²⁺",false,"神経や筋で活動電位を起こすために必要な電解質の組合せ。"],
+  ["HCO₃⁻ と HPO₄²⁻",false,"HCO₃⁻は体液のpHが大きく変化しないようにするはたらきをもつ。HPO₄²⁻は血漿中の濃度が2 mEq/Lと低い。"],
+  ["Mg²⁺ と SO₄²⁻",false,"どちらも血漿中の濃度が1〜3 mEq/Lと低く、浸透圧を左右するほどの量がない。"]],
+ exp:"血液に含まれる電解質のうち、<b>Na⁺とCl⁻</b>は浸透圧の維持で大きな役割を果たす。血漿中でもっとも多い陽イオン（143 mEq/L）と陰イオン（103 mEq/L）なので、量がそのまま浸透圧に効いてくる。電解質のはたらきは「<b>浸透圧＝Na⁺・Cl⁻</b>」「活動電位＝K⁺・Ca²⁺」「pH緩衝＝HCO₃⁻」の3つで整理しておく。（教科書 P116）"},
+
+{q:"神経や筋で活動電位を起こすために必要な電解質の組合せはどれか。",kihon:true,
+ choices:[
+  ["K⁺ と Ca²⁺",true,""],
+  ["Na⁺ と Cl⁻",false,"血漿中でもっとも多い陽イオンと陰イオンで、浸透圧の維持で大きな役割を果たす組合せ。"],
+  ["HCO₃⁻ と HPO₄²⁻",false,"HCO₃⁻は体液のpHが大きく変化しないようにするはたらきをもつ。HPO₄²⁻は血漿中の濃度が2 mEq/Lと低い。"],
+  ["Mg²⁺ と SO₄²⁻",false,"どちらも血漿中の濃度が1〜3 mEq/Lと低く、表8・1で個別のはたらきが示されていない電解質。"]],
+ exp:"<b>K⁺とCa²⁺</b>は、神経や筋で活動電位を起こすために必要である。電解質のはたらきは「浸透圧＝Na⁺・Cl⁻」「<b>活動電位＝K⁺・Ca²⁺</b>」「pH緩衝＝HCO₃⁻」の3つで整理しておく。（教科書 P116）"},
+
+{q:"体液のpHが大きく変化しないようにする作用をもつ電解質はどれか。",kihon:true,
+ choices:[
+  ["HCO₃⁻（重炭酸イオン）",true,""],
+  ["Na⁺",false,"血漿中でもっとも多い陽イオンで、Cl⁻とともに浸透圧の維持で大きな役割を果たす。"],
+  ["Ca²⁺",false,"K⁺とともに、神経や筋で活動電位を起こすために必要な電解質。"],
+  ["HPO₄²⁻",false,"血漿中の濃度が2 mEq/Lと低く、表8・1で個別のはたらきが示されていない陰イオン。"]],
+ exp:"重炭酸イオンのこのはたらきを<b>pH緩衝作用</b>という。血漿タンパク質も酸塩基平衡の調節分子として同じはたらきをもつ。電解質のはたらきは「浸透圧＝Na⁺・Cl⁻」「活動電位＝K⁺・Ca²⁺」「<b>pH緩衝＝HCO₃⁻</b>」の3つで整理しておく。（教科書 P116）"},
+
+{q:"血漿タンパク質の作用はどれか。",kihon:true,
+ choices:[
+  ["浸透圧維持・pH緩衝作用・物質運搬",true,""],
+  ["酸素運搬・二酸化炭素運搬・pH維持",false,"ヘモグロビンの3つのはたらき。"],
+  ["止血・凝固・線溶",false,"止血のしくみに関する語の並び。"],
+  ["造血・成熟・分化",false,"血球がつくられる過程に関する語の並び。"]],
+ exp:"血漿タンパク質は<b>浸透圧維持・pH緩衝作用・物質運搬</b>などのはたらきを担う。そのほか血液の粘性を維持し、血液凝固作用や免疫作用でも重要な役割を果たす。（教科書 P116）"},
+
+{q:"もっとも多い血漿タンパク質はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["アルブミン",true,""],
+  ["グロブリン",false,"電気的な性質の差によって4種類に分けられる血漿タンパク質。"],
+  ["フィブリノゲン",false,"血液の凝固で中心的な役割を果たす血漿タンパク質。"],
+  ["ヘモグロビン",false,"赤血球の内部にある色素タンパク質で、血漿タンパク質ではない。"]],
+ exp:"<b>アルブミン</b>は血漿タンパク質の60％を占める。浸透圧を維持して血漿の量を一定に保つはたらきへの寄与も最大である。（教科書 P117）"},
+
+{q:"アルブミンが血漿タンパク質に占める割合はどれか。",
+ choices:[
+  ["約60％",true,""],
+  ["約30％",false,"教科書が示す値より少ない。"],
+  ["約45％",false,"教科書が示す値より少ない。"],
+  ["約90％",false,"教科書が示す値より多い。"]],
+ exp:"アルブミンは血漿タンパク質の<b>60％</b>を占める。（教科書 P117）"},
+
+{q:"抗体として免疫機能を担う血漿タンパク質はどれか。",kihon:true,
+ choices:[
+  ["γグロブリン",true,""],
+  ["アルブミン",false,"もっとも多い血漿タンパク質。"],
+  ["フィブリノゲン",false,"フィブリンに変化して血餅をつくる血漿タンパク質。"],
+  ["ヘモグロビン",false,"赤血球の内部にある色素タンパク質。"]],
+ exp:"グロブリンはα₁、α₂、β、γの4種類に分けられ、α₁・α₂・βはホルモンやビタミンと結合して全身へ運び、<b>γ</b>は抗体として免疫機能を担う。（教科書 P117）"},
+
+{q:"血漿からある成分を除いたものが血清である。除かれるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["フィブリノゲン",true,""],
+  ["赤血球",false,"血液の細胞成分であり、液体成分である血漿にはもともと含まれない。"],
+  ["アルブミン",false,"もっとも多い血漿タンパク質で、血清にも残る。"],
+  ["グルコース",false,"血漿に含まれる栄養素で、血清にも残る。"]],
+ exp:"血漿から<b>フィブリノゲン</b>を除去したものは凝固せず、<b>血清</b>と呼ばれる。（教科書 P117）"},
+
+{q:"スターリングの仮説で、毛細血管の動脈側で起こるのはどれか。",kihon:true,
+ choices:[
+  ["毛細血管から間質へ水分が押し出される",true,""],
+  ["タンパク質が毛細血管から間質へ自由に移動する",false,"タンパク質は内皮細胞の隙間を透過しにくい。"],
+  ["赤血球が間質へ出ていく",false,"血球が毛細血管壁を通り抜けるわけではない。"],
+  ["水分の移動がまったく起こらない",false,"内圧の差によって水分は移動している。"]],
+ exp:"動脈側は内圧が高いため毛細血管から間質へ水分が<b>押し出される</b>。静脈側は内圧が次第に低下するため、間質側から毛細血管へ水分が<b>引き込まれる</b>。（教科書 P116）"},
+
+{q:"血漿タンパク質が結合して運搬するのはどれか。",
+ choices:[
+  ["カルシウム",true,""],
+  ["酸素",false,"赤血球内のヘモグロビンが結合して運ぶ。"],
+  ["ブドウ糖",false,"血漿に溶けて運ばれる栄養素。"],
+  ["尿素",false,"血漿に含まれる代謝老廃物。"]],
+ exp:"血漿タンパク質は<b>薬物、カルシウム、ホルモン</b>などの一部と結合してこれらを運搬する。（教科書 P116）"},
+
+{q:"血液が末梢組織から回収するものはどれか。",
+ choices:[
+  ["代謝老廃物と二酸化炭素",true,""],
+  ["酸素とホルモン",false,"末梢組織へ運ばれるもの。"],
+  ["熱と栄養分",false,"末梢組織へ運ばれるもの。"],
+  ["鉄と葉酸",false,"赤血球の産生に必要な材料。"]],
+ exp:"血液は心臓のポンプ作用で循環し、酸素・栄養分・熱・ホルモンなどを末梢組織へ運び、<b>代謝老廃物と二酸化炭素</b>を回収する。（教科書 P115）"},
+
+/* ---------- A-2 赤血球（P117〜119） ---------- */
+
+{q:"赤血球の直径はどれか。",kihon:true,
+ choices:[
+  ["7〜8μm",true,""],
+  ["2〜3μm",false,"血液の成分のうち、これより小さいものの直径。"],
+  ["5〜20μm",false,"赤血球より幅のある直径。"],
+  ["15〜20μm",false,"図8・1が赤血球に示している値ではない。"]],
+ exp:"赤血球は両凹型をした直径約<b>7〜8μm</b>の円盤状の細胞。柔軟に変形するため直径5μm程度の毛細血管でも通過できる。（教科書 P117、図8・1）"},
+
+{q:"血液1μL中の赤血球の数はどれか。",kihon:true,
+ choices:[
+  ["400万〜450万",true,""],
+  ["6,000〜8,000",false,"赤血球の数としては大幅に少ない。"],
+  ["20万〜30万",false,"赤血球の数としては少ない。"],
+  ["4,000万〜4,500万",false,"赤血球の数としては大幅に多い。"]],
+ exp:"図8・1より1μL中に<b>400万〜450万個</b>。血球の中で数がもっとも多い。（教科書 P115、P117）"},
+
+{q:"核をもつ血球はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["白血球",true,""],
+  ["赤血球",false,"核をはじめ細胞内小器官をもたない。"],
+  ["血小板",false,"巨核球が崩壊して生じた細胞片。"],
+  ["血漿",false,"血液の液体成分で、そもそも細胞ではない。"]],
+ exp:"核をもつのは<b>白血球</b>だけ。直径がいちばん大きいのも白血球、数がいちばん多いのは赤血球。（図8・1、教科書 P119）"},
+
+{q:"赤血球の寿命はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["約120日",true,""],
+  ["約14日",false,"教科書が示す値より大幅に短い。"],
+  ["約30日",false,"教科書が示す値より短い。"],
+  ["約1年",false,"教科書が示す値より大幅に長い。"]],
+ exp:"赤血球の寿命は<b>約120日</b>で、古くなった赤血球は脾臓などで破壊される。（教科書 P117）"},
+
+{q:"古くなった赤血球が破壊される主な場所はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["脾臓",true,""],
+  ["骨髄",false,"血球が産生される場所。"],
+  ["腎臓",false,"赤血球の成熟を促進するホルモンを分泌する臓器。"],
+  ["胸腺",false,"T細胞が成熟する場所。"]],
+ exp:"古くなった赤血球は<b>脾臓</b>などで破壊され、ヘモグロビンはヘムとグロビンに分解される。（教科書 P117〜118、図8・3）"},
+
+{q:"ヘモグロビンのうち、球状のタンパク質にあたる部分はどれか。",
+ choices:[
+  ["グロビン",true,""],
+  ["ヘム",false,"鉄を含む色素の部分。"],
+  ["アルブミン",false,"血漿タンパク質の一種。"],
+  ["フィブリノゲン",false,"血液凝固に関わる血漿タンパク質。"]],
+ exp:"ヘモグロビンは、ヘム（鉄を含む色素）と<b>グロビン</b>（球状のタンパク質）が結合した赤い複合タンパク質である。血液が赤くみえるのはヘモグロビンの影響。（教科書 P117）"},
+
+{q:"酸素と結合して鮮紅色にみえるヘモグロビンはどれか。",
+ choices:[
+  ["オキシヘモグロビン",true,""],
+  ["デオキシヘモグロビン",false,"酸素と結合していない状態で、暗赤色にみえる。"],
+  ["フェリチン",false,"鉄が貯蔵されるときの形。"],
+  ["ビリベルジン",false,"ヘムが分解されてできる物質。"]],
+ exp:"ヘモグロビンは肺で結合した酸素を全身に運ぶ。酸素と結合した状態が<b>オキシヘモグロビン</b>で鮮紅色、結合していない状態がデオキシヘモグロビンで暗赤色。（教科書 P117）"},
+
+{q:"1gのヘモグロビンが結合できる酸素量はどれか。",
+ choices:[
+  ["1.34mL",true,""],
+  ["0.34mL",false,"教科書が示す値より少ない。"],
+  ["13.4mL",false,"教科書が示す値の10倍にあたる。"],
+  ["20mL",false,"100mLの血液全体で結合している酸素量に近い値。"]],
+ exp:"1gのヘモグロビンは<b>1.34mL</b>の酸素と結合できる。100mLの血液には約15gのヘモグロビンが含まれるので、約20mLの酸素が結合していることになる。（教科書 P118）"},
+
+{q:"血液中で二酸化炭素がもっとも多く運ばれる形はどれか。",kihon:true,
+ choices:[
+  ["重炭酸イオン（HCO₃⁻）",true,""],
+  ["ヘモグロビンのグロビンとの結合",false,"二酸化炭素の運搬形式の1つだが、もっとも多いものではない。"],
+  ["血漿への物理的な溶解",false,"この形で運ばれる二酸化炭素はごくわずかである。"],
+  ["ヘムの鉄との結合",false,"ヘムの鉄に結合するのは酸素である。"]],
+ exp:"組織から血液中へ溶解した二酸化炭素は、<b>70〜80％が重炭酸イオン</b>として、20〜30％がヘモグロビンのグロビンと結合して運ばれる。（教科書 P118）"},
+
+{q:"ヘムが分解されてできるものはどれか。",
+ choices:[
+  ["鉄とビリベルジン",true,""],
+  ["アミノ酸",false,"グロビンが分解されてできるもの。"],
+  ["フィブリンと血餅",false,"血液が凝固するときにできるもの。"],
+  ["ウロビリノゲン",false,"ビリルビンが腸内で変化してできるもの。"]],
+ exp:"赤血球が破壊されるとヘモグロビンはヘムとグロビンに分解され、ヘムはさらに<b>鉄とビリベルジン</b>に分かれる。（図8・3、教科書 P118）"},
+
+{q:"鉄が肝臓に貯蔵されるときの形はどれか。",
+ choices:[
+  ["フェリチン",true,""],
+  ["グルクロン酸",false,"肝臓で直接ビリルビンがつくられるときに結合する物質。"],
+  ["ステルコビリン",false,"ビリルビンが変化して便中に排泄されるときの形。"],
+  ["グロビン",false,"分解されてアミノ酸になり、タンパク質合成に再利用される部分。"]],
+ exp:"鉄は主に<b>フェリチン</b>として肝臓中に貯蔵され再利用される。貯蔵鉄があるため、鉄の摂取が減ってもただちにヘモグロビンが減少することはない。（教科書 P118）"},
+
+{q:"貧血とはどのような状態か。",kihon:true,dobon:true,
+ choices:[
+  ["血液中の赤血球やヘモグロビンが減少した状態",true,""],
+  ["血液中の白血球が減少した状態",false,"免疫機能の低下につながるが、貧血の定義ではない。"],
+  ["血圧が低下した状態",false,"循環の指標であり、血液成分の状態を表すものではない。"],
+  ["血液の粘性が低下した状態",false,"粘性は血漿タンパク質が維持している。"]],
+ exp:"貧血とは<b>血液中の赤血球やヘモグロビンが減少した状態</b>で、血液の酸素運搬能力が低下する。出血のほか、赤血球の産生低下や破壊亢進などで起こる。（教科書 P118〜119）"},
+
+{q:"貧血で生じやすくなるのはどれか。",
+ choices:[
+  ["運動時の息切れや動悸",true,""],
+  ["ヘマトクリット値の上昇",false,"重度の脱水や嘔吐、下痢などでみられる変化。"],
+  ["血液が凝固しなくなること",false,"凝固にはフィブリノゲンなどが関わる。"],
+  ["血液が鮮紅色になること",false,"酸素と結合したヘモグロビンが多いときの色。"]],
+ exp:"貧血では血液の酸素運搬能力が低下するため、<b>運動時に息切れや動悸</b>などが生じやすくなる。（教科書 P119）"},
+
+{q:"ヘマトクリット値が表すのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["血液に占める赤血球の体積の比率",true,""],
+  ["血液に占める血漿の体積の比率",false,"血液の55％を占める液体成分の割合で、Htが表すものではない。"],
+  ["血液1μL中の赤血球の個数",false,"赤血球数で、体積の比率とは別の指標。"],
+  ["赤血球に含まれるヘモグロビンの量",false,"酸素運搬能の目安になるが、Htが表すものではない。"]],
+ exp:"<b>血液に占める赤血球の体積の比率</b>をヘマトクリット値と呼び、Htで表す。（教科書 P118）"},
+
+{q:"成人男性のヘマトクリット値はおよそどれくらいか。",kihon:true,
+ choices:[
+  ["約45％",true,""],
+  ["約40％",false,"成人女性のおよその値。"],
+  ["約55％",false,"教科書が示す値より高い。"],
+  ["約25％",false,"教科書が示す値より大幅に低い。"]],
+ exp:"ヘマトクリット値は男性で<b>約45％</b>、女性で約40％である。（教科書 P118〜119）"},
+
+{q:"ヘマトクリット値が高くなるのはどれか。",kihon:true,
+ choices:[
+  ["重度の脱水",true,""],
+  ["貧血",false,"ヘマトクリット値は低下する。"],
+  ["出血",false,"赤血球が失われるため、値は低下する。"],
+  ["赤血球の破壊亢進",false,"赤血球が減るため、値は低下する。"]],
+ exp:"<b>重度の脱水</b>や嘔吐、下痢などではヘマトクリット値が高くなる。貧血では低下する。臨床検査項目として有用。（教科書 P119）"},
+
+{q:"骨髄での赤血球の成熟を促進するホルモンはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["エリスロポエチン",true,""],
+  ["トロンボポエチン",false,"巨核球への分化に関わる因子。"],
+  ["アルブミン",false,"もっとも多い血漿タンパク質。"],
+  ["フェリチン",false,"鉄が貯蔵されるときの形。"]],
+ exp:"<b>エリスロポエチン</b>は腎臓から分泌されるホルモンで、骨髄での赤血球の成熟を促進する。ビタミンB₁₂や葉酸も同じはたらきをもつ。（教科書 P119）"},
+
+{q:"エリスロポエチンを分泌する臓器はどれか。",kihon:true,
+ choices:[
+  ["腎臓",true,""],
+  ["肝臓",false,"鉄がフェリチンとして貯蔵される臓器。"],
+  ["脾臓",false,"古くなった赤血球が破壊される臓器。"],
+  ["骨髄",false,"造血が行われる場所。"]],
+ exp:"エリスロポエチンは<b>腎臓</b>から分泌されるホルモンである。（教科書 P119）"},
+
+{q:"赤血球の成熟を促進するビタミンはどれか。",
+ choices:[
+  ["ビタミンB₁₂",true,""],
+  ["ビタミンK",false,"赤血球の成熟促進因子としては挙げられていない。"],
+  ["ビタミンC",false,"赤血球の成熟促進因子としては挙げられていない。"],
+  ["ビタミンD",false,"赤血球の成熟促進因子としては挙げられていない。"]],
+ exp:"赤血球の産生には原料となる鉄のほか種々の因子が必要で、エリスロポエチンのほか<b>ビタミンB₁₂</b>や<b>葉酸</b>が骨髄での成熟を促進させる。（教科書 P119）"},
+
+/* ---------- A-3 白血球（P119） ---------- */
+
+{q:"顆粒球に含まれるのはどれか。",
+ choices:[
+  ["好塩基球",true,""],
+  ["単球",false,"顆粒球とは別に分類される白血球。"],
+  ["リンパ球",false,"顆粒球とは別に分類される白血球。"],
+  ["巨核球",false,"骨髄中にあり、血小板のもとになる細胞。"]],
+ exp:"好酸球・好塩基球・好中球は多数の顆粒を細胞内に含むことから、まとめて<b>顆粒球</b>と呼ばれる。（図8・4、教科書 P119）"},
+
+{q:"好塩基球という名前の由来はどれか。",
+ choices:[
+  ["青い塩基性色素に顆粒がよく染まるから",true,""],
+  ["赤い酸性色素に顆粒がよく染まるから",false,"好酸球の名前の由来。"],
+  ["核が複数の葉に分かれているから",false,"教科書が示す名前の由来ではない。"],
+  ["顆粒をもたないから",false,"顆粒球はいずれも多数の顆粒を細胞内に含む。"]],
+ exp:"好酸球は赤い酸性色素に、<b>好塩基球は青い塩基性色素</b>に顆粒がよく染まることから、それぞれ名づけられた。（教科書 P119）"},
+
+{q:"血液1μL中の白血球の数はどれか。",kihon:true,
+ choices:[
+  ["6,000〜8,000",true,""],
+  ["600〜800",false,"白血球の数としては少ない。"],
+  ["20万〜30万",false,"白血球の数としては大幅に多い。"],
+  ["400万〜450万",false,"白血球の数としては大幅に多い。"]],
+ exp:"図8・1より1μL中に<b>6,000〜8,000個</b>。白血球は核をもつ比較的大きな血液細胞で、免疫機能の中心的な役割を担う。（教科書 P115、P119）"},
+
+/* ---------- A-4 血小板（P119） ---------- */
+
+{q:"血小板はどの細胞が崩壊して生じたものか。",kihon:true,
+ choices:[
+  ["骨髄中の巨核球",true,""],
+  ["赤芽球",false,"赤血球になる前の段階の細胞。"],
+  ["骨髄芽球",false,"顆粒球になる前の段階の細胞。"],
+  ["単芽球",false,"単球になる前の段階の細胞。"]],
+ exp:"血小板は骨髄中の<b>巨核球</b>が崩壊して生じたもので、核をもたない直径2〜3μmの細胞片である。（教科書 P119、図8・6）"},
+
+{q:"血液1μL中の血小板の数はどれか。",
+ choices:[
+  ["20万〜30万",true,""],
+  ["2万〜3万",false,"血小板の数としては少ない。"],
+  ["6,000〜8,000",false,"血小板の数としては大幅に少ない。"],
+  ["400万〜450万",false,"血小板の数としては大幅に多い。"]],
+ exp:"図8・1より1μL中に<b>20万〜30万個</b>である。（教科書 P115）"},
+
+{q:"血小板のはたらきはどれか。",
+ choices:[
+  ["血管の損傷部に粘着して血小板因子を放出する",true,""],
+  ["酸素を運ぶ",false,"赤血球内のヘモグロビンのはたらき。"],
+  ["抗体を産生する",false,"免疫機能は白血球が中心となって担う。"],
+  ["骨髄で赤血球の成熟を促進する",false,"ホルモンや種々の因子のはたらき。"]],
+ exp:"血小板は<b>血管の損傷部に粘着して血小板因子を放出</b>し、止血を助ける。（教科書 P119）"},
+
+/* ---------- A-5 血球の分化と造血（P119〜120） ---------- */
+
+{q:"成人で造血が行われる場所はどれか。",kihon:true,
+ choices:[
+  ["脊椎や胸骨、腸骨などの扁平骨の骨髄",true,""],
+  ["全身の骨髄",false,"乳幼児で造血が行われる範囲。"],
+  ["上腕骨や大腿骨などの長管骨の骨髄",false,"成長とともに造血が行われなくなる場所。"],
+  ["脾臓と肝臓",false,"成人で造血が行われる場所ではない。"]],
+ exp:"造血は骨の中心部にある海綿状の組織（骨髄）で行われる。乳幼児では全身の骨髄、成人では<b>脊椎や胸骨のほか腸骨などの扁平骨</b>の骨髄で行われる。（教科書 P119、図8・5）"},
+
+{q:"造血幹細胞がまず分化するのはどれか。",kihon:true,
+ choices:[
+  ["リンパ系幹細胞と骨髄系幹細胞",true,""],
+  ["赤芽球と巨核球",false,"さらに分化が進んだ段階の細胞。"],
+  ["T細胞前駆細胞とB細胞前駆細胞",false,"1つ下の段階で分かれる細胞。"],
+  ["顆粒球と単球",false,"末梢血にみられる成熟した血球。"]],
+ exp:"造血幹細胞はまず<b>リンパ系幹細胞</b>と<b>骨髄系幹細胞</b>に分化し、次に前駆細胞へと分化しながら増殖する。これらの分化はエリスロポエチンなどの造血因子で調節される。（教科書 P119〜120、図8・6）"},
+
+{q:"T細胞が成熟する場所はどれか。",
+ choices:[
+  ["胸腺",true,""],
+  ["骨髄",false,"造血が行われ、前駆細胞がつくられる場所。"],
+  ["脾臓",false,"古くなった赤血球が破壊される場所。"],
+  ["肝臓",false,"鉄が貯蔵される場所。"]],
+ exp:"図8・6より、T細胞前駆細胞は<b>胸腺</b>を経てT細胞になる。B細胞は骨髄で成熟する。（教科書 P119、図8・6）"},
+
+{q:"巨核球への分化に関わる因子はどれか。",
+ choices:[
+  ["トロンボポエチン",true,""],
+  ["エリスロポエチン",false,"赤芽球から赤血球への分化を促す因子。腎臓から分泌されるホルモン。"],
+  ["G-CSF",false,"顆粒球コロニー刺激因子。骨髄芽球を経て顆粒球になる系列に関わる。"],
+  ["M-CSF",false,"マクロファージコロニー刺激因子。単芽球を経て単球になる系列に関わる。"]],
+ exp:"巨核球・赤芽球前駆細胞から巨核球への分化には、MEG-CSF（巨核球コロニー刺激因子）と<b>トロンボポエチン</b>が関わる。その巨核球が崩壊して血小板になる。（教科書 図8・6）"},
+
+/* ---------- ⚠ 誤りを選ぶ ---------- */
+
+{q:"血液の成分について誤っているのはどれか。",kihon:true,dobon:true,gori:true,
+ choices:[
+  ["赤血球は核をもつ",true,""],
+  ["血漿は血液の約55％を占める",false,"教科書どおりの記述なので、正しい。"],
+  ["白血球の直径は5〜20μmである",false,"教科書どおりの記述なので、正しい。"],
+  ["血小板は核をもたない",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"赤血球は<b>核をはじめ細胞内小器官をもたない</b>。核をもつのは白血球だけである。（図8・1、教科書 P117）"},
+
+{q:"血漿タンパク質について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["血清にはフィブリノゲンが含まれる",true,""],
+  ["アルブミンは血漿タンパク質の60％を占める",false,"教科書どおりの記述なので、正しい。"],
+  ["γグロブリンは抗体として免疫機能を担う",false,"教科書どおりの記述なので、正しい。"],
+  ["グロブリンは電気的な性質の差によって4種類に分けられる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"血清は血漿から<b>フィブリノゲンを除去したもの</b>である。だから血清は凝固しない。（教科書 P117）"},
+
+{q:"赤血球について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["貧血ではヘマトクリット値が上昇する",true,""],
+  ["寿命は約120日である",false,"教科書どおりの記述なので、正しい。"],
+  ["直径は約7〜8μmである",false,"教科書どおりの記述なので、正しい。"],
+  ["古くなると脾臓などで破壊される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"貧血ではヘマトクリット値は<b>低下</b>する。上昇するのは重度の脱水や嘔吐、下痢などのとき。（教科書 P118〜119）"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"赤血球沈降速度が遅くなるのはどれか。",hosoku:true,
+ choices:[
+  ["赤血球増多症",true,""],
+  ["化膿性疾患",false,"赤血球沈降速度は速くなる。"],
+  ["肺結核",false,"赤血球沈降速度は速くなる。"],
+  ["重度の貧血",false,"赤血球沈降速度は速くなる。"]],
+ exp:"補足知識（資料外）。赤沈は赤血球と血漿の比重の差で起こる現象で、赤血球の凝集・血漿の粘性・赤血球数に左右される。<b>赤血球が増えると遅くなる</b>。正常1時間値は成人男性で10mm以下、女性で15mm以下。"},
+
+{q:"血液に加えると溶血を起こすのはどれか。",hosoku:true,
+ choices:[
+  ["蒸留水",true,""],
+  ["0.9％食塩水",false,"血漿と浸透圧が等しい液。"],
+  ["ナトリウムイオン",false,"血液に加えても溶血は起こらない。"],
+  ["カルシウムイオン",false,"血液に加えても溶血は起こらない。"]],
+ exp:"補足知識（資料外）。<b>蒸留水</b>は血漿より浸透圧が低いため、水が赤血球内へ入って赤血球が膨張し、細胞膜が破れて溶血が起こる。"},
+
+{q:"生理食塩水の塩化ナトリウム濃度はどれか。",hosoku:true,dobon:true,
+ choices:[
+  ["0.9％",true,""],
+  ["0.45％",false,"生理食塩水より薄い濃度。"],
+  ["5％",false,"等張性ブドウ糖液の濃度。"],
+  ["9％",false,"生理食塩水の10倍にあたる濃度。"]],
+ exp:"補足知識（資料外）。<b>0.9％食塩水</b>は血漿の浸透圧に等しいことから生理食塩水（等張性食塩水）と呼ばれる。等張性ブドウ糖液は5％。"},
+
+{q:"白血球のうちもっとも多いのはどれか。",hosoku:true,
+ choices:[
+  ["好中球",true,""],
+  ["リンパ球",false,"白血球の一種だが、もっとも多いものではない。"],
+  ["単球",false,"白血球の一種だが、もっとも多いものではない。"],
+  ["好酸球",false,"白血球の一種だが、もっとも多いものではない。"]],
+ exp:"補足知識（資料外）。<b>好中球</b>が白血球の60〜70％を占める。資料には割合の記載がないが、国試では繰り返し問われる。"},
+
+{q:"血小板の寿命はどれか。",hosoku:true,
+ choices:[
+  ["約10日",true,""],
+  ["約60日",false,"血小板の寿命としては長すぎる。"],
+  ["約120日",false,"血液の別の成分の寿命にあたる長さで、血小板はこれより大幅に短い。"],
+  ["約180日",false,"血小板の寿命としては大幅に長すぎる。"]],
+ exp:"補足知識（資料外）。血小板の寿命は<b>約8〜11日</b>。減少すると出血時間が延長する。"},
+
+{q:"チアノーゼの出現と関係が深いのはどれか。",hosoku:true,
+ choices:[
+  ["血中還元ヘモグロビン量の増加",true,""],
+  ["血中酸素分圧の上昇",false,"血液の酸素化が進んだ状態。"],
+  ["酸化ヘモグロビンの増加",false,"酸素と結合したヘモグロビンが増えた状態。"],
+  ["動脈血酸素飽和度の上昇",false,"血液の酸素化が進んだ状態。"]],
+ exp:"補足知識（資料外）。<b>還元（デオキシ）ヘモグロビン</b>が5g/dL以上になると、皮膚・粘膜が青紫色にみえるチアノーゼが出現する。"},
+
+{q:"網赤血球の説明として正しいのはどれか。",hosoku:true,
+ choices:[
+  ["骨髄から放出されたばかりの未成熟な赤血球",true,""],
+  ["脾臓で破壊される直前の古い赤血球",false,"網赤血球が指す段階とは逆。"],
+  ["核をもつ赤血球",false,"成熟赤血球も網赤血球も核をもたない。"],
+  ["ヘモグロビンをもたない赤血球",false,"いずれの段階でもヘモグロビンを含む。"]],
+ exp:"補足知識（資料外）。<b>網赤血球</b>は骨髄から放出されたばかりの若い赤血球で、24時間以内にすべての細胞内小器官を失って成熟赤血球になる。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を色付きにして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第8章 パートD 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#8b2635;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#f0d5d8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#f0d5d8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#8b2635;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#8b2635;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(139,38,53,.12);color:#8b2635}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#8b2635;background:#fbf4f5}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #8b2635;background:#8b2635;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#6b1d29}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#8b2635;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#8b2635;background:#fbf4f5}
+.mode .nm{font-size:16px;font-weight:600;color:#8b2635;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#8b2635;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#6b1d29;background:rgba(139,38,53,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#8b2635;background:rgba(139,38,53,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第8章 血液｜パートD 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第8章 血液 ｜ D 免疫（教科書 P127〜132）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第8章 P127中段〜P132 ベース）=====
+   対応スライド：ch8_partD.html
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本。通常モードで「ここは重要」と示す印。プールの4〜6割が目安
+   dobon :true … 💣ドボン。ドボンモードで外すと即終了になる問題。プールの15〜20%
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）
+   exp … 正解時に見せる「なぜ正しいか」
+
+   内訳：全62問／🎯基本34問（55%）／💣ドボン11問（18%）／⚠誤りを選ぶ4問／📘補足6問
+
+   ★免疫は過去問がもっとも厚い分野のため、他パートより問題数を多めにしている（6ページで62問）。
+     免疫グロブリンの種類別のはたらき（IgG最多・IgA分泌液・IgM感染初期・IgE I型アレルギー）は
+     教科書P131に「5種類ある」としか書かれていないため📘に回した。スライドでは
+     「参考（国試頻出）」の行にまとめられている部分にあたる。
+
+   過去問（2章 血液（生理学）／(1)(5)の免疫関連）での出題頻度：
+   抗体を産生するのは形質細胞 6回／食作用をもつ細胞・もたない細胞 6回／
+   液性免疫＝B細胞・細胞性免疫＝T細胞 5回／キラーT細胞が感染細胞・移植細胞を攻撃 4回／
+   IgEとI型アレルギー 4回／血中に最も多いのはIgG 3回／ヘルパーT細胞がB細胞を活性化 3回／
+   マクロファージ＝単球が組織へ移行 3回／好中球の食菌能 3回／ヒスタミン＝好塩基球・肥満細胞 2回／
+   NK細胞 2回／T細胞は胸腺で成熟 2回／自然免疫＝食作用 2回／オプソニン効果 1回 */
+const PICK=5;
+const POOL=[
+
+/* ---------- D-1 免疫系器官（P127〜128） ---------- */
+
+{q:"生体防御機構で、病原体を排除する免疫機能を担うのはどれか。",kihon:true,
+ choices:[
+  ["白血球",true,""],
+  ["赤血球",false,"ヘモグロビンによって酸素を運ぶ血球。"],
+  ["血小板",false,"血管の損傷部に粘着して止血を助ける血球。"],
+  ["血漿タンパク質",false,"浸透圧の維持や物質運搬などを担う。"]],
+ exp:"体液中のリンパ球や好中球などの<b>白血球</b>が、病原体を排除する免疫機能を担う。（教科書 P127）"},
+
+{q:"T細胞が成熟する器官はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["胸腺",true,""],
+  ["骨髄",false,"リンパ球や好中球などの前駆細胞が産生される器官。"],
+  ["脾臓",false,"血液中の危険な病原体を検知したときにB細胞を増殖させる器官。"],
+  ["リンパ節",false,"B細胞が形質細胞となって抗体を産生する場。"]],
+ exp:"骨髄で造血幹細胞から分化したリンパ系幹細胞のうち、T細胞系はさらに分化してT細胞前駆細胞となり、<b>胸腺</b>でT細胞になる。（教科書 P127）"},
+
+{q:"血液中の危険な病原体を検知したときにB細胞を増殖させる器官はどれか。",
+ choices:[
+  ["脾臓",true,""],
+  ["胸腺",false,"T細胞前駆細胞がT細胞になる器官。"],
+  ["骨髄",false,"血球が産生される器官。"],
+  ["扁桃",false,"咽頭にある免疫系器官のひとつ。"]],
+ exp:"B細胞はリンパ系幹細胞が分化した細胞で、病原体を排除するために抗体を産生し、体内での感染の拡大を阻止する。（教科書 P128）"},
+
+{q:"リンパ節で行われるのはどれか。",
+ choices:[
+  ["B細胞が形質細胞となって抗体を産生する",true,""],
+  ["赤血球が破壊される",false,"脾臓などで行われる。"],
+  ["T細胞が成熟する",false,"胸腺で行われる。"],
+  ["血球が産生される",false,"骨髄で行われる。"]],
+ exp:"リンパ節では<b>B細胞が形質細胞となっていろいろな抗体を産生</b>する。また、傍皮質はT細胞への抗原提示が行われる場となる。（教科書 P128）"},
+
+{q:"肥満細胞や樹状細胞はどのように生じるか。",
+ choices:[
+  ["前駆細胞が骨髄を離れ、組織に定着して分化する",true,""],
+  ["胸腺で分化する",false,"T細胞が成熟する器官。"],
+  ["血液中で分化する",false,"組織に定着してから分化する。"],
+  ["脾臓で分化する",false,"B細胞を増殖させる器官。"]],
+ exp:"肝臓のクッパー細胞、粘膜下組織や結合組織の肥満細胞、皮下組織・鼻腔・肺・胃・腸管の樹状細胞などは、それぞれの<b>前駆細胞が骨髄を離れて組織に定着し分化</b>する。（教科書 P127）"},
+
+/* ---------- D-2 リンパ球（P128） ---------- */
+
+{q:"免疫反応の主役としてはたらくのはどれか。",kihon:true,
+ choices:[
+  ["リンパ球",true,""],
+  ["好中球",false,"寿命が短く、感染部位で病原体を貪食・殺菌する。"],
+  ["好酸球",false,"胃や腸の粘膜に移動して寄生虫と闘う。"],
+  ["血小板",false,"止血を助ける細胞片。"]],
+ exp:"<b>リンパ球</b>は免疫反応の主役としてはたらく。骨髄で産生される前駆細胞は、胸腺や骨髄でT細胞、B細胞、ナチュラルキラー細胞のいずれかに分化する。（教科書 P128）"},
+
+{q:"リンパ球が分化するのはどの組合せか。",kihon:true,
+ choices:[
+  ["T細胞・B細胞・ナチュラルキラー細胞",true,""],
+  ["好中球・好酸球・好塩基球",false,"顆粒球の分類。"],
+  ["単球・マクロファージ・樹状細胞",false,"貪食や抗原提示を担う細胞の並び。"],
+  ["赤血球・血小板・血漿",false,"リンパ球とは別の血液成分の並び。"]],
+ exp:"骨髄で産生される前駆細胞は、胸腺や骨髄で<b>T細胞、B細胞、ナチュラルキラー（NK）細胞</b>のいずれかに分化する。（教科書 P128）"},
+
+{q:"リンパ球のみで観察される、血液循環とリンパ循環の2つの循環系を繰り返し循環する現象はどれか。",kihon:true,
+ choices:[
+  ["再循環現象",true,""],
+  ["定位反応",false,"音のした方向に反射性に頭や眼を向ける反応。"],
+  ["オプソニン化",false,"抗体が病原体を覆って貪食作用を亢進させるはたらき。"],
+  ["エキソサイトーシス",false,"細胞内の物質を細胞外へ出すしくみ。"]],
+ exp:"成熟したリンパ球は血液循環とリンパ循環の2つの循環系を繰り返し循環する。これはリンパ球のみで観察され、リンパ球の<b>再循環現象</b>と呼ばれる。（教科書 P128）"},
+
+{q:"細胞性免疫の中心としてはたらくのはどれか。",
+ choices:[
+  ["T細胞",true,""],
+  ["B細胞",false,"抗体を産生して液性免疫を担う。"],
+  ["好中球",false,"自然免疫で貪食を担う。"],
+  ["血小板",false,"止血を助ける細胞片。"]],
+ exp:"<b>T細胞</b>は細胞性免疫の中心としてはたらき、B細胞は抗体を産生して液性免疫を担う。（教科書 P128、P130）"},
+
+/* ---------- D-3 好中球・好酸球（P128） ---------- */
+
+{q:"血液中の好中球が組織へ移行するまでの時間はどれか。",kihon:true,
+ choices:[
+  ["10時間以内",true,""],
+  ["3日ほど",false,"単球が血中を循環する期間。"],
+  ["数ヵ月",false,"マクロファージの組織での寿命。"],
+  ["約120日",false,"核をもたない血球の寿命にあたる長さ。"]],
+ exp:"好中球は寿命が短く、血液中の好中球は<b>10時間以内</b>に組織へ移行し、2〜3日で死滅する。その間に病原体が侵入すると感染部位へ移動して貪食・殺菌する。（教科書 P128）"},
+
+{q:"好酸球が多く移動して寄生虫と闘う場所はどれか。",
+ choices:[
+  ["胃や腸の粘膜",true,""],
+  ["骨髄",false,"血球が産生される場所。"],
+  ["胸腺",false,"T細胞が成熟する場所。"],
+  ["脳",false,"ミクログリアが存在する場所。"]],
+ exp:"好酸球の多くは<b>胃や腸の粘膜</b>に移動し、そこで寄生虫と闘う。呼吸器系や泌尿器系の粘膜にも多く存在する。（教科書 P128）"},
+
+{q:"ヒスタミンを不活化してアレルギー反応を抑えるのはどれか。",
+ choices:[
+  ["好酸球",true,""],
+  ["好塩基球",false,"ヒスタミンを放出する側の細胞。"],
+  ["好中球",false,"感染部位へ移動して病原体を貪食・殺菌する。"],
+  ["キラーT細胞",false,"ウイルス感染細胞を直接殺傷する。"]],
+ exp:"<b>好酸球</b>は気管支喘息などのアレルギー疾患の際に増加し、好塩基球などが分泌するヒスタミンを不活化してアレルギー反応を抑える。（教科書 P128）"},
+
+{q:"好酸球が増加するのはどのようなときか。",
+ choices:[
+  ["気管支喘息などのアレルギー疾患のとき",true,""],
+  ["重度の脱水のとき",false,"ヘマトクリット値が高くなる状況。"],
+  ["出血したとき",false,"止血の反応が起こる状況。"],
+  ["血液型の合わない輸血をしたとき",false,"赤血球の凝集や溶血が起こる状況。"]],
+ exp:"好酸球は<b>気管支喘息などのアレルギー疾患</b>や、他の呼吸器系・消化管系の病気の際に増加する。（教科書 P128）"},
+
+/* ---------- D-4 好塩基球・単球・樹状細胞（P128） ---------- */
+
+{q:"好塩基球が放出し、蕁麻疹やアナフィラキシーショックを起こすのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["ヒスタミン",true,""],
+  ["セロトニン",false,"血小板が放出して血管を収縮させる物質。"],
+  ["パーフォリン",false,"キラーT細胞が分泌する細胞傷害性顆粒に含まれる物質。"],
+  ["インターロイキン2（IL-2）",false,"ヘルパーT細胞が分泌してキラーT細胞を活性化させる物質。"]],
+ exp:"抗原と結合したIgEが好塩基球表面の受容体に結合すると、好塩基球は<b>ヒスタミン</b>を放出する。その結果、蕁麻疹やアナフィラキシーショックといった即時型のアレルギー反応が現れる。（教科書 P128）"},
+
+{q:"表面に免疫グロブリンIgEの受容体をもつのはどれか。",kihon:true,
+ choices:[
+  ["好塩基球",true,""],
+  ["好中球",false,"感染部位へ移動して病原体を貪食・殺菌する。"],
+  ["好酸球",false,"胃や腸の粘膜で寄生虫と闘い、アレルギー反応を抑える。"],
+  ["赤血球",false,"ヘモグロビンによって酸素を運ぶ血球。"]],
+ exp:"<b>好塩基球</b>の表面には免疫グロブリンの一種であるIgEの受容体がある。抗原と結合したIgEがその受容体に結合すると、ヒスタミンを放出する。（教科書 P128）"},
+
+{q:"単球が組織へ移行すると何になるか。",kihon:true,dobon:true,
+ choices:[
+  ["マクロファージ",true,""],
+  ["形質細胞",false,"B細胞が分化して抗体を産生するようになった細胞。"],
+  ["キラーT細胞",false,"ウイルス感染細胞を直接殺傷するリンパ球。"],
+  ["メモリーB細胞",false,"抗原の情報を記憶するリンパ球。"]],
+ exp:"骨髄で産生された単球は血中に入って3日ほど循環したのち、組織へ移行して<b>マクロファージ</b>となる。組織での寿命は数ヵ月である。（教科書 P128）"},
+
+{q:"単球が血中を循環する期間はどれか。",
+ choices:[
+  ["3日ほど",true,""],
+  ["10時間以内",false,"好中球が血液中から組織へ移行するまでの時間。"],
+  ["数ヵ月",false,"組織へ移行したあとの寿命にあたる長さ。"],
+  ["約120日",false,"核をもたない血球の寿命にあたる長さ。"]],
+ exp:"骨髄で産生された単球は血中に入って<b>3日ほど</b>循環したのち、組織へ移行する。（教科書 P128）"},
+
+{q:"マクロファージにあたるのはどれか。",
+ choices:[
+  ["クッパー細胞・肺胞マクロファージ・ミクログリア",true,""],
+  ["好中球・好酸球・好塩基球",false,"顆粒球の分類。"],
+  ["T細胞・B細胞・NK細胞",false,"リンパ球が分化した細胞の並び。"],
+  ["形質細胞・メモリーB細胞",false,"B細胞が分化してできる細胞の並び。"]],
+ exp:"マクロファージには、肝臓の<b>クッパー細胞</b>のほか、<b>肺胞マクロファージ</b>や脳の<b>ミクログリア</b>がある。それぞれT細胞の作用で活性化し、好中球と同様に病原体を貪食して殺菌する。（教科書 P128）"},
+
+{q:"主に抗原提示細胞としてはたらくのはどれか。",kihon:true,
+ choices:[
+  ["樹状細胞",true,""],
+  ["好中球",false,"感染部位へ移動して病原体を貪食・殺菌する。"],
+  ["好酸球",false,"胃や腸の粘膜で寄生虫と闘う。"],
+  ["赤血球",false,"ヘモグロビンによって酸素を運ぶ血球。"]],
+ exp:"<b>樹状細胞</b>はさまざまな組織に存在し、主に抗原提示細胞としてはたらく。病原体を貪食し、リンパ節へ移動してリンパ球に抗原を提示する。（教科書 P128〜129）"},
+
+/* ---------- D-5 自然免疫と貪食（P129〜130） ---------- */
+
+{q:"病原体に対してはたらく生体防御機構は何と何に分けられるか。",kihon:true,
+ choices:[
+  ["自然免疫と獲得免疫",true,""],
+  ["液性免疫と細胞性免疫",false,"獲得免疫をさらに2つに分けた分類。"],
+  ["一次応答と二次応答",false,"免疫記憶に関する語で、抗体産生の起こり方を指す。"],
+  ["内因系と外因系",false,"血液凝固の2つの反応過程の名前。"]],
+ exp:"病原体に対してはたらく生体防御機構は、<b>自然免疫</b>と<b>獲得免疫</b>の2つに分けられる。（教科書 P129）"},
+
+{q:"感染部位に集まり、最初に病原体を貪食するのはどれか。",kihon:true,
+ choices:[
+  ["好中球",true,""],
+  ["マクロファージ",false,"遅れて感染部位へ向かい、後片付けをする側。"],
+  ["形質細胞",false,"抗体を産生する細胞で、貪食は行わない。"],
+  ["キラーT細胞",false,"ウイルス感染細胞を直接殺傷する細胞で、貪食は行わない。"]],
+ exp:"<b>好中球</b>は病原体に由来する抗原等に引き寄せられて感染部位に集まり、病原体を貪食する。（教科書 P129）"},
+
+{q:"貪食を終えて死滅した好中球が集まってできるのはどれか。",kihon:true,
+ choices:[
+  ["膿",true,""],
+  ["血餅",false,"フィブリンが血液細胞を閉じ込めてできる塊。"],
+  ["凝集塊",false,"赤血球が他者の抗体と反応して集合したもの。"],
+  ["ファゴソーム",false,"病原体を取り込んだ小胞のこと。"]],
+ exp:"好中球は貪食を終えると死滅して<b>膿</b>となる。（教科書 P129〜130）"},
+
+{q:"好中球に遅れて感染部位へ向かい、好中球の死骸や融解した組織を貪食するのはどれか。",
+ choices:[
+  ["マクロファージ",true,""],
+  ["好酸球",false,"胃や腸の粘膜で寄生虫と闘う。"],
+  ["好塩基球",false,"ヒスタミンを放出してアレルギー反応を起こす。"],
+  ["形質細胞",false,"抗体を産生する細胞で、貪食は行わない。"]],
+ exp:"<b>マクロファージ</b>は好中球に遅れて感染部位へ向かい、病原体のほか好中球の死骸や融解した組織を貪食して後片付けをする。（教科書 P129）"},
+
+{q:"好中球が自らの細胞膜で病原体を囲んで取り込んだ小胞を何というか。",
+ choices:[
+  ["ファゴソーム",true,""],
+  ["リソソーム",false,"タンパク質分解酵素を含む細胞内小器官。"],
+  ["細胞傷害性顆粒",false,"キラーT細胞が分泌する顆粒。"],
+  ["エキソサイトーシス",false,"細胞内の物質を細胞外へ出すしくみ。"]],
+ exp:"貪食は好中球が自らの細胞膜で病原体を囲むことから始まり、病原体を取り込んだ小胞を<b>ファゴソーム</b>という。（教科書 P129、図8・14）"},
+
+{q:"ファゴソームにリソソームが結合してできるのはどれか。",kihon:true,
+ choices:[
+  ["ファゴリソーム",true,""],
+  ["リソソーム",false,"タンパク質分解酵素を含む細胞内小器官そのもの。"],
+  ["エキソサイトーシス",false,"細胞内の物質を細胞外へ出すしくみ。"],
+  ["メモリーB細胞",false,"抗原の情報を記憶するリンパ球。"]],
+ exp:"好中球の細胞内小器官であるリソソームがファゴソームに結合すると、<b>ファゴリソーム</b>を形成する。（教科書 P129、図8・14）"},
+
+{q:"ファゴリソーム内で殺菌を行うのはどれか。",
+ choices:[
+  ["タンパク質分解酵素を含むリソソームの内容物",true,""],
+  ["抗体",false,"液性免疫で病原体を中和したり覆ったりするもの。"],
+  ["ヒスタミン",false,"好塩基球が放出してアレルギー反応を起こす物質。"],
+  ["補体",false,"抗体のはたらきを補助する、肝臓で産生されるタンパク質。"]],
+ exp:"ファゴリソーム内では、さまざまな<b>タンパク質分解酵素</b>を含むリソソームの内容物が放出されて殺菌が行われる。好中球はほかにも病原体に毒性を示す物質を産生する。（教科書 P129）"},
+
+{q:"未消化の病原体の断片や残渣はどのように除去されるか。",
+ choices:[
+  ["エキソサイトーシス",true,""],
+  ["オプソニン化",false,"抗体が病原体を覆って貪食作用を亢進させるはたらき。"],
+  ["再循環現象",false,"リンパ球が2つの循環系をめぐる現象。"],
+  ["抗原提示",false,"抗原の断片を細胞表面に示すはたらき。"]],
+ exp:"未消化の病原体の断片や残渣は<b>エキソサイトーシス</b>で除去される。（教科書 図8・14）"},
+
+/* ---------- D-6 獲得免疫の2種類（P130） ---------- */
+
+{q:"B細胞が産生する抗体を用いて病原体を排除する免疫機構はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["液性免疫",true,""],
+  ["細胞性免疫",false,"活性化したT細胞が感染細胞に傷害を与え排除する免疫機構。"],
+  ["自然免疫",false,"貪食などによって相手を選ばずはたらく生体防御機構。"],
+  ["免疫記憶",false,"抗原の情報を記憶して二次応答を可能にするしくみ。"]],
+ exp:"獲得免疫は液性免疫と細胞性免疫の2種類に分けられる。<b>液性免疫</b>はB細胞が産生する抗体を用いて病原体を排除する免疫機構である。（教科書 P130）"},
+
+{q:"活性化したT細胞が感染細胞に傷害を与えて排除する免疫機構はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["細胞性免疫",true,""],
+  ["液性免疫",false,"B細胞が産生する抗体を用いて病原体を排除する免疫機構。"],
+  ["自然免疫",false,"貪食などによって相手を選ばずはたらく生体防御機構。"],
+  ["免疫記憶",false,"抗原の情報を記憶して二次応答を可能にするしくみ。"]],
+ exp:"<b>細胞性免疫</b>は、活性化したT細胞が感染細胞に傷害を与え排除する免疫機構である。<b>液性免疫＝B細胞／細胞性免疫＝T細胞</b>と対にして覚える。（教科書 P130）"},
+
+{q:"抗体を産生するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["形質細胞",true,""],
+  ["ヘルパーT細胞",false,"サイトカインを分泌してB細胞を活性化させる。"],
+  ["キラーT細胞",false,"ウイルス感染細胞を直接殺傷する。"],
+  ["マクロファージ",false,"病原体を貪食し、抗原を提示する。"]],
+ exp:"B細胞が分化して<b>形質細胞</b>になり、抗体を産生する。国試では「抗体を産生するのはどれか」の形で繰り返し問われる。（教科書 P128、P132）"},
+
+{q:"自然免疫にあたるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["好中球やマクロファージによる食作用",true,""],
+  ["キラーT細胞による細胞傷害作用",false,"獲得免疫のうち細胞性免疫にあたる。"],
+  ["形質細胞による抗体の産生",false,"獲得免疫のうち液性免疫にあたる。"],
+  ["メモリーB細胞による抗原の認識",false,"獲得免疫で免疫記憶を担うはたらき。"]],
+ exp:"<b>自然免疫</b>は生まれつき備わっている非特異的な防御で、好中球やマクロファージなどの食細胞による貪食が中心となる。（教科書 P129）"},
+
+/* ---------- D-7 液性免疫（P130） ---------- */
+
+{q:"抗原が体内へ侵入したとき、これらを貪食するのはどれか。",
+ choices:[
+  ["マクロファージと樹状細胞",true,""],
+  ["赤血球と血小板",false,"酸素の運搬と止血を担う血球で、貪食は行わない。"],
+  ["形質細胞とメモリーB細胞",false,"B細胞が分化してできる細胞で、貪食は行わない。"],
+  ["キラーT細胞とヘルパーT細胞",false,"細胞傷害や他の細胞の活性化を担う細胞で、貪食は行わない。"]],
+ exp:"抗原が体内へ侵入すると、<b>マクロファージと樹状細胞</b>がこれらを貪食する。（教科書 P130、図8・15）"},
+
+{q:"抗原由来の断片が、主に樹状細胞によって提示される細胞表面の分子はどれか。",kihon:true,
+ choices:[
+  ["MHCクラスII",true,""],
+  ["MHCクラスI",false,"ウイルス等に感染した細胞が抗原の断片を提示するときに使う分子。"],
+  ["T細胞受容体",false,"T細胞の側にあって、提示された抗原を認識する受容体。"],
+  ["IgE受容体",false,"好塩基球の表面にあり、抗原と結合したIgEが結合する受容体。"]],
+ exp:"抗原由来の断片が主に樹状細胞によって細胞表面（<b>MHCクラスII</b>）へ提示される。このほかB細胞にも抗原提示能がある。（教科書 P130）"},
+
+{q:"液性免疫で、提示された抗原を認識して活性化するのはどれか。",
+ choices:[
+  ["ヘルパーT細胞（Th2細胞）",true,""],
+  ["キラーT細胞",false,"MHCクラスIに提示された抗原を認識して感染細胞を殺傷する。"],
+  ["形質細胞",false,"B細胞が分化して抗体を産生するようになった細胞。"],
+  ["好中球",false,"自然免疫で病原体を貪食・殺菌する。"]],
+ exp:"液性免疫では<b>ヘルパーT細胞（Th2細胞）</b>が提示された抗原を認識して活性化する。（教科書 P130）"},
+
+{q:"活性化したヘルパーT細胞がB細胞を活性化させるために分泌するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["インターロイキン4（IL-4）",true,""],
+  ["IFN-γ",false,"Th1細胞が分泌してマクロファージを活性化させる。"],
+  ["パーフォリン",false,"キラーT細胞が分泌する細胞傷害性顆粒に含まれる。"],
+  ["ヒスタミン",false,"好塩基球が放出してアレルギー反応を起こす。"]],
+ exp:"活性化したヘルパーT細胞は<b>IL-4、IL-5、IL-6、IL-10</b>を分泌してB細胞を活性化させる。（教科書 P130、図8・15）"},
+
+{q:"ヘルパーT細胞に活性化されたB細胞がたどるのはどれか。",
+ choices:[
+  ["分裂増殖して抗体を産生するか、メモリーB細胞に分化する",true,""],
+  ["貪食を行って膿になる",false,"好中球がたどる経過。"],
+  ["ウイルス感染細胞を直接殺傷する",false,"キラーT細胞のはたらき。"],
+  ["組織へ移行してマクロファージになる",false,"単球がたどる経過。"]],
+ exp:"活性化したB細胞は<b>分裂増殖して抗体を産生</b>したり、<b>メモリーB細胞に分化</b>して抗原の情報を記憶したりする。（教科書 P130）"},
+
+/* ---------- D-8 抗体の種類とはたらき（P131） ---------- */
+
+{q:"抗体が含まれるのはどれか。",kihon:true,
+ choices:[
+  ["γ-グロブリン（免疫グロブリン）",true,""],
+  ["アルブミン",false,"もっとも多い血漿タンパク質で、浸透圧の維持に関わる。"],
+  ["フィブリノゲン",false,"血液凝固で中心的な役割を果たす血漿タンパク質。"],
+  ["ヘモグロビン",false,"赤血球内にあって酸素を運ぶ色素タンパク質。"]],
+ exp:"抗体は<b>γ-グロブリン（免疫グロブリン）</b>の中に含まれており、IgG、IgA、IgM、IgD、IgEの5種類がある。（教科書 P131）"},
+
+{q:"免疫グロブリンは何種類あるか。",
+ choices:[
+  ["5種類",true,""],
+  ["2種類",false,"教科書が示す種類より少ない。"],
+  ["3種類",false,"教科書が示す種類より少ない。"],
+  ["7種類",false,"教科書が示す種類より多い。"]],
+ exp:"抗体にはIgG、IgA、IgM、IgD、IgEの<b>5種類</b>があり、それぞれ固有のはたらきをする。（教科書 P131）"},
+
+{q:"抗体のはたらきの組合せで正しいのはどれか。",kihon:true,
+ choices:[
+  ["抗原の中和・オプソニン化・補体の活性化",true,""],
+  ["貪食・殺菌・エキソサイトーシス",false,"好中球が自然免疫で行う一連の過程。"],
+  ["凝集・溶血・凝固",false,"血液型の不一致や止血に関わる現象の並び。"],
+  ["抗原提示・細胞傷害・サイトカイン分泌",false,"T細胞や樹状細胞が担うはたらきの並び。"]],
+ exp:"抗体のはたらきは、①<b>抗原の中和</b>、②抗原の<b>オプソニン化</b>、③<b>補体の活性化</b>の3つに分けられる。（教科書 P131）"},
+
+{q:"抗原の中和とはどのようなことか。",
+ choices:[
+  ["病原体が産生する毒素に抗体が結合して無毒化すること",true,""],
+  ["抗体が病原体を覆って貪食作用を亢進させること",false,"オプソニン化の説明。"],
+  ["抗体のはたらきを補助するタンパク質を活性化すること",false,"補体の活性化の説明。"],
+  ["抗原の断片を細胞表面に示すこと",false,"抗原提示の説明。"]],
+ exp:"<b>抗原の中和</b>とは、たとえば病原体が産生する毒素に抗体が結合して無毒化することである。（教科書 P131）"},
+
+{q:"オプソニン化とはどのようなことか。",kihon:true,
+ choices:[
+  ["抗体が病原体を覆って貪食作用を亢進させること",true,""],
+  ["病原体が産生する毒素に抗体が結合して無毒化すること",false,"抗原の中和の説明。"],
+  ["抗原の断片を細胞表面に示すこと",false,"抗原提示の説明。"],
+  ["未消化の残渣を細胞外へ出すこと",false,"エキソサイトーシスの説明。"]],
+ exp:"<b>オプソニン化</b>とは、抗体が好中球やマクロファージなどが貪食する病原体を覆うことで、その貪食作用を亢進させることである。（教科書 P131）"},
+
+{q:"補体が産生される場所はどれか。",
+ choices:[
+  ["肝臓",true,""],
+  ["骨髄",false,"血球が産生される器官。"],
+  ["胸腺",false,"T細胞が成熟する器官。"],
+  ["脾臓",false,"B細胞を増殖させる器官。"]],
+ exp:"補体は抗体のはたらきを補助するタンパク質で、<b>肝臓</b>で産生され、通常は不活性状態で血中に存在する。（教科書 P131）"},
+
+{q:"抗原に結合した抗体が補体を活性化すると起こるのはどれか。",kihon:true,
+ choices:[
+  ["オプソニン化・病原体の破壊・食細胞に対する走化性刺激",true,""],
+  ["ヒスタミンの放出と蕁麻疹",false,"好塩基球が関わる即時型アレルギー反応。"],
+  ["フィブリンの形成と血餅",false,"血液凝固で起こること。"],
+  ["赤血球の凝集と溶血",false,"血液型の合わない輸血で起こること。"]],
+ exp:"抗原に結合した抗体は補体を活性化し、<b>オプソニン化、病原体の破壊、食細胞に対する走化性刺激</b>などではたらかせる。（教科書 P131）"},
+
+/* ---------- D-9 細胞性免疫（P132） ---------- */
+
+{q:"ウイルス等に感染した細胞が抗原の断片を提示する細胞表面の分子はどれか。",kihon:true,
+ choices:[
+  ["MHCクラスI",true,""],
+  ["MHCクラスII",false,"樹状細胞やマクロファージが抗原の断片を提示するときに使う分子。"],
+  ["T細胞受容体",false,"T細胞の側にあって、提示された抗原を認識する受容体。"],
+  ["IgE受容体",false,"好塩基球の表面にあり、抗原と結合したIgEが結合する受容体。"]],
+ exp:"ウイルス等の病原体に感染した細胞は、抗原の断片を自らの細胞表面（<b>MHCクラスI</b>）に提示する。<b>感染細胞＝クラスI／提示する側＝クラスII</b>と整理する。（教科書 P132）"},
+
+{q:"MHCクラスIに提示された抗原を認識して感染細胞を殺傷するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["キラーT細胞",true,""],
+  ["ヘルパーT細胞",false,"提示された抗原を認識して活性化し、他の細胞を活性化させる。"],
+  ["形質細胞",false,"抗体を産生する細胞。"],
+  ["好中球",false,"自然免疫で病原体を貪食・殺菌する。"]],
+ exp:"ウイルス感染細胞がMHCクラスIに抗原断片を提示すると、<b>キラーT細胞</b>がそれを認識して殺傷する。移植された臓器を攻撃するのもこの細胞である。（教科書 P132）"},
+
+{q:"キラーT細胞を活性化させるのはどれか。",kihon:true,
+ choices:[
+  ["IL-2",true,""],
+  ["IL-4",false,"Th2細胞が分泌してB細胞を活性化させる。"],
+  ["IFN-γ",false,"Th1細胞が分泌してマクロファージを活性化させる。"],
+  ["ヒスタミン",false,"好塩基球が放出してアレルギー反応を起こす。"]],
+ exp:"樹状細胞がMHCクラスIIに提示した抗原をヘルパーT細胞（Th1細胞）が認識すると活性化して<b>IL-2</b>を分泌し、IL-2がキラーT細胞を活性化させる。（教科書 P132）"},
+
+{q:"キラーT細胞が分泌する細胞傷害性顆粒に含まれるのはどれか。",kihon:true,
+ choices:[
+  ["パーフォリン",true,""],
+  ["ヒスタミン",false,"好塩基球が放出してアレルギー反応を起こす物質。"],
+  ["セロトニン",false,"血小板が放出して血管を収縮させる物質。"],
+  ["プラスミン",false,"フィブリンを分解する酵素。"]],
+ exp:"キラーT細胞は、リソソームの一種である細胞傷害性顆粒（<b>パーフォリン</b>含有顆粒）を分泌してウイルス感染細胞を殺傷する。（教科書 P132、図8・16）"},
+
+{q:"Th1細胞が分泌してマクロファージを活性化させるのはどれか。",kihon:true,
+ choices:[
+  ["IFN-γ",true,""],
+  ["IL-2",false,"同じTh1細胞が分泌するが、活性化させる相手はキラーT細胞。"],
+  ["IL-4",false,"Th2細胞が分泌してB細胞を活性化させる。"],
+  ["パーフォリン",false,"キラーT細胞が分泌して感染細胞を殺傷する。"]],
+ exp:"活性化したヘルパーT細胞（Th1細胞）が<b>IFN-γ</b>を分泌してマクロファージを活性化すると、マクロファージの貪食能が亢進する。（教科書 P132）"},
+
+/* ---------- D-10 免疫記憶（P132） ---------- */
+
+{q:"ある病原体に初めて感染したとき、抗体が産生されるまでにかかる時間はどれか。",
+ choices:[
+  ["数日間",true,""],
+  ["数秒",false,"実際にかかる時間より大幅に短い。"],
+  ["数ヵ月",false,"実際にかかる時間より大幅に長い。"],
+  ["数年",false,"実際にかかる時間より大幅に長い。"]],
+ exp:"初めて感染したときには、B細胞が分化して形質細胞になり抗体を産生する（一次応答）までに<b>数日間</b>を要する。（教科書 P132、図8・17）"},
+
+{q:"抗原の情報を記憶するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["メモリーB細胞",true,""],
+  ["形質細胞",false,"抗体を産生するようになった細胞。"],
+  ["キラーT細胞",false,"ウイルス感染細胞を直接殺傷する細胞。"],
+  ["マクロファージ",false,"病原体を貪食し、抗原を提示する細胞。"]],
+ exp:"1回目の感染の際、B細胞の一部は<b>メモリーB細胞</b>に分化して抗原の情報を記憶する。（教科書 P132、図8・15）"},
+
+{q:"二次応答の特徴はどれか。",kihon:true,
+ choices:[
+  ["より迅速かつ多量に抗体を分泌する",true,""],
+  ["抗体がまったく産生されない",false,"一次応答よりむしろ強い反応が起こる。"],
+  ["一次応答より遅く、少量の抗体しか出ない",false,"反応の向きが逆である。"],
+  ["抗体ではなく補体だけがはたらく",false,"補体は抗体のはたらきを補助するもの。"]],
+ exp:"同じ抗原に後日再び遭遇したときに、<b>より迅速かつ多量に</b>抗体を分泌して獲得免疫を作動させられるようになる。これを免疫記憶と呼ぶ。（教科書 P132）"},
+
+{q:"免疫記憶はどのくらいの期間保つことができるか。",
+ choices:[
+  ["数年間という長期",true,""],
+  ["数時間",false,"実際に保たれる期間より大幅に短い。"],
+  ["2〜3日",false,"組織へ移行した好中球の寿命にあたる長さ。"],
+  ["約120日",false,"核をもたない血球の寿命にあたる長さ。"]],
+ exp:"免疫記憶は<b>数年間</b>という長期にわたって保つことができる。麻疹ウイルス抗原などに対する免疫記憶は一生続く。（教科書 P132）"},
+
+/* ---------- ⚠ 誤りを選ぶ ---------- */
+
+{q:"免疫担当細胞について誤っているのはどれか。",kihon:true,dobon:true,gori:true,
+ choices:[
+  ["形質細胞は食作用をもつ",true,""],
+  ["好中球は感染部位で病原体を貪食・殺菌する",false,"教科書どおりの記述なので、正しい。"],
+  ["単球は組織へ移行してマクロファージとなる",false,"教科書どおりの記述なので、正しい。"],
+  ["樹状細胞は主に抗原提示細胞としてはたらく",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"形質細胞はB細胞が分化して<b>抗体を産生</b>する細胞で、食作用はもたない。食作用をもつのは好中球・マクロファージ（単球）・樹状細胞など。（教科書 P128、P130）"},
+
+{q:"液性免疫について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["キラーT細胞が中心となってはたらく",true,""],
+  ["B細胞が産生する抗体を用いて病原体を排除する",false,"教科書どおりの記述なので、正しい。"],
+  ["ヘルパーT細胞がIL-4などを分泌してB細胞を活性化させる",false,"教科書どおりの記述なので、正しい。"],
+  ["樹状細胞がMHCクラスIIに抗原を提示する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"キラーT細胞が中心となるのは<b>細胞性免疫</b>。液性免疫で中心となるのはB細胞とヘルパーT細胞（Th2細胞）である。（教科書 P130、P132）"},
+
+{q:"細胞性免疫について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["感染細胞はMHCクラスIIに抗原の断片を提示する",true,""],
+  ["キラーT細胞がパーフォリン含有顆粒を分泌する",false,"教科書どおりの記述なので、正しい。"],
+  ["Th1細胞がIL-2を分泌する",false,"教科書どおりの記述なので、正しい。"],
+  ["Th1細胞がIFN-γを分泌してマクロファージを活性化する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"ウイルス等に感染した細胞が抗原の断片を提示するのは<b>MHCクラスI</b>。クラスIIを使うのは樹状細胞やマクロファージ、B細胞である。（教科書 P130、P132）"},
+
+{q:"抗体のはたらきについて誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["補体は抗体がなくても抗原に直接結合して活性化する",true,""],
+  ["病原体が産生する毒素に結合して無毒化する",false,"教科書どおりの記述なので、正しい。"],
+  ["病原体を覆って貪食作用を亢進させる",false,"教科書どおりの記述なので、正しい。"],
+  ["補体は肝臓で産生され、通常は不活性状態で血中に存在する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"教科書は「<b>抗原に結合した抗体が</b>補体を活性化し」と述べている。補体は抗体のはたらきを補助するタンパク質である。（教科書 P131）"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"健常成人の血液中にもっとも多い免疫グロブリンはどれか。",hosoku:true,dobon:true,
+ choices:[
+  ["IgG",true,""],
+  ["IgA",false,"分泌液や初乳に多く含まれる免疫グロブリン。"],
+  ["IgM",false,"感染初期に産生される免疫グロブリン。"],
+  ["IgE",false,"I型アレルギーに関与する免疫グロブリン。"]],
+ exp:"補足知識（資料外）。多い順に<b>IgG ＞ IgA ＞ IgM ＞ IgD ＞ IgE</b>。IgGは唯一胎盤を通過できる免疫グロブリンでもあり、国試で繰り返し問われる。"},
+
+{q:"唾液や母乳、涙などの分泌液に多く含まれる免疫グロブリンはどれか。",hosoku:true,
+ choices:[
+  ["IgA",true,""],
+  ["IgG",false,"血液中にもっとも多く、胎盤を通過する免疫グロブリン。"],
+  ["IgM",false,"感染初期に産生される免疫グロブリン。"],
+  ["IgD",false,"血液中の量がごく少ない免疫グロブリン。"]],
+ exp:"補足知識（資料外）。<b>IgA</b>は唾液・母乳・涙などの分泌液に含まれ、粘膜での感染防御にはたらく。初乳に多く含まれ、新生児を感染から守る。"},
+
+{q:"感染初期に産生され、分子がもっとも大きい免疫グロブリンはどれか。",hosoku:true,
+ choices:[
+  ["IgM",true,""],
+  ["IgG",false,"血液中にもっとも多く、胎盤を通過する免疫グロブリン。"],
+  ["IgA",false,"分泌液や初乳に多く含まれる免疫グロブリン。"],
+  ["IgE",false,"I型アレルギーに関与する免疫グロブリン。"]],
+ exp:"補足知識（資料外）。<b>IgM</b>は5つの単位がつながった大きな分子で、感染初期に最初に産生される。分子が大きいため胎盤を通過できず、ABO式血液型の抗体もこの型にあたる。"},
+
+{q:"I型アレルギーに関与する免疫グロブリンはどれか。",hosoku:true,
+ choices:[
+  ["IgE",true,""],
+  ["IgG",false,"血液中にもっとも多く、胎盤を通過する免疫グロブリン。"],
+  ["IgA",false,"分泌液や初乳に多く含まれる免疫グロブリン。"],
+  ["IgM",false,"感染初期に産生される免疫グロブリン。"]],
+ exp:"補足知識（資料外）。<b>IgE</b>は好塩基球や肥満細胞の表面の受容体に結合し、抗原と反応するとヒスタミンが放出されてI型アレルギーが起こる。"},
+
+{q:"アナフィラキシーショックはどの型のアレルギー反応か。",hosoku:true,
+ choices:[
+  ["I型",true,""],
+  ["II型",false,"血液型不適合輸血による溶血などが含まれる型。"],
+  ["III型",false,"全身性エリテマトーデスや関節リウマチなどが含まれる型。"],
+  ["IV型",false,"ツベルクリン反応や接触性皮膚炎が含まれる型。"]],
+ exp:"補足知識（資料外）。<b>I型（即時型）</b>はIgE抗体を介して起こり、花粉症、気管支喘息、蕁麻疹、食物アレルギー、アナフィラキシーショックなどが含まれる。"},
+
+{q:"ツベルクリン反応はどの型のアレルギー反応か。",hosoku:true,
+ choices:[
+  ["IV型",true,""],
+  ["I型",false,"IgE抗体を介して起こる即時型の反応。"],
+  ["II型",false,"血液型不適合輸血による溶血などが含まれる型。"],
+  ["III型",false,"全身性エリテマトーデスや関節リウマチなどが含まれる型。"]],
+ exp:"補足知識（資料外）。<b>IV型（遅延型）</b>は抗体ではなく活性化したT細胞が直接関与する。ツベルクリン反応や接触性皮膚炎が含まれ、反応は48時間後に現れる。細胞性免疫がはたらく例でもある。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を色付きにして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
