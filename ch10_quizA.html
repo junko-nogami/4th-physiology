@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第10章 パートA 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#8c2a2a;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#f0c4c4;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#f0c4c4;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#8c2a2a;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#8c2a2a;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(140,42,42,.12);color:#8c2a2a}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#8c2a2a;background:#fbf3f3}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #8c2a2a;background:#8c2a2a;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#6f2020}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#8c2a2a;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#8c2a2a;background:#fbf3f3}
+.mode .nm{font-size:16px;font-weight:600;color:#8c2a2a;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#8c2a2a;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#6f2020;background:rgba(140,42,42,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#8c2a2a;background:rgba(140,42,42,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第10章 循環｜パートA 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第10章 循環 ｜ A 循環系の概要・心臓の機能的解剖・電気的活動（教科書 P139〜141）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第10章 P139〜141 ベース）=====
+   対応スライド：ch10_partA.html
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本。通常モードで「ここは重要」と示す印。プールの4〜6割が目安
+   dobon :true … 💣ドボン。ドボンモードで外すと即終了になる問題。プールの15〜20%
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）
+   exp … 正解時に見せる「なぜ正しいか」
+
+   ★スターリングの心臓の法則（過去問6回）は教科書P154（D 循環調節）に記述があるため、パートAには入れていない。
+
+   過去問（3章 循環（生理学）2008〜2017＋宅ドリル循環30問）での出題頻度：
+   心筋の性質 7回（ギャップ結合・機能的合胞体5／横紋筋3／自動能3／活動電位が長い・Ca²⁺ 3／不応期が長く強縮しない2）／
+   肺循環・肺静脈＝動脈血 5回／刺激伝導系の順序 3回／洞房結節＝ペースメーカー 1回（解説でも頻出）／弁 1回 */
+const PICK=5;
+const POOL=[
+
+/* ---------- A-1 循環系のはたらき（P139） ---------- */
+
+{q:"循環系を構成する2つの系の組合せで正しいのはどれか。",
+ choices:[
+  ["心臓血管系とリンパ系",true,""],
+  ["心臓血管系と神経系",false,"神経系は電気信号で情報を伝える系で、循環系には含まれない。"],
+  ["リンパ系と内分泌系",false,"内分泌系はホルモンを分泌する系で、循環系はそのホルモンを運ぶ側にあたる。"],
+  ["肺循環系と消化器系",false,"肺循環系は心臓血管系の一部。消化器系は栄養素を吸収する系で、循環系には含まれない。"]],
+ exp:"循環系は、血液を循環させる<b>心臓血管系</b>と、リンパ液を循環させる<b>リンパ系</b>から構成される。（教科書 P139）"},
+
+{q:"循環系のはたらきについて誤っているのはどれか。",gori:true,
+ choices:[
+  ["赤血球を産生して酸素の運搬能力を高める",true,""],
+  ["消化管から吸収した栄養素を各細胞へ運ぶ",false,"教科書どおりの記述なので、正しい。"],
+  ["貯蔵された脂肪や糖を必要とする組織へ運ぶ",false,"教科書どおりの記述なので、正しい。"],
+  ["ホルモンを運んで細胞間の情報伝達を担う",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"赤血球を産生するのは<b>骨髄</b>（第8章）。循環系は、つくられた赤血球を含む血液を運ぶ側である。（教科書 P139）"},
+
+{q:"細胞の代謝で生じた炭酸ガスや尿素、熱を、循環系が運んでいく排泄系の組合せはどれか。",
+ choices:[
+  ["肺・腎臓・皮膚",true,""],
+  ["肝臓・脾臓・膵臓",false,"代謝や血液の処理、消化液やホルモンの分泌を担う臓器の並び。"],
+  ["胃・小腸・大腸",false,"食物の消化と吸収を担う消化管の並び。"],
+  ["心臓・脳・骨格筋",false,"多くの血液を受け取って活動する臓器の並びで、排泄を担うわけではない。"]],
+ exp:"細胞の代謝によって生じた炭酸ガス、尿素、熱などは、排泄系である<b>肺・腎臓・皮膚</b>に運ばれる。（教科書 P139）"},
+
+{q:"出血や感染を防ぐために、循環系が目的の場所へ集めるものはどれか。",
+ choices:[
+  ["血小板や白血球",true,""],
+  ["赤血球やアルブミン",false,"酸素の運搬や浸透圧の維持を担う血液成分。"],
+  ["ホルモンや消化酵素",false,"細胞間の情報伝達や栄養素の分解を担う物質。"],
+  ["尿素や炭酸ガス",false,"細胞の代謝で生じ、排泄系へ運ばれる代謝産物。"]],
+ exp:"循環系は<b>血小板、白血球</b>などを目的の場所に集め、出血や感染を防ぐ。（教科書 P139）"},
+
+/* ---------- A-2 肺循環系と体循環系（P139） ---------- */
+
+{q:"肺循環系を構成するのはどれか。",kihon:true,
+ choices:[
+  ["右心室",true,""],
+  ["左心室",false,"体循環系に属し、血液を全身へ送り出す部屋。"],
+  ["左心房",false,"体循環系に属し、肺から戻った血液を受け取る部屋。"],
+  ["大動脈",false,"左心室から全身へ血液を送り出す、体循環系の血管。"]],
+ exp:"肺循環系は<b>右心房、右心室と肺</b>からなる。左心房・左心室は体循環系に属する。（教科書 P139）"},
+
+{q:"肺循環に属する血管はどれか。",kihon:true,
+ choices:[
+  ["肺動脈",true,""],
+  ["門脈",false,"消化管などからの血液を肝臓へ運ぶ、体循環系の血管。"],
+  ["腎動脈",false,"腹大動脈から分かれて腎臓へ血液を送る、体循環系の血管。"],
+  ["冠状動脈",false,"大動脈の起始部から分かれて心臓自身に血液を送る、体循環系の血管。"]],
+ exp:"右心室から出た血液は<b>肺動脈</b>を通って肺へ送られる（図10・2）。肺循環は「小循環」、体循環は「大循環」とも呼ばれる。"},
+
+{q:"肺循環系と体循環系のつながり方で正しいのはどれか。",
+ choices:[
+  ["直列につながっている",true,""],
+  ["並列につながっている",false,"並列だと血液の一部が肺を通らずに全身へ回ることになり、実際のつながり方とは違う。"],
+  ["互いに独立した2つの閉じた回路である",false,"2つの回路は心臓でつながり、血液は両方を順に通る。"],
+  ["肺循環系が体循環系の途中から枝分かれしている",false,"肺循環系は右心から始まる回路で、体循環系の枝ではない。"]],
+ exp:"肺循環系と体循環系は<b>直列</b>につながっている。そのため、全身から戻った血液はすべて肺を通ってから再び全身へ送られる。（教科書 P139）"},
+
+{q:"血液が循環する順序で正しいのはどれか。",kihon:true,
+ choices:[
+  ["左心 → 体循環 → 右心 → 肺循環 → 左心",true,""],
+  ["左心 → 肺循環 → 右心 → 体循環 → 左心",false,"左心から出た血液は肺ではなく全身へ送られる。"],
+  ["右心 → 体循環 → 左心 → 肺循環 → 右心",false,"右心から出た血液は全身ではなく肺へ送られる。"],
+  ["左心 → 体循環 → 肺循環 → 右心 → 左心",false,"全身から戻った血液は、肺へ行く前にまず右心に戻る。"]],
+ exp:"血液は<b>左心 → 体循環 → 右心 → 肺循環 → 左心</b>と循環する。（教科書 図10・2）"},
+
+{q:"酸素を多く含む血液が流れている血管はどれか。",hosoku:true,dobon:true,
+ choices:[
+  ["肺静脈",true,""],
+  ["肺動脈",false,"右心室から肺へ向かう血管で、酸素の少ない静脈血が流れる。"],
+  ["上大静脈",false,"上半身から右心房へ戻る血管で、静脈血が流れる。"],
+  ["門脈",false,"消化管などから肝臓へ向かう血管で、組織を通ったあとの静脈血が流れる。"]],
+ exp:"補足知識（資料外）。肺でガス交換を終えた動脈血は<b>肺静脈</b>を通って左心房へ戻る。名前は「静脈」でも動脈血が流れ、逆に肺動脈には静脈血が流れる。"},
+
+{q:"肺循環について正しいのはどれか。",hosoku:true,
+ choices:[
+  ["肺動脈圧は体循環の動脈圧より低い",true,""],
+  ["肺静脈は右心房へ血液を戻す",false,"肺静脈が血液を戻すのは左心房。右心房へ戻るのは上・下大静脈。"],
+  ["肺循環の血液は左心室から送り出される",false,"肺循環の血液を送り出すのは右心室。左心室は体循環の出発点。"],
+  ["肺動脈の壁は大動脈の壁より厚い",false,"圧の低い肺動脈の壁は、高い圧を受ける大動脈より薄い。"]],
+ exp:"補足知識（資料外）。肺動脈圧は約15 mmHgで、体循環の動脈圧（約120 mmHg）より<b>低い</b>。"},
+
+/* ---------- A-3 心臓の弁（P139） ---------- */
+
+{q:"心室が収縮するとき、左心室から左心房への逆流を防ぐ弁はどれか。",kihon:true,
+ choices:[
+  ["僧帽弁",true,""],
+  ["三尖弁",false,"右心房と右心室の間にある房室弁。"],
+  ["大動脈弁",false,"左心室の出口にある半月弁で、大動脈から左心室への逆流を防ぐ。"],
+  ["肺動脈弁",false,"右心室の出口にある半月弁で、肺動脈から右心室への逆流を防ぐ。"]],
+ exp:"左心房と左心室の間にある房室弁が<b>僧帽弁</b>。心室が収縮すると閉じて、心房への逆流を防ぐ。（教科書 P139）"},
+
+{q:"大動脈弁がある位置はどれか。",kihon:true,
+ choices:[
+  ["左心室の出口",true,""],
+  ["右心室の出口",false,"肺動脈弁がある位置。"],
+  ["左心房と左心室の間",false,"僧帽弁がある位置。"],
+  ["右心房と右心室の間",false,"三尖弁がある位置。"]],
+ exp:"<b>大動脈弁</b>は左心室の出口にある。右心室の出口には肺動脈弁がある。（教科書 P139）"},
+
+{q:"半月弁に分類される弁の組合せはどれか。",kihon:true,
+ choices:[
+  ["肺動脈弁と大動脈弁",true,""],
+  ["三尖弁と僧帽弁",false,"心房と心室の間にある房室弁の組合せ。"],
+  ["三尖弁と肺動脈弁",false,"右心にある弁の組合せで、房室弁と半月弁が混ざっている。"],
+  ["僧帽弁と大動脈弁",false,"左心にある弁の組合せで、房室弁と半月弁が混ざっている。"]],
+ exp:"心室の出口にある<b>肺動脈弁と大動脈弁</b>が半月弁。心室の入口にある三尖弁と僧帽弁は房室弁と呼ぶ。（教科書 図10・2）"},
+
+{q:"心臓の弁が開いたり閉じたりするしくみはどれか。",
+ choices:[
+  ["前後の圧力差によって受動的に開閉する",true,""],
+  ["弁に付着した骨格筋の収縮で開閉する",false,"心臓の弁には骨格筋は付着していない。"],
+  ["迷走神経の興奮で閉じる",false,"迷走神経は心拍数を減らす神経で、弁を直接動かすことはない。"],
+  ["洞房結節の興奮が直接弁を動かす",false,"洞房結節は心臓のリズムをつくる部位で、弁を直接動かすことはない。"]],
+ exp:"心臓の弁は<b>圧力差によって受動的に開閉</b>し、血液を一方向に流れるようにしている。（教科書 P139）"},
+
+/* ---------- A-4 心筋の種類と特徴（P139） ---------- */
+
+{q:"心筋について誤っているのはどれか。",kihon:true,dobon:true,gori:true,
+ choices:[
+  ["心筋細胞どうしはシナプスを介して連絡している",true,""],
+  ["心臓全体として協調して収縮する",false,"教科書どおりの記述なので、正しい。"],
+  ["興奮すると活動電位が生じる",false,"教科書どおりの記述なので、正しい。"],
+  ["刺激伝導系を通じて興奮が伝わる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"心筋細胞どうしは<b>ギャップ結合</b>で連結されている。そのため電気的活動がシナプスを介さずに細胞から細胞へ直接伝わる。（教科書 P139）"},
+
+{q:"心筋と同じく横紋筋に分類されるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["骨格筋",true,""],
+  ["血管の平滑筋",false,"血管の壁にある平滑筋で、横紋はない。"],
+  ["消化管の平滑筋",false,"消化管の壁で分節運動や蠕動運動を起こす平滑筋で、横紋はない。"],
+  ["瞳孔括約筋",false,"虹彩にあって瞳孔を小さくする平滑筋で、横紋はない。"]],
+ exp:"心筋は<b>骨格筋</b>と同じ横紋筋に分類される（教科書 P139）。ただし骨格筋と違い、自分の意思では動かせない不随意筋である。"},
+
+{q:"興奮の自動発生と伝導を担うのはどれか。",kihon:true,
+ choices:[
+  ["特殊心筋",true,""],
+  ["固有心筋",false,"心房筋と心室筋からなり、血液の駆出を担う心筋。"],
+  ["平滑筋",false,"内臓や血管の壁をつくる筋で、心臓の筋ではない。"],
+  ["骨格筋",false,"骨に付着して関節を動かす筋で、心臓の筋ではない。"]],
+ exp:"心筋は2種類に大別される。<b>特殊心筋</b>は興奮の自動発生と伝導を、固有心筋は血液の駆出を担う。（教科書 P139）"},
+
+{q:"固有心筋に含まれるのはどれか。",
+ choices:[
+  ["心室筋",true,""],
+  ["洞房結節",false,"興奮を自動的に発生させる特殊心筋。"],
+  ["ヒス束",false,"房室結節からの興奮を心室へ伝える特殊心筋。"],
+  ["プルキンエ線維",false,"心室の内膜側に分布して興奮を伝える特殊心筋。"]],
+ exp:"固有心筋は<b>心房筋と心室筋</b>に分けられ、血液の駆出を担う。（教科書 P139・141）"},
+
+{q:"心臓が「機能的合胞体」と呼ばれる理由はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["心筋細胞どうしがギャップ結合でつながり、電気的活動が細胞から細胞へ伝わる",true,""],
+  ["心臓全体が1個の巨大な細胞でできている",false,"心臓は多数の心筋細胞でできており、1個の細胞ではない。"],
+  ["すべての心筋細胞に運動神経が直接分布している",false,"心筋細胞1つ1つに運動神経が分布するわけではない。神経を切り離しても心臓は収縮を続ける。"],
+  ["骨格筋と同じく、神経筋接合部で興奮が伝わる",false,"神経筋接合部は運動神経から骨格筋へ興奮を伝える部位で、心筋細胞どうしのつながりではない。"]],
+ exp:"心筋細胞の間は<b>ギャップ結合</b>で連結され、電気的活動が細胞から細胞へ伝わる。そのため心臓は1つの細胞のようにふるまい、機能的合胞体と呼ばれる。（教科書 P139）"},
+
+{q:"心臓につながる神経をすべて切り離した場合について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["一定のリズムで収縮を続ける",true,""],
+  ["ただちに停止する",false,"神経の指令がないと動かない骨格筋のふるまい。"],
+  ["外から刺激したときだけ収縮する",false,"自ら興奮を生じない筋のふるまい。"],
+  ["収縮したまま弛緩しなくなる",false,"収縮が持続する強縮のような状態で、心筋では起こらない。"]],
+ exp:"骨格筋と異なり、心筋には<b>自動能</b>がある。そのため神経を切り離しても一定のリズムで収縮する。（教科書 P139）"},
+
+{q:"心筋が強縮を起こさない理由はどれか。",hosoku:true,
+ choices:[
+  ["不応期が長い",true,""],
+  ["自動能がある",false,"神経がなくても自らリズムよく収縮できる性質で、強縮が起こらない理由ではない。"],
+  ["ギャップ結合で連結している",false,"興奮を細胞から細胞へ伝えるしくみで、強縮が起こらない理由ではない。"],
+  ["横紋筋である",false,"骨格筋も横紋筋で、骨格筋は強縮を起こす。"]],
+ exp:"補足知識（資料外）。心筋は<b>不応期が長い</b>（約0.3秒）ため、前の収縮が終わる前に次の刺激で収縮が重なることがなく、強縮を起こさない。"},
+
+{q:"心筋の活動電位が骨格筋より長く続く原因となるのはどれか。",hosoku:true,
+ choices:[
+  ["Ca²⁺の細胞内への流入",true,""],
+  ["K⁺の細胞内への流入",false,"K⁺は細胞内に多いイオンで、興奮したあとは細胞外へ流出して再分極を起こす。"],
+  ["Na⁺の細胞外への流出",false,"Na⁺は興奮のはじめに細胞内へ流入して脱分極を起こすイオン。"],
+  ["Cl⁻の細胞外への流出",false,"Cl⁻は細胞外に多い陰イオンで、心筋の活動電位を長く続ける役割はない。"]],
+ exp:"補足知識（資料外）。心筋では脱分極のあと<b>Ca²⁺が細胞内へ流入</b>し続けるので、活動電位が長く続く。流入するCa²⁺が増えると発生張力も大きくなる。"},
+
+{q:"心筋の活動電位で、脱分極のあと電位がしばらく平らに保たれる部分を何というか。",hosoku:true,
+ choices:[
+  ["プラトー",true,""],
+  ["オーバーシュート",false,"脱分極で膜電位が0 mVを越えてプラスになる部分。"],
+  ["後過分極",false,"再分極のあと、膜電位が一時的に静止電位よりマイナス側になる部分。"],
+  ["閾膜電位",false,"これを越えると活動電位が発生する境目の膜電位。"]],
+ exp:"補足知識（資料外）。心筋の活動電位は、急速な脱分極のあと平坦な部分（<b>プラトー</b>）が続く。このため持続時間が長い。"},
+
+/* ---------- A-5 心筋細胞の興奮（P140） ---------- */
+
+{q:"心筋細胞の静止電位はどれか。",
+ choices:[
+  ["−75 mV",true,""],
+  ["−90 mV",false,"心筋細胞の静止電位よりマイナス側にずれた値。"],
+  ["−50 mV",false,"心筋細胞の閾膜電位。ここに達すると活動電位が生じる。"],
+  ["+40 mV",false,"心筋細胞の活動電位のピーク。"]],
+ exp:"心筋細胞は<b>−75 mV</b>のマイナスの静止電位をもつ（分極状態）。閾膜電位は−50 mV、活動電位のピークは+40 mV。（教科書 P140）"},
+
+{q:"心筋細胞の膜電位が閾膜電位に達すると起こることはどれか。",
+ choices:[
+  ["電位が急速に上昇し、活動電位が生じる",true,""],
+  ["膜電位が静止電位に戻る",false,"興奮が終わったあとに起こる再分極のこと。"],
+  ["不応期が終わる",false,"不応期は興奮している期間にあたり、閾膜電位に達したときはむしろ興奮が始まる。"],
+  ["心筋が弛緩する",false,"弛緩は興奮が終わったあとに起こる。"]],
+ exp:"刺激で膜電位が上昇し閾膜電位（−50 mV）に達すると、<b>電位は急速に上昇して+40 mVに達する</b>。これが活動電位（興奮）である。（教科書 P140）"},
+
+{q:"心筋細胞の興奮期間（約0.3秒）について正しいのはどれか。",kihon:true,
+ choices:[
+  ["新たな刺激に反応しない",true,""],
+  ["新たな刺激に通常より強く反応する",false,"興奮期間中の心筋のふるまいとは逆。"],
+  ["膜電位は静止電位のまま変化しない",false,"興奮期間中は活動電位が生じ、膜電位は大きく変化している。"],
+  ["興奮は周囲の細胞へ伝わらない",false,"1個の細胞が興奮すると周囲の細胞を刺激し、興奮は次々と伝わる。"]],
+ exp:"心筋細胞の興奮期間は約0.3秒あり、この期間は<b>新たな刺激に反応しない</b>（不応期）。そのため、隣の細胞に伝わった自分の興奮によって再び脱分極することはない。（教科書 P140）"},
+
+{q:"興奮のあと、膜電位が静止電位に戻ることを何というか。",
+ choices:[
+  ["再分極",true,""],
+  ["脱分極",false,"膜電位が正の方向へ変化すること。"],
+  ["過分極",false,"膜電位が静止電位よりさらにマイナス側へ変化すること。"],
+  ["閾値",false,"活動電位を起こすのに必要な最小の刺激の強さ。"]],
+ exp:"興奮のあと、膜電位が−75 mVの静止電位に戻ることを<b>再分極</b>という。（教科書 P140）"},
+
+/* ---------- A-6 心筋の刺激伝導系（P140〜141） ---------- */
+
+{q:"房室結節より先の刺激伝導の順序で正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["ヒス束 → 左右の脚 → プルキンエ線維 → 心室筋",true,""],
+  ["プルキンエ線維 → ヒス束 → 左右の脚 → 心室筋",false,"プルキンエ線維はヒス束の末梢部で、興奮は最後に通る。"],
+  ["左右の脚 → ヒス束 → プルキンエ線維 → 心室筋",false,"左右の脚はヒス束から分かれる枝で、ヒス束より先にはこない。"],
+  ["ヒス束 → プルキンエ線維 → 左右の脚 → 心室筋",false,"プルキンエ線維は左右の脚のさらに先にある。"]],
+ exp:"興奮は<b>洞房結節 → 房室結節 → ヒス束 → 左右の脚 → プルキンエ線維 → 心室筋</b>の順に伝わる。（教科書 図10・3）"},
+
+{q:"洞房結節で始まった興奮が心房に広がったあと、次に到達する刺激伝導系の部位はどれか。",kihon:true,
+ choices:[
+  ["房室結節",true,""],
+  ["ヒス束",false,"心室中隔の上部にあり、左右の脚に分かれて心室へ興奮を伝える部位。"],
+  ["左脚",false,"ヒス束から分かれ、心室中隔を通って心尖部へ向かう枝。"],
+  ["プルキンエ線維",false,"ヒス束の末梢部で、心室の内膜側に分布する線維。"]],
+ exp:"心房からの刺激は、まず<b>房室結節</b>が受け取って心室へ伝える中継点となる。（教科書 P141）"},
+
+{q:"外部からの刺激なしに興奮し、その周期で心拍数を決める部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["洞房結節",true,""],
+  ["房室結節",false,"心房からの刺激を受けて心室へ伝える中継点。"],
+  ["ヒス束",false,"房室結節からの刺激を心室中隔へ伝える部位。"],
+  ["心室筋",false,"血液の駆出を担う固有心筋。"]],
+ exp:"<b>洞房結節</b>は静止膜電位レベルが自然に上昇し、外部からの刺激なしに興奮する。この興奮の周期が心拍数を決めるため、「ペースメーカー（歩調取り）細胞」と呼ばれる。（教科書 P141）"},
+
+{q:"洞房結節がある部位はどれか。",
+ choices:[
+  ["上大静脈と右心房の移行部",true,""],
+  ["下大静脈と右心房の移行部",false,"下半身からの血液が右心房へ入る部分。"],
+  ["肺静脈と左心房の移行部",false,"肺からの動脈血が左心房へ入る部分。"],
+  ["心室中隔の上部",false,"房室結節から続くヒス束が通る部分。"]],
+ exp:"洞房結節は<b>上大静脈と右心房の移行部</b>に局在する細胞群である。（教科書 P141）"},
+
+{q:"心室中隔の中を通り、心尖部へ興奮を伝えるのはどれか。",kihon:true,
+ choices:[
+  ["左脚と右脚",true,""],
+  ["房室結節",false,"心房と心室の境にあり、心房からの刺激を心室へ中継する部位。"],
+  ["洞房結節",false,"上大静脈と右心房の移行部にあるペースメーカー。"],
+  ["心房筋",false,"洞房結節からの興奮を受けて収縮する固有心筋。"]],
+ exp:"房室結節からの刺激はヒス束から、心室中隔の<b>左右の脚</b>を通って心尖部に伝導する。（教科書 P141）"},
+
+{q:"心房の収縮が、心室の収縮より前に完了するしくみはどれか。",
+ choices:[
+  ["房室結節が興奮の伝導を約0.07秒遅らせる",true,""],
+  ["ヒス束が興奮の伝導を速める",false,"伝導を速めても、心房と心室の収縮の順序をつくることにはならない。"],
+  ["プルキンエ線維が心房へ興奮を送り返す",false,"プルキンエ線維は心室の内膜側に分布し、心房へ興奮を戻すことはない。"],
+  ["洞房結節が心室へ直接興奮を送る",false,"心房と心室は線維輪で分けられ、洞房結節の興奮は心室へ直接伝わらない。"]],
+ exp:"<b>房室結節</b>は刺激の伝導を<b>約0.07秒遅らせる</b>ため、心房の収縮は心室の収縮の前に完了する。（教科書 P141）"},
+
+{q:"心房の興奮が心室筋へ直接伝わらない理由はどれか。",
+ choices:[
+  ["心房と心室が線維輪で分けられている",true,""],
+  ["心室筋にはギャップ結合がない",false,"心室筋も含めて、心筋細胞どうしはギャップ結合で連結している。"],
+  ["心房筋には不応期がない",false,"心房筋も心筋なので、興奮期間中は新たな刺激に反応しない。"],
+  ["心室筋に自動能がある",false,"自動能は特殊心筋の性質で、興奮が伝わらない理由ではない。"]],
+ exp:"心房と心室は<b>線維輪</b>で分けられているため、心房からの刺激は心室に直接伝わらず、房室結節を中継点として伝わる。（教科書 P141）"},
+
+{q:"刺激伝導系について誤っているのはどれか。",gori:true,
+ choices:[
+  ["ヒス束は心房の壁に広く分布する",true,""],
+  ["洞房結節の興奮は左右の心房へ伝わる",false,"教科書どおりの記述なので、正しい。"],
+  ["プルキンエ線維はヒス束の末梢部にあたる",false,"教科書どおりの記述なので、正しい。"],
+  ["興奮の伝導によって心臓は規則正しく収縮と拡張を繰り返す",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"<b>ヒス束</b>は房室結節から続き、心室中隔の左右の脚へ刺激を伝える経路。心房の壁には分布しない。（教科書 P141）"},
+
+{q:"プルキンエ線維が興奮したとき、心室筋の収縮が広がる方向はどれか。",
+ choices:[
+  ["心内膜側から心外膜側へ",true,""],
+  ["心外膜側から心内膜側へ",false,"実際の広がり方とは逆向き。プルキンエ線維がどちら側に分布しているかを考える。"],
+  ["心室中隔から心房へ",false,"心房と心室は線維輪で分けられ、心室の興奮は心房へ戻らない。"],
+  ["右心室から左心室へ順に",false,"左右の脚を通って、左右の心室にほぼ同時に伝わる。"]],
+ exp:"プルキンエ線維は左右の心室の<b>内膜側</b>に分布している。そのため、心筋の収縮は<b>心内膜側から心外膜側へ</b>と広がる。（教科書 P141）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を色付きにして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>

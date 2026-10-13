@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第10章 パートC 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#8c2a2a;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#f0c4c4;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#f0c4c4;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#8c2a2a;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#8c2a2a;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(140,42,42,.12);color:#8c2a2a}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#8c2a2a;background:#fbf3f3}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #8c2a2a;background:#8c2a2a;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#6f2020}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#8c2a2a;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#8c2a2a;background:#fbf3f3}
+.mode .nm{font-size:16px;font-weight:600;color:#8c2a2a;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#8c2a2a;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#6f2020;background:rgba(140,42,42,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#8c2a2a;background:rgba(140,42,42,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第10章 循環｜パートC 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第10章 循環 ｜ B 血管（弾性血管・抵抗血管）（教科書 P145〜148）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第10章 P145下〜148 ベース）=====
+   対応スライド：ch10_partC.html
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本。プールの4〜6割が目安
+   dobon :true … 💣ドボン。プールの15〜20%
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識（パートCは0問）
+   exp … 正解時に見せる「なぜ正しいか」
+
+   過去問（宅ドリル循環30問）での出題：平均動脈圧の計算1／大動脈の弾性で拡張期にも送る1／
+   静脈＝容量血管1／収縮期血圧の上昇（動脈弾性の低下・加齢）2／細動脈収縮＝エンドセリン1／心臓血管中枢＝延髄1 */
+const PICK=5;
+const POOL=[
+
+/* ---------- B 血管の分類（P145〜146、図10・7） ---------- */
+
+{q:"弾性血管に分類されるのはどれか。",kihon:true,
+ choices:[
+  ["大動脈",true,""],
+  ["細動脈",false,"中膜に平滑筋が多く、血管径を変えて血管抵抗を調節する抵抗血管。"],
+  ["毛細血管",false,"壁が内皮細胞のみで薄く、物質交換を行う交換血管。"],
+  ["静脈",false,"壁が薄く伸展性がよいため、多量の血液をためておける容量血管。"]],
+ exp:"<b>大動脈</b>は弾性組織が多い弾性血管である。（教科書 P145〜146、図10・7）"},
+
+{q:"抵抗血管に分類されるのはどれか。",kihon:true,
+ choices:[
+  ["細動脈",true,""],
+  ["大動脈",false,"弾性組織が多い弾性血管。"],
+  ["毛細血管",false,"物質交換を行う交換血管。"],
+  ["静脈",false,"血液をためておける容量血管。"]],
+ exp:"<b>細動脈</b>は中膜に平滑筋が多く、血管径を変えて血管抵抗を調節するため抵抗血管と呼ばれる。（教科書 P146、P148）"},
+
+{q:"交換血管に分類されるのはどれか。",kihon:true,
+ choices:[
+  ["毛細血管",true,""],
+  ["大動脈",false,"弾性組織が多い弾性血管。"],
+  ["細動脈",false,"平滑筋が多い抵抗血管。"],
+  ["静脈",false,"血液をためておける容量血管。"]],
+ exp:"<b>毛細血管</b>は壁が内皮細胞のみで薄く（約1μm）、血液と組織の物質交換に適している。（教科書 P145〜146、図10・7）"},
+
+{q:"静脈が属する血管系はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["容量血管",true,""],
+  ["弾性血管",false,"大動脈が属する血管系。"],
+  ["抵抗血管",false,"細動脈が属する血管系。"],
+  ["交換血管",false,"毛細血管が属する血管系。"]],
+ exp:"静脈は<b>容量血管</b>に分類される。血管は弾性血管（大動脈）、抵抗血管（細動脈）、交換血管（毛細血管）、容量血管（静脈）に分けられる。（教科書 P146）"},
+
+{q:"血管とその構造の特徴の組合せで正しいのはどれか。",
+ choices:[
+  ["毛細血管 ― 壁は内皮細胞のみ",true,""],
+  ["大動脈 ― 平滑筋が多い",false,"大動脈の壁に特に多いのは弾性組織。"],
+  ["細動脈 ― 弾性組織が多い",false,"細動脈の壁に特に多いのは平滑筋。"],
+  ["静脈 ― 壁は内皮細胞のみ",false,"大静脈の壁厚は約1.5mmあり、弾性組織・平滑筋・線維組織を含む。"]],
+ exp:"大動脈＝弾性組織が多い、細動脈＝平滑筋が多い、<b>毛細血管＝内皮細胞のみ</b>。構造の違いが血管の機能に結びついている。（教科書 P145、図10・7）"},
+
+{q:"毛細血管の内径はおよそどれか。",
+ choices:[
+  ["8μm",true,""],
+  ["35μm",false,"細動脈の内径。"],
+  ["2mm",false,"大動脈の壁の厚さ。"],
+  ["25mm",false,"大動脈の内径。"]],
+ exp:"毛細血管は内径約<b>8μm</b>、壁厚約1μm。（教科書 P145、図10・7）"},
+
+/* ---------- B-1 弾性血管（P146） ---------- */
+
+{q:"心室の拡張期にも、血液が途切れずに末梢へ送られるしくみはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["伸展した大動脈壁が、弾性で元の径に戻る",true,""],
+  ["心房が収縮する",false,"心房の収縮で送られる血液は、心室へ入る。"],
+  ["細動脈が収縮する",false,"血管抵抗を高める変化で、血液を末梢へ押し出すしくみではない。"],
+  ["静脈の弁が閉じる",false,"静脈血の逆流を防ぐもので、動脈側のしくみではない。"]],
+ exp:"心室の収縮エネルギーの一部は、<b>大動脈壁の伸展エネルギー</b>として蓄えられる。拡張期には伸展した大動脈が弾性で元の径に戻ろうとし、血液を末梢へ送り出す。（教科書 P146、図10・8）"},
+
+{q:"大動脈壁で、弾力のある線維が多い層はどれか。",
+ choices:[
+  ["中膜",true,""],
+  ["内膜",false,"血管の内腔側の層。"],
+  ["外膜",false,"血管の最も外側の層。"],
+  ["粘膜下層",false,"消化管の壁にある層で、血管壁の層ではない。"]],
+ exp:"大動脈の壁（約2mm）は内膜、<b>中膜</b>、外膜の3層からなり、中膜に弾力のある線維が多いため弾力性が強い。（教科書 P146）"},
+
+/* ---------- B-1-a 動脈圧の成因（P146） ---------- */
+
+{q:"収縮期血圧を上昇させるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["大動脈壁の伸展性の低下",true,""],
+  ["1回拍出量の減少",false,"最高血圧を下げる方向にはたらく。"],
+  ["動脈系の血管抵抗の低下",false,"血液が流れ出やすくなり、最低血圧が下がる方向の変化。"],
+  ["細動脈平滑筋の弛緩",false,"血管が拡張し、血管抵抗が下がる。"]],
+ exp:"最高血圧は1回拍出量とその速度、<b>大動脈壁の伸展性</b>などで決まる。動脈硬化などで伸びにくい血管に多量の血液が拍出されると、最高血圧は上昇する。（教科書 P146）"},
+
+{q:"最低血圧（拡張期血圧）を主に決める因子の組合せはどれか。",kihon:true,
+ choices:[
+  ["動脈系の血管抵抗と心拍数",true,""],
+  ["1回拍出量と大動脈壁の伸展性",false,"最高血圧を主に決める因子。"],
+  ["静脈圧と呼吸数",false,"動脈圧の成因として扱う因子ではない。"],
+  ["コロトコフ音と脈拍",false,"血圧を測定するときの手がかり。"]],
+ exp:"最低血圧は<b>動脈系血管の抵抗、心拍数</b>などで決まる。（教科書 P146）"},
+
+{q:"最低血圧が低下するのはどれか。",
+ choices:[
+  ["心拍数の減少",true,""],
+  ["動脈系の血管抵抗の増大",false,"大動脈から流れ出る血液が減り、最低血圧は上がる方向の変化。"],
+  ["交感神経の興奮による細動脈の収縮",false,"血管抵抗が上がり、最低血圧も上がる方向の変化。"],
+  ["エンドセリンの作用",false,"血管を収縮させ、血管抵抗を上げる。"]],
+ exp:"<b>心拍数</b>が低下すると、次の収縮までに時間がかかって動脈圧の低下期間が長くなり、最低血圧は低下する。（教科書 P146）"},
+
+{q:"動脈圧について誤っているのはどれか。",gori:true,
+ choices:[
+  ["動脈系の血管抵抗が小さいと最低血圧は上昇する",true,""],
+  ["伸展性の低い血管に多量の血液が拍出されると、最高血圧は上昇する",false,"教科書どおりの記述なので、正しい。"],
+  ["大動脈弁の閉鎖後、動脈圧は徐々に低下する",false,"教科書どおりの記述なので、正しい。"],
+  ["最高血圧は1回拍出量の影響を受ける",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"動脈系の血管抵抗が小さいと、大動脈から流れ出る血液量が多くなって血圧の低下速度が増し、最低血圧は<b>低下</b>する。（教科書 P146）"},
+
+/* ---------- B-1-b 動脈圧測定法（P146〜147） ---------- */
+
+{q:"間接法で、収縮期血圧とするのはどの点か。",kihon:true,
+ choices:[
+  ["コロトコフ音が聞こえはじめた点",true,""],
+  ["コロトコフ音が急に減弱・消失した点",false,"拡張期血圧とする点。"],
+  ["橈骨動脈の脈拍が触れなくなった点",false,"カフ圧が動脈圧を上回り、血流が止まったとき。"],
+  ["コロトコフ音が最も大きくなった点",false,"血圧値を決める目安にはしない。"]],
+ exp:"カフ圧が最高血圧より低くなると血液が流れはじめ、<b>コロトコフ音が聞こえはじめる</b>。この点（図10・9のA点）の圧を収縮期血圧とする。（教科書 P147）"},
+
+{q:"間接法で、拡張期血圧とするのはどの点か。",kihon:true,
+ choices:[
+  ["コロトコフ音が急に減弱・消失した点",true,""],
+  ["コロトコフ音が聞こえはじめた点",false,"収縮期血圧とする点。"],
+  ["橈骨動脈の脈拍が触れなくなった点",false,"カフ圧が動脈圧を上回ったとき。"],
+  ["カフを膨らませはじめた点",false,"測定の開始時で、血圧値とは関係しない。"]],
+ exp:"さらにカフ圧を下げ、コロトコフ音が<b>急に減弱あるいは消失する点</b>（図10・9のB点）を拡張期血圧とする。（教科書 P147）"},
+
+{q:"動脈内にカニューレを挿入し、圧トランスデューサで測定する方法はどれか。",
+ choices:[
+  ["直接法",true,""],
+  ["間接法",false,"カフを巻き、聴診器でコロトコフ音を聞いて求める方法。"],
+  ["双極誘導法",false,"心電図の記録法。"],
+  ["心音図法",false,"弁の開閉による振動を記録する方法。"]],
+ exp:"動脈内にカニューレを挿入し、圧力を圧トランスデューサで電圧に変換する方法を<b>直接法</b>という。（教科書 P146）"},
+
+/* ---------- B-1-c 平均動脈圧（P147） ---------- */
+
+{q:"収縮期血圧120 mmHg、拡張期血圧90 mmHgのときの平均動脈圧はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["100 mmHg",true,""],
+  ["105 mmHg",false,"収縮期と拡張期の単純平均。"],
+  ["110 mmHg",false,"収縮期血圧から脈圧の1/3を引いた値。"],
+  ["30 mmHg",false,"脈圧（収縮期血圧−拡張期血圧）。"]],
+ exp:"平均動脈圧＝拡張期血圧＋脈圧÷3＝90＋（120−90）÷3＝<b>100 mmHg</b>。（教科書 P147）"},
+
+{q:"心拍数が一定のときの平均動脈圧の求め方はどれか。",kihon:true,
+ choices:[
+  ["拡張期血圧＋脈圧÷3",true,""],
+  ["収縮期血圧＋脈圧÷3",false,"基準にする血圧が違い、収縮期血圧より高くなってしまう。"],
+  ["（収縮期血圧＋拡張期血圧）÷2",false,"単純平均で、拡張期の時間が長いことを反映しない。"],
+  ["拡張期血圧−脈圧÷3",false,"拡張期血圧より低くなってしまう。"]],
+ exp:"平均動脈圧＝<b>拡張期血圧＋脈圧÷3</b>（脈圧＝収縮期血圧−拡張期血圧）。（教科書 P147）"},
+
+{q:"収縮期血圧135 mmHg、拡張期血圧75 mmHgのときの脈圧はどれか。",
+ choices:[
+  ["60 mmHg",true,""],
+  ["95 mmHg",false,"平均動脈圧（75＋60÷3）。"],
+  ["105 mmHg",false,"収縮期と拡張期の単純平均。"],
+  ["210 mmHg",false,"収縮期と拡張期の和。"]],
+ exp:"脈圧＝収縮期血圧−拡張期血圧＝135−75＝<b>60 mmHg</b>。（教科書 P147）"},
+
+{q:"平均動脈圧が指標となるのはどれか。",
+ choices:[
+  ["組織を流れる血液の有効灌流圧",true,""],
+  ["1回拍出量",false,"1回の収縮で駆出される血液量。"],
+  ["大動脈壁の伸展性",false,"最高血圧を左右する血管の性質。"],
+  ["心室の電気活動",false,"心電図がとらえるもの。"]],
+ exp:"平均動脈圧は動脈圧変化の指標で、特に組織を流れる血液の<b>有効灌流圧</b>の指標となる。動脈圧波形を時間積分して得られる。（教科書 P147）"},
+
+/* ---------- B-2 抵抗血管（P148） ---------- */
+
+{q:"血管半径が2倍になると、血流量はおよそ何倍になるか。",kihon:true,
+ choices:[
+  ["16倍",true,""],
+  ["2倍",false,"半径の倍率そのまま。"],
+  ["4倍",false,"半径の2乗（断面積）の倍率。"],
+  ["8倍",false,"半径の3乗の倍率。"]],
+ exp:"血管抵抗は主に細動脈領域の血管径に依存し、血管半径が2倍になれば血流量は<b>16倍</b>にも増加する。（教科書 P148）"},
+
+{q:"各臓器の血流量を個別に調節しているのはどれか。",
+ choices:[
+  ["その臓器の血管抵抗",true,""],
+  ["臓器ごとに異なる動脈圧",false,"臓器は動脈系に並列に配置されているため、各臓器にかかる動脈圧は等しい。"],
+  ["臓器ごとに異なる心拍数",false,"心拍数は全身で共通。"],
+  ["静脈の容量",false,"血液をためておく性質で、臓器へ流れ込む量を決めるものではない。"]],
+ exp:"臓器の血流量は灌流圧と血管抵抗で決まる。臓器は並列に配置され等しい動脈圧がかかるので、個々の血流量は<b>その臓器の血管抵抗</b>で調節される。（教科書 P148）"},
+
+{q:"細動脈にあり、内因性の緊張をもって血管径を調節するのはどれか。",
+ choices:[
+  ["血管括約筋",true,""],
+  ["房室弁",false,"心房と心室の間にある弁。"],
+  ["介在板",false,"心筋細胞どうしの結合部。"],
+  ["静脈弁",false,"静脈の逆流を防ぐ弁。"]],
+ exp:"細動脈には<b>血管括約筋</b>があり、内因性の緊張を有する。その緊張程度が局所性・神経性・液性因子で調節される。（教科書 P148）"},
+
+{q:"抵抗血管について誤っているのはどれか。",gori:true,
+ choices:[
+  ["血管抵抗は主に大動脈の血管径に依存する",true,""],
+  ["中膜に発達した平滑筋がある",false,"教科書どおりの記述なので、正しい。"],
+  ["臓器は動脈系に対して並列に配置されている",false,"教科書どおりの記述なので、正しい。"],
+  ["血管抵抗の変化は動脈圧の調節にかかわる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"血管抵抗は主に<b>細動脈</b>領域の血管径に依存する。（教科書 P148）"},
+
+/* ---------- B-2-b ① 局所性因子（P148） ---------- */
+
+{q:"自己調節が特に顕著な臓器の組合せはどれか。",kihon:true,
+ choices:[
+  ["脳と腎臓",true,""],
+  ["皮膚と骨格筋",false,"運動や体温調節で血流量が大きく変わる組織。"],
+  ["肝臓と脾臓",false,"腹部の臓器で、自己調節が顕著な臓器としては挙がらない。"],
+  ["肺と胃",false,"自己調節が顕著な臓器としては挙がらない。"]],
+ exp:"自己調節は血管そのものに内在する調節機構で、動脈圧がある範囲で変動しても血流量を一定範囲に保つ。<b>脳</b>および<b>腎臓</b>で顕著。（教科書 P148）"},
+
+{q:"血管拡張を引き起こすのはどれか。",kihon:true,
+ choices:[
+  ["酸素分圧の低下",true,""],
+  ["炭酸ガス分圧の低下",false,"血管収縮を引き起こす。"],
+  ["体温の低下",false,"血管収縮を引き起こす。"],
+  ["ノルアドレナリン",false,"交感神経終末から分泌され、血管収縮を引き起こす。"]],
+ exp:"代謝の亢進に伴う変化（体温の上昇、<b>酸素分圧の低下</b>、pHの低下、炭酸ガス分圧の増加、乳酸やK⁺の増加など）は血管拡張を引き起こす。（教科書 P148）"},
+
+{q:"血管拡張を引き起こすのはどれか。",
+ choices:[
+  ["炭酸ガス分圧の増加",true,""],
+  ["体温の低下",false,"血管収縮を引き起こす。"],
+  ["エンドセリン",false,"血管内皮細胞でつくられ、強力な血管収縮作用をもつペプチド。"],
+  ["アンジオテンシンⅡ",false,"血管収縮を引き起こす液性因子。"]],
+ exp:"<b>炭酸ガス分圧の増加</b>は代謝の亢進に伴う変化で、血管拡張を引き起こす。アデノシンやヒスタミンも血管を拡張させる。（教科書 P148）"},
+
+{q:"血管内皮細胞に由来し、強力な血管収縮作用をもつのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["エンドセリン",true,""],
+  ["一酸化窒素",false,"血管内皮細胞が産生するが、血管平滑筋に作用して血管を拡張させる。"],
+  ["ヒスタミン",false,"血管拡張を引き起こす。"],
+  ["アデノシン",false,"血管拡張を引き起こす。"]],
+ exp:"<b>エンドセリン</b>は血管内皮細胞でつくられる21個のアミノ酸からなるペプチドで、強力な血管収縮作用をもつ。（教科書 P148）"},
+
+{q:"一酸化窒素（NO）について正しいのはどれか。",kihon:true,
+ choices:[
+  ["血管平滑筋に作用して血管を拡張させる",true,""],
+  ["交感神経終末から分泌される",false,"交感神経終末から分泌されるのはノルアドレナリン。NOは血管内皮細胞が産生する。"],
+  ["21個のアミノ酸からなるペプチドである",false,"エンドセリンの特徴。"],
+  ["延髄の心臓血管中枢で合成される",false,"心臓血管中枢は交感神経の活動を調節する部位で、NOの産生部位ではない。"]],
+ exp:"一酸化窒素は血管内皮細胞が産生し、<b>血管平滑筋に作用して血管拡張</b>を引き起こす。（教科書 P148）"},
+
+{q:"一酸化窒素の原料となるのはどれか。",
+ choices:[
+  ["L-アルギニン",true,""],
+  ["チロシン",false,"カテコールアミン（ノルアドレナリンなど）の原料となるアミノ酸。"],
+  ["トリプトファン",false,"セロトニンの原料となるアミノ酸。"],
+  ["コレステロール",false,"ステロイドホルモンの原料。"]],
+ exp:"一酸化窒素はアミノ酸の一種の<b>L-アルギニン</b>から、NO合成酵素により合成される。（教科書 P148）"},
+
+/* ---------- B-2-b ②神経性因子・③液性因子（P148） ---------- */
+
+{q:"細動脈に分布する交感神経の終末から分泌され、血管を収縮させるのはどれか。",kihon:true,
+ choices:[
+  ["ノルアドレナリン",true,""],
+  ["アセチルコリン",false,"副交感神経の終末から分泌され、心拍数を減少させる物質。"],
+  ["一酸化窒素",false,"血管内皮細胞が産生する血管拡張物質。"],
+  ["心房性ナトリウム利尿ペプチド",false,"血管拡張を引き起こす液性因子。"]],
+ exp:"交感神経終末は細動脈に多く分布し、<b>ノルアドレナリン</b>を神経活動に応じて分泌して血管収縮を引き起こす。（教科書 P148）"},
+
+{q:"細動脈に分布する交感神経を調節する心臓血管中枢がある部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["延髄",true,""],
+  ["中脳",false,"脳幹の最上部で、姿勢反射などにかかわる。"],
+  ["小脳",false,"運動の協調や平衡の調節にかかわる。"],
+  ["大脳皮質",false,"随意運動や感覚、思考などの中枢。"]],
+ exp:"細動脈に分布する交感神経は、<b>延髄</b>にある心臓血管中枢により調節されている。心臓血管中枢は炭酸ガス分圧の増加や酸素分圧の低下で刺激される。（教科書 P148）"},
+
+{q:"アドレナリンについて正しいのはどれか。",
+ choices:[
+  ["β作用により、筋肉や肝臓などの血管を拡張させる",true,""],
+  ["交感神経終末から分泌され、細動脈を収縮させる",false,"ノルアドレナリンの説明。"],
+  ["血管内皮細胞で合成される",false,"一酸化窒素やエンドセリンの説明。"],
+  ["L-アルギニンから合成される",false,"一酸化窒素の説明。"]],
+ exp:"液性因子として、アドレナリンは<b>β作用</b>で筋肉、肝臓などの血管を拡張させる。（教科書 P148）"},
+
+{q:"血管にはたらく物質とその作用の組合せで誤っているのはどれか。",gori:true,
+ choices:[
+  ["心房性ナトリウム利尿ペプチド ― 血管収縮",true,""],
+  ["アンジオテンシンⅡ ― 血管収縮",false,"教科書どおりの記述なので、正しい。"],
+  ["キニン ― 血管拡張",false,"教科書どおりの記述なので、正しい。"],
+  ["ノルアドレナリン（α作用）― 血管収縮",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"心房性ナトリウム利尿ペプチドは、キニンとともに<b>血管拡張</b>を引き起こす液性因子である。（教科書 P148）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
