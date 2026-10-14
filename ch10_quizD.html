@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第10章 パートD 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#8c2a2a;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#f0c4c4;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#f0c4c4;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#8c2a2a;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#8c2a2a;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(140,42,42,.12);color:#8c2a2a}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#8c2a2a;background:#fbf3f3}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #8c2a2a;background:#8c2a2a;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#6f2020}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#8c2a2a;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#8c2a2a;background:#fbf3f3}
+.mode .nm{font-size:16px;font-weight:600;color:#8c2a2a;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#8c2a2a;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#6f2020;background:rgba(140,42,42,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#8c2a2a;background:rgba(140,42,42,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第10章 循環｜パートD 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第10章 循環 ｜ B-3・4 交換血管・容量血管／C リンパ系（教科書 P149〜153）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第10章 P149〜153 ベース）=====
+   対応スライド：ch10_partD.html
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本。プールの4〜6割が目安
+   dobon :true … 💣ドボン。プールの15〜20%
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識
+   exp … 正解時に見せる「なぜ正しいか」
+
+   過去問（宅ドリル循環30問）での出題：静脈還流（吸息・立位・筋ポンプ）4／リンパ系（弁・静脈角・流れの向き）2／
+   組織液の還流・浮腫・タンパク質1／静脈＝容量血管1（quizCに収録済み）／脂肪の輸送1（📘）／圧が最も低い血管1（📘） */
+const PICK=5;
+const POOL=[
+
+/* ---------- B-3 交換血管（P149） ---------- */
+
+{q:"毛細血管の内皮細胞を取り巻いているのはどれか。",
+ choices:[
+  ["基底膜",true,""],
+  ["平滑筋層",false,"細動脈の中膜に発達し、血管径を変える層。"],
+  ["弾性線維の多い中膜",false,"大動脈の壁の特徴。"],
+  ["静脈弁",false,"中静脈の内膜に発達し、血液を心臓側へ流す構造。"]],
+ exp:"毛細血管は、1層の扁平な内皮細胞と、それを取り巻く<b>基底膜</b>からなる細い管である。（教科書 P149）"},
+
+{q:"毛細血管で物質交換が生じるしくみの組合せはどれか。",kihon:true,
+ choices:[
+  ["拡散と限外濾過",true,""],
+  ["静脈弁と筋肉のポンプ作用",false,"静脈血を心臓へ還すしくみ。"],
+  ["自己調節と代謝産物による血管拡張",false,"臓器の血流量を調節するしくみ。"],
+  ["受動的輸送と能動的輸送",false,"リンパを運ぶしくみ。"]],
+ exp:"毛細血管は壁が薄く、孔があり、流速も遅い。物質の交換は<b>拡散と限外濾過</b>により生じる。（教科書 P149）"},
+
+{q:"拡散による物質の移動速度を決める因子の組合せはどれか。",
+ choices:[
+  ["濃度差と毛細血管壁の透過性",true,""],
+  ["静水圧と膠質浸透圧の差",false,"限外濾過で体液が動く向きを決める因子。"],
+  ["灌流圧と血管抵抗",false,"臓器の血流量を決める因子。"],
+  ["1回拍出量と心拍数",false,"心拍出量を決める因子。"]],
+ exp:"移動速度は、血液と組織液の間の<b>濃度差</b>と、毛細血管壁のその物質に対する<b>透過性</b>で決まる。（教科書 P149）"},
+
+{q:"毛細血管壁を拡散によって移動する物質はどれか。",kihon:true,
+ choices:[
+  ["グルコース",true,""],
+  ["アルブミン",false,"高分子のタンパク質で、毛細血管壁の孔を通過できない。"],
+  ["フィブリノーゲン",false,"血漿中の高分子タンパク質で、孔を通過できない。"],
+  ["血小板",false,"血球成分で、拡散で壁を通り抜けるものではない。"]],
+ exp:"拡散で移動する物質は、水、酸素、炭酸ガス、尿素、<b>グルコース</b>など。（教科書 P149）"},
+
+{q:"血漿膠質浸透圧を生じさせる主な物質はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["アルブミン",true,""],
+  ["Na⁺",false,"低分子の電解質で、晶質浸透圧（低分子による浸透圧）のもとになる。毛細血管壁を通過するため、膠質浸透圧にはかかわらない。"],
+  ["Cl⁻",false,"低分子の電解質で、晶質浸透圧（低分子による浸透圧）のもとになる。毛細血管壁を通過するため、膠質浸透圧にはかかわらない。"],
+  ["グルコース",false,"低分子で、毛細血管壁を拡散で移動する。"]],
+ exp:"血漿膠質浸透圧は、<b>アルブミン</b>などのタンパク質が毛細血管壁を通過しないために生じる圧力である。（教科書 P149）"},
+
+{q:"血漿膠質浸透圧がはたらく向きはどれか。",kihon:true,
+ choices:[
+  ["体液を組織側から血管内へ移動させる",true,""],
+  ["血漿を血管内から組織側へ押し出す",false,"細動脈側で静水圧がはたらく向き。"],
+  ["組織液をリンパ管へ押し込む",false,"リンパ管を外から圧迫する受動的リンパ輸送のはたらき。"],
+  ["血液を末梢から中枢へ押し出す",false,"筋肉のポンプ作用のはたらき。"]],
+ exp:"血漿膠質浸透圧は、体液を<b>組織側から血管内側に移動させる力</b>となる。（教科書 P149）"},
+
+{q:"晶質浸透圧（電解質などの低分子による浸透圧）について正しいのはどれか。",
+ choices:[
+  ["晶質が血管内外を移動し、平衡に達する",true,""],
+  ["アルブミンによって生じる",false,"膠質浸透圧の説明。"],
+  ["毛細血管壁を通過しにくいため、浸透圧差を生じる",false,"膠質浸透圧の説明。"],
+  ["体液を組織側から血管内へ引き込む主な力となる",false,"血漿膠質浸透圧の説明。"]],
+ exp:"電解質などの低分子による晶質浸透圧は、<b>晶質が血管内外を移動して平衡に達する</b>ため、毛細血管では水を動かす力にならない。（教科書 P149）<br>⚠注意：「晶質」はNa⁺やCl⁻、グルコースのような小さな物質のこと。タンパク質のような大きな物質＝「膠質」と対になる言葉で、国試ではほとんど使われない。毛細血管で水の出入りを決めるのは<b>膠質浸透圧</b>のほうなので、そちらを優先して覚えよう。"},
+
+{q:"毛細血管の細動脈側で起こるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["血漿の濾過",true,""],
+  ["組織液の再吸収",false,"細静脈側で起こる。"],
+  ["リンパ管自身の収縮",false,"能動的リンパ輸送。"],
+  ["静脈弁の閉鎖",false,"静脈で血液の逆流を防ぐしくみ。"]],
+ exp:"細動脈側では静水圧が膠質浸透圧より大きいため、血管内から組織側に血漿の<b>濾過</b>が生じる。（教科書 P149、図10・10）"},
+
+{q:"毛細血管の細静脈側で、組織液が血管内に再吸収される理由はどれか。",kihon:true,
+ choices:[
+  ["静水圧が膠質浸透圧より小さい",true,""],
+  ["静水圧が膠質浸透圧より大きい",false,"細動脈側の状態で、濾過が起こる。"],
+  ["晶質浸透圧の差が大きくなる",false,"晶質は血管内外を移動して平衡に達するため、差は生じにくい。"],
+  ["リンパ管が組織液を押し戻す",false,"リンパは静脈角から静脈に入る経路で、毛細血管へ押し戻すものではない。"]],
+ exp:"細静脈側では毛細血管圧が下がり、<b>静水圧が膠質浸透圧より小さくなる</b>ため、組織液が再吸収される。（教科書 P149）"},
+
+{q:"限外濾過について誤っているのはどれか。",gori:true,
+ choices:[
+  ["細動脈側では膠質浸透圧が静水圧より大きい",true,""],
+  ["低分子物質は水とともに毛細血管壁の孔を通過する",false,"教科書どおりの記述なので、正しい。"],
+  ["静水圧は毛細血管圧と組織圧の差である",false,"教科書どおりの記述なので、正しい。"],
+  ["濾過された体液の一部は、リンパ系を通って血管内へ戻る",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"細動脈側では<b>静水圧が膠質浸透圧より大きい</b>ため、濾過が生じる。（教科書 P149）"},
+
+/* ---------- B-4 容量血管（P150〜151） ---------- */
+
+{q:"静脈が多量の血液を保持できる理由はどれか。",kihon:true,
+ choices:[
+  ["壁が薄く、伸展性がよい",true,""],
+  ["中膜に弾力のある線維が多い",false,"大動脈の壁の特徴。"],
+  ["中膜に平滑筋が発達している",false,"細動脈の壁の特徴。"],
+  ["壁が1層の内皮細胞と基底膜からなる",false,"毛細血管の壁の特徴。"]],
+ exp:"静脈壁は動脈壁に比べて<b>薄く、伸展性がよい</b>ため、多量の血液を保持できる。（教科書 P150、図10・11）"},
+
+{q:"静脈系が保持している血液は、循環血液量のおよそどのくらいか。",kihon:true,dobon:true,
+ choices:[
+  ["60〜75％",true,""],
+  ["5〜10％",false,"静脈系が保持する量よりはるかに少ない。"],
+  ["20〜30％",false,"静脈系が保持する量よりかなり少ない。"],
+  ["90％以上",false,"動脈系や心臓にも血液はあるので、静脈系だけでここまで多くはない。"]],
+ exp:"静脈系は容量血管と呼ばれ、循環血液量の<b>60〜75％</b>を保持している。（教科書 P150）"},
+
+{q:"静脈系が最終的につながる部位はどれか。",
+ choices:[
+  ["右心房",true,""],
+  ["左心房",false,"肺静脈から動脈血が戻る部位。"],
+  ["右心室",false,"三尖弁の先にあり、肺動脈へ血液を送り出す部位。"],
+  ["左心室",false,"大動脈へ血液を送り出す部位。"]],
+ exp:"静脈系は細静脈、中静脈、大静脈となり、最終的に<b>右心房</b>につながる。（教科書 P150）"},
+
+{q:"動脈と比べた静脈壁の特徴はどれか。",
+ choices:[
+  ["中膜が薄く、弾性線維が少ない",true,""],
+  ["中膜が厚く、弾性線維が多い",false,"大動脈の壁の特徴。"],
+  ["内膜・中膜・外膜の区別がない",false,"静脈も動脈と同様に3層からなる。"],
+  ["平滑筋をもたない",false,"静脈の中膜には平滑筋があり、交感神経の支配を受ける。"]],
+ exp:"静脈は動脈と同様に3層からなるが、高い圧を受けないので<b>中膜が薄く弾性線維が少ない</b>。（教科書 P150）"},
+
+{q:"静脈内の血液量が増えはじめたときの内圧の変化はどれか。",
+ choices:[
+  ["上昇は少ない",true,""],
+  ["急激に上昇する",false,"静脈壁が伸展しきってから起こる変化。"],
+  ["低下する",false,"血液量が増えて内圧が下がることはない。"],
+  ["大動脈と同じ程度まで上昇する",false,"静脈は高い圧を受けない血管。"]],
+ exp:"血液が少ないと静脈の断面は扁平で、増えると楕円から円形に変わるが、<b>内圧の上昇は少ない</b>。さらに増えると壁が伸展して内圧が上がる。（教科書 P150、図10・11）"},
+
+{q:"中静脈の内膜に発達し、血液を心臓側へ流すのはどれか。",kihon:true,
+ choices:[
+  ["静脈弁",true,""],
+  ["血管括約筋",false,"細動脈にあり、血管径を調節する。"],
+  ["房室弁",false,"心房と心室の間にある弁。"],
+  ["大動脈弁",false,"左心室と大動脈の間にある弁。"]],
+ exp:"中静脈の内膜には<b>静脈弁</b>が発達しており、血液が心臓側に流れるようにはたらく。（教科書 P150）"},
+
+{q:"交感神経活動が増加したときの静脈の変化はどれか。",
+ choices:[
+  ["静脈内容量が減少し、静脈還流量が増加する",true,""],
+  ["静脈内容量が増加し、静脈還流量が減少する",false,"交感神経活動とは逆向きの変化。"],
+  ["静脈壁の緊張が低下する",false,"交感神経活動の増加では緊張は増す。"],
+  ["静脈弁が開かなくなる",false,"静脈弁は交感神経で開閉するものではない。"]],
+ exp:"静脈中膜の平滑筋は交感神経の支配を受ける。活動が増すと静脈壁の緊張が増し、<b>静脈内容量が減って還流量が増える</b>。（教科書 P150）"},
+
+{q:"「第二の心臓」と呼ばれるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["筋肉のポンプ作用",true,""],
+  ["呼吸のポンプ作用",false,"胸腔内圧と腹腔内圧の変化で静脈還流を促すしくみ。"],
+  ["大動脈壁の弾性",false,"拡張期にも血液を末梢へ送るしくみ。"],
+  ["能動的リンパ輸送",false,"リンパ管自身が収縮してリンパを送るしくみ。"]],
+ exp:"筋の収縮で静脈が圧迫されると、血液は中枢側へ押し出され、静脈弁があるため逆流しない。運動時の還流量の増加は非常に大きく、<b>筋肉のポンプ作用</b>は「第二の心臓」と呼ばれる。（教科書 P150、図10・12）"},
+
+{q:"吸息時の変化はどれか。",kihon:true,
+ choices:[
+  ["胸腔内圧は低下し、腹腔内圧は上昇する",true,""],
+  ["胸腔内圧は上昇し、腹腔内圧は低下する",false,"両方の向きが逆。"],
+  ["胸腔内圧も腹腔内圧も上昇する",false,"胸腔内圧の向きが逆。"],
+  ["胸腔内圧も腹腔内圧も低下する",false,"腹腔内圧の向きが逆。"]],
+ exp:"吸息時には<b>胸腔内圧が低下</b>し、横隔膜が下降するため<b>腹腔内圧が上昇</b>する。腹部と胸部の静脈圧差が大きくなり、静脈還流量は増大する。（教科書 P150〜151）"},
+
+{q:"静脈還流量が増加するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["吸息時",true,""],
+  ["呼息時",false,"静脈還流量は低下する。"],
+  ["仰臥位から立位への体位変換",false,"下肢の静脈に血液がたまり、還流量は減少する。"],
+  ["息を止めて力む",false,"胸腔内圧が上がりすぎ、還流量が著しく低下する。"]],
+ exp:"<b>吸息時</b>は胸腔内圧の低下と腹腔内圧の上昇で、静脈還流量が増大する。（教科書 P151）"},
+
+{q:"静脈還流量が増加するのはどれか。",
+ choices:[
+  ["仰臥位で下肢を上げる",true,""],
+  ["呼息時",false,"静脈還流量は低下する。"],
+  ["仰臥位から立位への体位変換",false,"還流量は減少する。"],
+  ["息を止めて力む",false,"還流量が著しく低下する。"]],
+ exp:"<b>仰臥位で下肢を上げる</b>と、重力で下肢の血液が心臓側へ戻りやすくなり、静脈還流量は増加する。（教科書 P151）"},
+
+{q:"静脈還流量が減少するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["仰臥位から立位への体位変換",true,""],
+  ["吸息",false,"胸腔内圧が下がり、還流量は増大する。"],
+  ["交感神経活動の増加",false,"静脈内容量が減り、還流量は増加する。"],
+  ["筋のリズミカルな収縮",false,"筋肉のポンプ作用で還流量は増加する。"]],
+ exp:"立位では重力で下肢の静脈圧が増し、静脈壁が押し広げられて血液がたまるため、<b>静脈還流量は減少</b>する。（教科書 P151）"},
+
+{q:"ウェイトトレーニングで息を止めないようにする理由はどれか。",
+ choices:[
+  ["胸腔内圧の上昇による静脈還流量の低下を防ぐため",true,""],
+  ["腹腔内圧の低下を防ぐため",false,"息こらえで問題になるのは胸腔内圧の上昇。"],
+  ["静脈弁の閉鎖を防ぐため",false,"静脈弁は逆流を防ぐもので、息こらえで問題になるものではない。"],
+  ["筋肉のポンプ作用が強くなりすぎるのを防ぐため",false,"筋ポンプは還流を助けるはたらき。"]],
+ exp:"胸腔内圧が高くなりすぎると、還流量は著しく低下する。息を止めないのは、<b>胸腔内圧の上昇による静脈還流量の低下</b>を防ぐためである。（教科書 P151）"},
+
+{q:"静脈還流量に影響する因子について誤っているのはどれか。",gori:true,
+ choices:[
+  ["仰臥位から立位になると、下肢の静脈圧は低下する",true,""],
+  ["交感神経活動が増加すると、静脈内容量は減少する",false,"教科書どおりの記述なので、正しい。"],
+  ["呼息時には静脈還流量が低下する",false,"教科書どおりの記述なので、正しい。"],
+  ["筋が弛緩したときも、静脈血は末梢側へ逆流しない",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"立位では重力により血液の静水圧が増すため、下肢の静脈圧は<b>増加</b>する。（教科書 P151）"},
+
+{q:"血管内の圧が最も低いのはどれか。",hosoku:true,
+ choices:[
+  ["大静脈",true,""],
+  ["大動脈",false,"平均約100 mmHgと最も圧が高い。"],
+  ["細動脈",false,"圧が大きく下がる部位だが、まだ毛細血管より高い。"],
+  ["毛細血管の動脈側",false,"約35 mmHg。"]],
+ exp:"補足知識（資料外）。血圧は細動脈から毛細血管に向けて下がり（毛細血管の動脈側約35 mmHg、静脈側約15 mmHg）、静脈でさらに下がって<b>大静脈</b>に至る。"},
+
+/* ---------- C-1 リンパ管の解剖（P151〜152） ---------- */
+
+{q:"下肢、腹部および左上半身のリンパが静脈に注ぐ部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["左静脈角",true,""],
+  ["右静脈角",false,"右上半身のリンパが静脈に入る部位。"],
+  ["右心房",false,"静脈系が最終的につながる部位。"],
+  ["乳び槽",false,"腹腔臓器や下半身のリンパが集まる部位で、静脈ではない。"]],
+ exp:"下肢、腹部および左上半身のリンパは、<b>左静脈角</b>（左内頸静脈と左鎖骨下静脈の接合部）付近で静脈に注ぐ。（教科書 P152、図10・13）"},
+
+{q:"右上半身のリンパが静脈に入る部位はどれか。",kihon:true,
+ choices:[
+  ["右静脈角",true,""],
+  ["左静脈角",false,"下肢、腹部および左上半身のリンパが注ぐ部位。"],
+  ["右心房",false,"静脈系が最終的につながる部位。"],
+  ["乳び槽",false,"腹腔臓器や下半身のリンパが集まる部位。"]],
+ exp:"右上半身のリンパ管は、<b>右静脈角</b>（右内頸静脈と右鎖骨下静脈の接合部）付近で静脈に入る。（教科書 P152、図10・13）"},
+
+{q:"静脈角をつくる静脈の組合せはどれか。",
+ choices:[
+  ["内頸静脈と鎖骨下静脈",true,""],
+  ["上大静脈と下大静脈",false,"どちらも右心房に開く大静脈。"],
+  ["内頸静脈と外頸静脈",false,"頸部の静脈どうしの組合せ。"],
+  ["鎖骨下静脈と腋窩静脈",false,"上肢の静脈が続いていく組合せ。"]],
+ exp:"静脈角は<b>内頸静脈と鎖骨下静脈</b>の接合部である。（教科書 P152）"},
+
+{q:"腹腔臓器や下半身からのリンパが、胸管に運ばれる前に集まる部位はどれか。",
+ choices:[
+  ["乳び槽",true,""],
+  ["リンパ節",false,"主幹リンパ管にあり、異物を貪食するフィルター。"],
+  ["静脈角",false,"胸管が静脈に注ぐ部位。"],
+  ["胸腺",false,"T細胞が成熟する器官（第8章）。"]],
+ exp:"左上半身・両下半身・腹腔臓器からのリンパは、<b>乳び槽</b>から胸管に運ばれる。（教科書 P151、図10・13）"},
+
+{q:"リンパ系について誤っているのはどれか。",gori:true,
+ choices:[
+  ["リンパ管には弁がなく、リンパは両方向に流れる",true,""],
+  ["リンパ管は毛細血管の近くから始まり、各組織に網状に分布する",false,"教科書どおりの記述なので、正しい。"],
+  ["リンパ管の末端（リンパ毛細管）は組織間にある",false,"教科書どおりの記述なので、正しい。"],
+  ["主幹リンパ管にはリンパ節が存在する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"リンパ管には<b>弁が多数あり</b>、リンパは静脈側へと一定方向に流れる。（教科書 P152）"},
+
+/* ---------- C-2 リンパの流れ（P152〜153） ---------- */
+
+{q:"ヒトのリンパ流量はおよそどれか。",kihon:true,
+ choices:[
+  ["2〜4 L/日",true,""],
+  ["20 L/日",false,"毛細血管の動脈側で濾過される水の量。"],
+  ["16〜18 L/日",false,"毛細血管の静脈側で再吸収される水の量。"],
+  ["8,400 L/日",false,"1日あたりの心拍出量。"]],
+ exp:"濾過20 Lのうち16〜18 Lが再吸収され、残りの<b>2〜4 L/日</b>がリンパとして還流する。（教科書 P152〜153、図10・14）"},
+
+{q:"毛細血管の静脈側ではほとんど再吸収されず、主にリンパ系を通って血管内に戻るのはどれか。",kihon:true,
+ choices:[
+  ["タンパク質",true,""],
+  ["水",false,"濾過された量の大部分は、静脈側で再吸収される。"],
+  ["酸素",false,"拡散で移動する物質。"],
+  ["グルコース",false,"拡散で移動する物質。"]],
+ exp:"組織液中の<b>タンパク質</b>は再吸収が5 gほどで、リンパ管を介して75〜195 g/日が血管内に戻される。（教科書 P152〜153、図10・14）"},
+
+{q:"リンパ系が維持にかかわるのはどれか。",
+ choices:[
+  ["血漿量と血漿タンパク質",true,""],
+  ["体温と発汗量",false,"体温調節のしくみが維持するもの。"],
+  ["動脈圧と心拍数",false,"循環調節のしくみが調節するもの。"],
+  ["血糖値とインスリン量",false,"内分泌のしくみが調節するもの。"]],
+ exp:"リンパ系は<b>血漿量と血漿タンパク質</b>の維持機構として重要なはたらきをしている。（教科書 P153）"},
+
+{q:"リンパ管を外から圧迫してリンパ流を生じさせる因子はどれか。",
+ choices:[
+  ["呼吸運動",true,""],
+  ["リンパ管自身の収縮",false,"能動的リンパ輸送のしくみ。"],
+  ["血漿膠質浸透圧",false,"体液を組織側から血管内へ引き込む力。"],
+  ["細動脈の拡張",false,"血管抵抗を下げて血流量を増やす変化。"]],
+ exp:"受動的リンパ輸送でリンパ管を圧迫する因子には、筋肉運動、<b>呼吸運動</b>、消化管運動、動脈の拍動などがある。（教科書 P153）"},
+
+{q:"リンパ管自身が収縮してリンパを送る機構はどれか。",
+ choices:[
+  ["能動的リンパ輸送",true,""],
+  ["受動的リンパ輸送",false,"外からの圧迫でリンパ流を生じさせる機構。"],
+  ["限外濾過",false,"毛細血管壁の孔を通じて水と低分子物質が移動するしくみ。"],
+  ["筋肉のポンプ作用",false,"筋の収縮で静脈を圧迫し、血液を中枢へ送るしくみ。"]],
+ exp:"<b>能動的リンパ輸送</b>機構として、リンパ管自身が収縮してリンパを輸送することが報告されている。（教科書 P153）"},
+
+{q:"食後に増加するのはどの部位に由来するリンパか。",
+ choices:[
+  ["腸管",true,""],
+  ["下肢",false,"下肢のリンパは筋肉運動で増える。"],
+  ["頸部",false,"食事で増えるとされる部位ではない。"],
+  ["右上肢",false,"右静脈角へ注ぐ部位で、食事で増えるとされる部位ではない。"]],
+ exp:"食後は<b>腸管由来</b>のリンパが増加する。（教科書 P153）"},
+
+{q:"小腸で吸収された脂肪を主に運ぶのはどれか。",hosoku:true,
+ choices:[
+  ["リンパ管",true,""],
+  ["門脈",false,"吸収されたグルコースやアミノ酸を肝臓へ運ぶ静脈。"],
+  ["肝動脈",false,"肝臓に酸素を含む血液を送る動脈。"],
+  ["肺静脈",false,"肺から左心房へ動脈血を運ぶ静脈。"]],
+ exp:"補足知識（資料外）。吸収された脂肪はカイロミクロンとなって<b>リンパ管</b>に入り、乳び槽、胸管を経て静脈へ運ばれる。食後に腸由来のリンパが増えるのはこのため（教科書 P153）。"},
+
+/* ---------- C-2 リンパの役割（P153） ---------- */
+
+{q:"感染や炎症反応のとき、リンパが組織間隙から排除するのはどれか。",
+ choices:[
+  ["滲出液",true,""],
+  ["細胞内液",false,"細胞の中にある液で、組織間隙の液ではない。"],
+  ["脳脊髄液",false,"脳室やくも膜下腔を満たす液。"],
+  ["胆汁",false,"肝臓でつくられ、十二指腸へ分泌される消化液。"]],
+ exp:"リンパは、感染・炎症反応時の組織間隙の<b>滲出液</b>や異物の排除を行う。（教科書 P153）"},
+
+{q:"感染や炎症反応のとき、リンパが組織間隙から排除するのはどれか。",
+ choices:[
+  ["侵入した異物",true,""],
+  ["細胞内液",false,"細胞の中にある液で、組織間隙の液ではない。"],
+  ["脳脊髄液",false,"脳室やくも膜下腔を満たす液。"],
+  ["胆汁",false,"肝臓でつくられ、十二指腸へ分泌される消化液。"]],
+ exp:"リンパは、感染・炎症反応時の組織間隙の滲出液や<b>異物</b>の排除を行う。異物はリンパ節の細網内皮細胞が貪食する。（教科書 P153）"},
+
+{q:"リンパ系が主要な輸送経路となるのはどれか。",
+ choices:[
+  ["免疫グロブリン",true,""],
+  ["赤血球",false,"血管内を流れる血球で、毛細血管壁を通って組織へ出るものではない。"],
+  ["血小板",false,"血管内を流れ、止血にはたらく血球。"],
+  ["酸素",false,"主に赤血球のヘモグロビンと結合し、血液で運ばれる。"]],
+ exp:"<b>免疫グロブリン</b>やがん細胞の輸送には、リンパ系が主要経路となっている。（教科書 P153）"},
+
+{q:"リンパ系が主要な輸送経路となるのはどれか。",
+ choices:[
+  ["がん細胞",true,""],
+  ["赤血球",false,"血管内を流れる血球で、毛細血管壁を通って組織へ出るものではない。"],
+  ["血小板",false,"血管内を流れ、止血にはたらく血球。"],
+  ["酸素",false,"主に赤血球のヘモグロビンと結合し、血液で運ばれる。"]],
+ exp:"免疫グロブリンや<b>がん細胞</b>の輸送には、リンパ系が主要経路となっている。そのため、リンパ節にはがん転移が多い。（教科書 P153）"},
+
+{q:"リンパ節の細網内皮細胞のはたらきはどれか。",kihon:true,
+ choices:[
+  ["侵入した異物を貪食するフィルターとなる",true,""],
+  ["抗体を産生する",false,"形質細胞（B細胞）のはたらき（第8章）。"],
+  ["リンパ管を収縮させてリンパを送る",false,"能動的リンパ輸送のはたらき。"],
+  ["血漿膠質浸透圧をつくる",false,"アルブミンなどのタンパク質のはたらき。"]],
+ exp:"リンパ節の細網内皮細胞は、侵入異物を<b>貪食して血液内に入れないフィルター</b>の役目をする。（教科書 P153）"},
+
+{q:"リンパ管閉塞などでリンパの流れが阻害されたときに生じるのはどれか。",kihon:true,
+ choices:[
+  ["浮腫",true,""],
+  ["貧血",false,"血液中の赤血球やヘモグロビンが減った状態。"],
+  ["脱水",false,"体液が不足した状態で、組織間に体液がたまる状態とは逆。"],
+  ["起立性低血圧",false,"立位で下肢に血液がたまって起こる血圧の低下。"]],
+ exp:"リンパの流れが阻害されると、組織間に体液が貯留して<b>浮腫</b>を生じる。（教科書 P153）"},
+
+{q:"リンパ節にがん転移が多い理由はどれか。",
+ choices:[
+  ["リンパ系が、がん細胞の体内移動経路となるため",true,""],
+  ["リンパ節の細網内皮細胞が、がん細胞をつくるため",false,"細網内皮細胞は侵入異物を貪食するフィルター役の細胞。"],
+  ["リンパ管には弁がなく、リンパが逆流するため",false,"リンパ管には弁が多数あり、リンパは一定方向に流れる。"],
+  ["リンパ流量が心拍出量より多いため",false,"リンパ流量は約2〜4 L/日で、心拍出量よりはるかに少ない。"]],
+ exp:"リンパ系は<b>がん細胞の体内移動経路</b>となっているため、リンパ節にはがん転移が多い。（教科書 P153）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書の外から入れた国試頻出の知識。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
