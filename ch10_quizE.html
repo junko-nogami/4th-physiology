@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第10章 パートE 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#8c2a2a;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#f0c4c4;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#f0c4c4;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#8c2a2a;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#8c2a2a;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(140,42,42,.12);color:#8c2a2a}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#8c2a2a;background:#fbf3f3}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #8c2a2a;background:#8c2a2a;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#6f2020}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#8c2a2a;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#8c2a2a;background:#fbf3f3}
+.mode .nm{font-size:16px;font-weight:600;color:#8c2a2a;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#8c2a2a;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#6f2020;background:rgba(140,42,42,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#8c2a2a;background:rgba(140,42,42,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第10章 循環｜パートE 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第10章 循環 ｜ D 循環調節（教科書 P153〜157）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第10章 P153〜157 ベース）=====
+   対応スライド：ch10_partE.html（教科書 D 循環調節）
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本。プールの4〜6割が目安
+   dobon :true … 💣ドボン。プールの15〜20%
+   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 教科書に記述のない補足知識
+   exp … 正解時に見せる「なぜ正しいか」
+
+   過去問（循環過去問PDF＋宅ドリル循環30問）での出題：圧受容器の場所3／頸動脈小体＝化学受容器4／
+   頸動脈洞反射3／血圧を上げる・下げる因子4／心拍出量・1回拍出量2／心臓血管中枢＝延髄1／
+   血液量を感知する受容器2／アンジオテンシンⅡ1（📘）／スターリングの法則1（📘・💣例外） */
+const PICK=5;
+const POOL=[
+
+/* ---------- D 循環調節の基本（P153〜154） ---------- */
+
+{q:"臓器灌流の原動力となるのはどれか。",
+ choices:[
+  ["動脈圧",true,""],
+  ["静脈還流量",false,"心臓に戻る血液量で、心臓の前負荷を決める。"],
+  ["血漿膠質浸透圧",false,"体液を組織側から血管内へ引き込む力。"],
+  ["リンパ流",false,"組織液を静脈へ戻す流れ。"]],
+ exp:"臓器灌流の原動力は<b>動脈圧</b>であり、動脈圧を一定範囲内に保つことが臓器の血液需要の変化に対応する最良の手段となる。（教科書 P153）"},
+
+{q:"動脈圧を決める因子の組合せはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["心拍出量と総末梢血管抵抗",true,""],
+  ["1回拍出量と心拍数",false,"心拍出量を決める因子の組合せ。"],
+  ["拡張期末容量と収縮期末容量",false,"1回拍出量を決める因子の組合せ。"],
+  ["静脈還流量と心房圧",false,"出血時に長期的調節のきっかけとして低下するもの。"]],
+ exp:"動脈圧＝<b>心拍出量×総末梢血管抵抗</b>。（教科書 P154、図10・15）"},
+
+{q:"1回拍出量を求める式はどれか。",kihon:true,
+ choices:[
+  ["拡張期末容量 − 収縮期末容量",true,""],
+  ["収縮期末容量 − 拡張期末容量",false,"引く順が逆で、負の値になってしまう。"],
+  ["拡張期末容量 ＋ 収縮期末容量",false,"心室の容量を足し合わせても、駆出された量にはならない。"],
+  ["心拍出量 × 心拍数",false,"心拍出量そのものが「1回拍出量×心拍数」なので、さらに心拍数を掛ける式は成り立たない。"]],
+ exp:"1回拍出量＝<b>拡張期末容量−収縮期末容量</b>。心室に充満した量から、駆出後に残った量を引いたもの。（教科書 P154）"},
+
+{q:"成人の安静時の心拍出量はおよそどれか。",kihon:true,dobon:true,
+ choices:[
+  ["約5 L/分",true,""],
+  ["約0.5 L/分",false,"安静時の値の1/10程度で、少なすぎる。"],
+  ["約25 L/分",false,"運動時に増加したときの値に近い。"],
+  ["約50 L/分",false,"運動時でも達しない値。"]],
+ exp:"成人の安静時の心拍出量は<b>約5 L/分</b>で、運動時には5倍程度まで増加する。（教科書 P154）"},
+
+{q:"心拍出量を増やすのはどれか。",kihon:true,
+ choices:[
+  ["総末梢血管抵抗の低下",true,""],
+  ["心拍数の低下",false,"心拍出量＝1回拍出量×心拍数なので、心拍出量は減る。"],
+  ["心室収縮力の低下",false,"収縮期末容量が増え、1回拍出量が減る。"],
+  ["拡張期末容量の低下",false,"前負荷が下がり、1回拍出量が減る。"]],
+ exp:"駆出時の抵抗（動脈圧＝後負荷）が下がると心室内の血液が多く駆出され、1回拍出量が増える。<b>総末梢血管抵抗の低下</b>は後負荷を下げる。（教科書 P154）"},
+
+/* ---------- D-1 動脈圧を決める因子（P153〜154） ---------- */
+
+{q:"前負荷が高くなったときの変化はどれか。",
+ choices:[
+  ["1回拍出量が増加する",true,""],
+  ["1回拍出量が減少する",false,"後負荷（動脈圧）が上がったときの変化。"],
+  ["心拍数が減少する",false,"副交感神経活動が増えたときの変化。"],
+  ["静脈還流量が減少する",false,"前負荷を下げる側の変化。"]],
+ exp:"心室に負荷される圧力（前負荷）が高くなると心室内の血液充満量が増え、<b>1回拍出量は増加</b>する。（教科書 P154）"},
+
+{q:"後負荷にあたるのはどれか。",
+ choices:[
+  ["動脈圧",true,""],
+  ["拡張期末容量",false,"前負荷によって決まる、心室に充満した血液量。"],
+  ["静脈還流量",false,"前負荷を決める因子。"],
+  ["心拍数",false,"洞房結節の活動電位の発生周期で決まる。"]],
+ exp:"心室が血液を駆出するときの抵抗（<b>動脈圧</b>）が後負荷である。（教科書 P154）"},
+
+{q:"スターリングの心臓の法則はどれか。",dobon:true,hosoku:true,
+ choices:[
+  ["心室の拡張期容積が増えると1回拍出量が増える",true,""],
+  ["心臓は外からの刺激がなくても自発的に興奮する",false,"心臓の自動能の説明。"],
+  ["興奮は刺激伝導系によって心室全体に広がる",false,"刺激伝導系のはたらきの説明。"],
+  ["心拍数は洞房結節の活動電位の周期で決まる",false,"心拍数を決めるしくみの説明。"]],
+ exp:"補足知識（資料外）。心室に戻る血液が増えて心筋が引き伸ばされるほど収縮力が増し、<b>1回拍出量が増える</b>。教科書の「前負荷が高くなれば1回拍出量は増加する」（P154）を法則として表したもの。"},
+
+{q:"交感神経刺激で心筋の収縮力が増強したときの変化はどれか。",kihon:true,
+ choices:[
+  ["収縮期末容量が減少し、1回拍出量が増加する",true,""],
+  ["収縮期末容量が増加し、1回拍出量が減少する",false,"心筋の収縮力が低下したときの変化。"],
+  ["拡張期末容量が減少し、1回拍出量が減少する",false,"前負荷が下がったときの変化。"],
+  ["心拍数が減少する",false,"副交感神経の作用。"]],
+ exp:"心筋の収縮力が交感神経刺激などで増強すると、<b>収縮期末容量は減少し、1回拍出量が増加</b>する。（教科書 P154）"},
+
+{q:"心拍数を決めるのはどれか。",
+ choices:[
+  ["洞房結節の活動電位の発生周期",true,""],
+  ["房室結節の伝導時間",false,"心房から心室へ興奮が伝わるまでの遅れ。"],
+  ["拡張期末容量",false,"1回拍出量を決める因子。"],
+  ["総末梢血管抵抗",false,"心拍出量とともに動脈圧を決める因子。"]],
+ exp:"心拍数は<b>洞房結節の活動電位の発生周期</b>によって決まる。（教科書 P154）"},
+
+{q:"心臓の交感神経終末から分泌され、心拍数を増加させるのはどれか。",kihon:true,
+ choices:[
+  ["ノルアドレナリン",true,""],
+  ["アセチルコリン",false,"副交感神経終末から分泌され、心拍数を減少させる。"],
+  ["アドレナリン",false,"主に副腎髄質から分泌されるホルモン。"],
+  ["ドパミン",false,"主に中枢神経系ではたらく神経伝達物質。"]],
+ exp:"交感神経終末から分泌される<b>ノルアドレナリン</b>が心拍数を増加させる（正の変時作用）。（教科書 P154）"},
+
+{q:"副交感神経による心拍数の減少を何というか。",
+ choices:[
+  ["負の変時作用",true,""],
+  ["正の変時作用",false,"心拍数を増加させる作用。"],
+  ["正の変力作用",false,"心筋の収縮性を増加させる作用。"],
+  ["フィードバック調節",false,"変化を検知して元に戻す調節のしくみ。"]],
+ exp:"副交感神経終末から分泌されるアセチルコリンは、活動電位を生じる周期を延長し心拍数を減少させる（<b>負の変時作用</b>）。（教科書 P154）"},
+
+{q:"正の変力作用はどれか。",kihon:true,
+ choices:[
+  ["心筋の収縮性を増加させる",true,""],
+  ["心拍数を増加させる",false,"正の変時作用。"],
+  ["心拍数を減少させる",false,"負の変時作用。"],
+  ["細動脈の血管抵抗を増加させる",false,"交感神経が血管に及ぼす作用。"]],
+ exp:"交感神経活動が上昇すると、<b>心筋の収縮性が増加</b>し（正の変力作用）、1回拍出量が増える。（教科書 P157）"},
+
+{q:"交感神経活動の亢進による変化について誤っているのはどれか。",gori:true,
+ choices:[
+  ["前負荷が減少する",true,""],
+  ["心拍数が増加する",false,"教科書どおりの記述なので、正しい。"],
+  ["心筋の収縮性が増加する",false,"教科書どおりの記述なので、正しい。"],
+  ["血管抵抗が増加する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"交感神経活動の亢進は、前負荷・収縮性・心拍数・血管抵抗をそれぞれ<b>増加</b>させる。（教科書 P153、図10・15）"},
+
+{q:"副交感神経活動の増加が主に低下させるのはどれか。",
+ choices:[
+  ["心拍数",true,""],
+  ["血管抵抗",false,"交感神経が細動脈に作用して変化させる。"],
+  ["静脈の伸展性",false,"交感神経が静脈に作用して変化させる。"],
+  ["前負荷",false,"交感神経が静脈を収縮させると増える。"]],
+ exp:"副交感神経活動の増加は<b>心拍数</b>を低下させる。（教科書 P153、図10・15）"},
+
+/* ---------- D-2 動脈圧の調節（P154〜157） ---------- */
+
+{q:"動脈圧の短期的な変動を感知して補正するのはどれか。",kihon:true,
+ choices:[
+  ["動脈圧受容器反射",true,""],
+  ["腎臓-体液性動脈圧調節系",false,"長期間にわたる動脈圧の調節にかかわるしくみ。"],
+  ["レニン-アンジオテンシン-アルドステロン系",false,"尿量を減らして体液量を増やす、長期的調節のしくみ。"],
+  ["筋肉のポンプ作用",false,"静脈を圧迫して静脈還流を助けるしくみ。"]],
+ exp:"短期的調節＝<b>動脈圧受容器反射</b>、長期的調節＝腎臓-体液性動脈圧調節系。（教科書 P155、図10・16）"},
+
+{q:"長期的動脈圧調節が主に調節するのはどれか。",
+ choices:[
+  ["水分摂取と尿排泄による体液量",true,""],
+  ["心拍数と心筋の収縮性",false,"動脈圧受容器反射が交感神経を介して変化させるもの。"],
+  ["細動脈の血管径",false,"動脈圧受容器反射が交感神経を介して変化させるもの。"],
+  ["圧受容器の感度",false,"動脈圧の調節で変化させる対象ではない。"]],
+ exp:"長期的調節では、<b>水分摂取と尿排泄量</b>を調節して体液量を変え、循環血液量を調節する。循環血液量は静脈還流量を決め、心臓の前負荷を決定する。（教科書 P154、図10・16）"},
+
+{q:"動脈圧受容器反射の性格はどれか。",
+ choices:[
+  ["フィードバック調節",true,""],
+  ["フィードフォワード調節",false,"変化が起こる前に予測して先回りする調節。"],
+  ["自己調節",false,"臓器自身が灌流圧の変化に対して血流量を一定に保つしくみ。"],
+  ["随意運動",false,"意識して行う運動で、反射とは異なる。"]],
+ exp:"動脈圧受容器反射は、動脈圧を一定範囲に保つための<b>フィードバック調節</b>であり、刻々と変化する動脈圧を調節する主役である。（教科書 P155）"},
+
+{q:"動脈圧受容器があるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["頸動脈洞",true,""],
+  ["頸動脈小体",false,"血中酸素分圧の低下を感知する化学受容器（第5章 P60）。"],
+  ["冠状動脈",false,"心筋に血液を送る動脈。"],
+  ["椎骨動脈",false,"脳幹や小脳に血液を送る動脈。"]],
+ exp:"<b>頸動脈洞</b>および大動脈弓に、圧力を感知して中枢に送る圧受容器がある。（教科書 P155、図10・17）"},
+
+{q:"動脈圧受容器があるのはどれか。",kihon:true,
+ choices:[
+  ["大動脈弓",true,""],
+  ["大動脈体",false,"血中酸素分圧の低下を感知する化学受容器（第5章 P60）。"],
+  ["冠状動脈",false,"心筋に血液を送る動脈。"],
+  ["鎖骨下動脈",false,"上肢に血液を送る動脈。"]],
+ exp:"頸動脈洞および<b>大動脈弓</b>に、圧力を感知して中枢に送る圧受容器がある。（教科書 P155、図10・17）"},
+
+{q:"頸動脈洞の圧受容器の情報を延髄へ伝える神経はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["舌咽神経",true,""],
+  ["横隔神経",false,"横隔膜を支配する運動神経。"],
+  ["顔面神経",false,"表情筋を支配し、舌の前2/3の味覚を伝える。"],
+  ["副神経",false,"胸鎖乳突筋と僧帽筋を支配する。"]],
+ exp:"頸動脈洞の圧受容器の神経活動は、頸動脈洞神経から<b>舌咽神経</b>を介して延髄に伝達される。（教科書 P155）"},
+
+{q:"大動脈弓の圧受容器の情報を延髄へ伝える神経はどれか。",kihon:true,
+ choices:[
+  ["迷走神経",true,""],
+  ["横隔神経",false,"横隔膜を支配する運動神経。"],
+  ["三叉神経",false,"顔面の感覚と咀嚼筋を支配する。"],
+  ["副神経",false,"胸鎖乳突筋と僧帽筋を支配する。"]],
+ exp:"大動脈弓の圧受容器の神経活動は、<b>迷走神経</b>を介して延髄に伝達される。（教科書 P155）"},
+
+{q:"心臓血管中枢があるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["延髄",true,""],
+  ["中脳",false,"対光反射の中枢がある。"],
+  ["橋",false,"中脳の下に続く脳幹の一部で、呼吸の調節にかかわる。"],
+  ["頸髄",false,"横隔神経などが出る、脊髄の上部。"]],
+ exp:"<b>延髄</b>の心臓血管中枢が、動脈圧受容器の情報をもとに交感神経活動および副交感神経活動を変化させ、動脈圧を一定に保つ。（教科書 P156）"},
+
+{q:"交感神経が静脈に作用して変化させるのはどれか。",
+ choices:[
+  ["伸展性",true,""],
+  ["心拍数",false,"交感神経が心臓に作用して変化させる。"],
+  ["心筋の収縮性",false,"交感神経が心臓に作用して変化させる。"],
+  ["洞房結節の活動電位の周期",false,"心拍数を決めるもの。"]],
+ exp:"交感神経の終末は細動脈および静脈系につながっており、血管抵抗および静脈の<b>伸展性</b>を変化させる。（教科書 P156）"},
+
+{q:"急に立ち上がった直後に動脈圧が下がる理由はどれか。",kihon:true,
+ choices:[
+  ["下肢に血液がたまり、静脈還流量が減るため",true,""],
+  ["交感神経活動が上昇するため",false,"血圧が下がったあと、それを補正するために起こる反射。"],
+  ["総末梢血管抵抗が増加するため",false,"血圧を上げる側の変化。"],
+  ["腎臓でのレニン分泌が増えるため",false,"血圧を上げる長期的調節のしくみ。"]],
+ exp:"<b>下肢に血液が貯留して静脈還流量が減少</b>し、一過性に心拍出量が低下するため動脈圧が下がる。（教科書 P156）"},
+
+{q:"急に立ち上がったときに、動脈圧受容器反射で起こるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["交感神経活動の上昇",true,""],
+  ["迷走神経活動の上昇",false,"心拍数を下げ、血圧をさらに下げる方向の変化。"],
+  ["細動脈の拡張",false,"血管抵抗が下がり、血圧をさらに下げる方向の変化。"],
+  ["心拍数の減少",false,"副交感神経活動が増えたときの変化。"]],
+ exp:"血圧の低下は圧受容器で感知され、神経活動の低下として中枢に伝わる。中枢では反射性に<b>交感神経活動を上昇</b>させ、ノルアドレナリンの放出が増加する。（教科書 P156）"},
+
+{q:"急に立ち上がったときの反射について誤っているのはどれか。",gori:true,
+ choices:[
+  ["細動脈が拡張して血管抵抗が減少する",true,""],
+  ["心拍数が増加する",false,"教科書どおりの記述なので、正しい。"],
+  ["心筋の収縮性が増加する",false,"教科書どおりの記述なので、正しい。"],
+  ["静脈が収縮し、前負荷が増加する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"細動脈の血管径を<b>狭めて血管抵抗を増加</b>させる。心拍出量の増加と末梢血管抵抗の増加で血圧は上昇する。（教科書 P157）"},
+
+{q:"頸動脈洞を圧迫したときに起こるのはどれか。",hosoku:true,
+ choices:[
+  ["徐脈",true,""],
+  ["頻脈",false,"血圧が下がったときに、反射で起こる変化。"],
+  ["血圧の上昇",false,"圧受容器が血圧の低下を感知したときの反射の結果。"],
+  ["瞳孔の散大",false,"交感神経活動が上昇したときの変化。"]],
+ exp:"補足知識（資料外）。頸動脈洞を圧迫すると、圧受容器が「血圧が上がった」と感知し、反射で迷走神経活動が上がり心拍数が減る（<b>徐脈</b>）。血圧も低下する。"},
+
+{q:"動脈圧を低下させるのはどれか。",
+ choices:[
+  ["細動脈の拡張",true,""],
+  ["心拍出量の増加",false,"動脈圧を上げる変化。"],
+  ["心筋の収縮性の増加",false,"1回拍出量が増え、動脈圧を上げる変化。"],
+  ["体液量の増加",false,"静脈還流量が増え、動脈圧を上げる変化。"]],
+ exp:"<b>細動脈が拡張</b>すると総末梢血管抵抗が下がり、動脈圧は低下する。動脈圧＝心拍出量×総末梢血管抵抗。（教科書 P154）"},
+
+{q:"動脈圧を上昇させるのはどれか。",kihon:true,
+ choices:[
+  ["心拍出量の増加",true,""],
+  ["大出血",false,"血液量が減り、静脈還流量と心拍出量が低下する。"],
+  ["尿量の増加",false,"体液量が減り、循環血液量が低下する。"],
+  ["血管拡張",false,"総末梢血管抵抗が下がる。"]],
+ exp:"動脈圧＝心拍出量×総末梢血管抵抗なので、<b>心拍出量が増加</b>すると動脈圧は上昇する。（教科書 P154）"},
+
+{q:"血中酸素分圧の低下を感知する受容器があるのはどれか。",
+ choices:[
+  ["頸動脈小体",true,""],
+  ["頸動脈洞",false,"動脈圧を感知する圧受容器がある。"],
+  ["心房",false,"心房圧（静脈還流量）を感知する圧受容器がある。"],
+  ["延髄",false,"血中CO₂分圧を感知する中枢性化学受容器がある。"]],
+ exp:"<b>頸動脈小体</b>（頸動脈体）は末梢性化学受容器で、血中O₂分圧を感知する。名前の似た頸動脈洞（圧受容器）と混同しやすい。（第5章 P60）"},
+
+/* ---------- D-2 b 長期的動脈圧調節（P157） ---------- */
+
+{q:"心房の圧受容器が感知するのはどれか。",
+ choices:[
+  ["静脈還流量の低下による心房圧の低下",true,""],
+  ["血中酸素分圧の低下",false,"頸動脈小体などの末梢性化学受容器が感知する。"],
+  ["血液浸透圧の上昇",false,"視床下部の神経細胞が感知する。"],
+  ["体温の上昇",false,"温度受容器が感知する。"]],
+ exp:"心房には圧受容器が局在しており、<b>静脈還流量の低下は心房圧の低下</b>として感知される。（教科書 P157）"},
+
+{q:"出血後、心房の圧受容器を介して分泌が増えるホルモンはどれか。",kihon:true,
+ choices:[
+  ["抗利尿ホルモン（バソプレシン）",true,""],
+  ["心房性ナトリウム利尿ペプチド",false,"心房が引き伸ばされると分泌され、尿量を増やすホルモン。"],
+  ["オキシトシン",false,"脳下垂体後葉から分泌され、子宮収縮や射乳を起こす。"],
+  ["グルカゴン",false,"膵臓から分泌され、血糖値を上げる。"]],
+ exp:"心房圧の低下が感知されると、脳下垂体後葉からの<b>抗利尿ホルモン（ADH、バソプレシン）</b>の分泌が増加する。（教科書 P157、図10・18）"},
+
+{q:"抗利尿ホルモンを分泌するのはどれか。",kihon:true,
+ choices:[
+  ["脳下垂体後葉",true,""],
+  ["脳下垂体前葉",false,"成長ホルモンや副腎皮質刺激ホルモンなどを分泌する。"],
+  ["副腎皮質",false,"アルドステロンなどを分泌する。"],
+  ["腎臓",false,"レニンを分泌する。"]],
+ exp:"抗利尿ホルモン（ADH、バソプレシン）は<b>脳下垂体後葉</b>から分泌される。（教科書 P157）"},
+
+{q:"腎臓でのレニン分泌を促進するのはどれか。",kihon:true,
+ choices:[
+  ["腎交感神経活動の増加",true,""],
+  ["腎動脈圧の上昇",false,"レニン分泌は、腎動脈圧が低下したときに促進される。"],
+  ["心房圧の上昇",false,"体液量が増えたときの変化。"],
+  ["体液量の増加",false,"長期的調節で体液が回復したあとの状態。"]],
+ exp:"<b>腎交感神経活動の増加</b>および腎動脈圧の低下は、腎臓でのレニンの分泌を促進し、レニン-アンジオテンシン-アルドステロン系を賦活させる。（教科書 P157）"},
+
+{q:"出血後、腎臓-体液性動脈圧調節系で起こる変化はどれか。",
+ choices:[
+  ["尿量が減り、体内にNaと水が保持される",true,""],
+  ["尿量が増え、体液量が減る",false,"血圧をさらに下げる方向の変化。"],
+  ["飲水が抑制される",false,"実際には飲水や塩分摂取は促進される。"],
+  ["腎交感神経活動が低下する",false,"実際には反射性に増加する。"]],
+ exp:"<b>尿量は減少し、体内のNaおよび水の保持が促進</b>される。飲水や塩分摂取も促進されて体液量が増え、静脈還流量が回復して血圧は正常範囲になる。（教科書 P157）"},
+
+{q:"腎臓-体液性動脈圧調節系について誤っているのはどれか。",gori:true,
+ choices:[
+  ["動脈圧受容器反射より短時間で作用する",true,""],
+  ["主に尿量調節によって体液量を変化させる",false,"教科書どおりの記述なので、正しい。"],
+  ["循環血液量は静脈還流量を決める",false,"教科書どおりの記述なので、正しい。"],
+  ["レニン-アンジオテンシン-アルドステロン系がかかわる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"腎臓-体液性動脈圧調節系は、動脈圧受容器反射に比べて比較的<b>長時間</b>で作用する。（教科書 P157）"},
+
+{q:"アンジオテンシンⅡの作用はどれか。",hosoku:true,
+ choices:[
+  ["アルドステロンの分泌を促進する",true,""],
+  ["血管を拡張させる",false,"実際には強い血管収縮作用をもつ。"],
+  ["尿量を増加させる",false,"Naと水を体内に保持する方向にはたらく。"],
+  ["レニンの分泌を促進する",false,"レニンはアンジオテンシンⅡをつくる流れの上流にある。"]],
+ exp:"補足知識（資料外）。アンジオテンシンⅡは副腎皮質に作用して<b>アルドステロンの分泌を促進</b>し、強い血管収縮作用ももつ（レニン-アンジオテンシン-アルドステロン系は教科書 P157）。"},
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書の外から入れた国試頻出の知識。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
