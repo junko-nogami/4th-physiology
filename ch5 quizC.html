@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第5章 パートC 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#475569;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#cbd5e1;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#cbd5e1;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#475569;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#475569;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(71,85,105,.12);color:#475569}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#475569;background:#f1f5f9}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #475569;background:#475569;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#334155}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#475569;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#475569;background:#f1f5f9}
+.mode .nm{font-size:16px;font-weight:600;color:#475569;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#475569;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#334155;background:rgba(71,85,105,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#475569;background:rgba(71,85,105,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第5章 感覚の生理｜パートC 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第5章 感覚の生理 ｜ C-1・2 体性感覚（教科書 P74〜78）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第5章 P74〜78 ベース）=====
+   対応スライド：ch5_partC.html
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本 / dobon:true … 💣ドボン / gori:true … ⚠誤りを選ぶ / hosoku:true … 📘補足（資料外）
+
+   過去問（11章 感覚）での出題頻度（パートC範囲）：
+   受容器と感覚の組合せ 7回／痛覚の受容器＝自由神経終末 6回／Aδ線維・C線維 5回／
+   感覚点の密度 4回／深部感覚 4回／伝導路 2回／体部位局在 1回／複合感覚・二点弁別閾（資料外）4回 */
+const PICK=5;
+const POOL=[
+
+/* ---------- C-1 皮膚感覚：受容器（P74〜76、表5・2） ---------- */
+
+{q:"皮膚感覚に含まれないのはどれか。",kihon:true,
+ choices:[
+  ["関節位置覚",true,""],
+  ["触覚",false,"皮膚の機械受容器で生じる皮膚感覚。"],
+  ["圧覚",false,"皮膚の機械受容器で生じる皮膚感覚。"],
+  ["温冷覚",false,"皮膚の温度受容器で生じる皮膚感覚。"]],
+ exp:"<b>関節の位置の感覚</b>は深部感覚。皮膚感覚には触覚・圧覚・振動覚・温冷覚・痛覚などがある。（教科書 P74、P77）"},
+
+{q:"痛覚の受容器はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["自由神経終末",true,""],
+  ["パチニ小体",false,"振動を受容する機械受容器。"],
+  ["マイスネル小体",false,"粗振動・接触を受容する機械受容器。"],
+  ["メルケル触盤",false,"皮膚の変形を受容して触覚・圧覚を起こす機械受容器。"]],
+ exp:"侵害刺激に反応する主な受容器は<b>自由神経終末</b>。（教科書 P76、表5・2）"},
+
+{q:"自由神経終末が受容器としてはたらかない感覚はどれか。",
+ choices:[
+  ["振動覚",true,""],
+  ["冷覚",false,"冷受容器（自由終末）で受容される。"],
+  ["温覚",false,"温受容器（自由終末）で受容される。"],
+  ["刺す痛み",false,"侵害受容器（自由終末）で受容される。"]],
+ exp:"<b>振動</b>はマイスネル小体・パチニ小体が受容する。温度覚と痛覚の受容器は自由終末。（教科書 表5・2）"},
+
+{q:"順応が非常に速い皮膚の機械受容器はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["パチニ小体",true,""],
+  ["マイスネル小体",false,"順応は速いが、いちばん速いわけではない。粗振動・接触を起こす。"],
+  ["メルケル触盤",false,"皮膚の変形を受容し、順応が遅い。"],
+  ["ルフィニ終末",false,"皮膚の変形を受容し、順応が遅い。"]],
+ exp:"<b>パチニ小体</b>は振動を受容し、変位の速度・圧覚を起こす。順応は非常に速い。（教科書 表5・2）"},
+
+{q:"順応が遅い皮膚の機械受容器はどれか。",kihon:true,
+ choices:[
+  ["メルケル触盤",true,""],
+  ["パチニ小体",false,"振動を受容し、順応が非常に速い。"],
+  ["マイスネル小体",false,"振動を受容し、順応が速い。"],
+  ["毛包受容器",false,"毛の動きを受容し、順応が速い。"]],
+ exp:"<b>メルケル触盤</b>は皮膚の変形を受容し、触覚・圧覚を起こす。順応は遅い。（教科書 表5・2）"},
+
+{q:"毛の動きを適当刺激とする受容器はどれか。",
+ choices:[
+  ["毛包受容器",true,""],
+  ["メルケル触盤",false,"皮膚の変形を適当刺激とする。"],
+  ["パチニ小体",false,"振動を適当刺激とする。"],
+  ["ルフィニ終末",false,"皮膚の変形を適当刺激とし、触覚を起こす。"]],
+ exp:"<b>毛包受容器</b>は接触・圧覚を起こし、順応が速い。（教科書 表5・2）"},
+
+{q:"マイスネル小体が起こす感覚はどれか。",
+ choices:[
+  ["粗振動・接触",true,""],
+  ["冷覚",false,"自由終末の冷受容器が起こす。"],
+  ["灼けつく痛み",false,"C線維の侵害受容器が起こす。"],
+  ["関節の極端な位置の感覚",false,"関節のルフィニ小体が検出する。"]],
+ exp:"マイスネル小体は振動を受容して<b>粗振動・接触</b>の感覚を起こす。順応は速い。（教科書 表5・2）"},
+
+{q:"皮膚の機械受容器（パチニ小体・マイスネル小体など）の神経線維はどれか。",kihon:true,
+ choices:[
+  ["Aβ線維",true,""],
+  ["Aα線維",false,"筋紡錘からの求心性線維や、骨格筋を支配する運動神経線維。"],
+  ["Aδ線維",false,"刺す痛みや冷覚を伝える、細い有髄線維。"],
+  ["C線維",false,"灼けつく痛みや温覚を伝える無髄線維。"]],
+ exp:"皮膚の機械受容器の多くは<b>Aβ線維</b>につながる（自由終末による接触（粗）だけはAδ線維）。（教科書 表5・2）"},
+
+{q:"温受容器の神経線維はどれか。",
+ choices:[
+  ["C線維",true,""],
+  ["Aβ線維",false,"皮膚の機械受容器の線維。"],
+  ["Aα線維",false,"筋紡錘からの求心性線維など。"],
+  ["B線維",false,"自律神経の節前線維。"]],
+ exp:"冷受容器はAδ線維とC線維、温受容器は<b>C線維</b>につながる。（教科書 表5・2）"},
+
+{q:"温受容器が反応する温度の範囲はどれか。",
+ choices:[
+  ["30〜42℃",true,""],
+  ["15〜30℃",false,"冷受容器が反応する範囲。"],
+  ["0〜15℃",false,"冷受容器の範囲よりもさらに低い温度。"],
+  ["42〜50℃",false,"温受容器の範囲よりも高い温度。"]],
+ exp:"冷受容器は15〜30℃、温受容器は<b>30〜42℃</b>に反応する。（教科書 表5・2）"},
+
+{q:"温度受容に関与するチャネルはどれか。",
+ choices:[
+  ["TRPチャネル",true,""],
+  ["電位依存性Na⁺チャネル",false,"活動電位の立ち上がりでNa⁺を流入させるチャネル。"],
+  ["ニコチン性アセチルコリン受容体",false,"神経筋接合部で終板電位を起こす受容体。"],
+  ["電位依存性Ca²⁺チャネル",false,"神経終末で伝達物質の放出の引き金になるチャネル。"]],
+ exp:"温度受容には<b>TRPチャネル</b>ファミリーが関与する。冷刺激に反応するものや温刺激に反応するものなど、さまざまな種類がある。（教科書 P75）"},
+
+{q:"侵害受容器の線維のうち、C線維にだけみられる性質はどれか。",kihon:true,
+ choices:[
+  ["発痛物質などの化学的刺激にも反応する",true,""],
+  ["機械的刺激に反応する",false,"Aδ線維とC線維の両方にみられる性質。"],
+  ["温冷刺激に反応する",false,"Aδ線維とC線維の両方にみられる性質。"],
+  ["伝導速度が速い",false,"有髄のAδ線維の性質。"]],
+ exp:"Aδ線維は機械的刺激と温冷刺激に、C線維はそれらに加えて<b>発痛物質</b>などにも反応する。（教科書 P76）"},
+
+{q:"刺す痛みを伝える神経線維はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["Aδ線維",true,""],
+  ["C線維",false,"灼けつく痛みを伝える無髄線維。"],
+  ["Aβ線維",false,"触覚・圧覚・振動などを伝える有髄線維。"],
+  ["Aα線維",false,"筋紡錘からの求心性線維など。"]],
+ exp:"侵害受容器（自由終末）のうち、<b>Aδ線維</b>は刺す痛み、C線維は灼けつく痛みを起こす。（教科書 表5・2）"},
+
+{q:"灼けつく痛みを伝える神経線維について正しいのはどれか。",
+ choices:[
+  ["無髄で伝導速度が遅い",true,""],
+  ["有髄で伝導速度が速い",false,"刺す痛みを伝える線維の特徴。"],
+  ["機械的刺激にだけ反応する",false,"実際には温冷刺激や化学的刺激にも反応する。"],
+  ["皮膚の振動を伝える",false,"マイスネル小体・パチニ小体につながるAβ線維の役割。"]],
+ exp:"灼けつく痛みは<b>無髄のC線維</b>が伝える。伝導速度が遅い。（教科書 表5・2、第3章の神経線維の分類）"},
+
+{q:"受容器が自由神経終末であるのはどれか。",hosoku:true,
+ choices:[
+  ["ポリモーダル侵害受容器",true,""],
+  ["パチニ小体",false,"振動を受容する機械受容器。順応が非常に速い。"],
+  ["マイスネル小体",false,"振動を受容する機械受容器。粗振動・接触を起こす。"],
+  ["筋紡錘",false,"筋の長さの変化を受容する深部受容器。"]],
+ exp:"補足知識（資料外）。<b>ポリモーダル侵害受容器</b>（C線維）は、機械的・温冷・化学的など、いろいろな種類の侵害刺激に反応する自由神経終末。（教科書 表5・2）"},
+
+{q:"受容器が自由神経終末であるのはどれか。",hosoku:true,
+ choices:[
+  ["機械的侵害受容器（高閾値機械受容器）",true,""],
+  ["メルケル触盤",false,"皮膚の変形を受容して触覚・圧覚を起こす機械受容器。順応が遅い。"],
+  ["ルフィニ終末",false,"皮膚の変形を受容して触覚を起こす機械受容器。"],
+  ["ゴルジ腱器官",false,"筋の張力の変化を受容する深部受容器。"]],
+ exp:"補足知識（資料外）。<b>機械的侵害受容器</b>（Aδ線維）は強い機械的刺激に反応する自由神経終末で、刺す痛みを起こす。ポリモーダル侵害受容器も自由神経終末で、痛みの受容器はどちらも同じ形。（教科書 表5・2）"},
+
+{q:"ポリモーダル侵害受容器の線維はどれか。",hosoku:true,
+ choices:[
+  ["C線維",true,""],
+  ["Aδ線維",false,"刺す痛みを伝える細い有髄線維。"],
+  ["Aβ線維",false,"皮膚の機械受容器の線維。"],
+  ["Aα線維",false,"筋紡錘からの求心性線維など。"]],
+ exp:"補足知識（資料外）。機械的・温冷・化学的（発痛物質）など、いろいろな種類の侵害刺激に反応するので「ポリモーダル（多様式）」という。<b>C線維</b>がつながる。"},
+
+{q:"機械的侵害受容器（高閾値機械受容器）の線維はどれか。",hosoku:true,
+ choices:[
+  ["Aδ線維",true,""],
+  ["C線維",false,"機械的・温冷・化学的など、いろいろな侵害刺激に反応するポリモーダル侵害受容器の線維。"],
+  ["Aβ線維",false,"皮膚の機械受容器（パチニ小体・マイスネル小体など）の線維。侵害刺激ではない触覚・圧覚・振動を伝える。"],
+  ["Aα線維",false,"筋紡錘からの求心性線維など。"]],
+ exp:"補足知識（資料外）。<b>Aδ線維</b>の侵害受容器は、主に強い圧迫などの機械的な侵害刺激に反応する。閾値が高いので「高閾値機械受容器」とも呼ばれる。鋭く局在の明確な刺す痛み（一次痛）を伝える。なお教科書（P76）では、Aδ線維は温冷刺激にも反応すると書かれている。"},
+
+{q:"皮膚の感覚受容器について誤っているのはどれか。",gori:true,
+ choices:[
+  ["マイスネル小体は順応が遅い",true,""],
+  ["パチニ小体は振動を適当刺激とする",false,"教科書どおりの記述なので、正しい。"],
+  ["侵害受容器は主に自由神経終末である",false,"教科書どおりの記述なので、正しい。"],
+  ["温度受容にはTRPチャネルファミリーが関与する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"マイスネル小体は<b>順応が速い</b>。順応が遅いのはメルケル触盤とルフィニ終末。（教科書 表5・2）"},
+
+/* ---------- C-1 皮膚感覚：感覚点（P76） ---------- */
+
+{q:"もっとも数が多い感覚点はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["痛点",true,""],
+  ["触点",false,"鼻や口唇で特に多い感覚点。"],
+  ["冷点",false,"鼻で8〜13個/cm²、指で2〜4個/cm²程度の感覚点。"],
+  ["温点",false,"顔面や手指でも1〜4個/cm²と少ない感覚点。"]],
+ exp:"<b>痛点</b>は全身の平均で100〜200個/cm²と多い。ただし指の表面では比較的少ない。（教科書 P76）"},
+
+{q:"温点について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["冷点より少ない",true,""],
+  ["感覚点の中でもっとも多い",false,"痛点の特徴。"],
+  ["鼻や口唇で100個/cm²以上ある",false,"触圧点の特徴。"],
+  ["冷点と同じ受容器で感じる",false,"実際は冷受容器と温受容器は別の受容器。"]],
+ exp:"温点は顔面や手指で1〜4個/cm²、その他の部位は1個/cm²以下で、<b>冷点より少ない</b>。（教科書 P76）"},
+
+{q:"触圧点がもっとも多い部位はどれか。",kihon:true,
+ choices:[
+  ["口唇",true,""],
+  ["大腿",false,"触圧点が11〜13個/cm²と少ない部位。"],
+  ["背部",false,"触圧点が少ない部位。"],
+  ["前腕",false,"痛点は多いが、触圧点はそれほど多くない部位。"]],
+ exp:"触圧点は鼻や<b>口唇</b>で100個以上/cm²と多い。（教科書 P76）"},
+
+{q:"感覚点について誤っているのはどれか。",gori:true,
+ choices:[
+  ["痛点は指の表面でもっとも多い",true,""],
+  ["痛点は全身の平均で100〜200個/cm²ある",false,"教科書どおりの記述なので、正しい。"],
+  ["触圧点は大腿部では少ない",false,"教科書どおりの記述なので、正しい。"],
+  ["温点は顔面や手指でも1〜4個/cm²である",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"痛点は前腕や大腿などで多く、<b>指の表面では比較的少ない</b>。（教科書 P76）"},
+
+/* ---------- C-1 皮膚感覚：伝導路・体性感覚野・皮膚分節（P76〜77） ---------- */
+
+{q:"後索－内側毛帯路を上行する感覚はどれか。",kihon:true,
+ choices:[
+  ["関節の位置・動きの感覚",true,""],
+  ["温覚",false,"脊髄視床路を上行する感覚。"],
+  ["冷覚",false,"脊髄視床路を上行する感覚。"],
+  ["刺す痛み",false,"脊髄視床路を上行する感覚。"]],
+ exp:"後索－内側毛帯路は触覚・圧覚・振動覚・<b>深部感覚</b>を伝える。（教科書 P76、図5・19a）"},
+
+{q:"温度覚を伝える神経線維が、脊髄でシナプスを介して結合する部位はどれか。",
+ choices:[
+  ["後角",true,""],
+  ["前角",false,"α運動ニューロンの細胞体がある部位。"],
+  ["後索",false,"触覚や深部感覚の線維が、シナプスを介さずに上行する部位。"],
+  ["側角",false,"交感神経の節前ニューロンがある部位。"]],
+ exp:"温度覚・痛覚の線維は後根から脊髄に入り、<b>後角</b>のニューロンとシナプスを介して結合する。（教科書 P76）"},
+
+{q:"脊髄視床路について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["対側の前外側索を上行する",true,""],
+  ["同側の後索を上行する",false,"後索－内側毛帯路の特徴。"],
+  ["脊髄でシナプスを介さずに視床へ向かう",false,"後索－内側毛帯路の特徴。"],
+  ["深部感覚を伝える",false,"後索－内側毛帯路の役割。"]],
+ exp:"脊髄視床路は温度覚・痛覚と触圧覚の一部を伝え、<b>対側の前外側索</b>を上行して視床を経て一次体性感覚野へ投射する。（教科書 P76〜77、図5・19b）"},
+
+{q:"皮膚感覚の伝導路について誤っているのはどれか。",gori:true,
+ choices:[
+  ["後索－内側毛帯路は脊髄の後角でシナプスを介して結合する",true,""],
+  ["脊髄視床路は温度覚・痛覚を伝える",false,"教科書どおりの記述なので、正しい。"],
+  ["後索－内側毛帯路は伝導速度が速い",false,"教科書どおりの記述なので、正しい。"],
+  ["どちらの経路も視床を経て一次体性感覚野へ投射する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"後索－内側毛帯路は<b>脊髄でシナプスを介さず</b>、末梢から延髄まで直接つながっている。（教科書 P76）"},
+
+{q:"顔面や口腔の感覚を伝える神経はどれか。",
+ choices:[
+  ["三叉神経",true,""],
+  ["顔面神経",false,"表情筋を支配し、舌の前3分の2の味覚を伝える神経。"],
+  ["舌咽神経",false,"舌の後ろ3分の1の味覚を伝える神経。"],
+  ["舌下神経",false,"舌の運動を支配する神経。"]],
+ exp:"顔面・口腔・舌の感覚は<b>三叉神経</b>を通り、三叉神経主知覚核・三叉神経脊髄路核から視床を経て一次体性感覚野へ投射する。（教科書 P77）"},
+
+{q:"一次体性感覚野がある部位はどれか。",
+ choices:[
+  ["中心後回",true,""],
+  ["中心前回",false,"一次運動野がある部位。"],
+  ["後頭葉",false,"一次視覚野がある部位。"],
+  ["側頭葉",false,"聴覚野がある部位。"]],
+ exp:"一次体性感覚野は頭頂葉の<b>中心後回</b>にある。（教科書 P77、図3・8）"},
+
+{q:"一次体性感覚野の体部位局在で、特に広い領域を占める部位はどれか。",kihon:true,
+ choices:[
+  ["唇",true,""],
+  ["背部",false,"体幹の部位で、体部位局在の領域は狭い。"],
+  ["大腿",false,"下肢の部位で、体部位局在の領域は狭い。"],
+  ["上腕",false,"手や指に比べて、体部位局在の領域は狭い。"]],
+ exp:"体部位局在は指・手・<b>唇</b>・舌などで特に広い。（教科書 P77、図5・20）"},
+
+{q:"ある脊髄後根の感覚神経が支配する皮膚の領域を何というか。",kihon:true,
+ choices:[
+  ["皮膚分節",true,""],
+  ["体部位局在",false,"一次体性感覚野の局所領域と身体各部位との対応関係。"],
+  ["感覚点",false,"点で刺激したときに感覚が生じる皮膚上の点。"],
+  ["運動単位",false,"1つの運動ニューロンと、それが支配する筋線維群。"]],
+ exp:"<b>皮膚分節</b>はデルマトームともいう。（教科書 P77、図5・21）"},
+
+{q:"前面の肩周辺の皮膚に由来する感覚神経線維がつながる髄節はどれか。",
+ choices:[
+  ["第4頸髄",true,""],
+  ["第4胸髄",false,"乳頭の高さの皮膚がつながる髄節。"],
+  ["第10胸髄",false,"臍の高さの皮膚がつながる髄節。"],
+  ["第5腰髄",false,"足背の皮膚がつながる髄節。"]],
+ exp:"皮膚の各部位がどの髄節につながるかはおおよそ決まっている。前面の肩周辺は<b>第4頸髄</b>。（教科書 P77、図5・21）"},
+
+/* ---------- C-2 深部感覚（P77〜78） ---------- */
+
+{q:"深部受容器はどれか。",kihon:true,
+ choices:[
+  ["筋紡錘",true,""],
+  ["メルケル触盤",false,"皮膚の機械受容器。"],
+  ["マイスネル小体",false,"皮膚の機械受容器。"],
+  ["毛包受容器",false,"皮膚の機械受容器。"]],
+ exp:"深部受容器は<b>筋紡錘</b>・ゴルジ腱器官・関節受容器。（教科書 P77）"},
+
+{q:"関節の極端な位置（屈曲位・伸展位）を検出する受容器はどれか。",kihon:true,
+ choices:[
+  ["ルフィニ小体",true,""],
+  ["パチニ小体",false,"関節の動きの有無を感じとる受容器。"],
+  ["筋紡錘",false,"筋の長さの変化を受容する受容器。"],
+  ["メルケル触盤",false,"皮膚の変形を受容する受容器。"]],
+ exp:"関節にはパチニ小体・自由神経終末・<b>ルフィニ小体</b>などの機械受容器がある。（教科書 P78）"},
+
+{q:"深部感覚に含まれるのはどれか。",
+ choices:[
+  ["力・重さの感覚",true,""],
+  ["温冷覚",false,"皮膚感覚。"],
+  ["触覚",false,"皮膚感覚。"],
+  ["尿意",false,"内臓感覚のうちの臓器感覚。"]],
+ exp:"深部感覚には、関節の位置・動きの感覚、<b>力・重さの感覚</b>、深部痛などがある。（教科書 P77）"},
+
+{q:"物を持ち上げたときの力・重さの感覚で、皮膚や筋の伸張の情報とともに重要なのはどれか。",
+ choices:[
+  ["筋への運動指令との相互作用",true,""],
+  ["半規管の内リンパ液の流れ",false,"頭部の回転加速度の情報。"],
+  ["嗅細胞の受容器電位",false,"においの情報。"],
+  ["視細胞の過分極",false,"光の情報。"]],
+ exp:"力・重さの感覚では、皮膚受容器や筋の伸張の情報に加えて、<b>筋への運動指令</b>との相互作用が重要。（教科書 P78）"},
+
+{q:"筋の張力の変化を受容する深部受容器はどれか。",kihon:true,
+ choices:[
+  ["ゴルジ腱器官",true,""],
+  ["筋紡錘",false,"筋の長さの変化を受容する深部受容器。"],
+  ["パチニ小体",false,"関節の動きの有無を感じとる受容器。"],
+  ["ルフィニ小体",false,"関節の極端な位置を検出する受容器。"]],
+ exp:"筋紡錘は筋の長さ、<b>ゴルジ腱器官</b>は筋の張力の変化を受容する。（第4章）"},
+
+/* ---------- 📘補足（資料外） ---------- */
+
+{q:"二点弁別閾がもっとも小さい部位はどれか。",hosoku:true,
+ choices:[
+  ["指先",true,""],
+  ["背部",false,"触圧点が少なく、二点弁別閾が大きい部位。"],
+  ["大腿",false,"触圧点が少なく、二点弁別閾が大きい部位。"],
+  ["下腿",false,"触圧点が少なく、二点弁別閾が大きい部位。"]],
+ exp:"補足知識（資料外）。二点弁別閾は、2点を2点として区別できる最小の距離。触圧点が多い<b>指先</b>や口唇で小さい。"},
+
+{q:"複合感覚（皮質性感覚）に含まれるのはどれか。",hosoku:true,
+ choices:[
+  ["二点識別覚",true,""],
+  ["関節位置覚",false,"深部感覚。"],
+  ["圧覚",false,"皮膚感覚。"],
+  ["温覚",false,"皮膚感覚。"]],
+ exp:"補足知識（資料外）。複合感覚は、大脳皮質で複数の情報を統合して生じる感覚。<b>二点識別覚</b>・部位覚・立体覚などがある。"},
+
+{q:"後索－内側毛帯路の線維が正中線を越えて対側へ交叉する部位はどれか。",hosoku:true,
+ choices:[
+  ["延髄",true,""],
+  ["脊髄",false,"脊髄視床路の線維が交叉する部位。"],
+  ["中脳",false,"対光反射の中枢がある部位。"],
+  ["視床",false,"感覚を中継して大脳皮質へ投射する部位。"]],
+ exp:"補足知識（資料外）。後索を上行した線維は<b>延髄</b>の後索核で中継され、そこで交叉して内側毛帯を上行する。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
