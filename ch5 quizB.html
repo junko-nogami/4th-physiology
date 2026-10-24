@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第5章 パートB 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#475569;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#cbd5e1;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#cbd5e1;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#475569;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#475569;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(71,85,105,.12);color:#475569}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#475569;background:#f1f5f9}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #475569;background:#475569;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#334155}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#475569;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#475569;background:#f1f5f9}
+.mode .nm{font-size:16px;font-weight:600;color:#475569;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#475569;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#334155;background:rgba(71,85,105,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#475569;background:rgba(71,85,105,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第5章 感覚の生理｜パートB 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第5章 感覚の生理 ｜ B 特殊感覚（教科書 P62〜74）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第5章 P62〜74 ベース）=====
+   対応スライド：ch5_partB.html
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本 / dobon:true … 💣ドボン / gori:true … ⚠誤りを選ぶ / hosoku:true … 📘補足（資料外）
+
+   過去問（11章 感覚）での出題頻度（パートB範囲）：
+   杆体・錐体 6回／平衡（半規管・耳石器・有毛細胞）6回／遠近調節 5回／網膜の層構造 3回／
+   聴覚（耳小骨・内側膝状体・コルチ器）3回／味覚の伝導路 2回／対光反射 2回／視覚伝導路 2回／嗅覚と視床 1回 */
+const PICK=5;
+const POOL=[
+
+/* ---------- B-1 視覚：眼球の構造・遠近調節（P62〜63） ---------- */
+
+{q:"光が網膜に達するまでに通る順序で正しいのはどれか。",kihon:true,
+ choices:[
+  ["角膜→眼房→水晶体→硝子体",true,""],
+  ["角膜→硝子体→水晶体→眼房",false,"硝子体は眼球のいちばん奥を占めるゲル状の物質。"],
+  ["眼房→角膜→水晶体→硝子体",false,"眼房は眼球の最前面にはない。"],
+  ["角膜→水晶体→眼房→硝子体",false,"眼房は水晶体より後ろにはない。"]],
+ exp:"光は<b>角膜→眼房→水晶体→硝子体</b>と、屈折しながら通って網膜に達する。（教科書 P62、図5・3）"},
+
+{q:"近くを見るときに収縮するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["毛様体筋",true,""],
+  ["瞳孔散大筋",false,"交感神経の支配を受け、収縮すると散瞳する筋。"],
+  ["外側直筋",false,"眼球を外側へ向ける外眼筋。"],
+  ["上斜筋",false,"眼球を動かす外眼筋のひとつ。"]],
+ exp:"近くを見るときは副交感神経が興奮して<b>毛様体筋</b>が収縮する。すると毛様体小帯が弛緩し、水晶体が自らの弾力で膨らむ。（教科書 P63）"},
+
+{q:"近くを見るときの変化で正しいのはどれか。",kihon:true,
+ choices:[
+  ["水晶体が厚くなる",true,""],
+  ["毛様体小帯が緊張する",false,"遠くを見るとき（安静時）の状態。"],
+  ["角膜の彎曲が強くなる",false,"角膜の形は変わらない。遠近調節は別の構造の厚みで行う。"],
+  ["瞳孔が散大する",false,"暗い場所で起こる変化。"]],
+ exp:"毛様体小帯がゆるむと、<b>水晶体</b>は自らの弾力で膨らみ屈折率が大きくなる。こうして近くの物を網膜上に結像させる。（教科書 P63）"},
+
+{q:"遠くを眺めているとき（安静時）の状態で正しいのはどれか。",
+ choices:[
+  ["水晶体が毛様体小帯に引っ張られて薄くなる",true,""],
+  ["毛様体筋が収縮している",false,"近くを見るときの状態。"],
+  ["副交感神経が興奮している",false,"近くを見るときに起こる。"],
+  ["水晶体が自らの弾力で膨らむ",false,"近くを見るときの状態。"]],
+ exp:"休止眼では毛様体筋が弛緩し、水晶体は<b>毛様体小帯に引っ張られて</b>緊張している。このとき遠くの物が網膜上に結像する。（教科書 P63）"},
+
+{q:"近くを見るときにみられる眼球の動きはどれか。",hosoku:true,
+ choices:[
+  ["両眼の内転",true,""],
+  ["両眼の外転",false,"眼球が外側を向く動き。近くを見るときには起こらない。"],
+  ["両眼の上転",false,"眼球が上を向く動き。"],
+  ["眼振",false,"眼の速やかな周期的動揺。前庭器官が強く刺激されたときに起こる。"]],
+ exp:"補足知識（資料外）。近くを見るときは、両眼が<b>内側に寄る（輻輳）</b>、縮瞳、水晶体が厚くなる、の3つがそろって起こる。"},
+
+/* ---------- B-1 視覚：屈折の異常（P63） ---------- */
+
+{q:"近視について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["網膜の前方で焦点を結ぶ",true,""],
+  ["網膜の後方で焦点を結ぶ",false,"遠視の状態。"],
+  ["眼球の前後径が短いことで起こる",false,"遠視の原因。"],
+  ["角膜面が完全な球形でないことで生じることが多い",false,"乱視の原因。"]],
+ exp:"近視は眼球の前後径が長い、または屈折率が大きすぎるため、<b>網膜の前方</b>で焦点を結ぶ。凹レンズで焦点距離を伸ばして矯正する。（教科書 P63、図5・4）"},
+
+{q:"遠視の矯正に用いるのはどれか。",
+ choices:[
+  ["凸レンズ",true,""],
+  ["凹レンズ",false,"焦点距離を伸ばすレンズで、近視の矯正に使う。"],
+  ["円柱レンズ",false,"乱視の矯正に使う。"],
+  ["偏光レンズ",false,"反射光のまぶしさを抑えるレンズで、屈折異常の矯正には使わない。"]],
+ exp:"遠視は網膜の後方で焦点を結ぶため、<b>凸レンズ</b>で焦点距離を縮めて矯正する。（教科書 P63）"},
+
+{q:"屈折の異常について誤っているのはどれか。",gori:true,
+ choices:[
+  ["遠視は眼球の前後径が長いことで起こる",true,""],
+  ["近視は凹レンズで矯正する",false,"教科書どおりの記述なので、正しい。"],
+  ["乱視は円柱レンズで矯正する",false,"教科書どおりの記述なので、正しい。"],
+  ["正視眼では、毛様体筋が収縮しなくても遠くからの光が網膜上に焦点を結ぶ",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"前後径が長いのは<b>近視</b>。遠視は前後径が短い、または屈折率が小さすぎるため、網膜の後方で焦点を結ぶ。（教科書 P63）"},
+
+/* ---------- B-1 視覚：虹彩と瞳孔（P64） ---------- */
+
+{q:"瞳孔散大筋を支配するのはどれか。",kihon:true,
+ choices:[
+  ["交感神経",true,""],
+  ["副交感神経",false,"動眼神経に含まれ、瞳孔の周囲に輪状に分布する筋を支配する。"],
+  ["視神経",false,"網膜の情報を脳へ伝える感覚神経。"],
+  ["顔面神経",false,"表情筋を支配する脳神経。"]],
+ exp:"瞳孔散大筋は瞳孔縁から放射状に分布し、<b>交感神経</b>の支配を受ける。収縮すると散瞳する。（教科書 P64）"},
+
+{q:"縮瞳を起こすのはどれか。",kihon:true,
+ choices:[
+  ["瞳孔括約筋の収縮",true,""],
+  ["瞳孔散大筋の収縮",false,"散瞳を起こす。"],
+  ["毛様体筋の弛緩",false,"遠くを見るときの状態で、水晶体を薄くする。"],
+  ["上斜筋の収縮",false,"眼球を動かす外眼筋で、瞳孔の大きさは変えない。"]],
+ exp:"<b>瞳孔括約筋</b>は瞳孔の周囲に輪状に分布し、副交感神経（動眼神経）の支配で収縮して縮瞳を起こす。（教科書 P64）"},
+
+{q:"対光反射の遠心路はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["動眼神経に含まれる副交感神経",true,""],
+  ["視神経",false,"視細胞からの情報を中枢へ伝える、対光反射の求心路。"],
+  ["交感神経",false,"瞳孔散大筋を支配し、散瞳を起こす。"],
+  ["外転神経",false,"外側直筋を支配する運動神経。"]],
+ exp:"対光反射は、視細胞（受容器）→視神経（求心路）→両側の動眼神経副核（E-W核）→<b>動眼神経の副交感神経</b>（遠心路）→瞳孔括約筋、と進む。（教科書 P64、図5・7）"},
+
+{q:"対光反射の中枢がある部位はどれか。",
+ choices:[
+  ["中脳",true,""],
+  ["延髄",false,"呼吸・循環などの生命維持の中枢がある。"],
+  ["視床の外側膝状体",false,"視覚情報を大脳皮質へ中継する核。"],
+  ["大脳皮質の後頭葉",false,"一次視覚野がある。"]],
+ exp:"中枢は<b>中脳</b>の動眼神経副核（E-W核）。このため瞳孔の左右不同や対光反射の障害は、中脳の障害でみられることがある。（教科書 P64）"},
+
+{q:"対光反射について誤っているのはどれか。",gori:true,
+ choices:[
+  ["光を当てた側の眼だけが縮瞳する",true,""],
+  ["受容器は視細胞である",false,"教科書どおりの記述なので、正しい。"],
+  ["求心路は視神経である",false,"教科書どおりの記述なので、正しい。"],
+  ["片眼からの情報は両側の動眼神経副核に入力する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"片眼だけに光を当てても<b>両眼が縮瞳する</b>（共感性反射）。片眼からの情報が両側の動眼神経副核に入るため。（教科書 P64）"},
+
+{q:"近距離の物体を見たときに瞳孔が縮小する反射はどれか。",
+ choices:[
+  ["輻輳反射",true,""],
+  ["対光反射",false,"眼に入る光が強くなったときに縮瞳する反射。"],
+  ["共感性反射",false,"片眼に光を当てたとき、反対側の眼も縮瞳する現象。"],
+  ["角膜反射",false,"角膜に触れるとまぶたを閉じる反射。"]],
+ exp:"<b>輻輳反射</b>（近距離反射）は、対光反射とともに縮瞳反射のひとつ。（教科書 P64）"},
+
+/* ---------- B-1 視覚：網膜（P64〜65） ---------- */
+
+{q:"網膜の神経細胞のうち、もっとも強膜側（外側）にあるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["視細胞",true,""],
+  ["双極細胞",false,"網膜の中間層にあり、情報を中継する細胞。"],
+  ["神経節細胞",false,"硝子体側の内層にあり、視神経線維を出す細胞。"],
+  ["アマクリン細胞",false,"情報の経路を調節する細胞で、中間の層にある。"]],
+ exp:"網膜の最外層は色素上皮層で、その内側に<b>視細胞</b>→双極細胞→神経節細胞の層が続く。光は内側から入り、最外層の視細胞に届く。（教科書 P64〜65、図5・5）"},
+
+{q:"網膜で視覚情報が伝わる順序で正しいのはどれか。",kihon:true,
+ choices:[
+  ["視細胞→双極細胞→神経節細胞",true,""],
+  ["神経節細胞→双極細胞→視細胞",false,"情報の流れが逆。"],
+  ["双極細胞→視細胞→神経節細胞",false,"最初に光を受け取る細胞が違う。"],
+  ["視細胞→神経節細胞→双極細胞",false,"中継の順が違う。"]],
+ exp:"視細胞が受けた光の情報は、<b>双極細胞を経て神経節細胞</b>に入る。アマクリン細胞や水平細胞がこの経路を調節する。（教科書 P65）"},
+
+{q:"網膜がないため、結像しても見ることができない点（盲斑）がある部位はどれか。",
+ choices:[
+  ["視神経乳頭",true,""],
+  ["黄斑",false,"黄褐色にみえる網膜の部位で、中央にくぼみがある。"],
+  ["中心窩",false,"黄斑の中央のくぼみで、錐体が集中している。"],
+  ["毛様体",false,"水晶体の厚みを調節する筋がある部位。"]],
+ exp:"神経節細胞の線維は<b>視神経乳頭</b>に集まって眼球を出る。ここには網膜がないため盲斑（盲点）になる。視野の中心の外側15°付近にあたる。（教科書 P65、P67）"},
+
+{q:"視力がもっとも高い網膜の部位はどれか。",kihon:true,
+ choices:[
+  ["中心窩",true,""],
+  ["網膜の周辺部",false,"杆体が多い部位で、暗い場所での感度が高い。"],
+  ["色素上皮層",false,"網膜の最外層。"],
+  ["毛様体",false,"網膜ではなく、水晶体の厚みを調節する筋がある部位。"]],
+ exp:"<b>中心窩</b>には錐体が集中しており、ここで結像するよう注視したときに視力がもっとも大きい。（教科書 P65、P67）"},
+
+{q:"網膜について誤っているのはどれか。",gori:true,
+ choices:[
+  ["視神経乳頭には錐体が多く存在する",true,""],
+  ["黄斑は視神経乳頭のやや耳側にある",false,"教科書どおりの記述なので、正しい。"],
+  ["網膜の最外層は色素上皮層である",false,"教科書どおりの記述なので、正しい。"],
+  ["アマクリン細胞は視覚情報の経路を調節する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"視神経乳頭には網膜がなく、<b>視細胞は存在しない</b>。錐体が集中しているのは中心窩付近。（教科書 P65）"},
+
+/* ---------- B-1 視覚：視細胞と視物質・色覚・順応（P65〜66） ---------- */
+
+{q:"杆体の視物質はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["ロドプシン",true,""],
+  ["錐体オプシン",false,"錐体の視物質で、赤・緑・青に対応する3種類がある。"],
+  ["メラニン",false,"色素上皮などに含まれ、光を吸収する色素。"],
+  ["ヘモグロビン",false,"赤血球に含まれ、酸素を運ぶ色素たんぱく質。"]],
+ exp:"視物質は光を吸収する本体（感光色素）。杆体は<b>ロドプシン</b>、錐体は錐体オプシンをもつ。（教科書 P65）"},
+
+{q:"暗い場所でわずかな光を認識するときにはたらくのはどれか。",kihon:true,
+ choices:[
+  ["杆体",true,""],
+  ["錐体",false,"感度が低く、明るい場所で赤・緑・青の光に反応する。"],
+  ["双極細胞",false,"視細胞からの情報を神経節細胞へ中継する。"],
+  ["水平細胞",false,"網膜内で視覚情報の経路を調節する。"]],
+ exp:"<b>杆体</b>は感度が非常に高く、微量の光で反応する。網膜の周辺に多い。（教科書 P65）"},
+
+{q:"錐体について正しいのはどれか。",kihon:true,
+ choices:[
+  ["中心窩付近に集中している",true,""],
+  ["網膜の周辺に多い",false,"杆体の分布。"],
+  ["微量の光で反応するほど感度が高い",false,"杆体の特徴。"],
+  ["1種類しかない",false,"実際は赤・緑・青に対応する3種類がある。"]],
+ exp:"錐体は<b>中心窩付近に集中</b>し、明るい環境ではたらく。3種類の錐体の反応の強さの割合で色覚が決まる。（教科書 P65〜66）"},
+
+{q:"ビタミンAの欠乏で起こるのはどれか。",kihon:true,
+ choices:[
+  ["夜盲症",true,""],
+  ["近視",false,"網膜の前方で焦点を結ぶ屈折異常。"],
+  ["乱視",false,"角膜面が完全な球形でないため生じることが多い屈折異常。"],
+  ["盲斑",false,"視神経乳頭に結像して見えない点で、正常な眼にもある。"]],
+ exp:"ビタミンAが欠乏するとロドプシンが減少し、視細胞の感受性が下がる。昼間は見えるが夜間は見えづらくなる（<b>夜盲症</b>）。（教科書 P65）"},
+
+{q:"「薄い赤」「濃い赤」のような色の違いを表す要素はどれか。",
+ choices:[
+  ["彩度",true,""],
+  ["色相",false,"赤や緑といった色の種類。"],
+  ["明度",false,"「明るい赤」「暗い赤」といった違い。"],
+  ["三原色",false,"ほとんどの色をつくり出せる赤・緑・青の3色。"]],
+ exp:"色は色相・<b>彩度</b>・明度の3要素で特徴づけられる。（教科書 P65）"},
+
+{q:"暗順応について正しいのはどれか。",kihon:true,
+ choices:[
+  ["完了までに数十分かかる",true,""],
+  ["数分間で完了する",false,"明順応の速さ。"],
+  ["視物質の量が減少して感受性が下がる",false,"明順応で起こる変化。"],
+  ["硝子体のはたらきで起こる",false,"硝子体は光の通り道となるゲル状の物質で、順応には関わらない。"]],
+ exp:"暗い場所では視物質が増えて網膜の感受性が上がる。視物質の合成に時間がかかるため<b>数十分</b>を要する。（教科書 P66）"},
+
+{q:"暗順応の進み方で正しいのはどれか。",hosoku:true,
+ choices:[
+  ["錐体の順応が先に起こり、杆体の順応があとに続く",true,""],
+  ["順応が進むと視物質の量が減る",false,"明るい場所での変化（明順応）。"],
+  ["数秒で完了する",false,"実際は視物質の合成に時間がかかる。"],
+  ["中心窩の感度が大きく上がる",false,"中心窩には暗い場所ではたらく細胞がなく、感度は低いまま。"]],
+ exp:"補足知識（資料外）。暗順応は<b>まず錐体で、次に杆体</b>で起こる。杆体の順応のほうが遅いが、到達する感度は高い。"},
+
+{q:"網膜に光を当てたときの視細胞の電位変化はどれか。",kihon:true,
+ choices:[
+  ["過分極",true,""],
+  ["脱分極",false,"膜電位が正の方向へ変化すること。有毛細胞や味細胞の受容器電位はこの方向。"],
+  ["再分極",false,"脱分極した膜電位が静止電位に戻る過程。"],
+  ["変化しない",false,"実際は光の強さが増すほど電位変化が大きくなる。"]],
+ exp:"光を当てると視細胞の電位は負の方向に変化する（<b>過分極</b>性応答）。（教科書 P66）"},
+
+/* ---------- B-1 視覚：視覚伝導路・視力・視野（P66〜67） ---------- */
+
+{q:"視覚の伝導路で中継されるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["外側膝状体",true,""],
+  ["内側膝状体",false,"視床にある、視覚以外の感覚の中継核。"],
+  ["下丘",false,"中脳にある、視覚以外の感覚の伝導路の中継点。"],
+  ["大脳基底核",false,"運動の調節に関わる大脳深部の神経核。"]],
+ exp:"視神経は視交叉を経て視床の<b>外側膝状体</b>へ投射し、そこから後頭葉の一次視覚野へ投射する。（教科書 P66〜67、図5・7）"},
+
+{q:"一次視覚野がある部位はどれか。",kihon:true,
+ choices:[
+  ["後頭葉",true,""],
+  ["頭頂葉",false,"一次体性感覚野がある。"],
+  ["前頭葉",false,"一次運動野がある。"],
+  ["側頭葉",false,"聴覚野がある。"]],
+ exp:"外側膝状体ニューロンの軸索は、同側の大脳皮質<b>後頭葉</b>の一次視覚野へ投射する。（教科書 P67）"},
+
+{q:"左の外側膝状体が障害されたときに見えなくなる視野はどれか。",
+ choices:[
+  ["両眼の右半分",true,""],
+  ["両眼の左半分",false,"右側の外側膝状体より後ろの障害で起こる。"],
+  ["左眼の全視野",false,"視交叉より前の左の視神経の障害で起こる。"],
+  ["両眼の耳側半分",false,"視交叉の中央部（交叉する線維）の障害で起こる。"]],
+ exp:"鼻側の線維は視交叉で交叉し、耳側の線維は交叉しない。このため<b>右半分の視野</b>は左側の外側膝状体→一次視覚野に入る。（教科書 P66〜67、図5・7）"},
+
+{q:"視力の測定に用いるのはどれか。",
+ choices:[
+  ["ランドルト環",true,""],
+  ["音叉",false,"振動で音を出す器具で、聴覚の検査に使う。"],
+  ["打腱器",false,"腱をたたいて腱反射を調べる器具。"],
+  ["二点弁別計",false,"皮膚の触覚の識別能を調べる器具。"]],
+ exp:"<b>ランドルト環</b>を5 m離れて見て、切れ目（視角1′）を判別できれば視力1.0。（教科書 P67、図5・8a）"},
+
+{q:"視力について正しいのはどれか。",
+ choices:[
+  ["2点を識別できる最小の視角の逆数で表す",true,""],
+  ["照明が暗いほど高くなる",false,"実際は照明が暗いと低下する。"],
+  ["視神経乳頭で結像したときにもっとも高い",false,"網膜がない部位で、結像しても見えない。"],
+  ["最小の視角が大きいほど高い",false,"逆数で表すため、最小視角が小さいほど視力は高い。"]],
+ exp:"視力は物の形や位置を見分ける能力で、<b>最小の視角の逆数</b>で表す。中心窩で結像したときにもっとも大きい。（教科書 P67）"},
+
+{q:"白色光で測った片眼の視野がもっとも広い方向はどれか。",
+ choices:[
+  ["外側（耳側）",true,""],
+  ["内側（鼻側）",false,"65°。"],
+  ["上方",false,"65°。"],
+  ["下方",false,"75°。"]],
+ exp:"片眼の視野は内側65°、<b>外側100°</b>、上方65°、下方75°。色彩光で測ると白色光より狭い。（教科書 P67、図5・8b）"},
+
+/* ---------- B-2 聴覚：音の特性・耳の構造（P67〜69） ---------- */
+
+{q:"ヒトが聴くことのできる音の周波数の範囲はどれか。",
+ choices:[
+  ["20〜20,000 Hz",true,""],
+  ["250〜4,000 Hz",false,"日常会話で使われ、もっとも聴きやすい範囲。"],
+  ["2〜2,000 Hz",false,"下限・上限とも低すぎる。"],
+  ["200〜200,000 Hz",false,"上限が高すぎる。ヒトに聞こえない超音波の領域を含む。"]],
+ exp:"可聴域は<b>20〜20,000 Hz</b>。高い音ほど周波数が大きい。（教科書 P68）"},
+
+{q:"音の高さを決めるのはどれか。",
+ choices:[
+  ["周波数",true,""],
+  ["振幅",false,"音の大きさを決める。"],
+  ["波形",false,"音色や音質を決める。"],
+  ["伝わる速さ",false,"空気中では音の高さによらずほぼ一定。"]],
+ exp:"音は空気の振動（縦波）。高低は<b>周波数</b>（Hz）で、大きさは振幅（dB）で決まる。（教科書 P67〜68）"},
+
+{q:"普通の会話の声の大きさはおよそどれか。",
+ choices:[
+  ["60 dB",true,""],
+  ["100 dB",false,"電車が通るガード下の音の大きさ。"],
+  ["10 dB",false,"ほとんど聞こえないほど小さな音。"],
+  ["140 dB",false,"耳に痛みを感じるほどの大音量。"]],
+ exp:"音の大きさはデシベル（dB）で表す。普通の会話は約<b>60 dB</b>。（教科書 P68）"},
+
+{q:"鼓室と咽頭をつなぐのはどれか。",kihon:true,
+ choices:[
+  ["耳管",true,""],
+  ["外耳道",false,"耳介から鼓膜まで続く、約2.5 cmの管。"],
+  ["蝸牛管",false,"蝸牛の内部にある部屋で、内リンパ液に満たされている。"],
+  ["半規管",false,"内耳にあり、平衡感覚を担う。"]],
+ exp:"<b>耳管</b>の咽頭側の口はふだん閉じている。嚥下・あくび・くしゃみで開き、鼓室内の気圧を外気圧と等しくする。（教科書 P68）"},
+
+{q:"前庭窓に付着している耳小骨はどれか。",kihon:true,
+ choices:[
+  ["アブミ骨",true,""],
+  ["ツチ骨",false,"鼓膜に付着する耳小骨。"],
+  ["キヌタ骨",false,"ほかの2つの耳小骨の間に連なる耳小骨。"],
+  ["舌骨",false,"喉頭の上にあるU字形の骨で、耳小骨ではない。"]],
+ exp:"鼓膜の振動はツチ骨→キヌタ骨→<b>アブミ骨</b>と伝わり、前庭窓から蝸牛へ入る。（教科書 P68）"},
+
+{q:"耳小骨のはたらきで正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["鼓膜の振動を増幅して蝸牛へ伝える",true,""],
+  ["音の振動を電気信号に変換する",false,"蝸牛の有毛細胞の役割。"],
+  ["回転加速度を感知する",false,"半規管の役割。"],
+  ["鼓室内の気圧を外気圧と等しくする",false,"耳管の役割。"]],
+ exp:"鼓膜と前庭窓の面積比と、耳小骨のテコ比によって、音圧は約22倍に<b>増幅</b>される。（教科書 P68〜69）"},
+
+{q:"鼓膜から前庭窓へ伝わるまでに、音圧はおよそ何倍に増幅されるか。",
+ choices:[
+  ["約22倍",true,""],
+  ["約1.3倍",false,"耳小骨のテコ比。"],
+  ["約17倍",false,"鼓膜と前庭窓の面積比。"],
+  ["約100倍",false,"実際の増幅率よりはるかに大きい。"]],
+ exp:"面積比（約17：1）とテコ比（約1.3：1）を掛け合わせて<b>約22倍</b>になる。外耳道にも共振で音圧を上げる作用がある。（教科書 P69）"},
+
+{q:"蝸牛管を満たしているのはどれか。",kihon:true,
+ choices:[
+  ["内リンパ液",true,""],
+  ["外リンパ液",false,"前庭階と鼓室階を満たす液。"],
+  ["脳脊髄液",false,"脳室とくも膜下腔を満たす液。"],
+  ["房水",false,"眼房を満たす液。"]],
+ exp:"蝸牛の内部は前庭階・蝸牛管・鼓室階に分かれる。蝸牛管は<b>内リンパ液</b>、前庭階と鼓室階は外リンパ液。前庭階と鼓室階は蝸牛頂でつながる。（教科書 P69、図5・10・11）"},
+
+/* ---------- B-2 聴覚：コルチ器・音の伝わり方・伝導路（P69〜70） ---------- */
+
+{q:"音の振動を受容して脳へ伝える細胞はどれか。",kihon:true,
+ choices:[
+  ["内有毛細胞",true,""],
+  ["外有毛細胞",false,"音の振動を調節して感度を変える細胞。"],
+  ["平衡斑の有毛細胞",false,"耳石器にあり、直線加速度を感知する。"],
+  ["杆体",false,"網膜の視細胞で、暗い場所ではたらく。"]],
+ exp:"コルチ器では内側に<b>内有毛細胞</b>が1列、外側に外有毛細胞が3〜5列並ぶ。上にはゼリー状の蓋膜がある。（教科書 P69）"},
+
+{q:"前庭窓に近い基底膜で受容される音はどれか。",kihon:true,
+ choices:[
+  ["高い音",true,""],
+  ["低い音",false,"蝸牛頂側で受容される。"],
+  ["大きな音だけ",false,"音の大きさで受容部位が決まるのではない。"],
+  ["すべての周波数の音",false,"周波数ごとに振動が最大になる場所が違う。"]],
+ exp:"基底膜に生じる振動波（進行波）は、周波数ごとに特定の場所で最大になる。前庭窓側＝<b>高い音</b>、蝸牛頂側＝低い音。（教科書 P70、図5・12）"},
+
+{q:"聴覚の伝導路で中継される視床の核はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["内側膝状体",true,""],
+  ["外側膝状体",false,"視床にある、聴覚以外の感覚の中継核。"],
+  ["前庭神経核",false,"延髄にある、聴覚とは別の感覚の信号を受ける核。"],
+  ["視床下部",false,"体温や血液浸透圧などを調節する間脳の部位。"]],
+ exp:"蝸牛神経→蝸牛神経核→上オリーブ核→下丘→視床の<b>内側膝状体</b>→大脳皮質聴覚野。（教科書 P70）"},
+
+{q:"左右方向の音源定位の手がかりになるのはどれか。",
+ choices:[
+  ["両耳に届く音の時間差",true,""],
+  ["耳介での音の反響の差",false,"前後・上下方向の手がかり。"],
+  ["基底膜を伝わる進行波",false,"音の周波数の受容に関わる。"],
+  ["耳管の開閉",false,"鼓室内の気圧を調節する。"]],
+ exp:"左右方向は、両耳に聞こえる音の<b>時間・強度・高低の差</b>が手がかり。音源に近い耳に先に、大きく届く。（教科書 P70）"},
+
+{q:"聴覚について誤っているのはどれか。",gori:true,
+ choices:[
+  ["外耳道には音圧を下げる作用がある",true,""],
+  ["前庭階と鼓室階は蝸牛頂でつながっている",false,"教科書どおりの記述なので、正しい。"],
+  ["有毛細胞の上にはゼリー状の蓋膜がある",false,"教科書どおりの記述なので、正しい。"],
+  ["聴力は加齢に伴って低下する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"外耳道には共振によって<b>音圧を上げる</b>作用がある。（教科書 P67、P69）"},
+
+/* ---------- B-3 平衡感覚（P70〜72） ---------- */
+
+{q:"回転加速度を感知するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["半規管",true,""],
+  ["球形嚢",false,"平衡斑をもつ耳石器のひとつ。"],
+  ["蝸牛管",false,"内リンパ液に満たされた聴覚の器官。"],
+  ["耳小骨",false,"中耳にあり、鼓膜の振動を伝える。"]],
+ exp:"頭が回転すると<b>半規管</b>内の内リンパ液が流れ、膨大部頂（クプラ）とその中の感覚毛が曲がって、回転加速度が感知される。（教科書 P70〜71）"},
+
+{q:"重力などの直線加速度を感知するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["耳石器",true,""],
+  ["コルチ器",false,"蝸牛の基底膜上にある聴覚の受容器。"],
+  ["鼓膜",false,"外耳と中耳の境にあり、音波で振動する膜。"],
+  ["嗅上皮",false,"鼻腔の奥にある嗅覚の受容部。"]],
+ exp:"<b>耳石器</b>（球形嚢・卵形嚢）の平衡斑では、直線加速度で平衡石膜がずれて感覚毛が倒れ、有毛細胞に受容器電位が発生する。（教科書 P71）"},
+
+{q:"半規管の膨大部にあり、有毛細胞の感覚毛が入り込んでいるゼリー状の構造はどれか。",
+ choices:[
+  ["膨大部頂（クプラ）",true,""],
+  ["平衡石膜",false,"平衡斑の表面を覆う膜。"],
+  ["蓋膜",false,"コルチ器の有毛細胞の上に横たわる膜。"],
+  ["基底膜",false,"コルチ器がのっている膜。"]],
+ exp:"膨大部稜から<b>膨大部頂</b>が伸びる。膨大部頂が動くと感覚毛が屈曲し、受容器電位が発生する。（教科書 P71、図5・13）"},
+
+{q:"頭が水平に回転し始めたときの外側半規管の内リンパ液の動きはどれか。",
+ choices:[
+  ["頭の回転方向と逆向きに流れる",true,""],
+  ["頭の回転方向と同じ向きに流れる",false,"内リンパ液は慣性でその場にとどまろうとする。"],
+  ["まったく流れない",false,"実際は流れが生じて膨大部頂を屈曲させる。"],
+  ["回転速度が一定になっても流れ続ける",false,"速度が一定になると流れはやみ、膨大部頂は元に戻る。"]],
+ exp:"内リンパ液が慣性で止まろうとするため、<b>頭部の回転方向と逆向き</b>の流れが生じる。（教科書 P71、図5・14）"},
+
+{q:"立位で上下（垂直）方向の直線加速度を感受するのはどれか。",kihon:true,
+ choices:[
+  ["球形嚢",true,""],
+  ["卵形嚢",false,"立位で水平（前後・左右）方向の直線加速度を感受する。"],
+  ["外側半規管",false,"頭の水平回転を感知する。"],
+  ["蝸牛管",false,"聴覚の器官。"]],
+ exp:"立位では<b>球形嚢</b>の平衡斑が垂直方向を、卵形嚢の平衡斑が水平方向を感受する。（教科書 P71）"},
+
+{q:"耳石器の内部にあり、有毛細胞が並び、表面を平衡石膜が覆う肥厚部はどれか。",
+ choices:[
+  ["平衡斑",true,""],
+  ["膨大部稜",false,"半規管の膨大部にある、管と直交する隆起。"],
+  ["蓋膜",false,"コルチ器の有毛細胞の上に横たわる膜。"],
+  ["味蕾",false,"舌の乳頭にある味覚の受容器。"]],
+ exp:"<b>平衡斑</b>の平衡石膜の上には平衡石（耳石）がのっている。（教科書 P71、図5・15）"},
+
+{q:"前庭器官からの信号が前庭神経で伝えられる延髄の核はどれか。",kihon:true,
+ choices:[
+  ["前庭神経核",true,""],
+  ["孤束核",false,"延髄にある、平衡感覚とは別の感覚の情報が入る核。"],
+  ["蝸牛神経核",false,"聴覚の伝導路の最初の中継核。"],
+  ["動眼神経副核",false,"瞳孔の反射に関わる核。"]],
+ exp:"<b>前庭神経核</b>群を出た信号は視床を経て大脳皮質へ送られる。眼筋神経核・脊髄・小脳へ向かう軸索もある。（教科書 P72）"},
+
+{q:"前庭神経核群から脊髄へ向かう経路ではたらく反射はどれか。",
+ choices:[
+  ["前庭脊髄反射",true,""],
+  ["前庭動眼反射",false,"前庭神経核群から眼筋神経核へ向かう経路ではたらく。"],
+  ["伸張反射",false,"筋紡錘を受容器とする脊髄反射。"],
+  ["対光反射",false,"光の強さに応じて瞳孔を縮小させる反射。"]],
+ exp:"前庭器官の信号は脊髄へも送られ（<b>前庭脊髄反射</b>）、姿勢筋や体幹筋をはたらかせてからだの平衡を保つ。（教科書 P70、P72）"},
+
+{q:"身体の平衡を保つことに関与しない感覚はどれか。",hosoku:true,
+ choices:[
+  ["聴覚",true,""],
+  ["視覚",false,"周囲の景色の傾きや動きが手がかりになる。"],
+  ["足底の触圧覚",false,"体重のかかり方が手がかりになる。"],
+  ["前庭感覚",false,"頭部の傾きや動きを感知する。"]],
+ exp:"補足知識（資料外）。身体の平衡には前庭感覚のほか、視覚、筋・腱・関節の深部感覚、足底の触圧覚が総合して関わる。<b>聴覚</b>は関わらない。"},
+
+/* ---------- B-4 味覚（P72〜73） ---------- */
+
+{q:"基本の味に含まれるのはどれか。",kihon:true,
+ choices:[
+  ["うま味",true,""],
+  ["辛味",false,"痛覚や温覚などで感じる刺激で、基本の味ではない。"],
+  ["渋味",false,"舌の粘膜が収れんする感覚で、基本の味ではない。"],
+  ["えぐ味",false,"苦味と渋味が混じった感覚で、基本の味ではない。"]],
+ exp:"基本の味は甘味・塩味・酸味・苦味・<b>うま味</b>の5つ。うま味は日本で発見された。（教科書 P72）"},
+
+{q:"閾値が低い（感受性が高い）味の組合せはどれか。",
+ choices:[
+  ["苦味と酸味",true,""],
+  ["甘味と塩味",false,"甘味は閾値が高い味。"],
+  ["甘味とうま味",false,"甘味は閾値が高い味。"],
+  ["塩味とうま味",false,"閾値が特に低い味の組合せではない。"]],
+ exp:"毒物や腐敗物に多い<b>苦味・酸味</b>は閾値が低く、すぐに気づいて吐き出す防衛反応につながる。（教科書 P72）"},
+
+{q:"味蕾がない乳頭はどれか。",kihon:true,
+ choices:[
+  ["糸状乳頭",true,""],
+  ["茸状乳頭",false,"味蕾をもつ乳頭のひとつ。"],
+  ["葉状乳頭",false,"味蕾をもつ乳頭のひとつ。"],
+  ["有郭乳頭",false,"味蕾をもつ乳頭のひとつ。"]],
+ exp:"味蕾のほとんどは舌の乳頭にあるが、<b>糸状乳頭</b>には味蕾がない。味蕾は加齢とともに減少する。（教科書 P72〜73、図5・16）"},
+
+{q:"舌の前3分の2の味覚を伝える神経はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["顔面神経（鼓索神経）",true,""],
+  ["舌咽神経",false,"舌の後ろ3分の1（葉状乳頭・有郭乳頭）の味覚を伝える。"],
+  ["迷走神経",false,"咽頭・喉頭部の味覚を伝える。"],
+  ["舌下神経",false,"舌の運動を支配する神経で、味覚は伝えない。"]],
+ exp:"舌の前3分の2（茸状乳頭）の味覚は、<b>顔面神経</b>の一部である鼓索神経が伝える。（教科書 P73）"},
+
+{q:"味覚の神経が入る延髄の核はどれか。",
+ choices:[
+  ["孤束核",true,""],
+  ["前庭神経核",false,"延髄にある、味覚とは別の感覚の信号を受ける核。"],
+  ["蝸牛神経核",false,"延髄にある、味覚とは別の感覚の中継核。"],
+  ["動眼神経副核",false,"瞳孔の反射に関わる核。"]],
+ exp:"味覚は延髄の<b>孤束核</b>→視床→大脳皮質味覚野と伝わる。（教科書 P73）"},
+
+/* ---------- B-5 嗅覚（P73〜74） ---------- */
+
+{q:"嗅細胞がある部位はどれか。",kihon:true,
+ choices:[
+  ["嗅上皮",true,""],
+  ["鼻甲介",false,"鼻腔の外側壁から張り出したひだ。"],
+  ["味蕾",false,"舌の乳頭にある味覚の受容器。"],
+  ["鼓室",false,"中耳の空洞で、耳小骨がある。"]],
+ exp:"嗅細胞は鼻腔の奥の<b>嗅上皮</b>にある。においの分子が嗅線毛の受容体に結合すると受容器電位が発生する。（教科書 P73〜74、図5・17）"},
+
+{q:"嗅細胞の軸索（嗅神経）が終わる部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["嗅球",true,""],
+  ["前頭眼窩野",false,"嗅覚の情報が最終的に投射する嗅覚野。"],
+  ["外側膝状体",false,"視床にある、嗅覚とは別の感覚の中継核。"],
+  ["視床下部",false,"体温や血液浸透圧などを調節する間脳の部位。"]],
+ exp:"嗅細胞の軸索は嗅神経となって頭蓋腔に入り<b>嗅球</b>に終わる。最終的には前頭眼窩野（嗅覚野）へ投射する。（教科書 P74）"},
+
+{q:"嗅覚の特徴で正しいのはどれか。",kihon:true,
+ choices:[
+  ["順応が早い",true,""],
+  ["閾値が味覚より高い",false,"実際は味覚より非常に低い。"],
+  ["ヒトの嗅覚はイヌより鋭敏である",false,"実際はヒトのほうが鈍感。"],
+  ["順応はほとんど起こらない",false,"痛覚の特徴。"]],
+ exp:"嗅覚は閾値が非常に低いのですぐににおいに気づくが、<b>順応が早い</b>のですぐに感じなくなる。（教科書 P73）"},
+
+{q:"視床で中継されない感覚はどれか。",hosoku:true,
+ choices:[
+  ["嗅覚",true,""],
+  ["視覚",false,"視床の核で中継されてから後頭葉へ投射する。"],
+  ["聴覚",false,"視床の核で中継されてから聴覚野へ投射する。"],
+  ["味覚",false,"延髄の核から視床を経て味覚野へ投射する。"]],
+ exp:"補足知識（資料外）。嗅覚を除く感覚は視床で中継されてから大脳皮質へ送られる。<b>嗅覚</b>は嗅球から視床を経ずに嗅覚野へ向かう。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
