@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第5章 パートD/E 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#475569;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#cbd5e1;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#cbd5e1;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#475569;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#475569;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(71,85,105,.12);color:#475569}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#475569;background:#f1f5f9}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #475569;background:#475569;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#334155}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#475569;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#475569;background:#f1f5f9}
+.mode .nm{font-size:16px;font-weight:600;color:#475569;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#475569;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#334155;background:rgba(71,85,105,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#475569;background:rgba(71,85,105,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第5章 感覚の生理｜パートD/E 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第5章 感覚の生理 ｜ D 内臓感覚・E 痛覚（教科書 P78〜82）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第5章 P78〜82 ベース）=====
+   対応スライド：ch5_partDE.html
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本 / dobon:true … 💣ドボン / gori:true … ⚠誤りを選ぶ / hosoku:true … 📘補足（資料外）
+
+   過去問（11章 感覚・10章 神経）での出題頻度（パートD/E範囲）：
+   一次痛＝Aδ・二次痛＝C 4回／痛覚は順応しない 3回／発痛物質 2回／関連痛 2回／脊髄視床路 2回／
+   摂食調節（視床下部・遊離脂肪酸、資料外）3回／内臓痛・防御・内因性鎮痛物質 各1回
+   ※Aδ・C線維の名前を問う問題と、脊髄視床路が対側を上行する問題は ch5_quizC にあるため、ここでは別の角度から問う */
+const PICK=5;
+const POOL=[
+
+/* ---------- D 内臓感覚（P78〜79） ---------- */
+
+{q:"臓器感覚に含まれるのはどれか。",
+ choices:[
+  ["渇き",true,""],
+  ["振動覚",false,"皮膚感覚の一つ。"],
+  ["関節位置覚",false,"深部感覚の一つ。"],
+  ["平衡感覚",false,"内耳の前庭器官で感じる特殊感覚。"]],
+ exp:"臓器感覚は飢餓、<b>渇き</b>、尿意、便意、性欲、満腹、吐き気など。（教科書 P79）"},
+
+{q:"のどの渇きの感覚に関わる受容器はどれか。",
+ choices:[
+  ["浸透圧受容器",true,""],
+  ["筋紡錘",false,"筋の伸張を受容する深部受容器。"],
+  ["パチニ小体",false,"振動を受容する皮膚の機械受容器。"],
+  ["視細胞",false,"光を受容する網膜の細胞。"]],
+ exp:"<b>浸透圧受容器</b>・圧受容器・化学受容器などが反射反応を起こし、臓器感覚を生じさせる。（教科書 P79）"},
+
+{q:"臓器感覚の信号が送られ、自律神経活動と内分泌活動を制御する部位はどれか。",
+ choices:[
+  ["視床下部",true,""],
+  ["小脳",false,"運動の協調にはたらく部位。"],
+  ["一次体性感覚野",false,"皮膚感覚や深部感覚を受けとる大脳皮質。"],
+  ["外側膝状体",false,"視覚を中継する視床の核。"]],
+ exp:"臓器感覚の信号は<b>視床下部</b>や大脳辺縁系にも送られる。視床下部は自律神経活動・内分泌活動を、大脳辺縁系は本能・情動行動を制御する。（教科書 P79）"},
+
+{q:"空腹中枢（摂食中枢）と満腹中枢がともにある部位はどれか。",hosoku:true,
+ choices:[
+  ["視床下部",true,""],
+  ["延髄",false,"呼吸・循環など、生命維持の中枢がある部位。"],
+  ["大脳辺縁系",false,"本能・情動行動を制御する部位。"],
+  ["小脳",false,"運動の協調にはたらく部位。"]],
+ exp:"補足知識（資料外）。摂食行動は<b>視床下部</b>で調節され、空腹中枢（摂食中枢）と満腹中枢の両方がここにある。"},
+
+{q:"空腹感を起こす血中の変化はどれか。",hosoku:true,
+ choices:[
+  ["遊離脂肪酸の上昇",true,""],
+  ["血漿浸透圧の上昇",false,"浸透圧受容器を刺激し、渇きを起こす変化。"],
+  ["二酸化炭素分圧の上昇",false,"化学受容器を刺激し、呼吸を促す変化。"],
+  ["血圧の上昇",false,"圧受容器を刺激し、血圧を下げる反射を起こす変化。"]],
+ exp:"補足知識（資料外）。空腹時には脂肪が分解されて<b>遊離脂肪酸</b>が血中に放出される（第13章 P193）。この上昇が空腹中枢を刺激し、空腹感が生じる。"},
+
+{q:"満腹感を起こす血中の変化はどれか。",hosoku:true,
+ choices:[
+  ["血糖値の上昇",true,""],
+  ["血漿浸透圧の上昇",false,"浸透圧受容器を刺激し、渇きを起こす変化。"],
+  ["二酸化炭素分圧の上昇",false,"化学受容器を刺激し、呼吸を促す変化。"],
+  ["血圧の低下",false,"圧受容器を刺激し、血圧を上げる反射を起こす変化。"]],
+ exp:"補足知識（資料外）。食後に<b>血糖値</b>が上がると満腹中枢が刺激され、満腹感が生じる。"},
+
+/* ---------- E 痛覚の特徴（P79） ---------- */
+
+{q:"もっとも順応が起こりにくい感覚はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["痛覚",true,""],
+  ["触覚",false,"皮膚の機械受容器には、順応が速いものが多い。"],
+  ["嗅覚",false,"順応が早く、初めは感じたにおいもすぐに感じなくなる。"],
+  ["視覚",false,"暗順応・明順応が起こる。"]],
+ exp:"<b>痛覚</b>では、他の感覚種と異なり順応が起こらない。（教科書 P79）"},
+
+{q:"侵害刺激が繰り返し加わると、痛みはどうなるか。",
+ choices:[
+  ["痛みが増強し、痛覚過敏が起こる",true,""],
+  ["順応して痛みが弱まる",false,"痛覚では順応が起こらない。"],
+  ["一次痛だけになり、二次痛が消える",false,"一次痛と二次痛は伝える神経線維の違いで生じるもので、刺激の反復で入れ替わるわけではない。"],
+  ["痛みが関連痛に切り替わる",false,"関連痛は、内臓や身体深部の痛みを、離れた皮膚分節で感じる現象。"]],
+ exp:"侵害刺激が繰り返すと痛みが増強し、<b>痛覚過敏</b>を引き起こす。（教科書 P79）"},
+
+{q:"痛みが生体の防御システムとして重要なのはなぜか。",kihon:true,
+ choices:[
+  ["痛みに対処する行動を引き起こすから",true,""],
+  ["繰り返すうちに順応して感じなくなるから",false,"痛覚は順応が起こらない。"],
+  ["不快な情動体験を伴わないから",false,"実際には、痛みは不快な感覚や情動体験をもたらす。"],
+  ["飢餓や渇きを起こして臓器の状態を知らせるから",false,"臓器感覚の説明。"]],
+ exp:"痛みは不快だが、<b>痛みに対処する行動</b>を引き起こすため、生体の防御システムとして重要。（教科書 P79）"},
+
+{q:"熱い鍋に触れた瞬間、思わず手を引っ込めるときにはたらく反射はどれか。",
+ choices:[
+  ["屈曲反射",true,""],
+  ["伸張反射",false,"筋が急に伸ばされると、その筋が収縮する反射。"],
+  ["対光反射",false,"眼に入る光が強くなると、瞳孔が縮小する反射。"],
+  ["前庭動眼反射",false,"頭の動きを打ち消す方向に眼球を動かす反射。"]],
+ exp:"<b>屈曲反射</b>は、侵害刺激から身を遠ざける防御反射。痛みが対処行動を起こす例。（第4章）"},
+
+/* ---------- E-1 原因による痛みの分類（P79） ---------- */
+
+{q:"神経因性疼痛はどれか。",
+ choices:[
+  ["幻肢痛",true,""],
+  ["切り傷の直後の痛み",false,"組織の傷害で生じる侵害受容性疼痛。"],
+  ["身体的な異常が見当たらないのに続く痛み",false,"心因性疼痛。"],
+  ["尿管結石による激しい痛み",false,"管状器官の強い収縮・伸展で起こる疝痛（内臓痛）。"]],
+ exp:"神経因性疼痛は神経系の病変に伴う痛みで、神経痛や<b>幻肢痛</b>（切断で失った肢に感じる痛み）がある。（教科書 P79）"},
+
+{q:"侵害受容性疼痛の説明として正しいのはどれか。",
+ choices:[
+  ["組織の傷害や、傷害のおそれがある刺激で生じる",true,""],
+  ["神経系の病変に伴って生じる",false,"神経因性疼痛の説明。"],
+  ["身体的な異常がないのに生じる",false,"心因性疼痛の説明。"],
+  ["内臓の痛みを離れた皮膚で感じる",false,"関連痛の説明。"]],
+ exp:"侵害受容性疼痛は、<b>組織を傷害したり、傷害が起こる可能性がある侵害刺激が加わったり</b>したときに発生する。（教科書 P79）"},
+
+{q:"痛みの原因による分類について誤っているのはどれか。",gori:true,
+ choices:[
+  ["心因性疼痛は、神経系の病変に伴って起こる",true,""],
+  ["侵害受容性疼痛は、組織の傷害で生じる",false,"教科書どおりの記述なので、正しい。"],
+  ["神経痛は、神経因性疼痛に含まれる",false,"教科書どおりの記述なので、正しい。"],
+  ["痛みには、情動から生じる面がある",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"心因性疼痛は<b>身体的な異常がないのに起こる</b>痛み。神経系の病変に伴うのは神経因性疼痛。（教科書 P79）"},
+
+/* ---------- E-2 発生部位による痛みの分類：表面痛（P79〜80） ---------- */
+
+{q:"刺す痛み（一次痛）の特徴として正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["鋭く、局在が明確である",true,""],
+  ["鈍く、局在が不明瞭である",false,"灼けつく痛み（二次痛）の特徴。"],
+  ["刺激をやめたあとも長く続く",false,"灼けつく痛み（二次痛）の特徴。"],
+  ["伝導速度の遅い線維で伝えられる",false,"灼けつく痛みを伝えるC線維の特徴。"]],
+ exp:"刺す痛みは<b>鋭く、局在が明確</b>で、刺激を止めるとすぐに消失する。伝導速度が速いAδ線維で伝えられる。（教科書 P79〜80）"},
+
+{q:"火を消したばかりのマッチが皮膚に触れると、刺すような痛みのあとに、遅れて灼けつくような痛みが現れる。この時間差が生じる理由はどれか。",kihon:true,
+ choices:[
+  ["それぞれの痛みを伝える神経線維の伝導速度が違うから",true,""],
+  ["受容器の順応の速さが違うから",false,"痛覚は順応が起こらない。"],
+  ["一次痛は機械受容器、二次痛は温度受容器で受容されるから",false,"侵害刺激を受容するのは、どちらも自由神経終末（侵害受容器）。"],
+  ["二次痛だけが大脳辺縁系を経由するから",false,"大脳辺縁系へ向かうのは、不安や苦しみを起こす情動の系（内側系）。"]],
+ exp:"刺す痛みは伝導速度が速いAδ線維、灼けつく痛みは遅いC線維で伝えられる。この<b>伝導速度の違い</b>が時間差を生む。（教科書 P79〜80）"},
+
+/* ---------- E-2 深部痛・内臓痛・関連痛（P80） ---------- */
+
+{q:"機械的刺激で起こる深部痛にもっとも鋭敏なのはどれか。",
+ choices:[
+  ["骨膜",true,""],
+  ["筋",false,"深部痛を生じる組織の一つ（筋・筋膜・骨・靱帯・関節包・腱など）。"],
+  ["腱",false,"深部痛を生じる組織の一つ（筋・筋膜・骨・靱帯・関節包・腱など）。"],
+  ["関節包",false,"深部痛を生じる組織の一つ（筋・筋膜・骨・靱帯・関節包・腱など）。"]],
+ exp:"<b>骨膜</b>は、機械的刺激で起こる深部痛にもっとも鋭敏。（教科書 P80）"},
+
+{q:"深部痛の特徴として正しいのはどれか。",
+ choices:[
+  ["一次痛と二次痛の区別がない",true,""],
+  ["皮膚や粘膜の表面で生じる",false,"表面痛の説明。"],
+  ["順応が速い",false,"痛覚は順応が起こらない。"],
+  ["胸膜や腹膜で生じる",false,"内臓痛の説明。"]],
+ exp:"深部痛は筋・骨膜・関節包・腱などで生じる<b>うずく痛み</b>で、表面痛と異なり<b>一次痛と二次痛の区別がない</b>。（教科書 P80）"},
+
+{q:"管状器官に起こる疝痛の原因として正しいのはどれか。",kihon:true,
+ choices:[
+  ["強い収縮や伸展",true,""],
+  ["管状器官を切る",false,"正常な管状器官は、切っても痛みが起こらない。"],
+  ["管状器官を焼く",false,"正常な管状器官は、焼いても痛みが起こらない。"],
+  ["胸膜への弱い刺激",false,"胸膜は痛みに非常に敏感だが、これは疝痛とは呼ばない。"]],
+ exp:"胃腸・胆道・尿管などの管状器官に<b>強い収縮や伸展</b>が生じると、疝痛（せんつう）という激しい痛みが起こる。（教科書 P80）"},
+
+{q:"弱い刺激でも大きな痛みが生じるのはどれか。",
+ choices:[
+  ["腹膜",true,""],
+  ["正常な胃",false,"正常な管状器官は、切ったり焼いたりしても痛みが起こらない。"],
+  ["正常な尿管",false,"正常な管状器官は、切ったり焼いたりしても痛みが起こらない（強い収縮・伸展では疝痛が起こる）。"],
+  ["皮膚",false,"表面痛は、強い機械的刺激や高温・低温刺激などで生じる。"]],
+ exp:"<b>胸膜と腹膜</b>は痛みに非常に敏感で、弱い刺激で大きな痛みが発生する。（教科書 P80）"},
+
+{q:"内臓痛について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["正常な胃腸は、切ると激しい痛みが起こる",true,""],
+  ["胸膜は、弱い刺激でも大きな痛みが生じる",false,"教科書どおりの記述なので、正しい。"],
+  ["深部痛と同様のうずく痛みである",false,"教科書どおりの記述なので、正しい。"],
+  ["炎症のある管状器官は、弱い機械的刺激でも痛む",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"正常な管状器官は<b>切ったり焼いたりしても痛みが起こらない</b>。強い収縮や伸展で疝痛が起こる。（教科書 P80）"},
+
+{q:"関連痛が現れる体表の部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["痛みを発する内臓と同じ高さの脊髄に分布する皮膚分節",true,""],
+  ["痛みを発する内臓の真上の皮膚",false,"関連痛は、痛みが発生している部位から離れた体表面で感じられる。"],
+  ["痛みを発する内臓と同じ側の上肢",false,"現れる部位は、左右のどちら側かではなく脊髄の高さで決まる。"],
+  ["迷走神経が分布する皮膚",false,"迷走神経は、主に胸腹部の内臓に分布する副交感神経。"]],
+ exp:"関連痛が現れるのは、痛みを発している内臓器官と<b>同じ高さの脊髄に分布する皮膚の部位（皮膚分節）</b>。（教科書 P80）"},
+
+{q:"狭心症で、胸のほかに痛みを感じやすい部位はどれか。",kihon:true,
+ choices:[
+  ["腕（外側部）",true,""],
+  ["右下腹部",false,"下位の胸髄・腰髄に対応する部位で、心臓とは脊髄の高さが違う。"],
+  ["後頭部",false,"上位の頸髄に対応する部位で、心臓とは脊髄の高さが違う。"],
+  ["足底",false,"腰髄・仙髄に対応する部位で、心臓とは脊髄の高さが違う。"]],
+ exp:"狭心症で心臓に痛みが生じると、胸だけでなく<b>腕の外側部</b>にも痛みを感じる。（教科書 P80、図5・22）"},
+
+/* ---------- E-3 発痛物質（P80〜81） ---------- */
+
+{q:"皮膚を傷つけたあと、遅れて現れて長く続く痛みの原因となる発痛物質はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["ブラジキニン",true,""],
+  ["アセチルコリン",false,"神経筋接合部や副交感神経の神経伝達物質。"],
+  ["ノルアドレナリン",false,"交感神経節後線維の神経伝達物質。"],
+  ["グルタミン酸",false,"中枢神経系の代表的な興奮性の神経伝達物質。"]],
+ exp:"遅れて現れる痛みは、傷害部位で産生された<b>ブラジキニン</b>が起こす炎症による。（教科書 P80〜81）"},
+
+{q:"ブラジキニンの作用を増強し、侵害受容器の感受性を高める物質はどれか。",kihon:true,
+ choices:[
+  ["プロスタグランジン",true,""],
+  ["ヒスタミン",false,"肥満細胞から放出される発痛物質。"],
+  ["セロトニン",false,"血小板から放出される発痛物質。"],
+  ["ヘパリン",false,"肥満細胞などが出す抗凝固物質。"]],
+ exp:"炎症に伴って<b>プロスタグランジン</b>がつくられる。ブラジキニンの作用を増強し、侵害受容器の感受性を高める。（教科書 P81）"},
+
+{q:"発痛物質と、それを放出するものの組合せで正しいのはどれか。",kihon:true,
+ choices:[
+  ["ヒスタミン ― 肥満細胞",true,""],
+  ["セロトニン ― 肥満細胞",false,"セロトニンを放出するのは血小板。"],
+  ["カリウムイオン ― 血小板",false,"カリウムイオンは、傷害された細胞から流出する。"],
+  ["ブラジキニン ― 血小板",false,"ブラジキニンは、傷害部位で産生される。"]],
+ exp:"血小板からセロトニン、<b>肥満細胞からヒスタミン</b>、傷害された細胞からカリウムイオンが出て、いずれも発痛作用をもつ。（教科書 P81）"},
+
+{q:"傷害された細胞から流れ出て、発痛作用をもつのはどれか。",
+ choices:[
+  ["カリウムイオン（K⁺）",true,""],
+  ["ナトリウムイオン（Na⁺）",false,"細胞外にもっとも多い陽イオン。"],
+  ["カルシウムイオン（Ca²⁺）",false,"筋収縮や血液凝固に関わる陽イオン。"],
+  ["塩化物イオン（Cl⁻）",false,"細胞外にもっとも多い陰イオン。"]],
+ exp:"<b>カリウムイオン</b>は細胞内に多く、細胞が傷害されると流出して発痛作用をもつ。（教科書 P81）"},
+
+{q:"発痛物質として誤っているのはどれか。",kihon:true,dobon:true,gori:true,
+ choices:[
+  ["エンケファリン",true,""],
+  ["ブラジキニン",false,"教科書どおりの記述なので、正しい。"],
+  ["セロトニン",false,"教科書どおりの記述なので、正しい。"],
+  ["カリウムイオン",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"<b>エンケファリン</b>は、中枢神経系がつくるモルヒネ様の鎮痛物質。（教科書 P82）"},
+
+{q:"ブラジキニンやヒスタミンのほかに、発痛作用をもつのはどれか。",hosoku:true,
+ choices:[
+  ["水素イオン（H⁺）",true,""],
+  ["ナトリウムイオン（Na⁺）",false,"細胞外にもっとも多い陽イオン。"],
+  ["塩化物イオン（Cl⁻）",false,"細胞外にもっとも多い陰イオン。"],
+  ["重炭酸イオン（HCO₃⁻）",false,"血液のpH緩衝にはたらく陰イオン。"]],
+ exp:"補足知識（資料外）。<b>水素イオン</b>も発痛物質の一つ。組織が酸性に傾くと痛みが起こる。"},
+
+/* ---------- E-4 痛みの伝導路（P81） ---------- */
+
+{q:"痛みの上行路が外側系と内側系に分かれる部位はどれか。",
+ choices:[
+  ["脳幹",true,""],
+  ["脊髄後角",false,"一次侵害受容ニューロンの興奮が、二次ニューロンへ中継される部位。"],
+  ["視床",false,"外側系の興奮が再び中継され、体性感覚野へ送られる部位。"],
+  ["大脳辺縁系",false,"内側系の興奮が送られ、不安や苦しみを起こす部位。"]],
+ exp:"二次侵害受容ニューロンは対側の脊髄前側索を上行し、<b>脳幹</b>で外側系と内側系に分かれる。（教科書 P81、図5・23）"},
+
+{q:"痛みを感覚として意識に上らせる上行路はどれか。",kihon:true,
+ choices:[
+  ["脊髄視床路",true,""],
+  ["脊髄網様体視床路",false,"大脳辺縁系へ向かい、不安や苦しみを起こす情動の系（内側系）。"],
+  ["後索－内側毛帯路",false,"触覚・圧覚・振動覚・深部感覚の伝導路。"],
+  ["皮質脊髄路",false,"大脳皮質から脊髄へ下行する運動の経路（錐体路）。"]],
+ exp:"外側系（<b>脊髄視床路</b>）は視床で中継されて体性感覚野へ送られ、痛みが意識に上る。「感覚の系」。（教科書 P81）"},
+
+{q:"痛みに伴う不安や苦しみを起こすために、痛みの信号が送られる部位はどれか。",
+ choices:[
+  ["大脳辺縁系",true,""],
+  ["一次体性感覚野",false,"外側系で痛みが送られ、痛みを感覚として意識する部位。"],
+  ["小脳",false,"運動の協調にはたらく部位。"],
+  ["外側膝状体",false,"視覚を中継する視床の核。"]],
+ exp:"内側系（脊髄網様体視床路）は視床から<b>大脳辺縁系</b>へ送られ、不安や苦しみなどの情動反応を起こす。「情動の系」。（教科書 P81）"},
+
+/* ---------- E-5 痛覚の抑制システム（P82） ---------- */
+
+{q:"下行性痛覚抑制系が出発する部位はどれか。",
+ choices:[
+  ["中脳",true,""],
+  ["延髄",false,"下行性痛覚抑制系が中継される部位。"],
+  ["視床",false,"痛みの上行路が中継される部位。"],
+  ["小脳",false,"運動の協調にはたらく部位。"]],
+ exp:"下行性痛覚抑制系は<b>中脳</b>を出て延髄で中継され、脊髄を下行して侵害刺激の伝達を遮断する。（教科書 P82、図5・24）"},
+
+{q:"中枢神経系でつくられ、モルヒネに似た鎮痛作用をもつ物質はどれか。",kihon:true,
+ choices:[
+  ["β-エンドルフィン",true,""],
+  ["ブラジキニン",false,"炎症を起こす代表的な発痛物質。"],
+  ["ヒスタミン",false,"肥満細胞から放出される発痛物質。"],
+  ["プロスタグランジン",false,"ブラジキニンの作用を増強し、侵害受容器の感受性を高める物質。"]],
+ exp:"中枢神経系は、モルヒネに似た作用をもつ<b>β-エンドルフィン</b>やエンケファリンを産生する。下行性痛覚抑制系に作用して鎮痛効果をもたらす。（教科書 P82）"},
+
+{q:"モルヒネの鎮痛作用のしくみとして正しいのはどれか。",
+ choices:[
+  ["下行性痛覚抑制系を活性化させる",true,""],
+  ["侵害受容器の感受性を高める",false,"プロスタグランジンのはたらき。"],
+  ["痛みの信号を大脳辺縁系へ送る",false,"内側系（脊髄網様体視床路）のはたらき。"],
+  ["痛覚に順応を起こさせる",false,"痛覚は順応が起こらない。"]],
+ exp:"モルヒネは中脳などで作用して<b>下行性痛覚抑制系を活性化</b>させるほか、脊髄へ直接作用して侵害受容性痛覚の伝達を遮断する。（教科書 P82）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
