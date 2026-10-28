@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第11章 呼吸の生理 パートD｜生理学スライド</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#0f766e;padding:14px 28px}
+.hd .ch{font-size:11px;color:#cdeee9;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.hd .tt{font-size:20px;font-weight:500;color:#fff}
+.bd{padding:20px 28px 16px;background:#fff}
+.sec{font-size:10px;font-weight:600;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.box{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:12px}
+.row{display:block;font-size:14px;line-height:1.9;color:#222;padding:5px 0;border-bottom:1px solid #e5e7eb}
+.row:last-child{border-bottom:none}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:#0f766e;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
+.tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;color:#0f766e;white-space:nowrap;min-width:110px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.two{grid-template-columns:1fr}.tbl td:first-child{white-space:normal;min-width:80px}}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
+.tf{background:rgba(15,118,110,.12);color:#0f766e}
+.tb{background:rgba(17,94,89,.12);color:#115e59}
+.sup{display:inline-block;font-size:10.5px;font-weight:600;color:#fff;background:#8a8f98;border-radius:3px;padding:0 6px;margin-right:6px;vertical-align:1px}
+.note{font-size:11.5px;color:#777}
+.em{font-weight:700;color:#0f766e}
+.blank{display:inline-block;min-width:72px;border-bottom:2.5px solid #0f766e;border-radius:3px 3px 0 0;cursor:pointer;text-align:center;padding:0 5px;transition:all .22s;position:relative;vertical-align:baseline}
+.blank::after{content:"？";font-size:12px;color:#0f766e;opacity:.45;position:absolute;left:50%;transform:translateX(-50%)}
+.blank span{visibility:hidden;font-weight:600;color:#0f766e;font-size:14px;opacity:0;transition:opacity .22s;display:inline-block}
+.blank.on{border-bottom-color:transparent;background:rgba(15,118,110,.1);border-radius:4px;padding:1px 7px}
+.blank.on::after{display:none}
+.blank.on span{visibility:visible;opacity:1}
+.blank:not(.on):hover{background:rgba(15,118,110,.07)}
+.ctrl{display:flex;align-items:center;gap:8px;padding:10px 28px 12px;background:#f8f9fb;border-top:1px solid #e5e7eb;flex-wrap:wrap}
+.btn{padding:7px 15px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#333;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn:hover{background:#f0f2f5}
+.btnp{background:#0f766e;color:#fff;border-color:#0f766e}
+.btnp:hover{background:#0b5a54}
+.cnt{font-size:11px;color:#888;margin-left:auto}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
+.dot.a{background:#0f766e}
+.pg{font-size:11px;color:#888;margin-left:auto}
+</style>
+</head>
+<body>
+<h1>生理学 第11章 呼吸の生理｜パートD：呼吸周期の調節</h1>
+<div class="slide">
+  <div id="sc"></div>
+  <div class="ctrl">
+    <button class="btn" onclick="nextBlank()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="showAll()">すべて表示</button>
+    <button class="btn" onclick="resetAll()">リセット</button>
+    <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
+    <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+<script>
+const SUP="<span class='sup'>補足知識（資料外）</span>";
+const S=[
+{t:"呼吸の神経支配経路",ch:"第11章 呼吸の生理 ｜ D-1 呼吸の神経支配経路",type:"two",
+left:{label:"a 自律的調節系",rows:[
+"意識せずに絶えず繰り返し行われる [自律的]・[周期的] な呼吸運動を支配する．",
+"[延髄] の呼吸中枢から下行する．",
+"呼吸筋を支配する [運動神経] が律動的に興奮することで行われる．",
+]},
+right:{label:"b 随意的調節系",rows:[
+"[深呼吸] をしたり [息を止めたり] といった随意的な呼吸運動を支配する．",
+"[大脳皮質] から [皮質脊髄路] を通って，呼吸筋の運動神経に達する．",
+"大脳皮質から [呼吸中枢] へ指令が伝わるために起こる．",
+]}},
+{t:"脳幹の切断実験と呼吸中枢",ch:"第11章 呼吸の生理 ｜ D-1-a 自律的調節系（図11・11）",type:"p",
+rows:[
+"[延髄] よりも下側を切断すると，自発呼吸は [完全に停止] する．",
+"[橋] の下を切断すると，いくらか [不規則] になるものの自発呼吸は継続する．",
+"このことは，[延髄] にある呼吸ニューロンの律動的な興奮が自発呼吸を引き起こし，[橋] にある呼吸ニューロンがそれを [調節] していることを示す．",
+"延髄の呼吸ニューロン群を [狭義の呼吸中枢] と呼ぶ．",
+"橋の呼吸ニューロン群を [呼吸調節中枢] と呼ぶ．",
+"狭義の呼吸中枢と呼吸調節中枢をまとめて [呼吸中枢] と呼ぶ．",
+]},
+{t:"狭義の呼吸中枢（延髄）",ch:"第11章 呼吸の生理 ｜ D-1-a-① 狭義の呼吸中枢",type:"p",
+rows:[
+"[吸息ニューロン] と [呼息ニューロン] の2種類のニューロンがある．",
+"吸息ニューロンは [吸息] 時に，呼息ニューロンは [呼息] 時に興奮する．",
+"これらは延髄の [背側部]（背側群）と [腹側部]（腹側群）に分布する（図11・11）．",
+"背側部は主に [吸息ニューロン] で構成され，[横隔神経] を主に支配する．",
+"腹側部には吸息ニューロンと呼息ニューロンが [混在] し，[補助呼吸筋] と [肋間筋] を主に支配する運動神経につながっている．",
+SUP+"呼吸のリズムは延髄の呼吸中枢（[延髄網様体]）でつくられる．大脳皮質・大脳基底核・視床・中脳ではない．",
+]},
+{t:"呼吸調節中枢（橋）",ch:"第11章 呼吸の生理 ｜ D-1-a-② 呼吸調節中枢",type:"p",
+rows:[
+"[持続性吸息中枢] は吸息運動を担う．",
+"呼吸調節中枢が障害されると，呼吸回数が [減少] し，1回換気量が [増える]．",
+"このことから，呼吸調節中枢は [吸息] を抑制して [呼息] への切り替えを行っていると考えられる．",
+"自律的な呼吸運動は，[末梢性化学受容器]，[中枢化学受容器]，[伸展受容器] からの情報を呼吸中枢が処理することで調節される．",
+]},
+{t:"末梢性化学受容器",ch:"第11章 呼吸の生理 ｜ D-2-a 末梢性化学受容器（図11・12）",type:"p",
+rows:[
+"[頸動脈小体] と [大動脈小体] は，動脈血中の [酸素分圧] を主に感知する．その他，[二酸化炭素分圧] や [pH] の変化も感知する．",
+"頸動脈小体は，左右の頸動脈の [分岐部] の近くにそれぞれ1個ずつ存在する．",
+"大動脈小体は，[大動脈弓] の近くに1個または数個存在する．",
+"頸動脈小体には [舌咽神経]，大動脈小体には [迷走神経] の枝がつながっている．",
+"呼吸中枢はこれらの情報に基づいて [肺胞換気量] を増減させ，[負のフィードバック] 調節によって動脈血中の酸素分圧・二酸化炭素分圧・pHを一定に保つ．",
+SUP+"[頸動脈洞]・大動脈弓にあるのは血圧を感じる [圧受容器] で，化学受容器（頸動脈小体・大動脈小体）とは別物．",
+]},
+{t:"中枢化学受容器",ch:"第11章 呼吸の生理 ｜ D-2-b 中枢化学受容器",type:"p",
+rows:[
+"呼吸中枢の近くの [延髄腹側表面] には，中枢化学受容器がある．",
+"この受容器は，血中の [pH] や [二酸化炭素分圧] の変化に敏感に反応する．",
+"二酸化炭素分圧の [上昇] は換気量を [増加] させる．",
+SUP+"中枢化学受容器は主に [二酸化炭素分圧の上昇]（水素イオン濃度の上昇）に反応し，動脈血酸素分圧には反応しない．",
+SUP+"髄液のpHが [上昇] すると，呼吸運動は抑制される．",
+]},
+{t:"呼吸を促進する因子・抑制する因子",ch:"第11章 呼吸の生理 ｜ D-2 化学受容器のまとめ",type:"two",
+left:{label:"呼吸が促進される",rows:[
+"動脈血酸素分圧の [低下]．",
+"二酸化炭素分圧の [上昇]．",
+"水素イオン濃度の [上昇]（pHの [低下]）．",
+SUP+"四肢の [運動]（酸素消費量が増える）．",
+]},
+right:{label:"呼吸が抑制される",rows:[
+"動脈血酸素分圧の [上昇]．",
+"二酸化炭素分圧の [低下]．",
+"pHの [上昇]．",
+"[肺伸展受容器] の興奮（ヘーリング・ブロイエル反射）．",
+]}},
+{t:"ヘーリング・ブロイエル反射",ch:"第11章 呼吸の生理 ｜ D-2-c 伸展受容器",type:"p",
+rows:[
+"肺や気道には，肺の伸展を感知する [伸展受容器] がある．",
+"呼吸中枢は，この伸展受容器から [迷走神経] に入る情報も処理している．",
+"伸展受容器が刺激されて迷走神経が興奮すると，[吸息ニューロン] の活動が [抑制] される．これを [ヘーリング・ブロイエル反射] と呼ぶ．",
+"迷走神経を切断されてヘーリング・ブロイエル反射が起こらなくなると，[吸息] の期間が [延長] する（図11・11）．",
+SUP+"反射の流れ：吸息で肺が膨らむ → [肺伸展受容器] → 求心路は [迷走神経]（舌咽神経・交感神経ではない）→ 反射中枢は [延髄]（視床下部ではない）→ 吸息が止まり呼息へ切り替わる．",
+]},
+{t:"呼吸パターン",ch:"📘 補足知識（資料外） ｜ 呼吸の異常",type:"tbl",
+cols:["名称","特徴"],
+rows:[
+["頻呼吸","呼吸の [回数] が増える（深さは変わらない）"],
+["徐呼吸","呼吸の [回数] が減る"],
+["過呼吸","呼吸の [深さ]（1回換気量）が増える"],
+["減呼吸","呼吸の [深さ] が減る"],
+["チェーン・ストークス呼吸","[無呼吸] と，次第に深くなってまた浅くなる呼吸を [繰り返す]"],
+["クスマウル呼吸","[深くて速い] 呼吸が続く．[代謝性アシドーシス]（糖尿病性ケトアシドーシスなど）でみられる"],
+["ビオー呼吸","無呼吸から [突然] 過呼吸が始まり，突然 [無呼吸] になる"],
+["参考","安静時の呼吸数は 12〜15回/分程度．呼吸困難のある患者には [起坐位] が楽（横隔膜が動きやすい）"],
+]},
+{t:"パートDまとめ",ch:"第11章 呼吸の生理 ｜ パートDまとめ",type:"tbl",
+cols:["項目","内容"],
+rows:[
+["自律的調節系","[延髄] の呼吸中枢から下行する"],
+["随意的調節系","[大脳皮質] から皮質脊髄路を通る（深呼吸・息止め）"],
+["狭義の呼吸中枢","[延髄]．吸息ニューロンと呼息ニューロン．背側群は [横隔神経] を支配"],
+["呼吸調節中枢","[橋]．吸息を抑制して [呼息] へ切り替える"],
+["末梢性化学受容器","[頸動脈小体]（舌咽神経）と [大動脈小体]（迷走神経）．主に [酸素分圧] を感知"],
+["中枢化学受容器","[延髄腹側表面]．pHと [二酸化炭素分圧] に敏感"],
+["ヘーリング・ブロイエル反射","[肺伸展受容器] → [迷走神経] → 吸息ニューロンを [抑制]"],
+["迷走神経の切断","[吸息] の期間が延長する"],
+]}
+];
+let cur=0,bs=[];
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="revealBlank('${id}')"><span>${ans}</span></span>`;}
+function fill(t){
+  t=t.replace(/\{\{([^{}]+)\}\}/g,(m,a)=>`<span class="em">${a}</span>`);
+  return t.replace(/\[([^\[\]]+)\]/g,(m,a)=>{const id="b"+bs.length;bs.push({id,on:false});return bl(id,a);});
+}
+function buildSlide(i){
+  const s=S[i];bs=[];
+  let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
+  if(s.type==="p"){
+    h+=`<div class="sec">重要事項</div><div class="box">`;
+    s.rows.forEach(r=>{h+=`<span class="row">${fill(r)}</span>`;});
+    h+=`</div>`;
+  }else if(s.type==="tbl"){
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    s.cols.forEach(c=>h+=`<th>${c}</th>`);
+    h+=`</tr></thead><tbody>`;
+    s.rows.forEach(row=>{h+=`<tr>`;row.forEach(cell=>{h+=`<td>${fill(cell)}</td>`;});h+=`</tr>`;});
+    h+=`</tbody></table></div>`;
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${fill(r)}</p>`;});
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById("sc").innerHTML=h;
+  upd();bldNav();
+}
+function revealBlank(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nextBlank(){const u=bs.find(x=>!x.on);if(u){revealBlank(u.id);const el=document.getElementById(u.id);if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}}
+function showAll(){bs.forEach(b=>revealBlank(b.id));}
+function resetAll(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=bs.length?d+"/"+bs.length+" 表示済み":"参照用スライド（カッコなし）";}
+function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
+function bldNav(){
+  let h="";
+  S.forEach((_,i)=>h+=`<div class="dot${i===cur?" a":""}" onclick="go(${i})"></div>`);
+  h+=`<span class="pg">${cur+1} / ${S.length}</span>`;
+  document.getElementById("nav").innerHTML=h;
+}
+buildSlide(0);
+</script>
+</body>
+</html>
