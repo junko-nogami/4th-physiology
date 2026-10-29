@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第11章 パートD 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#155e75;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#cfe7ee;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#cfe7ee;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#155e75;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#155e75;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(21,94,117,.12);color:#155e75}
+.mark.dobon{background:rgba(195,60,40,.13);color:#c33c28}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#155e75;background:#f0f7f9}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #155e75;background:#155e75;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#0e4658}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#155e75;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#155e75;background:#f0f7f9}
+.mode .nm{font-size:16px;font-weight:600;color:#155e75;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdf1ee}
+.score .big{font-size:40px;font-weight:700;color:#155e75;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#0e4658;background:rgba(21,94,117,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#155e75;background:rgba(21,94,117,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(195,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第11章 呼吸の生理｜パートD 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第11章 呼吸の生理 ｜ D 呼吸周期の調節（教科書 P168〜170）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第11章 P168〜170 ベース）=====
+   対応スライド：ch11_partD.html
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon / dobon / gori / hosoku の意味は引き継ぎ資料8節のとおり
+
+   内訳：全46問／🎯基本22問／💣ドボン8問／⚠誤りを選ぶ3問／📘補足10問
+
+   過去問（4章 呼吸（生理学）(3)呼吸調節・(4)呼吸の異常）での出題頻度：
+   呼吸中枢＝延髄 5回／ヘーリング・ブロイエル反射 5回／呼吸を促進する因子 5回／
+   末梢性化学受容器（頸動脈小体・頸動脈洞との区別）3回／中枢化学受容器はCO2 2回／
+   呼吸パターン・起坐位 4回 */
+const PICK=5;
+const POOL=[
+
+/* ---------- D-1 神経支配経路（P168〜169） ---------- */
+
+{q:"意識せずに絶えず繰り返される周期的な呼吸運動を支配する経路は、どこから下行するか。",kihon:true,dobon:true,
+ choices:[
+  ["延髄の呼吸中枢",true,""],
+  ["大脳皮質",false,"深呼吸や息止めなど、随意的な呼吸の指令を出す場所。"],
+  ["視床下部",false,"体温や摂食など、自律機能を統合する中枢。"],
+  ["小脳",false,"運動の協調やバランスを担う。"]],
+ exp:"自律的・周期的な呼吸運動は、<b>延髄の呼吸中枢</b>から下行する自律的調節系で支配される。（教科書 P168）"},
+
+{q:"深呼吸をしたり息を止めたりする随意的な呼吸運動の指令が出るのはどこか。",kihon:true,
+ choices:[
+  ["大脳皮質",true,""],
+  ["延髄",false,"意識せずに行われる周期的な呼吸を支配する。"],
+  ["橋",false,"呼吸調節中枢があり、吸息から呼息への切り替えを担う。"],
+  ["大脳基底核",false,"不随意運動の調節に関わる。"]],
+ exp:"随意的な呼吸運動は、<b>大脳皮質</b>から呼吸中枢へ指令が伝わるために起こる。（教科書 P168〜169）"},
+
+{q:"随意的調節系の指令が呼吸筋の運動神経に達するまでに通る経路はどれか。",
+ choices:[
+  ["皮質脊髄路",true,""],
+  ["脊髄視床路",false,"温痛覚などを脳へ伝える上行路。"],
+  ["迷走神経",false,"肺の伸展受容器の情報を呼吸中枢へ伝える求心路。"],
+  ["舌咽神経",false,"頸動脈小体の情報を伝える神経。"]],
+ exp:"随意的調節系は、大脳皮質から<b>皮質脊髄路</b>を通って呼吸筋の運動神経に達する。（教科書 P168）"},
+
+{q:"眠っている間も呼吸が止まらずに続くのは何によるか。",
+ choices:[
+  ["延髄の呼吸ニューロンの律動的な興奮",true,""],
+  ["大脳皮質からの指令",false,"意識して深呼吸や息止めをするときにはたらく。"],
+  ["横隔膜自身の自動能",false,"横隔膜はほとんどが横紋筋で、呼吸中枢の指令を受けて収縮する。"],
+  ["肺伸展受容器の興奮",false,"吸息ニューロンの活動を抑えるはたらきをもつ。"]],
+ exp:"自律的な呼吸運動は、呼吸筋を支配する運動神経が律動的に興奮することで行われ、そのもとは<b>延髄の呼吸ニューロン</b>である。（教科書 P168）"},
+
+/* ---------- D-1-a 切断実験と呼吸中枢（P168〜169） ---------- */
+
+{q:"自発呼吸のリズムをつくり出す呼吸ニューロンがあるのはどこか。",kihon:true,dobon:true,
+ choices:[
+  ["延髄",true,""],
+  ["橋",false,"自発呼吸のリズムを調節する呼吸ニューロンがある。"],
+  ["中脳",false,"対光反射など眼球運動に関わる中枢がある。"],
+  ["視床",false,"感覚の中継核。"]],
+ exp:"<b>延髄</b>にある呼吸ニューロンの律動的な興奮が自発呼吸を引き起こし、橋の呼吸ニューロンがそれを調節する。国試では「延髄網様体」と表現されることもある。（教科書 P168）"},
+
+{q:"延髄よりも下側で脳幹を切断すると、自発呼吸はどうなるか。",kihon:true,
+ choices:[
+  ["完全に停止する",true,""],
+  ["いくらか不規則になるが継続する",false,"橋の下で切断したときの変化。"],
+  ["呼吸回数が減り、1回換気量が増える",false,"呼吸調節中枢が障害されたときの変化。"],
+  ["吸息の期間が延長する",false,"迷走神経を切断したときの変化。"]],
+ exp:"延髄の呼吸ニューロンから切り離されると、自発呼吸は<b>完全に停止</b>する。（教科書 P168、図11・11）"},
+
+{q:"橋の下で脳幹を切断すると、自発呼吸はどうなるか。",
+ choices:[
+  ["いくらか不規則になるが継続する",true,""],
+  ["完全に停止する",false,"延髄よりも下側で切断したときの変化。"],
+  ["呼吸回数が減り、1回換気量が増える",false,"呼吸調節中枢が障害されたときの変化。"],
+  ["吸息の期間が延長する",false,"迷走神経を切断したときの変化。"]],
+ exp:"延髄が残っていればリズムは保たれ、調節役の橋を失ったぶん<b>いくらか不規則になるが継続</b>する。（教科書 P168、図11・11）"},
+
+{q:"橋の呼吸調節中枢が障害されると、呼吸はどうなるか。",kihon:true,
+ choices:[
+  ["呼吸回数が減少し、1回換気量が増える",true,""],
+  ["呼吸回数が増え、1回換気量が減る",false,"実際とは逆向きの変化。"],
+  ["自発呼吸が完全に停止する",false,"延髄よりも下側で切断したときの変化。"],
+  ["深呼吸や息止めができなくなる",false,"随意的調節系がはたらかなくなったときの変化。"]],
+ exp:"吸息が抑えられずに長くなるため、<b>呼吸回数が減少し、1回換気量が増える</b>。（教科書 P169）"},
+
+{q:"橋にある呼吸ニューロン群は何と呼ばれるか。",
+ choices:[
+  ["呼吸調節中枢",true,""],
+  ["狭義の呼吸中枢",false,"延髄の呼吸ニューロン群の呼び名。"],
+  ["中枢化学受容器",false,"延髄腹側表面で、pHや二酸化炭素分圧を感知する受容器。"],
+  ["血管運動中枢",false,"延髄にあり、血圧を調節する中枢。"]],
+ exp:"延髄の呼吸ニューロン群を狭義の呼吸中枢、橋の呼吸ニューロン群を<b>呼吸調節中枢</b>と呼ぶ。（教科書 P168〜169）"},
+
+{q:"「呼吸中枢」は何をまとめた呼び名か。",
+ choices:[
+  ["狭義の呼吸中枢と呼吸調節中枢",true,""],
+  ["末梢性化学受容器と中枢化学受容器",false,"呼吸中枢に情報を送る受容器。"],
+  ["吸息筋と呼息筋",false,"呼吸中枢の指令を受けて動く筋。"],
+  ["自律的調節系と随意的調節系",false,"呼吸運動を支配する2つの神経経路。"]],
+ exp:"延髄の<b>狭義の呼吸中枢</b>と橋の<b>呼吸調節中枢</b>をまとめて呼吸中枢と呼ぶ。（教科書 P169）"},
+
+/* ---------- D-1-a-① 狭義の呼吸中枢（P169） ---------- */
+
+{q:"延髄の呼吸中枢にある2種類のニューロンはどれか。",
+ choices:[
+  ["吸息ニューロンと呼息ニューロン",true,""],
+  ["交感神経と副交感神経の節前ニューロン",false,"内臓のはたらきを調節する自律神経のニューロン。"],
+  ["上位運動ニューロンと下位運動ニューロン",false,"随意運動の指令を伝える経路のニューロン。"],
+  ["一次感覚ニューロンと介在ニューロン",false,"感覚情報を伝える経路のニューロン。"]],
+ exp:"<b>吸息ニューロン</b>は吸息時に、<b>呼息ニューロン</b>は呼息時に興奮する。（教科書 P169）"},
+
+{q:"延髄の背側群を主に構成するのはどれか。",kihon:true,
+ choices:[
+  ["吸息ニューロン",true,""],
+  ["呼息ニューロン",false,"呼息時に興奮するニューロン。"],
+  ["吸息ニューロンと呼息ニューロンの混在",false,"腹側群の構成。"],
+  ["中枢化学受容器",false,"延髄腹側表面にある受容器。"]],
+ exp:"背側部は主に<b>吸息ニューロン</b>で構成される。（教科書 P169）"},
+
+{q:"延髄の背側群が主に支配するのはどれか。",kihon:true,
+ choices:[
+  ["横隔神経",true,""],
+  ["肋間神経",false,"外肋間筋・内肋間筋を支配する神経。"],
+  ["迷走神経",false,"肺の伸展受容器の情報を伝える求心路。"],
+  ["舌咽神経",false,"頸動脈小体の情報を伝える神経。"]],
+ exp:"背側群は<b>横隔神経</b>を主に支配する。安静時の呼吸の約75％を担う横隔膜を動かす神経である。（教科書 P160、P169）"},
+
+{q:"延髄の腹側群につながる運動神経が主に支配するのはどれか。",
+ choices:[
+  ["補助呼吸筋と肋間筋",true,""],
+  ["横隔膜",false,"背側群が主に支配する。"],
+  ["心筋",false,"自動能をもち、自律神経で調節される。"],
+  ["気管支の平滑筋",false,"自律神経が支配する。"]],
+ exp:"腹側部には吸息ニューロンと呼息ニューロンが混在し、<b>補助呼吸筋と肋間筋</b>を主に支配する運動神経につながる。（教科書 P169）"},
+
+/* ---------- D-1-a-② 呼吸調節中枢（P169） ---------- */
+
+{q:"橋の呼吸調節中枢のはたらきはどれか。",kihon:true,
+ choices:[
+  ["吸息を抑制して呼息へ切り替える",true,""],
+  ["動脈血の酸素分圧を感知する",false,"頸動脈小体・大動脈小体のはたらき。"],
+  ["自発呼吸のリズムをつくり出す",false,"延髄の呼吸ニューロンのはたらき。"],
+  ["随意的に息を止める",false,"大脳皮質からの指令によるはたらき。"]],
+ exp:"呼吸調節中枢が障害されると回数が減り1回換気量が増えることから、<b>吸息を抑制して呼息へ切り替えている</b>と考えられる。（教科書 P169）"},
+
+/* ---------- D-2 化学受容器（P169〜170） ---------- */
+
+{q:"自律的な呼吸運動を調節するために、呼吸中枢へ情報を送る受容器の組合せはどれか。",
+ choices:[
+  ["末梢性化学受容器・中枢化学受容器・伸展受容器",true,""],
+  ["圧受容器・浸透圧受容器・温度受容器",false,"血圧・体液量・体温の調節に関わる受容器。"],
+  ["筋紡錘・腱紡錘・パチニ小体",false,"筋の長さ・張力や皮膚の振動を感じる受容器。"],
+  ["視細胞・有毛細胞・味細胞",false,"特殊感覚の受容器。"]],
+ exp:"自律的な呼吸運動は、<b>末梢性化学受容器・中枢化学受容器・伸展受容器</b>からの情報を呼吸中枢が処理して調節される。（教科書 P169）"},
+
+{q:"動脈血中の酸素分圧を主に感知するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["頸動脈小体",true,""],
+  ["頸動脈洞",false,"血圧を感じる圧受容器。"],
+  ["中枢化学受容器",false,"延髄腹側表面にあり、pHや二酸化炭素分圧に敏感。"],
+  ["肺伸展受容器",false,"肺のふくらみを感知する。"]],
+ exp:"<b>頸動脈小体</b>と大動脈小体は末梢性化学受容器で、動脈血中の酸素分圧を主に感知する。（教科書 P170）"},
+
+{q:"頸動脈小体につながっている神経はどれか。",kihon:true,
+ choices:[
+  ["舌咽神経",true,""],
+  ["迷走神経",false,"大動脈小体や肺の伸展受容器からの情報を伝える。"],
+  ["横隔神経",false,"第3〜5頸髄から出て横隔膜を支配する。"],
+  ["顔面神経",false,"表情筋の運動や舌前方の味覚を担う。"]],
+ exp:"頸動脈小体には<b>舌咽神経</b>、大動脈小体には迷走神経の枝がつながっている。（教科書 P170、図11・12）"},
+
+{q:"大動脈小体につながっている神経はどれか。",
+ choices:[
+  ["迷走神経",true,""],
+  ["舌咽神経",false,"頸動脈小体からの情報を伝える。"],
+  ["肋間神経",false,"肋間筋を支配する。"],
+  ["副神経",false,"胸鎖乳突筋や僧帽筋を支配する。"]],
+ exp:"大動脈小体には<b>迷走神経</b>の枝がつながる。（教科書 P170、図11・12）"},
+
+{q:"頸動脈小体があるのはどこか。",
+ choices:[
+  ["左右の頸動脈の分岐部の近く",true,""],
+  ["大動脈弓の近く",false,"大動脈小体がある場所。"],
+  ["延髄腹側表面",false,"中枢化学受容器がある場所。"],
+  ["肺や気道",false,"伸展受容器がある場所。"]],
+ exp:"頸動脈小体は<b>左右の頸動脈の分岐部の近く</b>にそれぞれ1個ずつある。（教科書 P170）"},
+
+{q:"末梢性化学受容器が、酸素分圧のほかに感知するのはどれか。",
+ choices:[
+  ["二酸化炭素分圧とpH",true,""],
+  ["血圧",false,"頸動脈洞や大動脈弓の圧受容器が感知する。"],
+  ["血漿浸透圧",false,"視床下部の浸透圧受容器が感知する。"],
+  ["肺の伸展",false,"肺や気道の伸展受容器が感知する。"]],
+ exp:"頸動脈小体と大動脈小体は、主に酸素分圧を感知し、<b>二酸化炭素分圧やpH</b>の変化も感知する。（教科書 P170）"},
+
+{q:"化学受容器の情報に基づいて呼吸中枢が増減させ、動脈血のガス分圧とpHを一定に保つのはどれか。",
+ choices:[
+  ["肺胞換気量",true,""],
+  ["心拍出量",false,"心臓が1分間に送り出す血液量。"],
+  ["死腔量",false,"ガス交換に関わらない気道の容積。"],
+  ["尿量",false,"腎臓での排泄量。"]],
+ exp:"呼吸中枢の指令で<b>肺胞換気量</b>が増減し、酸素分圧・二酸化炭素分圧・pHが一定に保たれる。（教科書 P170）"},
+
+{q:"化学受容器の情報で肺胞換気量が調節されるしくみはどれか。",
+ choices:[
+  ["負のフィードバック",true,""],
+  ["正のフィードバック",false,"変化をさらに強める方向にはたらくしくみ。"],
+  ["フィードフォワード",false,"変化が起こる前に予測して調整するしくみ。"],
+  ["条件反射",false,"経験によって後天的に獲得される反射。"]],
+ exp:"ずれを打ち消す方向に換気量を変えるので、<b>負のフィードバック</b>調節である。（教科書 P170、第1章参照）"},
+
+{q:"中枢化学受容器があるのはどこか。",kihon:true,
+ choices:[
+  ["延髄腹側表面",true,""],
+  ["頸動脈の分岐部",false,"頸動脈小体がある場所。"],
+  ["大動脈弓",false,"大動脈小体がある場所。"],
+  ["視床下部",false,"体温調節中枢などがある場所。"]],
+ exp:"呼吸中枢の近くの<b>延髄腹側表面</b>に中枢化学受容器がある。（教科書 P170）"},
+
+{q:"中枢化学受容器が敏感に反応するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["pHや二酸化炭素分圧の変化",true,""],
+  ["動脈血の酸素分圧の変化",false,"主に頸動脈小体・大動脈小体が感知する。"],
+  ["血圧の変化",false,"頸動脈洞・大動脈弓の圧受容器が感知する。"],
+  ["肺のふくらみ",false,"伸展受容器が感知する。"]],
+ exp:"中枢化学受容器は<b>pHや二酸化炭素分圧</b>に敏感で、二酸化炭素分圧の上昇は換気量を増やす。「末梢＝主にO₂／中枢＝CO₂・pH」と対で覚える。なお、受容器が直接接しているのは脳脊髄液である。（教科書 P170）"},
+
+{q:"呼吸を促進するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["動脈血酸素分圧の低下",true,""],
+  ["二酸化炭素分圧の低下",false,"換気を減らす方向にはたらく変化。"],
+  ["pHの上昇",false,"換気を減らす方向にはたらく変化。"],
+  ["肺伸展受容器の興奮",false,"吸息ニューロンの活動を抑える。"]],
+ exp:"<b>酸素分圧が下がる</b>と頸動脈小体・大動脈小体が刺激され、換気が増える。（教科書 P170）"},
+
+{q:"呼吸を促進するのはどれか。",kihon:true,
+ choices:[
+  ["二酸化炭素分圧の上昇",true,""],
+  ["動脈血酸素分圧の上昇",false,"換気を減らす方向にはたらく変化。"],
+  ["pHの上昇",false,"換気を減らす方向にはたらく変化。"],
+  ["肺伸展受容器の興奮",false,"吸息ニューロンの活動を抑える。"]],
+ exp:"<b>二酸化炭素分圧の上昇</b>は、中枢化学受容器などを介して換気量を増加させる。（教科書 P170）"},
+
+{q:"血中濃度が上昇すると呼吸を促進するのはどれか。",kihon:true,
+ choices:[
+  ["水素イオン",true,""],
+  ["重炭酸イオン",false,"増えるとpHを上げる方向にはたらく塩基。"],
+  ["ナトリウムイオン",false,"血漿中に最も多い陽イオンで、浸透圧の維持を担う。"],
+  ["塩化物イオン",false,"血漿中に最も多い陰イオン。"]],
+ exp:"<b>水素イオン</b>濃度の上昇＝pHの低下で、化学受容器が刺激されて呼吸が促進される。（教科書 P170）"},
+
+{q:"呼吸を抑制するのはどれか。",kihon:true,
+ choices:[
+  ["二酸化炭素分圧の低下",true,""],
+  ["動脈血酸素分圧の低下",false,"換気を増やす方向にはたらく変化。"],
+  ["水素イオン濃度の上昇",false,"換気を増やす方向にはたらく変化。"],
+  ["pHの低下",false,"換気を増やす方向にはたらく変化。"]],
+ exp:"<b>二酸化炭素分圧が下がる</b>と換気は減る。酸素分圧の上昇・pHの上昇も同じく抑制側。（教科書 P170）"},
+
+/* ---------- D-2-c ヘーリング・ブロイエル反射（P170） ---------- */
+
+{q:"ヘーリング・ブロイエル反射で、情報を呼吸中枢へ伝える求心路はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["迷走神経",true,""],
+  ["舌咽神経",false,"頸動脈小体からの情報を伝える。"],
+  ["横隔神経",false,"横隔膜を動かす運動神経。"],
+  ["肋間神経",false,"肋間筋を動かす運動神経。"]],
+ exp:"伸展受容器からの情報は<b>迷走神経</b>に入り、呼吸中枢で処理される。（教科書 P170）"},
+
+{q:"肺の伸展受容器が刺激されて迷走神経が興奮すると、何が起こるか。",kihon:true,
+ choices:[
+  ["吸息ニューロンの活動が抑制される",true,""],
+  ["吸息ニューロンの活動が強まる",false,"実際とは逆向きの変化。"],
+  ["呼息ニューロンの活動が抑制される",false,"吸息が続く方向の変化。"],
+  ["自発呼吸が完全に停止する",false,"延髄より下側で切断したときの変化。"]],
+ exp:"<b>吸息ニューロンの活動が抑制</b>され、呼息へ切り替わる。これがヘーリング・ブロイエル反射である。（教科書 P170）"},
+
+{q:"ヘーリング・ブロイエル反射の受容器はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["肺伸展受容器",true,""],
+  ["圧受容器",false,"頸動脈洞や大動脈弓で血圧を感じる受容器。"],
+  ["頸動脈小体",false,"動脈血の酸素分圧を主に感知する化学受容器。"],
+  ["筋紡錘",false,"骨格筋の長さの変化を感じる受容器。"]],
+ exp:"肺や気道には、肺の伸展を感知する<b>伸展受容器</b>がある。（教科書 P170）"},
+
+{q:"迷走神経を切断すると、呼吸はどうなるか。",kihon:true,
+ choices:[
+  ["吸息の期間が延長する",true,""],
+  ["完全に停止する",false,"延髄よりも下側で切断したときの変化。"],
+  ["いくらか不規則になるが継続する",false,"橋の下で切断したときの変化。"],
+  ["呼吸回数が増え、1回換気量が減る",false,"吸息が短くなる方向の変化。"]],
+ exp:"ヘーリング・ブロイエル反射が起こらなくなり、吸息を止めるブレーキが効かなくなるため、<b>吸息の期間が延長</b>する。（教科書 P170、図11・11）"},
+
+/* ---------- ⚠ 誤りを選ぶ ---------- */
+
+{q:"呼吸中枢について誤っているのはどれか。",kihon:true,dobon:true,gori:true,
+ choices:[
+  ["呼吸のリズムは橋でつくられる",true,""],
+  ["延髄には吸息ニューロンと呼息ニューロンがある",false,"教科書どおりの記述なので、正しい。"],
+  ["橋の呼吸調節中枢は吸息を抑制して呼息へ切り替える",false,"教科書どおりの記述なので、正しい。"],
+  ["延髄より下側で切断すると自発呼吸は停止する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"リズムをつくるのは<b>延髄</b>。橋はそれを調節する。（教科書 P168〜169）"},
+
+{q:"化学受容器について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["中枢化学受容器は主に動脈血の酸素分圧を感知する",true,""],
+  ["頸動脈小体には舌咽神経がつながる",false,"教科書どおりの記述なので、正しい。"],
+  ["大動脈小体には迷走神経がつながる",false,"教科書どおりの記述なので、正しい。"],
+  ["二酸化炭素分圧の上昇は換気量を増加させる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"酸素分圧を主に感知するのは<b>末梢性化学受容器</b>。中枢化学受容器はpHと二酸化炭素分圧に敏感である。（教科書 P170）"},
+
+{q:"ヘーリング・ブロイエル反射について誤っているのはどれか。",gori:true,
+ choices:[
+  ["迷走神経を切断すると吸息の期間が短くなる",true,""],
+  ["受容器は肺や気道の伸展受容器である",false,"教科書どおりの記述なので、正しい。"],
+  ["求心路は迷走神経である",false,"教科書どおりの記述なので、正しい。"],
+  ["吸息ニューロンの活動が抑制される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"切断すると吸息を止める反射が起こらず、吸息の期間は<b>延長</b>する。（教科書 P170）"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"脳脊髄液のpHが上昇すると、呼吸運動はどうなるか。",hosoku:true,
+ choices:[
+  ["抑制される",true,""],
+  ["促進される",false,"pHが低下したときの変化。"],
+  ["変化しない",false,"中枢化学受容器はpHの変化に敏感なので、影響を受ける。"],
+  ["吸息の期間だけが延長する",false,"迷走神経を切断したときの変化。"]],
+ exp:"補足知識（資料外）。pHの上昇（H⁺の減少）は中枢化学受容器を介して呼吸を<b>抑制</b>する。"},
+
+{q:"中枢化学受容器が直接接して、その変化を感知しているのはどれか。",hosoku:true,
+ choices:[
+  ["脳脊髄液",true,""],
+  ["動脈血",false,"頸動脈小体・大動脈小体が接している。"],
+  ["リンパ",false,"組織液が毛細リンパ管に入ったもの。"],
+  ["肺胞気",false,"肺胞の中にあるガス。"]],
+ exp:"補足知識（資料外）。動脈血のCO₂が血液脳関門を通って<b>脳脊髄液</b>に入り、H⁺を生じる。中枢化学受容器はこのH⁺（pHの低下）を感知する。"},
+
+{q:"中枢化学受容器が、血中のpH変化よりも二酸化炭素分圧の変化に敏感に反応する理由はどれか。",hosoku:true,
+ choices:[
+  ["CO₂は血液脳関門を通りやすいが、H⁺は通りにくいから",true,""],
+  ["中枢化学受容器にはCO₂だけと結合する受容体があるから",false,"受容器が実際に感知しているのは、CO₂から生じたH⁺である。"],
+  ["脳脊髄液には重炭酸イオンが多く、CO₂が増えないから",false,"実際にはCO₂は脳脊髄液に入ってH⁺を生じる。"],
+  ["血中のH⁺は肺からすべて排出されるから",false,"H⁺は血中の重炭酸イオンと反応して処理される。"]],
+ exp:"補足知識（資料外）。血中のCO₂が上がると、脳脊髄液にもすぐCO₂が入ってpHが下がる。一方、血中のH⁺は<b>血液脳関門</b>で止められるため、脳脊髄液に届きにくい。"},
+
+{q:"呼吸運動を促進するのはどれか。",hosoku:true,
+ choices:[
+  ["四肢の運動",true,""],
+  ["気道の拡張",false,"空気が通りやすくなる変化で、呼吸を強める刺激ではない。"],
+  ["肺胞の二酸化炭素分圧の低下",false,"換気を減らす方向にはたらく変化。"],
+  ["動脈血酸素分圧の上昇",false,"換気を減らす方向にはたらく変化。"]],
+ exp:"補足知識（資料外）。<b>四肢の運動</b>で酸素消費量が増えるため、呼吸は促進される。"},
+
+{q:"ヘーリング・ブロイエル反射の反射中枢はどこか。",hosoku:true,
+ choices:[
+  ["延髄",true,""],
+  ["視床下部",false,"体温・摂食・飲水などの中枢。"],
+  ["大脳皮質",false,"随意的な呼吸の指令を出す。"],
+  ["脊髄",false,"伸張反射や屈曲反射の中枢。"]],
+ exp:"補足知識（資料外）。肺伸展受容器 → 迷走神経 → <b>延髄</b> → 吸息を抑えて呼息へ切り替える。"},
+
+{q:"頸動脈洞にある受容器はどれか。",hosoku:true,
+ choices:[
+  ["血圧を感じる圧受容器",true,""],
+  ["酸素分圧を感知する化学受容器",false,"頸動脈小体にある受容器。"],
+  ["肺伸展受容器",false,"肺や気道にある受容器。"],
+  ["中枢化学受容器",false,"延髄腹側表面にある受容器。"]],
+ exp:"補足知識（資料外）。頸動脈「洞」＝<b>血圧</b>、頸動脈「小体」＝酸素。名前が似ていて国試で狙われる。"},
+
+{q:"無呼吸と、次第に深くなってまた浅くなる呼吸を繰り返すのはどれか。",hosoku:true,
+ choices:[
+  ["チェーン・ストークス呼吸",true,""],
+  ["クスマウル呼吸",false,"深くて速い呼吸が続く。"],
+  ["ビオー呼吸",false,"無呼吸から突然過呼吸が始まり、突然無呼吸になる。"],
+  ["頻呼吸",false,"深さは変わらず、回数だけが増える。"]],
+ exp:"補足知識（資料外）。周期的に深さが増減するのが<b>チェーン・ストークス呼吸</b>の特徴。"},
+
+{q:"糖尿病性ケトアシドーシスなどの代謝性アシドーシスでみられる、深くて速い呼吸はどれか。",hosoku:true,
+ choices:[
+  ["クスマウル呼吸",true,""],
+  ["チェーン・ストークス呼吸",false,"無呼吸と、深くなってまた浅くなる呼吸を繰り返す。"],
+  ["ビオー呼吸",false,"無呼吸から突然過呼吸が始まり、突然無呼吸になる。"],
+  ["徐呼吸",false,"呼吸の回数が減る。"]],
+ exp:"補足知識（資料外）。酸を二酸化炭素として吐き出そうとして深く速くなるのが<b>クスマウル呼吸</b>。"},
+
+{q:"呼吸の深さ（1回換気量）が増えるのはどれか。",hosoku:true,
+ choices:[
+  ["過呼吸",true,""],
+  ["頻呼吸",false,"呼吸の回数が増える。"],
+  ["徐呼吸",false,"呼吸の回数が減る。"],
+  ["減呼吸",false,"呼吸の深さが減る。"]],
+ exp:"補足知識（資料外）。「頻・徐」は回数、「<b>過</b>・減」は深さ。"},
+
+{q:"呼吸困難のある患者にとって楽な体位はどれか。",hosoku:true,
+ choices:[
+  ["起坐位",true,""],
+  ["仰臥位",false,"腹部内臓が横隔膜を押し上げ、動きを妨げる。"],
+  ["腹臥位",false,"胸や腹が圧迫され、胸郭が広がりにくい。"],
+  ["頭部を低くした仰臥位",false,"内臓がさらに横隔膜側へ寄る。"]],
+ exp:"補足知識（資料外）。<b>起坐位</b>では内臓が下がり、横隔膜が動きやすくなる。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>

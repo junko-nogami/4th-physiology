@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第11章 パートB 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#155e75;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#cde6ee;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#cde6ee;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#155e75;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#155e75;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(21,94,117,.13);color:#0e4152}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#155e75;background:#ecf5f8}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #155e75;background:#155e75;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#0e4152}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#155e75;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#155e75;background:#ecf5f8}
+.mode .nm{font-size:16px;font-weight:600;color:#155e75;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#155e75;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#0e4152;background:rgba(21,94,117,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#155e75;background:rgba(21,94,117,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第11章 呼吸の生理｜パートB 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第11章 呼吸の生理 ｜ B-2〜5 換気</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第11章 P161〜P164 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon / dobon / gori / hosoku の意味は確認テスト引き継ぎ資料（第5版）8節のとおり
+   過去問での出題頻度（パートBの範囲）：肺気量の区分 約8回／安静呼吸の胸膜腔内圧・肺胞内圧 約5回／
+   1秒率 3回／肺胞換気量・死腔・分時換気量 約3回／換気障害 2回／サーファクタント 1回 */
+const PICK=5;
+/* グループごとの1回あたりの出題上限（atsu＝胸膜腔内圧・肺胞内圧など圧の問題） */
+const GMAX={atsu:2};
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
+const POOL=[
+
+/* ---------- 換気のしくみ（P161） ---------- */
+
+{g:"atsu",q:"肺胞が自らの弾性で縮まろうとする、ゴム風船のような力を何というか。",
+ choices:[
+  ["肺胞壁弾性圧",true,""],
+  ["肺胞内圧",false,"外気を取り込んだ肺胞が広がろうとするときの力。"],
+  ["胸膜腔内圧",false,"2枚の胸膜の間（胸膜腔）の内圧。安静呼吸時は常に陰圧。"],
+  ["大気圧",false,"体の外の空気の圧力。呼息の終わりには肺胞内圧がこれと等しくなる。"]],
+ exp:"肺胞が自らの弾性で縮まろうとする力を<b>肺胞壁弾性圧</b>という。（教科書 P161）"},
+
+{g:"atsu",q:"吸息が起こるのはどれか。",
+ choices:[
+  ["肺胞内圧が、肺胞壁弾性圧と胸膜腔内圧の合計を上回るとき",true,""],
+  ["肺胞内圧が、肺胞壁弾性圧と胸膜腔内圧の合計を下回るとき",false,"呼息が起こる条件。"],
+  ["肺胞内圧が大気圧と等しいとき",false,"呼息の終わりの静止時の状態。"],
+  ["胸膜腔内圧が陽圧になったとき",false,"安静呼吸では胸膜腔内圧は陽圧にならない。"]],
+ exp:"肺胞壁弾性圧と胸膜腔内圧の合計圧を肺胞内圧が<b>上回る</b>と吸息、下回ると呼息が行われる。（教科書 P161、図11・4）"},
+
+{g:"atsu",q:"安静時の吸息で起こる変化はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["胸膜腔内圧が低下し、肺が膨らむ",true,""],
+  ["胸膜腔内圧が上昇し、肺が縮む",false,"呼息時の変化。"],
+  ["肺胞内圧が陽圧になる",false,"呼息時の変化。"],
+  ["胸郭の体積が減少する",false,"吸息筋が弛緩する呼息時の変化。"]],
+ exp:"吸息筋が収縮して胸郭の体積が増えると、<b>胸膜腔内圧が低下して肺が膨らむ</b>。その結果、肺胞内圧が下がり外界から空気が流入する。（教科書 P161）"},
+
+{g:"atsu",q:"安静時の呼息で起こる変化はどれか。",kihon:true,
+ choices:[
+  ["肺胞内圧が陽圧となり、空気が外界へ押し出される",true,""],
+  ["胸膜腔内圧が陽圧になる",false,"安静呼吸時の胸膜腔内圧は、呼息時も大気圧より低い。"],
+  ["吸息筋が収縮する",false,"吸息時の変化。"],
+  ["胸郭の体積が増加する",false,"吸息時の変化。"]],
+ exp:"吸息筋が弛緩して胸郭の体積が減ると胸膜腔内圧が上昇し、肺が縮む。<b>肺胞内圧が陽圧</b>となり空気が押し出される。（教科書 P161）"},
+
+{g:"atsu",q:"安静呼吸について誤っているのはどれか。",kihon:true,dobon:true,gori:true,
+ choices:[
+  ["胸膜腔内圧は、呼息時に陽圧になる",true,""],
+  ["胸膜腔内圧は、吸息時に陰圧である",false,"教科書どおりの記述なので、正しい。"],
+  ["肺胞内圧は、吸息時に陰圧になる",false,"教科書どおりの記述なので、正しい。"],
+  ["肺胞内圧は、呼息時に陽圧になる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"安静呼吸時の胸膜腔内圧は、吸息時も呼息時も大気圧より常に低い<b>陰圧</b>。陰圧・陽圧が入れ替わるのは肺胞内圧のほう。（教科書 P161）"},
+
+{g:"atsu",q:"呼息の終わりの静止時、肺胞内圧はどうなっているか。",kihon:true,
+ choices:[
+  ["大気圧と等しい",true,""],
+  ["大気圧より高い",false,"呼息の途中の肺胞内圧（陽圧）。"],
+  ["大気圧より低い",false,"吸息の途中の肺胞内圧（陰圧）。"],
+  ["胸膜腔内圧と等しい",false,"胸膜腔内圧は常に陰圧で、この時点の肺胞内圧とは等しくない。"]],
+ exp:"呼息の終わりの静止時には、肺胞内圧が<b>大気圧と等しく</b>なる。（教科書 P161）"},
+
+{g:"atsu",q:"安静時の呼息中、胸膜腔内圧はどうなっているか。",kihon:true,dobon:true,
+ choices:[
+  ["大気圧より低い",true,""],
+  ["大気圧より高い",false,"呼息中の肺胞内圧の状態（陽圧）。"],
+  ["大気圧と等しい",false,"呼息の終わりの静止時の肺胞内圧の状態。"],
+  ["吸息時より低い",false,"胸膜腔内圧の陰圧がもっとも強くなるのは吸息時。"]],
+ exp:"安静呼吸時の胸膜腔内圧は、吸息時も呼息時も大気圧より常に低い<b>陰圧</b>。呼息で胸膜腔内圧は上昇するが、陽圧にまではならない。（教科書 P161）"},
+
+{g:"atsu",q:"安静呼吸中、常に大気圧より低く保たれているのはどれか。",kihon:true,
+ choices:[
+  ["胸膜腔内圧",true,""],
+  ["肺胞内圧",false,"吸息時は陰圧だが、呼息時には陽圧になる。"],
+  ["気道内圧",false,"呼息時には肺胞内圧と同じく大気圧より高くなる。"],
+  ["大動脈の血圧",false,"心臓の拍出による圧で、常に大気圧より高い。"]],
+ exp:"常に陰圧なのは<b>胸膜腔内圧</b>。陰圧と陽圧が入れ替わるのは肺胞内圧。（教科書 P161）"},
+
+{g:"atsu",q:"安静時の呼息について誤っているのはどれか。",gori:true,
+ choices:[
+  ["胸膜腔内圧が陽圧になる",true,""],
+  ["吸息筋が弛緩する",false,"教科書どおりの記述なので、正しい。"],
+  ["肺胞内圧が陽圧になる",false,"教科書どおりの記述なので、正しい。"],
+  ["呼息の終わりの静止時には、肺胞内圧が大気圧と等しくなる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"呼息では胸膜腔内圧は上昇するが、大気圧より低い<b>陰圧</b>のまま。陽圧になるのは肺胞内圧。（教科書 P161）"},
+
+{g:"atsu",q:"安静呼吸で、肺胞内圧が大気圧と等しくなるのはどれか。",kihon:true,
+ choices:[
+  ["呼息の終わりの静止時",true,""],
+  ["吸息の途中",false,"肺胞内圧は陰圧で、外界から空気が流入している。"],
+  ["呼息の途中",false,"肺胞内圧は陽圧で、空気が外界へ押し出されている。"],
+  ["呼吸周期のどの時点でも等しくならない",false,"空気の出入りが止まる時点がある。"]],
+ exp:"<b>呼息の終わりの静止時</b>には、肺胞内圧が大気圧と等しくなり、空気の出入りが止まる。（教科書 P161）"},
+
+{g:"atsu",q:"安静時の呼息の途中、肺胞内圧はどうなっているか。",kihon:true,
+ choices:[
+  ["大気圧より高い（陽圧）",true,""],
+  ["大気圧より低い（陰圧）",false,"吸息の途中の肺胞内圧。"],
+  ["大気圧と等しい",false,"呼息の終わりの静止時の肺胞内圧。"],
+  ["胸膜腔内圧と等しい",false,"胸膜腔内圧は呼息中も陰圧で、肺胞内圧とは等しくない。"]],
+ exp:"呼息では胸郭が縮んで肺が縮み、肺胞内圧が<b>陽圧</b>になる。この圧で空気が外界へ押し出される。（教科書 P161）"},
+
+{g:"atsu",q:"安静呼吸の呼息の終わりの静止時の組合せで正しいのはどれか。（肺胞内圧 ― 胸膜腔内圧）",
+ choices:[
+  ["大気圧と等しい ― 陰圧",true,""],
+  ["大気圧と等しい ― 大気圧と等しい",false,"胸膜腔内圧はこの時点でも陰圧。"],
+  ["陽圧 ― 陰圧",false,"呼息の途中の状態。"],
+  ["陰圧 ― 陰圧",false,"吸息の途中の状態。"]],
+ exp:"呼息の終わりは<b>肺胞内圧＝大気圧</b>。<b>胸膜腔内圧</b>は呼吸のどの時点でも<b>陰圧</b>。（教科書 P161）"},
+
+{g:"atsu",q:"安静呼吸時の胸膜腔内圧の組合せで正しいのはどれか。（吸息時 ― 呼息時）",kihon:true,
+ choices:[
+  ["陰圧 ― 陰圧",true,""],
+  ["陰圧 ― 陽圧",false,"肺胞内圧の組合せ。"],
+  ["陽圧 ― 陰圧",false,"吸息時も呼息時も、このような変化はしない。"],
+  ["大気圧と等しい ― 陰圧",false,"胸膜腔内圧が大気圧と等しくなる時点はない。"]],
+ exp:"胸膜腔内圧は吸息時も呼息時も<b>陰圧</b>（吸息時のほうが陰圧が強い）。（教科書 P161）"},
+
+{g:"atsu",q:"安静吸息時の胸膜腔内圧はおよそどれか。",hosoku:true,
+ choices:[
+  ["−6 mmHg",true,""],
+  ["−2.5 mmHg",false,"呼息時の胸膜腔内圧。"],
+  ["−1 mmHg",false,"吸息時の肺胞内圧。"],
+  ["＋1 mmHg",false,"呼息時の肺胞内圧。"]],
+ exp:"補足知識（資料外）。胸膜腔内圧は吸息時に約<b>−6 mmHg</b>で最も陰圧が強く、呼息時も約−2.5 mmHgの陰圧。"},
+
+{g:"atsu",q:"吸息時に起こる変化として誤っているのはどれか。",gori:true,hosoku:true,
+ choices:[
+  ["肺胞壁弾性力が減少する",true,""],
+  ["横隔膜が収縮する",false,"正しい記述。"],
+  ["肺胞内圧が陰圧になる",false,"正しい記述。"],
+  ["胸膜腔内圧が低下する",false,"正しい記述。"]],
+ exp:"補足知識（資料外）。吸息で肺胞壁が広げられると、肺胞は縮まろうとして弾性力が<b>増大</b>する。"},
+
+/* ---------- 肺気量（P162〜163、表11・1） ---------- */
+
+{q:"成人の1回換気量の正常値はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["500 mL",true,""],
+  ["150 mL",false,"死腔量の目安。"],
+  ["1,000 mL",false,"予備呼気量。"],
+  ["1,500 mL",false,"残気量。"]],
+ exp:"安静時の1回の呼吸で肺へ出入りする空気の容積＝1回換気量で、約<b>500 mL</b>。（表11・1）"},
+
+{q:"成人の予備吸気量の正常値はどれか。",
+ choices:[
+  ["2,000〜2,500 mL",true,""],
+  ["500 mL",false,"1回換気量。"],
+  ["1,000 mL",false,"予備呼気量。"],
+  ["3,000〜4,500 mL",false,"肺活量。"]],
+ exp:"安静吸息ののち、最大努力でさらに吸い込める量が予備吸気量で<b>2,000〜2,500 mL</b>。（表11・1）"},
+
+{q:"成人の残気量の正常値はどれか。",
+ choices:[
+  ["1,500 mL",true,""],
+  ["500 mL",false,"1回換気量。"],
+  ["1,000 mL",false,"予備呼気量。"],
+  ["2,500 mL",false,"機能的残気量。"]],
+ exp:"予備呼気量を吐き出したのちも肺に残る空気が残気量で<b>1,500 mL</b>。（表11・1）"},
+
+{q:"最大吸気位から最大努力で吐き出せる空気の量はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["肺活量",true,""],
+  ["残気量",false,"最大努力で吐き出したあとも肺に残る空気の量。"],
+  ["機能的残気量",false,"安静時の呼息終了時に肺に残る空気の量。"],
+  ["1回換気量",false,"安静時の1回の呼吸で出入りする空気の量。"]],
+ exp:"<b>肺活量</b>＝1回換気量＋予備吸気量＋予備呼気量。最大に吸ってから最大に吐ける量にあたる。（表11・1）"},
+
+{q:"機能的残気量を表すのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["予備呼気量＋残気量",true,""],
+  ["予備吸気量＋1回換気量＋予備呼気量",false,"肺活量。"],
+  ["残気量＋肺活量",false,"全肺気量。"],
+  ["1回換気量−死腔量",false,"1回肺胞換気量。"]],
+ exp:"機能的残気量＝<b>予備呼気量と残気量の和</b>で、約2,500 mL。（表11・1）"},
+
+{q:"安静呼吸の呼息終了時に肺内に残っている空気の量はどれか。",kihon:true,
+ choices:[
+  ["機能的残気量",true,""],
+  ["残気量",false,"予備呼気量まで吐き切ったあとに残る量。"],
+  ["予備呼気量",false,"安静呼息のあと、さらに努力して吐ける量。"],
+  ["1回換気量",false,"安静時の1回の呼吸で出入りする量。"]],
+ exp:"安静呼息の終わりには、まだ予備呼気量と残気量が肺に残っている。この和が<b>機能的残気量</b>。（表11・1）"},
+
+{q:"肺活量に何を加えると全肺気量になるか。",kihon:true,
+ choices:[
+  ["残気量",true,""],
+  ["予備吸気量",false,"すでに肺活量に含まれている。"],
+  ["予備呼気量",false,"すでに肺活量に含まれている。"],
+  ["1回換気量",false,"すでに肺活量に含まれている。"]],
+ exp:"全肺気量（表では「肺気量」）＝<b>残気量＋肺活量</b>で、5,500〜6,000 mL。（表11・1）"},
+
+{q:"安静時の呼息ののち、最大努力でさらに吐き出せる空気の量はどれか。",
+ choices:[
+  ["予備呼気量",true,""],
+  ["予備吸気量",false,"安静吸息ののち、さらに努力して吸い込める量。"],
+  ["残気量",false,"どれだけ吐いても肺に残る量。"],
+  ["1回換気量",false,"安静時の1回の呼吸で出入りする量。"]],
+ exp:"<b>予備呼気量</b>は約1,000 mL。（表11・1）"},
+
+{q:"肺気量について誤っているのはどれか。",gori:true,
+ choices:[
+  ["最大努力で吐き出すと、肺内の空気はほぼなくなる",true,""],
+  ["機能的残気量は残気量より多い",false,"教科書どおりの記述なので、正しい。"],
+  ["肺活量は残気量より多い",false,"教科書どおりの記述なので、正しい。"],
+  ["予備吸気量は予備呼気量より多い",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"最大努力で吐き出しても、肺には約1,500 mLの<b>残気量</b>が残る。（表11・1）"},
+
+{q:"スパイロメーターで直接測定できないのはどれか。",hosoku:true,
+ choices:[
+  ["残気量",true,""],
+  ["1回換気量",false,"口から出入りする空気なので測定できる。"],
+  ["予備吸気量",false,"口から出入りする空気なので測定できる。"],
+  ["肺活量",false,"口から出入りする空気なので測定できる。"]],
+ exp:"補足知識（資料外）。<b>残気量</b>は吐き出せないので測れない。そのため残気量を含む機能的残気量・全肺気量も測れない。"},
+
+/* ---------- 1秒率・換気率（P162） ---------- */
+
+{q:"1秒率が正常とされる基準はどれか。",kihon:true,
+ choices:[
+  ["70%以上",true,""],
+  ["50%以上",false,"基準より低すぎる値。"],
+  ["60%以上",false,"基準より低い値。"],
+  ["80%以上",false,"拘束性換気障害の判定に使う「%肺活量」の基準。"]],
+ exp:"肺活量に対する1秒量の割合が1秒率で、<b>70%以上</b>なら正常。（教科書 P162）"},
+
+{q:"1秒率を求める式はどれか。",hosoku:true,
+ choices:[
+  ["1秒量÷努力肺活量×100（%）",true,""],
+  ["1秒量÷機能的残気量×100（%）",false,"機能的残気量は吐き出せる量ではない。"],
+  ["1秒量÷残気量×100（%）",false,"残気量は吐き出せない量。"],
+  ["1秒量÷予備呼気量×100（%）",false,"予備呼気量は肺活量の一部にすぎない。"]],
+ exp:"補足知識（資料外）。国試では分母を<b>努力肺活量</b>（最大吸気から一気に最大努力で吐いたときの肺活量）とする。"},
+
+{q:"換気率を求める式はどれか。",
+ choices:[
+  ["肺胞換気量÷（機能的残気量＋肺胞換気量）×100",true,""],
+  ["肺胞換気量÷（残気量＋肺胞換気量）×100",false,"分母が、安静呼息終了時に肺に残っている量になっていない。"],
+  ["肺胞換気量÷肺活量×100",false,"肺活量は最大努力で出入りできる量。"],
+  ["1回換気量÷全肺気量×100",false,"死腔の分が引かれておらず、分母も違う。"]],
+ exp:"1回の吸息で換気される肺胞内の空気の割合が換気率。安静呼息終了時に肺に残っている<b>機能的残気量</b>に、新しい空気（肺胞換気量）が加わる。（教科書 P162）"},
+
+/* ---------- 換気障害（補足） ---------- */
+
+{q:"喘息などの閉塞性換気障害で低下するのはどれか。",hosoku:true,
+ choices:[
+  ["1秒率",true,""],
+  ["肺活量",false,"拘束性換気障害で減少する指標。"],
+  ["気道抵抗",false,"閉塞性換気障害では増加する。"],
+  ["機能的残気量",false,"換気障害の判定には使わない。"]],
+ exp:"補足知識（資料外）。気道が狭く気道抵抗が高いため勢いよく吐けず、<b>1秒率</b>が70%未満に低下する。肺活量は正常。"},
+
+{q:"肺線維症などの拘束性換気障害で減少するのはどれか。",hosoku:true,
+ choices:[
+  ["肺活量",true,""],
+  ["1秒率",false,"拘束性では変わらない。閉塞性で低下する指標。"],
+  ["気道抵抗",false,"閉塞性換気障害で増加する。"],
+  ["死腔量",false,"換気障害の判定には使わない。"]],
+ exp:"補足知識（資料外）。肺の弾性が低下して膨らみにくくなり、<b>肺活量</b>が減る（%肺活量80%未満）。1秒率は変わらない。"},
+
+/* ---------- 死腔と肺胞換気量（P162〜163） ---------- */
+
+{q:"気道でガスが占める空間を何と呼ぶか。",kihon:true,
+ choices:[
+  ["死腔",true,""],
+  ["胸膜腔",false,"2枚の胸膜の間で、漿液に満たされている。"],
+  ["肺胞",false,"ガス交換が行われる場所。"],
+  ["残気量",false,"最大努力で吐いたあとに肺に残る空気の量。"]],
+ exp:"気道ではガス交換は行われない。気道でガスが占める空間を<b>死腔</b>と呼ぶ。（教科書 P162）"},
+
+{q:"1回肺胞換気量を求める式はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["1回換気量−死腔量",true,""],
+  ["1回換気量＋死腔量",false,"死腔の分を足してしまっている。"],
+  ["1回換気量×1分間呼吸回数",false,"分時換気量。"],
+  ["予備呼気量＋残気量",false,"機能的残気量。"]],
+ exp:"死腔があるため換気量のすべてが肺胞で使われるわけではない。1回肺胞換気量＝<b>1回換気量−死腔量</b>。（教科書 P162）"},
+
+{q:"1回換気量400 mL、呼吸数15回/分、死腔量150 mLのとき、分時換気量はどれか。",kihon:true,
+ choices:[
+  ["6,000 mL",true,""],
+  ["3,750 mL",false,"分時肺胞換気量（250×15）。"],
+  ["250 mL",false,"1回肺胞換気量。"],
+  ["8,250 mL",false,"死腔量を足して（400＋150）×15と計算した値。"]],
+ exp:"分時換気量＝1回換気量×1分間呼吸回数＝400×15＝<b>6,000 mL</b>。死腔量は使わない。（教科書 P162）"},
+
+{q:"1回換気量500 mL、死腔量150 mL、呼吸数14回/分のとき、分時肺胞換気量はどれか。",kihon:true,
+ choices:[
+  ["4,900 mL",true,""],
+  ["7,000 mL",false,"分時換気量（500×14）。"],
+  ["350 mL",false,"1回肺胞換気量。"],
+  ["9,100 mL",false,"死腔量を足して（500＋150）×14と計算した値。"]],
+ exp:"（500−150）×14＝<b>4,900 mL</b>。（教科書 P162〜163）"},
+
+{q:"死腔量150 mLで分時換気量がどれも6,000 mLのとき、分時肺胞換気量がもっとも少ないのはどれか。",
+ choices:[
+  ["1回換気量300 mL × 呼吸数20回/分",true,""],
+  ["1回換気量500 mL × 呼吸数12回/分",false,"分時肺胞換気量は4,200 mL。"],
+  ["1回換気量600 mL × 呼吸数10回/分",false,"分時肺胞換気量は4,500 mL。"],
+  ["1回換気量750 mL × 呼吸数8回/分",false,"分時肺胞換気量は4,800 mL。"]],
+ exp:"（300−150）×20＝3,000 mL。<b>浅く速い呼吸</b>は、分時換気量が同じでも肺胞換気量が少なくなる。（教科書 P163）"},
+
+/* ---------- コンプライアンスと気道抵抗（P163〜164） ---------- */
+
+{q:"肺の膨らみやすさ（伸展度）を何と呼ぶか。",
+ choices:[
+  ["コンプライアンス",true,""],
+  ["気道抵抗",false,"空気と気道壁との摩擦による抵抗。"],
+  ["表面張力",false,"肺胞内面の液体層にはたらき、肺をつぶす方向の力になる。"],
+  ["肺胞壁弾性圧",false,"肺胞が自らの弾性で縮まろうとする力。"]],
+ exp:"肺の膨らみやすさを肺の<b>コンプライアンス</b>と呼ぶ。（教科書 P163）"},
+
+{q:"サーファクタントについて正しいのはどれか。",kihon:true,
+ choices:[
+  ["肺胞の表面張力を減少させる",true,""],
+  ["肺胞の表面張力を増大させる",false,"はたらきが逆。"],
+  ["タンパク質でできている",false,"サーファクタントはリン脂質でできた表面活性物質。"],
+  ["肺のコンプライアンスを低下させる",false,"喫煙の影響。"]],
+ exp:"サーファクタントは<b>表面張力を減らし</b>、コンプライアンスを上昇させる（肺胞を広がりやすくする）。（教科書 P164）"},
+
+{q:"サーファクタントを分泌する細胞はどれか。",
+ choices:[
+  ["肺胞上皮細胞",true,""],
+  ["気管支上皮細胞",false,"粘液を分泌し、吸気に湿り気を与えたり異物を捕らえたりする。"],
+  ["血管内皮細胞",false,"血管の内面を覆う細胞。"],
+  ["赤血球",false,"酸素を運ぶ血球。2,3-DPGを産生する。"]],
+ exp:"サーファクタントは<b>肺胞上皮細胞</b>で分泌される。（教科書 P163〜164）"},
+
+{q:"未熟児でサーファクタントが不足して起こるのはどれか。",hosoku:true,
+ choices:[
+  ["新生児呼吸窮迫症候群",true,""],
+  ["気管支喘息",false,"気道が狭くなり気道抵抗が増える病気。"],
+  ["肺線維症",false,"肺の弾性が低下する拘束性換気障害の例。"],
+  ["気胸",false,"胸膜腔に空気が入った状態。"]],
+ exp:"補足知識（資料外）。サーファクタントが不足すると肺胞がつぶれ、呼吸困難を起こす（<b>新生児呼吸窮迫症候群</b>）。"},
+
+{q:"肺のコンプライアンスを低下させるのはどれか。",
+ choices:[
+  ["喫煙",true,""],
+  ["サーファクタントの分泌",false,"表面張力を減らし、コンプライアンスを上げる。"],
+  ["表面張力の減少",false,"コンプライアンスを上げる。"],
+  ["弾性線維の力が小さいこと",false,"コンプライアンスを上げる。"]],
+ exp:"<b>喫煙</b>はコンプライアンスを低下させる。（教科書 P164）"},
+
+{q:"呼吸筋の仕事量が増えるのはどれか。",
+ choices:[
+  ["気道抵抗が増加したとき",true,""],
+  ["コンプライアンスが上昇したとき",false,"肺が膨らみやすく、仕事量は少なくてすむ。"],
+  ["サーファクタントが十分に分泌されたとき",false,"表面張力が減り、仕事量は少なくてすむ。"],
+  ["弾性線維の力が小さいとき",false,"肺が膨らみやすく、仕事量は少なくてすむ。"]],
+ exp:"仕事量に影響する因子はコンプライアンスと気道抵抗。<b>気道抵抗が高い</b>（喘息など）と仕事量が増える。（教科書 P163〜164）"},
+
+{q:"気道抵抗は何によって生じる抵抗か。",
+ choices:[
+  ["空気と気道壁との間の摩擦",true,""],
+  ["肺胞内面の液体層の表面張力",false,"コンプライアンスを決める因子。"],
+  ["肺の弾性線維が縮もうとする力",false,"コンプライアンスを決める因子。"],
+  ["胸膜同士の摩擦",false,"胸膜腔の漿液が防いでいる。"]],
+ exp:"気道抵抗は、<b>空気と気道壁との摩擦</b>による抵抗。（教科書 P164）"},
+
+{q:"呼吸筋の仕事量について誤っているのはどれか。",gori:true,
+ choices:[
+  ["サーファクタントは肺のコンプライアンスを低下させる",true,""],
+  ["仕事量に影響する因子はコンプライアンスと気道抵抗である",false,"教科書どおりの記述なので、正しい。"],
+  ["コンプライアンスが高いと仕事量は少なくてすむ",false,"教科書どおりの記述なので、正しい。"],
+  ["喘息は気道抵抗の増加が一因となって生じる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"サーファクタントは表面張力を減らし、コンプライアンスを<b>上昇</b>させる。（教科書 P163〜164）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=draw();
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>

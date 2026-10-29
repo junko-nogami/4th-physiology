@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第11章 パートA 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#155e75;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#cde6ee;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#cde6ee;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#155e75;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#155e75;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(21,94,117,.13);color:#0e4152}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#155e75;background:#ecf5f8}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #155e75;background:#155e75;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#0e4152}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#155e75;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#155e75;background:#ecf5f8}
+.mode .nm{font-size:16px;font-weight:600;color:#155e75;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#155e75;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#0e4152;background:rgba(21,94,117,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#155e75;background:rgba(21,94,117,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第11章 呼吸の生理｜パートA 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第11章 呼吸の生理 ｜ A 呼吸器系の構造・B-1 呼吸筋</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第11章 P159〜P161 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon / dobon / gori / hosoku の意味は確認テスト引き継ぎ資料（第5版）8節のとおり
+   過去問での出題頻度（パートAの範囲）：安静吸息の筋 約8回／深い呼息・強制呼気 約4回／
+   補助吸息筋 約3回／安静呼息は受動的 約3回 */
+const PICK=5;
+const POOL=[
+
+/* ---------- 外呼吸・呼吸器系の構造（P159〜160） ---------- */
+
+{q:"肺胞と血液との間で行われるガス交換を何というか。",kihon:true,dobon:true,
+ choices:[
+  ["外呼吸",true,""],
+  ["内呼吸",false,"血液と細胞（組織）との間で行われるガス交換。"],
+  ["換気",false,"外界と肺胞との間で空気を出し入れすること。"],
+  ["肺循環",false,"右心室から肺を通って左心房へ戻る血液の流れ。"]],
+ exp:"肺と血液との間で行われる呼吸が<b>外呼吸</b>、血液と細胞との間で行われる呼吸が<b>内呼吸</b>。（教科書 P159）"},
+
+{q:"空気が肺胞に達するまでの順序で正しいのはどれか。",
+ choices:[
+  ["鼻腔 → 咽頭 → 喉頭 → 気管 → 気管支",true,""],
+  ["鼻腔 → 喉頭 → 咽頭 → 気管 → 気管支",false,"2番目と3番目の順序が逆になっている。"],
+  ["鼻腔 → 咽頭 → 気管 → 喉頭 → 気管支",false,"喉頭は気管の入口にあたり、気管より上にある。"],
+  ["鼻腔 → 咽頭 → 喉頭 → 気管支 → 気管",false,"気管が左右に分岐して気管支になるので、順序が逆。"]],
+ exp:"空気は鼻腔・口腔 → <b>咽頭</b> → <b>喉頭</b> → <b>気管</b> → 左右の<b>気管支</b> → 分岐を繰り返して肺胞に達する。（教科書 P159、図11・1）"},
+
+{q:"鼻や口から細気管支までをまとめて何と呼ぶか。",
+ choices:[
+  ["気道",true,""],
+  ["肺",false,"空気の通り道の一部と肺胞で構成される器官。"],
+  ["胸郭",false,"肋骨・胸骨・脊柱などでできた胸のかご。"],
+  ["上気道",false,"鼻腔から喉頭までの部分だけを指す呼び方。"]],
+ exp:"鼻や口から細気管支までをまとめて<b>気道</b>と呼ぶ。（教科書 P159）"},
+
+{q:"酸素を取り入れ二酸化炭素を排出するガス交換が行われるのはどこか。",kihon:true,dobon:true,
+ choices:[
+  ["肺胞",true,""],
+  ["気管支",false,"空気の通り道で、ここではガス交換は行われない。"],
+  ["胸膜腔",false,"2枚の胸膜の間のすき間で、漿液で満たされている。"],
+  ["咽頭",false,"空気と飲食物が共通で通る部分。"]],
+ exp:"<b>肺胞</b>で、酸素を取り入れ二酸化炭素を排出するガス交換が行われる。（教科書 P159）"},
+
+{q:"胸郭を形成しないのはどれか。",
+ choices:[
+  ["鎖骨",true,""],
+  ["横隔膜",false,"胸郭の底面をつくる筋。"],
+  ["胸骨",false,"胸の前面中央にあり、肋骨とつながる骨。"],
+  ["脊柱",false,"胸郭の後面をつくる。"]],
+ exp:"胸郭は肋骨と肋間筋のほか、横隔膜・胸骨・脊柱で形成される。<b>鎖骨</b>は上肢帯の骨で、胸郭には含まれない。（教科書 P160）"},
+
+{q:"胸膜腔を満たしているのはどれか。",
+ choices:[
+  ["漿液",true,""],
+  ["空気",false,"胸膜腔に空気が入った状態は、気胸という異常。"],
+  ["血液",false,"胸膜腔に血液がたまった状態は、血胸という異常。"],
+  ["サーファクタント",false,"肺胞の内面を潤す、リン脂質でできた表面活性物質。"]],
+ exp:"2つの胸膜の間隙＝胸膜腔は、胸膜同士の摩擦を防ぐ<b>漿液</b>で満たされている。（教科書 P160）"},
+
+/* ---------- 吸息筋（P160〜161） ---------- */
+
+{q:"安静時の吸息で主に収縮する筋はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["横隔膜",true,""],
+  ["内肋間筋",false,"深い呼息で収縮して胸郭を狭める筋。"],
+  ["胸鎖乳突筋",false,"吸息を補助する筋で、安静時の吸息の主役ではない。"],
+  ["腹直筋",false,"強制呼気で腹圧を上げ、呼息を助ける筋。"]],
+ exp:"安静時の吸息は<b>横隔膜</b>と外肋間筋の収縮で行われる。安静時の呼吸のおよそ75％は横隔膜のはたらきによる。（教科書 P160）"},
+
+{q:"安静時の吸息で主に収縮する筋はどれか。",kihon:true,
+ choices:[
+  ["外肋間筋",true,""],
+  ["内肋間筋",false,"深い呼息で収縮して胸郭を狭める筋。"],
+  ["斜角筋",false,"吸息を補助する筋で、安静時の吸息の主役ではない。"],
+  ["腹斜筋",false,"強制呼気で腹圧を上げ、呼息を助ける筋。"]],
+ exp:"安静時の吸息は横隔膜と<b>外肋間筋</b>の収縮で行われる。外肋間筋は肋骨を持ち上げて胸郭を広げる。（教科書 P160）"},
+
+{q:"安静時の呼吸のうち、横隔膜のはたらきによる割合はおよそどのくらいか。",
+ choices:[
+  ["約75%",true,""],
+  ["約25%",false,"実際の割合よりかなり小さい値。"],
+  ["約50%",false,"実際の割合より小さい値。"],
+  ["約95%",false,"実際の割合より大きい値。外肋間筋も吸息筋としてはたらいている。"]],
+ exp:"安静時の呼吸のおよそ<b>75％</b>は横隔膜のはたらきによる。（教科書 P160）"},
+
+{q:"横隔神経が出る脊髄の高さはどれか。",kihon:true,
+ choices:[
+  ["第3〜5頸髄",true,""],
+  ["第1〜2頸髄",false,"頸髄のいちばん上の部分で、後頭部・頸部上部に関わる神経が出る高さ。"],
+  ["第6〜8頸髄",false,"主に上肢へ向かう神経が出る高さ。"],
+  ["胸髄",false,"肋間神経が出る部位。"]],
+ exp:"横隔膜を支配する横隔神経は、<b>第3〜5頸髄</b>から出たのち胸腔内を通って横隔膜に達する。（教科書 P160）"},
+
+{q:"横隔膜と外肋間筋の支配神経の組合せで正しいのはどれか。",
+ choices:[
+  ["横隔神経 ― 肋間神経",true,""],
+  ["肋間神経 ― 横隔神経",false,"組合せが逆になっている。"],
+  ["迷走神経 ― 肋間神経",false,"迷走神経は、肺の伸展受容器からの情報などを伝える脳神経。"],
+  ["横隔神経 ― 副神経",false,"副神経は胸鎖乳突筋や僧帽筋を支配する脳神経。"]],
+ exp:"横隔膜は<b>横隔神経</b>（第3〜5頸髄）、外肋間筋は胸髄から出る<b>肋間神経</b>に支配される。（教科書 P160〜161）"},
+
+{q:"横隔膜の上下運動の幅について正しいのはどれか。",
+ choices:[
+  ["安静時は約1.5cm、深呼吸時は約7cm",true,""],
+  ["安静時は約7cm、深呼吸時は約1.5cm",false,"数値が逆になっている。"],
+  ["安静時も深呼吸時も約1.5cmで変わらない",false,"上下運動の幅は呼吸の深さで変化する。"],
+  ["安静時は約0.5cm、深呼吸時は約15cm",false,"どちらも実際の値から大きく外れている。"]],
+ exp:"横隔膜の上下運動の幅は呼吸の深さで変わり、安静時は<b>1.5cm</b>ほど、深呼吸時には<b>7cm</b>にも上る。（教科書 P160）"},
+
+{q:"横隔膜について誤っているのはどれか。",gori:true,
+ choices:[
+  ["ほとんどが平滑筋でできている",true,""],
+  ["肝臓の上に位置する",false,"教科書どおりの記述なので、正しい。"],
+  ["胸郭の底面部分にある",false,"教科書どおりの記述なので、正しい。"],
+  ["収縮すると胸膜腔の底部が下がる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"横隔膜のほとんどは<b>横紋筋</b>でできている。（教科書 P160）"},
+
+{q:"外肋間筋が収縮したときの動きとして正しいのはどれか。",kihon:true,
+ choices:[
+  ["肋骨を持ち上げ、胸郭を広げる",true,""],
+  ["肋骨を引き下げ、胸郭を狭める",false,"深い呼息で内肋間筋が収縮したときの動き。"],
+  ["横隔膜を胸腔側へ押し上げる",false,"強制呼気で腹筋が腹圧を上げたときの動き。"],
+  ["肺を直接引っ張って膨らませる",false,"肺は筋と直接つながっていない。胸郭が広がって胸膜腔内圧が下がることで膨らむ。"]],
+ exp:"外肋間筋は肋間を斜めに走り、収縮して<b>胸郭を広げる</b>とともに<b>肋骨を持ち上げる</b>。（教科書 P160、図11・3a）"},
+
+{q:"吸息を補助する筋はどれか。",kihon:true,
+ choices:[
+  ["胸鎖乳突筋",true,""],
+  ["内肋間筋",false,"深い呼息で収縮して胸郭を狭める筋。"],
+  ["腹直筋",false,"強制呼気で腹圧を上げ、呼息を助ける筋。"],
+  ["内腹斜筋",false,"強制呼気で腹圧を上げ、呼息を助ける筋。"]],
+ exp:"前鋸筋・斜角筋・<b>胸鎖乳突筋</b>なども吸息を補助する。（教科書 P161）"},
+
+{q:"吸息を補助する筋はどれか。",
+ choices:[
+  ["斜角筋",true,""],
+  ["内肋間筋",false,"深い呼息で収縮して胸郭を狭める筋。"],
+  ["外腹斜筋",false,"強制呼気で腹圧を上げ、呼息を助ける筋。"],
+  ["腹横筋",false,"腹部を締めて腹圧を上げ、呼息を助ける筋。"]],
+ exp:"前鋸筋・<b>斜角筋</b>・胸鎖乳突筋なども吸息を補助する。（教科書 P161）"},
+
+{q:"激しい吸息で補助呼吸筋としてはたらくのはどれか。",hosoku:true,
+ choices:[
+  ["大胸筋",true,""],
+  ["内肋間筋",false,"深い呼息で収縮して胸郭を狭める筋。"],
+  ["腹斜筋",false,"強制呼気で腹圧を上げ、呼息を助ける筋。"],
+  ["腹直筋",false,"強制呼気で腹圧を上げ、呼息を助ける筋。"]],
+ exp:"補足知識（資料外）。深い（激しい）吸息では、前鋸筋・斜角筋・胸鎖乳突筋に加えて、<b>小胸筋・大胸筋</b>・僧帽筋などの補助呼吸筋も加わり、胸腔の拡大がさらに強まる。"},
+
+/* ---------- 呼息筋（P161） ---------- */
+
+{q:"安静時の呼息について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["吸息筋の弛緩によって受動的に行われる",true,""],
+  ["内肋間筋の収縮によって能動的に行われる",false,"深い呼息のしくみ。"],
+  ["横隔膜の収縮によって行われる",false,"吸息のしくみ。横隔膜は収縮すると下がって胸腔を広げる。"],
+  ["腹筋の収縮によって行われる",false,"強制呼気（努力性呼息）で加わるしくみ。"]],
+ exp:"安静時の呼息は、吸息筋の<b>弛緩</b>に伴い<b>受動的</b>に行われる。収縮する筋はない。（教科書 P161、図11・3b）"},
+
+{q:"深い呼息で収縮する筋はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["内肋間筋",true,""],
+  ["外肋間筋",false,"安静時の吸息で肋骨を持ち上げる筋。"],
+  ["斜角筋",false,"吸息を補助する筋。"],
+  ["横隔膜",false,"安静時の吸息の主役。呼息時には弛緩して胸腔側へ押し上げられる。"]],
+ exp:"深い呼息では<b>内肋間筋</b>が収縮し、肺内の空気が体外へと<b>能動的</b>に押し出される。（教科書 P161）"},
+
+{q:"強制呼気（努力性呼息）で収縮する筋はどれか。",hosoku:true,
+ choices:[
+  ["腹斜筋",true,""],
+  ["胸鎖乳突筋",false,"吸息を補助する筋。"],
+  ["大胸筋",false,"激しい吸息で補助呼吸筋としてはたらく筋。"],
+  ["外肋間筋",false,"安静時の吸息で肋骨を持ち上げる筋。"]],
+ exp:"補足知識（資料外）。強制呼気では、<b>腹筋</b>（内・外腹斜筋、腹直筋）が収縮して腹圧を上げ、横隔膜を押し上げて呼息を助ける。"},
+
+{q:"内肋間筋について正しいのはどれか。",
+ choices:[
+  ["外肋間筋と交差するように走り、収縮すると胸郭の容積を減らす",true,""],
+  ["外肋間筋と平行に走る",false,"走行の向きが外肋間筋とは異なる。"],
+  ["横隔神経に支配される",false,"横隔神経が支配するのは横隔膜。"],
+  ["安静時の吸息で収縮する",false,"安静時の吸息で収縮するのは横隔膜と外肋間筋。"]],
+ exp:"内肋間筋は外肋間筋と<b>交差</b>するように肋骨間を走行し、肋間神経に支配されて収縮し、胸郭内の容積を<b>減少</b>させる。（教科書 P161）"},
+
+/* ---------- ⚠ 誤りを選ぶ／組合せ ---------- */
+
+{q:"呼吸筋について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["安静時の呼息では、内肋間筋が必ず収縮する",true,""],
+  ["横隔膜は横隔神経に支配される",false,"教科書どおりの記述なので、正しい。"],
+  ["外肋間筋は肋間神経に支配される",false,"教科書どおりの記述なので、正しい。"],
+  ["胸鎖乳突筋は吸息を補助する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"安静時の呼息は吸息筋の弛緩による<b>受動的</b>な運動。内肋間筋が収縮するのは<b>深い呼息</b>のとき。（教科書 P161）"},
+
+{q:"呼吸器系の構造について誤っているのはどれか。",gori:true,
+ choices:[
+  ["気道ではガス交換が行われる",true,""],
+  ["肺は気道の一部と肺胞で構成される",false,"教科書どおりの記述なので、正しい。"],
+  ["胸壁の内面と肺の外表面は胸膜で覆われる",false,"教科書どおりの記述なので、正しい。"],
+  ["気管は左右の気管支に分かれる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"ガス交換が行われるのは<b>肺胞</b>。気道ではガス交換は行われない（気道でガスが占める空間を死腔と呼ぶ）。（教科書 P159、P162）"},
+
+{q:"安静時の吸息で起こる変化の組合せで正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["横隔膜が収縮して下がる ― 外肋間筋が収縮する",true,""],
+  ["横隔膜が弛緩して上がる ― 外肋間筋が収縮する",false,"横隔膜の動きが呼息のときのもの。"],
+  ["横隔膜が収縮して下がる ― 内肋間筋が収縮する",false,"内肋間筋は深い呼息で収縮する筋。"],
+  ["横隔膜が弛緩して上がる ― 内肋間筋が収縮する",false,"深い呼息のときの組合せ。"]],
+ exp:"安静時の吸息では、<b>横隔膜が収縮して下がり</b>、<b>外肋間筋が収縮</b>して肋骨を持ち上げ、胸郭が広がる。（教科書 P160、図11・2）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
