@@ -350,7 +350,7 @@ function pick(el,ok){
     if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
     if(mode==="dobon") streak++;
     exp.className="exp show ok";
-    document.getElementById("vd").textContent=(qmiss===0)?"正解！":"正解！（"+qmiss+"回目で正解）";
+    document.getElementById("vd").textContent="正解！";
     document.getElementById("tx").innerHTML=item.exp;
     nx.disabled=false;
     nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";

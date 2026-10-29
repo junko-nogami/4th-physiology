@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第15章 パートB 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#1a5c7a;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#a8d5e8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#a8d5e8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#1a5c7a;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#1a5c7a;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(26,92,122,.13);color:#154e68}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#1a5c7a;background:#eaf3f7}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #1a5c7a;background:#1a5c7a;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#154e68}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#1a5c7a;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#1a5c7a;background:#eaf3f7}
+.mode .nm{font-size:16px;font-weight:600;color:#1a5c7a;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#1a5c7a;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#154e68;background:rgba(26,92,122,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#1a5c7a;background:rgba(26,92,122,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第15章 体温とその調節｜パートB 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第15章 体温とその調節 ｜ C 熱放散・D 体温調節</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第15章 P217〜220 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本　dobon:true … 💣ドボン（ドボンモードで外すと終了）
+   gori  :true … ⚠誤りを選ぶ　hosoku:true … 📘補足（資料外）
+   g:"…" … 出題グループ（GMAXの上限まで）
+   過去問（7章 体温）での出題回数：体温調節中枢＝視床下部10／熱放散を増やす反応9／
+   精神性発汗の部位5／エクリン・アポクリン4／寒冷時の皮膚血管収縮4／汗腺の神経3／
+   放射の割合・例3／不感蒸散2 */
+const PICK=5;
+const GMAX={butsuri:2,kanrei:1,shinkei:1,kan:1,seishin:1,kodo:1,hosan:1,horumon:1};
+const POOL=[
+
+/* ---------- C-1 熱放散の物理的しくみ（P217） ---------- */
+
+{q:"環境温度が高いとき、熱放散で大きな役割をもつしくみはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["蒸発",true,""],
+  ["伝導",false,"接触している物体との間で熱が伝わるしくみ。環境温度が低いときに大きな役割をもつ。"],
+  ["対流",false,"空気や水の流れに伴って熱が移動するしくみ。環境温度が低いときに大きな役割をもつ。"],
+  ["放射（輻射）",false,"赤外線によって離れた物体へ熱が伝わるしくみ。環境温度が低いときに大きな役割をもつ。"]],
+ exp:"環境温度が低いときは伝導と対流・放射が、<b>高いときは蒸発</b>が熱放散の大きな役割をもつ。（教科書 P217）"},
+
+{g:"butsuri",q:"からだから出る赤外線によって、離れた物体へ熱が伝わるしくみはどれか。",kihon:true,
+ choices:[
+  ["放射（輻射）",true,""],
+  ["伝導",false,"からだと接触している物体との間で熱が伝わるしくみ。"],
+  ["対流",false,"液体や気体の移動に伴って熱が移動するしくみ。"],
+  ["蒸発",false,"汗などの水分が気化するときに、皮膚から熱を奪うしくみ。"]],
+ exp:"物体からは温度に応じた電磁波（赤外線）が常に出ており、離れた物体へ電磁波が伝わるとき熱も伝わる。これを<b>放射（輻射）</b>という。（教科書 P217）"},
+
+{g:"butsuri",q:"冷たい金属製のベンチに座ると、おしりから熱が奪われる。このとき主にはたらく熱放散のしくみはどれか。",
+ choices:[
+  ["伝導",true,""],
+  ["対流",false,"空気や水の流れに伴って熱が移動するしくみ。"],
+  ["放射（輻射）",false,"赤外線によって、触れていない物体へ熱が伝わるしくみ。"],
+  ["蒸発",false,"水分が気化するときに熱を奪うしくみ。"]],
+ exp:"<b>伝導</b>は、接触している物体との間で、温度の高いほうから低いほうへ熱が移動すること。（教科書 P217）"},
+
+{g:"butsuri",q:"扇風機の風に当たると、汗をかいていなくても涼しく感じる。このとき主にはたらく熱放散のしくみはどれか。",
+ choices:[
+  ["対流",true,""],
+  ["伝導",false,"接触している物体との間で熱が伝わるしくみ。"],
+  ["放射（輻射）",false,"赤外線によって、触れていない物体へ熱が伝わるしくみ。"],
+  ["蒸発",false,"水分が気化するときに熱を奪うしくみ。"]],
+ exp:"皮膚に接する空気が流れると、熱放散の量が増える（<b>対流</b>）。（教科書 P217）"},
+
+{g:"butsuri",q:"冷えた窓ガラスのそばに立つと、触れていなくてもからだが冷える。このとき主にはたらく熱放散のしくみはどれか。",
+ choices:[
+  ["放射（輻射）",true,""],
+  ["伝導",false,"接触している物体との間で熱が伝わるしくみ。"],
+  ["対流",false,"空気や水の流れに伴って熱が移動するしくみ。"],
+  ["蒸発",false,"水分が気化するときに熱を奪うしくみ。"]],
+ exp:"からだから出る赤外線が離れた物体へ伝わるとき、熱も伝わる（<b>放射</b>）。（教科書 P217）"},
+
+{g:"butsuri",q:"気温25℃前後で安静にしているとき、熱放散の割合がもっとも大きいのはどれか。",hosoku:true,
+ choices:[
+  ["放射（輻射）",true,""],
+  ["蒸発",false,"汗や不感蒸散の気化熱による熱放散。暑くなるほど割合が増える。"],
+  ["対流",false,"空気の流れに伴う熱放散。"],
+  ["伝導",false,"接触している物体への熱放散。"]],
+ exp:"補足知識（資料外）。気温25℃前後では熱放散の半分以上を<b>放射</b>が占める。環境温度が上がるほど蒸発の割合が大きくなる。"},
+
+{q:"皮膚や気道粘膜から、自覚されずに起こる水分の蒸発を何というか。",kihon:true,
+ choices:[
+  ["不感蒸散",true,""],
+  ["温熱性発汗",false,"暑熱環境で、全身のエクリン汗腺から出る汗。"],
+  ["精神性発汗",false,"精神的な緊張で、手掌・足底などに出る汗。"],
+  ["対流",false,"空気や水の流れに伴って熱が移動するしくみ。"]],
+ exp:"気化熱を奪う熱放散には、発汗のほか、皮膚と気道粘膜からの<b>不感蒸散</b>（自覚されない蒸発）がある。（教科書 P217）"},
+
+{q:"汗1gが蒸発するときに、からだから奪う熱量はおよそどれか。",hosoku:true,
+ choices:[
+  ["約0.58 kcal",true,""],
+  ["約0.058 kcal",false,"汗1gの気化熱と合わない値。"],
+  ["約5.8 kcal",false,"汗1gの気化熱と合わない値。"],
+  ["約58 kcal",false,"汗1gの気化熱と合わない値。"]],
+ exp:"補足知識（資料外）。汗1gの蒸発で<b>約580 cal（0.58 kcal）</b>の熱が奪われる。"},
+
+/* ---------- C-2 熱放散の生理学的しくみ：皮膚血管運動（P218） ---------- */
+
+{q:"身体内部から皮膚へ熱を運ぶうえで、もっとも大きな役割を果たすのはどれか。",
+ choices:[
+  ["血流を介した対流",true,""],
+  ["組織間での伝導",false,"組織どうしが接して熱が伝わるしくみ。皮膚への熱の運搬での役割は小さい。"],
+  ["放射（輻射）",false,"体表から離れた物体へ赤外線で熱が伝わるしくみ。"],
+  ["汗の蒸発",false,"皮膚の表面から外部へ熱を逃がすしくみ。"]],
+ exp:"身体内部から皮膚への熱の移動は、組織間の伝導よりも<b>血流を介した対流</b>の役割が大きい。（教科書 P218）"},
+
+{g:"shinkei",q:"皮膚血管を収縮させる神経はどれか。",kihon:true,
+ choices:[
+  ["交感神経のアドレナリン作動性神経",true,""],
+  ["交感神経のコリン作動性神経",false,"皮膚血管を拡張させる神経。汗腺にも分布する。"],
+  ["副交感神経",false,"消化管の運動などを促す自律神経。皮膚血管を支配していない。"],
+  ["運動神経",false,"骨格筋を収縮させる神経。"]],
+ exp:"皮膚血管は交感神経に支配され、<b>アドレナリン作動性神経</b>で収縮、コリン作動性神経で拡張する。（教科書 P218）"},
+
+{g:"shinkei",q:"運動時や暑熱環境下での皮膚血管の調節で正しいのはどれか。",
+ choices:[
+  ["アドレナリン作動性神経が不活化し、コリン作動性神経が活性化して拡張する",true,""],
+  ["アドレナリン作動性神経が活性化し、コリン作動性神経が不活化して拡張する",false,"神経の活動の向きが合わない。アドレナリン作動性神経の活性化は血管を細くする。"],
+  ["アドレナリン作動性神経が活性化して収縮する",false,"寒冷環境で起こる反応。"],
+  ["副交感神経が活性化して拡張する",false,"皮膚血管は副交感神経の支配を受けない。"]],
+ exp:"運動時・暑熱環境下では、アドレナリン作動性神経が<b>不活化</b>するとともにコリン作動性神経が<b>活性化</b>し、皮膚血管が<b>拡張</b>する。（教科書 P218）"},
+
+{g:"kanrei",q:"寒冷環境で、ふるえや非ふるえ熱産生よりも先に起こる反応はどれか。",kihon:true,
+ choices:[
+  ["皮膚血管の収縮",true,""],
+  ["皮膚血管の拡張",false,"暑熱環境で熱放散を促す反応。"],
+  ["発汗の増加",false,"暑熱環境で熱放散を促す反応。"],
+  ["不感蒸散の増加",false,"皮膚や気道からの水分蒸発が増えること。熱放散を増やす方向にはたらく。"]],
+ exp:"寒冷環境では、ふるえ・非ふるえ熱産生よりも先にアドレナリン作動性神経が活性化して<b>皮膚血管が収縮</b>する。（教科書 P218）"},
+
+{g:"kanrei",q:"寒冷環境で皮膚血管が収縮したときの変化で正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["皮膚血流が減少し、熱放散が抑制される",true,""],
+  ["皮膚血流が増加し、熱放散が促進される",false,"暑熱環境で皮膚血管が拡張したときの変化。"],
+  ["皮膚血流が減少し、熱放散が促進される",false,"血流と熱放散の関係が合わない。"],
+  ["皮膚血流が増加し、熱放散が抑制される",false,"血流と熱放散の関係が合わない。"]],
+ exp:"皮膚血管収縮 → <b>皮膚血流減少</b> → <b>熱放散抑制</b>。（教科書 P219、図15・3）"},
+
+{q:"皮膚血管が拡張すると皮膚温が上がる。これによって盛んになる熱放散のしくみはどれか。",
+ choices:[
+  ["伝導・対流・放射（輻射）",true,""],
+  ["蒸発だけ",false,"汗が気化するときの熱放散。汗腺の活動によって起こる。"],
+  ["不感蒸散だけ",false,"皮膚や気道から自覚されずに起こる水分の蒸発。"],
+  ["精神性発汗",false,"精神的な緊張で手掌・足底などに出る汗。"]],
+ exp:"皮膚血管の拡張は皮膚温を上昇させ、<b>伝導・対流・放射（輻射）</b>による環境との熱移動を盛んにする。（教科書 P218）"},
+
+{q:"皮膚に多く、体温が上がると開いて熱放散に役立つ血管構造はどれか。",hosoku:true,
+ choices:[
+  ["動静脈吻合",true,""],
+  ["毛細血管前括約筋",false,"毛細血管の入口にある平滑筋。開閉で毛細血管への血流を調節する。"],
+  ["静脈弁",false,"静脈にある弁。血液の逆流を防ぐ。"],
+  ["リンパ管",false,"組織液の一部をリンパとして回収し、静脈へ戻す管。"]],
+ exp:"補足知識（資料外）。<b>動静脈吻合</b>は細動脈と細静脈を、毛細血管を通さずに直接つなぐ血管。手指・足趾・耳介などの皮膚に多く、体温が上がると開いて皮膚血流を増やし、熱放散を促す。"},
+
+/* ---------- C-2 熱放散の生理学的しくみ：汗腺（P218） ---------- */
+
+{q:"体温調節に貢献する汗腺はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["エクリン汗腺",true,""],
+  ["アポクリン汗腺",false,"腋窩・外陰部などにある汗腺。体温調節にはほとんど関与しない。"],
+  ["皮脂腺",false,"皮脂を分泌して皮膚や毛を保護する腺。"],
+  ["乳腺",false,"乳汁を分泌する腺。"]],
+ exp:"体温調節に貢献するのは<b>エクリン汗腺</b>で、アポクリン汗腺はほとんど関与しない。（教科書 P218）"},
+
+{g:"kan",q:"汗腺について誤っているのはどれか。",gori:true,
+ choices:[
+  ["能動汗腺の数は、成人してからの生活環境で決まる",true,""],
+  ["エクリン汗腺は、からだに200〜500万個ある",false,"教科書どおりの記述なので、正しい。"],
+  ["能動化された汗腺でも、刺激のたびに毎回活動するとは限らない",false,"教科書どおりの記述なので、正しい。"],
+  ["蒸発による熱放散のうち、発汗がもっとも強力である",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"汗腺の能動化は、<b>生後2〜3年まで</b>の環境で決まる。（教科書 P218）"},
+
+{q:"汗腺を支配する神経と、発汗量を増やす伝達物質の組合せで正しいのはどれか。",kihon:true,
+ choices:[
+  ["交感神経 ― アセチルコリン",true,""],
+  ["交感神経 ― ノルアドレナリン",false,"交感神経の多くの節後線維が放出する物質。皮膚血管を収縮させる側。"],
+  ["副交感神経 ― アセチルコリン",false,"消化管の運動などを促す神経。汗腺を支配していない。"],
+  ["副交感神経 ― ノルアドレナリン",false,"神経も伝達物質も合わない。"]],
+ exp:"汗腺は<b>交感神経</b>に支配され、コリン作動性神経が放出する<b>アセチルコリン</b>に反応して発汗量を増やす。（教科書 P218、第3章）"},
+
+{g:"kan",q:"生後2〜3年を熱帯環境で過ごした人の能動汗腺数について正しいのはどれか。",
+ choices:[
+  ["多くなる",true,""],
+  ["少なくなる",false,"寒冷環境で育った場合の変化。"],
+  ["生まれたときから決まっていて、環境では変わらない",false,"誕生後すぐにすべての汗腺が能動化するわけではない。"],
+  ["成人してから増えはじめる",false,"能動化が決まる時期が合わない。"]],
+ exp:"能動汗腺数は生後2〜3年までの環境で決まり、熱帯環境で育つと<b>多く</b>、寒冷環境で育つと少なくなる。（教科書 P218）"},
+
+{q:"暑熱環境下での体温調節にもっとも貢献する発汗はどれか。",kihon:true,
+ choices:[
+  ["温熱性発汗",true,""],
+  ["精神性発汗",false,"精神的な緊張で手掌・足底などに出る汗。"],
+  ["不感蒸散",false,"皮膚や気道から自覚されずに起こる水分の蒸発。"],
+  ["皮脂の分泌",false,"皮脂腺から出る脂。皮膚や毛を保護する。"]],
+ exp:"暑熱環境下での発汗を<b>温熱性発汗</b>といい、体温調節にもっとも貢献する。（教科書 P218）"},
+
+{g:"seishin",q:"温熱性発汗がみられない部位はどれか。",kihon:true,
+ choices:[
+  ["手掌と足底",true,""],
+  ["背部と胸部",false,"温熱性発汗がみられる部位。"],
+  ["前額と頸部",false,"温熱性発汗がみられる部位。"],
+  ["腹部と大腿",false,"温熱性発汗がみられる部位。"]],
+ exp:"温熱性発汗は、<b>手掌や足底を除く</b>全身のエクリン汗腺からの発汗。（教科書 P218）"},
+
+{g:"seishin",q:"精神的に緊張したとき、汗がもっとも出やすい部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["手掌",true,""],
+  ["背部",false,"暑熱環境で温熱性発汗がみられる部位。"],
+  ["大腿",false,"暑熱環境で温熱性発汗がみられる部位。"],
+  ["上腕",false,"暑熱環境で温熱性発汗がみられる部位。"]],
+ exp:"精神性発汗は、<b>手掌</b>・足底・腋窩・前額などで主にみられる。（教科書 P218）"},
+
+{g:"seishin",q:"手掌や足底の精神性発汗が果たす役割はどれか。",
+ choices:[
+  ["物をつかんだり踏ん張ったりするときの滑り止め",true,""],
+  ["皮膚から熱を奪い、体温を下げる",false,"温熱性発汗の役割。"],
+  ["皮膚の血流を増やす",false,"皮膚血管の拡張による変化。"],
+  ["手のひらで温度を感じとりやすくする",false,"温度は皮膚の温度受容器で感知する。"]],
+ exp:"手掌と足底での発汗は、物をつかんだり踏ん張ったりする際の<b>滑り止め</b>の役割を果たす。（教科書 P218）"},
+
+{q:"アポクリン汗腺が主に分布する部位はどれか。",hosoku:true,
+ choices:[
+  ["腋窩・乳頭・外陰部",true,""],
+  ["手掌・足底",false,"精神性発汗がみられる部位。"],
+  ["全身の皮膚",false,"温熱性発汗を担う汗腺が分布する範囲。"],
+  ["前額・頸部",false,"温熱性発汗がみられる部位。"]],
+ exp:"補足知識（資料外）。アポクリン汗腺は<b>腋窩・乳頭・外陰部</b>などに限られ、体温調節にはほとんど関与しない。"},
+
+/* ---------- D 体温調節（P218〜220） ---------- */
+
+{q:"体温調節中枢がある部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["視床下部",true,""],
+  ["延髄",false,"呼吸や循環の中枢がある部位。"],
+  ["小脳",false,"運動の協調を担う部位。"],
+  ["大脳皮質の体性感覚野",false,"皮膚からの温度情報が、温度感覚として認知される部位。"]],
+ exp:"皮膚と身体内部で感知された温度情報は、<b>視床下部</b>の視索前野にある体温調節中枢で統合される。（教科書 P219）"},
+
+{q:"視索前野に多く、主に温度の上昇で興奮するニューロンはどれか。",
+ choices:[
+  ["温ニューロン",true,""],
+  ["冷ニューロン",false,"温度の低下で興奮するニューロン。"],
+  ["α運動ニューロン",false,"脊髄前角にあり、骨格筋を収縮させるニューロン。"],
+  ["介在ニューロン",false,"ニューロンどうしの間をつなぐニューロン。"]],
+ exp:"視索前野には温度感受性ニューロンがあり、主に温度の上昇で興奮する<b>温ニューロン</b>である。（教科書 P219）"},
+
+{q:"体温調節反応の主な入力となる温度はどれか。",kihon:true,
+ choices:[
+  ["核心温度",true,""],
+  ["外殻温度",false,"皮膚表面や浅層の温度。外気温に伴って変化する。"],
+  ["外気温",false,"からだのまわりの空気の温度。"],
+  ["衣服内の温度",false,"衣服と皮膚の間の空気の温度。"]],
+ exp:"体温調節反応の主たる入力は<b>核心温度</b>。設定温度から解離していれば、熱放散や熱産生で調節される。（教科書 P219）"},
+
+{q:"核心温度が設定温度からずれたとき、元に戻すように熱放散や熱産生が調節される。このしくみを何というか。",
+ choices:[
+  ["負のフィードバック",true,""],
+  ["正のフィードバック",false,"変化をさらに強める方向にはたらくしくみ。分娩時のオキシトシン分泌など。"],
+  ["順応",false,"同じ刺激が続くと、感覚が弱まっていく現象。"],
+  ["条件反射",false,"経験によって後天的に獲得される反射。"]],
+ exp:"<b>負のフィードバック</b>による恒常性の維持である。（教科書 P219、第1章）"},
+
+{q:"皮膚の温度受容器からの情報の伝わり方で正しいのはどれか。",
+ choices:[
+  ["外側脊髄視床路を上行した情報は、温度感覚として認知される",true,""],
+  ["外側脊髄視床路を上行した情報は、視索前野で体温調節に使われる",false,"視索前野へは、脳幹の外側結合腕傍核を経由する別の経路で伝わる。"],
+  ["温度情報は、脊髄後角を通らずに脳へ伝わる",false,"2つの経路はどちらも脊髄後角を通る。"],
+  ["温度情報は、小脳で体温調節に使われる",false,"小脳は運動の協調を担う部位。"]],
+ exp:"経路は2つ。①脊髄後角→外側結合腕傍核→視索前野、②脊髄後角→交叉→<b>外側脊髄視床路</b>→大脳皮質体性感覚野（<b>温度感覚として認知</b>）。（教科書 P219）"},
+
+{g:"kodo",q:"行動性体温調節にあたるのはどれか。",
+ choices:[
+  ["寒くて上着を羽織る",true,""],
+  ["からだがふるえる",false,"骨格筋の不随意的な収縮による熱産生。自律性の反応。"],
+  ["鳥肌が立つ",false,"立毛筋の収縮。自律神経による反応。"],
+  ["汗をかく",false,"汗腺の活動による熱放散。自律性の反応。"]],
+ exp:"暑いときに扇風機をつける、寒いときにストーブに近づくなど、意識的に行う体温調節を<b>行動性体温調節</b>という。（教科書 P219）"},
+
+{g:"kodo",q:"体温調節について誤っているのはどれか。",gori:true,
+ choices:[
+  ["皮膚血管の収縮・拡張は、行動性体温調節にあたる",true,""],
+  ["エアコンの設定温度を変えるのは、行動性体温調節にあたる",false,"教科書どおりの記述なので、正しい。"],
+  ["ふるえによる熱産生は、自律性体温調節にあたる",false,"教科書どおりの記述なので、正しい。"],
+  ["発汗による熱放散は、自律性体温調節にあたる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"ふるえ・非ふるえ熱産生、皮膚血管の収縮・拡張、発汗の調節を<b>自律性体温調節</b>という。（教科書 P219）"},
+
+{q:"運動時に、体温の情報以外で体温調節反応のきっかけとなるのはどれか。",
+ choices:[
+  ["上位中枢からの運動の指令（セントラルコマンド）",true,""],
+  ["核心温度の上昇",false,"体温の情報（温熱性要因）。"],
+  ["皮膚温の上昇",false,"体温の情報（温熱性要因）。"],
+  ["外気温の上昇",false,"皮膚の温度受容器を介して伝わる、温熱性要因。"]],
+ exp:"運動時は、<b>セントラルコマンド</b>や活動筋からの情報（機械受容器・代謝受容器）に連動して体温調節反応が起こる。（教科書 P220）"},
+
+{g:"horumon",q:"暑熱環境で多量に発汗し、血漿浸透圧が上昇したときに分泌が増えるホルモンはどれか。",
+ choices:[
+  ["抗利尿ホルモン（バソプレシン）",true,""],
+  ["心房性ナトリウム利尿ペプチド",false,"心房が伸展されると分泌され、尿量を増やすホルモン。"],
+  ["カルシトニン",false,"甲状腺から分泌され、血中Ca²⁺濃度を下げるホルモン。"],
+  ["インスリン",false,"膵臓のB細胞から分泌され、血糖を下げるホルモン。"]],
+ exp:"多量発汗による血漿浸透圧の上昇は体温調節反応にも影響する（教科書 P220）。浸透圧が上がると<b>抗利尿ホルモン</b>が増え、腎臓での水の再吸収が促される（第6章）。"},
+
+{g:"horumon",q:"暑熱環境で大量に発汗して体液が失われたとき、分泌が増えて腎臓でのNa⁺の再吸収を促すホルモンはどれか。",
+ choices:[
+  ["アルドステロン",true,""],
+  ["抗利尿ホルモン（バソプレシン）",false,"下垂体後葉から分泌され、腎臓での水の再吸収を促すホルモン。"],
+  ["心房性ナトリウム利尿ペプチド",false,"心房が伸展されると分泌され、Na⁺の排泄を促すホルモン。"],
+  ["コルチゾル",false,"副腎皮質から分泌され、血糖を上げ、ストレスへの抵抗性を高めるホルモン。"]],
+ exp:"大量の発汗で体液が減ると、副腎皮質から<b>アルドステロン</b>の分泌が増え、腎臓でのNa⁺の再吸収が促されて体液量が保たれる。（教科書 P220、第6章）"},
+
+{g:"hosan",q:"熱放散を増やす反応はどれか。",kihon:true,
+ choices:[
+  ["皮膚血管の拡張",true,""],
+  ["皮膚血管の収縮",false,"寒冷時に皮膚への血流を減らし、熱を逃がさないようにする反応。"],
+  ["立毛筋の収縮",false,"毛を立てる皮膚の平滑筋の収縮。寒冷時にみられる。"],
+  ["ふるえ",false,"骨格筋の不随意的な律動的収縮による熱産生。"]],
+ exp:"<b>皮膚血管拡張</b> → 皮膚血流増加 → 熱放散促進。（教科書 P219、図15・3）"},
+
+{g:"hosan",q:"暑熱環境に曝露されたときの反応について誤っているのはどれか。",gori:true,
+ choices:[
+  ["熱産生が促進される",true,""],
+  ["皮膚血管が拡張する",false,"教科書どおりの記述なので、正しい。"],
+  ["皮膚血流が増加する",false,"教科書どおりの記述なので、正しい。"],
+  ["発汗が促進される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"暑熱環境では熱放散が促進され、熱産生は<b>抑制</b>される。（教科書 P219、図15・3）"},
+
+];
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=draw();
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent="正解！";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  document.getElementById("htt").textContent="結果";
+  if(mode==="dobon"){
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
