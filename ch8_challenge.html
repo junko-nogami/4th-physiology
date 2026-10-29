@@ -69,6 +69,13 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .tag{display:inline-block;font-size:12px;font-weight:600;color:#8b2635;background:rgba(139,38,53,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
 .tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
 .step{font-size:12px;font-weight:700;color:#8b2635;letter-spacing:.08em;margin:0 auto 10px}
+.mode.study{border-color:#cfe5e2}
+.mode.study .nm{color:#0f766e}
+.mode.study:hover{border-color:#0f766e;background:#eef7f6}
+.mode.resume{border-color:#0f766e;background:#eef7f6}
+.mode.resume .nm{color:#0f766e}
+.divider{font-size:12px;font-weight:700;color:#0f766e;letter-spacing:.08em;margin:22px auto 10px}
+.tag.study{color:#0f766e;background:rgba(15,118,110,.1)}
 </style>
 </head>
 <body>
@@ -81,6 +88,7 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 </div>
 <script>
 /* ===== 問題プール =====
+   追加：📖学習モード（ch11_challenge.html と同じエンジン。全問・選び直しあり・間違えた問題だけ解き直し・localStorageに保存して再開）
    パートA〜Dの全問（教科書 第8章 P115〜132 ベース）＋ チャレンジ限定の新問題10問
    choices: [表示文, 正解フラグ, その選択肢が何かの説明]
    kihon / gori / hosoku / shinmon の意味は ch3_challenge と同じ。
@@ -1859,10 +1867,32 @@ const COURSES={
   "100":{name:"コンプリート100",pick:{A:26,B:21,C:15,D:28}},
   "all":{name:"ALL",            pick:null}
 };
-const TOTAL=Object.values(PARTS).reduce((s,p)=>s+p.length,0)+SHINMON.length;
+const ALL=[].concat(POOL_A,POOL_B,POOL_C,POOL_D,SHINMON);
+const TOTAL=ALL.length;
 
-/* ===== 出題エンジン ===== */
+/* ===== 学習モード用：問題の識別キーと保存 ===== */
+function keyOf(it){return it.q+"｜"+it.choices.find(c=>c[1])[0];}
+const BYKEY={}; ALL.forEach(it=>{BYKEY[keyOf(it)]=it;});
+const SKEY="ch8_challenge_study_v1";   // 章ごとに別のキー
+function sLoad(){
+  try{
+    const s=JSON.parse(localStorage.getItem(SKEY));
+    if(!s||!Array.isArray(s.list))return null;
+    s.list=s.list.filter(k=>BYKEY[k]);           // 問題を差し替えても壊れないように
+    s.wrong=(s.wrong||[]).filter(k=>BYKEY[k]);
+    if(!s.list.length)return null;
+    s.pos=Math.min(Math.max(0,s.pos|0),s.list.length);
+    s.round=s.round||1;
+    return s;
+  }catch(e){return null;}
+}
+function sSave(){try{localStorage.setItem(SKEY,JSON.stringify(st));}catch(e){}}
+function sClear(){try{localStorage.removeItem(SKEY);}catch(e){}}
+
+/* ===== 共通 ===== */
+let mode="challenge";
 let course="50", drawn=[], idx=0, correct=0, streak=0, best=0, lives=0, maxLives=0, answered=false, dead=false;
+let st=null, sMiss=0;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function hearts(){
   if(maxLives<=1) return "";
@@ -1884,10 +1914,32 @@ function resetHead(t){
   drawn=[];
   document.getElementById("ctrl").innerHTML="";
 }
+function qBody(item){
+  const opts=shuffle(item.choices);
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml="";
+  if(item.kihon)   markHtml += `<span class="mark kihon">🎯 基本</span>`;
+  if(item.gori)    markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku)  markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  if(item.shinmon) markHtml += `<span class="mark shinmon">🔥 チャレンジ限定</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  const qn = (mode==="study") ? st.pos+1 : idx+1;
+  let h=`<div class="qnum">Q${qn} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  return h;
+}
 
-/* ステップ1：問題数を選ぶ */
+/* ステップ1：問題数（または学習モード）を選ぶ */
 function home(){
+  mode="challenge";
   resetHead("コンプリートチャレンジ");
+  const sv=sLoad();
+  const resume = (sv && sv.pos<sv.list.length) ? `
+        <button class="mode resume" onclick="studyResume()">
+          <div class="nm">📖 学習モード：続きから</div>
+          <div class="ds">${sv.round}周目${sv.round>1?"（間違えた問題）":""}の ${sv.pos+1}問目 / ${sv.list.length}問 から再開します。</div>
+        </button>` : "";
   document.getElementById("bd").innerHTML=`
     <div class="center">
       <p class="lead">第8章の全パートの問題に、チャレンジ限定の新問題を混ぜて出題します。<br>毎回ランダムに選んでシャッフル。ライフがなくなるまで出し続けます。</p>
@@ -1906,12 +1958,20 @@ function home(){
           <div class="ds">第8章の全問題。最後までたどり着けるか挑戦。</div>
         </button>
       </div>
+      <div class="divider">じっくり学ぶ</div>
+      <div class="modes">${resume}
+        <button class="mode study" onclick="studyNew()">
+          <div class="nm">📖 学習モード（全${TOTAL}問）</div>
+          <div class="ds">ライフなし。間違えても選び直して最後まで進めます。1周したら、間違えた問題だけをもう一度。全問クリアするまで続けられます。進み具合は自動で保存されます。</div>
+        </button>
+      </div>
       <div class="legend">
         <span class="mark kihon">🎯 基本</span> 落としちゃダメな基本問題<br>
         <span class="mark gori">⚠ 誤りを選ぶ</span> 誤っているものを選ぶ問題<br>
         <span class="mark hosoku">📘 補足（資料外）</span> 教科書外の国試頻出テーマ<br>
         <span class="mark shinmon">🔥 チャレンジ限定</span> この章末だけに出る新問題<br>
-        ※ どのモードでも選び直しはできません。間違えた問題も解説は表示されます。
+        ※ チャレンジ（50・100・ALL）は選び直しができません。間違えた問題も解説は表示されます。<br>
+        ※ 学習モードの進み具合は、<b>この端末のこのブラウザにだけ</b>保存されます。シークレットモードで開いた場合や、ブラウザの履歴・データを消した場合は保存されません。
       </div>
     </div>`;
 }
@@ -1952,6 +2012,7 @@ function draw(){
 }
 
 function start(n){
+  mode="challenge";
   maxLives=n; lives=n;
   drawn=draw();
   idx=0; correct=0; streak=0; best=0; dead=false;
@@ -1961,25 +2022,15 @@ function start(n){
 function render(){
   answered=false;
   const item=drawn[idx];
-  const opts=shuffle(item.choices);
   document.getElementById("htt").textContent = cname()+"｜"+lname();
   paintHead();
   document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
-  const L=["ア","イ","ウ","エ","オ"];
-  let markHtml="";
-  if(item.kihon)   markHtml += `<span class="mark kihon">🎯 基本</span>`;
-  if(item.gori)    markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
-  if(item.hosoku)  markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
-  if(item.shinmon) markHtml += `<span class="mark shinmon">🔥 チャレンジ限定</span>`;
-  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
-  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
-  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
-  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
-  document.getElementById("bd").innerHTML=h;
+  document.getElementById("bd").innerHTML=qBody(item);
   document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
 }
 
 function pick(el,ok){
+  if(mode==="study") return studyPick(el,ok);
   if(answered)return;
   answered=true;
   const item=drawn[idx];
@@ -2020,8 +2071,8 @@ function next(){
 
 function result(){
   const n=drawn.length;
-  const done=idx+1;                       // 出題された問題数
-  const complete=(!dead && done>=n);      // 全問やりきった
+  const done=idx+1;
+  const complete=(!dead && done>=n);
   document.getElementById("htt").textContent="結果";
   document.getElementById("life").innerHTML=hearts();
   document.getElementById("pg").textContent="";
@@ -2064,7 +2115,95 @@ function result(){
   document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">問題数を選ぶ</button><button class="btn sub" onclick="pickCourse(course)">ライフを選ぶ</button><button class="btn" onclick="start(maxLives)">もう一度（シャッフル）▶</button>`;
 }
 
+/* ===== 📖 学習モード =====
+   全問をシャッフルして出題。間違えたら選び直し（通常モードと同じ）。
+   1周終わったら、1回でもミスした問題だけで次の周を作る。全問クリアで終了。
+   1問答えるごとに localStorage に保存し、次に開いたとき「続きから」で再開できる。 */
+function studyNew(){
+  const sv=sLoad();
+  if(sv && sv.pos<sv.list.length && !confirm("保存されている続きを消して、全問を最初から始めますか？")) return;
+  st={v:1,round:1,list:shuffle(ALL.map(keyOf)),pos:0,wrong:[]};
+  sSave();
+  studyRender();
+}
+function studyResume(){
+  st=sLoad();
+  if(!st){home();return;}
+  if(st.pos>=st.list.length){mode="study";studyEnd();return;}
+  studyRender();
+}
+function studyRender(){
+  mode="study"; sMiss=0;
+  const item=BYKEY[st.list[st.pos]];
+  document.getElementById("htt").textContent="学習モード｜"+st.round+"周目"+(st.round>1?"（間違えた問題）":"");
+  document.getElementById("life").innerHTML="";
+  document.getElementById("pg").textContent=`${st.pos+1} / ${st.list.length}問目`;
+  document.getElementById("bar").style.width=(st.pos/st.list.length*100)+"%";
+  document.getElementById("bd").innerHTML=qBody(item);
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">中断する（保存済み）</button><button class="btn" id="nx" onclick="studyNext()" disabled>解答を選んでください</button>`;
+}
+function studyPick(el,ok){
+  if(el.classList.contains("dis"))return;
+  const key=st.list[st.pos];
+  const item=BYKEY[key];
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+  if(ok){
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent=(sMiss===0)?"正解！":"正解！（ミス "+sMiss+"回のあと）";
+    document.getElementById("tx").innerHTML=item.exp;
+    st.pos++; sSave();
+    nx.disabled=false;
+    nx.textContent=(st.pos<st.list.length)?"次の問題 ▶":"この周の結果を見る ▶";
+    return;
+  }
+  sMiss++;
+  if(!st.wrong.includes(key)){st.wrong.push(key); sSave();}
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+sMiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function studyNext(){
+  if(st.pos<st.list.length) studyRender();
+  else studyEnd();
+}
+function studyEnd(){
+  const n=st.list.length, w=st.wrong.length, ok=n-w, r=st.round;
+  document.getElementById("htt").textContent="学習モード｜"+r+"周目の結果";
+  document.getElementById("life").innerHTML="";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  let html, btns;
+  if(w===0){
+    sClear(); st=null;
+    html = (r===1)
+      ? `<div class="center score"><span class="tag study">📖 学習モード</span>
+          <div>全問一発正解</div><div class="big">${n} / ${n}</div>
+          <div class="msg">第8章の全問を1周目でノーミス。お見事です！</div></div>`
+      : `<div class="center score"><span class="tag study">📖 学習モード</span>
+          <div>✨ 全問クリア！</div><div class="big">${r}周で完了</div>
+          <div class="msg">間違えた問題をすべて解き直しました。<br>次はチャレンジ（ライフ制）で腕試しをしてみましょう。</div></div>`;
+    btns=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="studyNew()">全問をもう一度（シャッフル）▶</button>`;
+  }else{
+    html=`<div class="center score"><span class="tag study">📖 学習モード｜${r}周目</span>
+      <div>一発正解</div><div class="big">${ok} / ${n}</div>
+      <div class="msg">間違えた問題が <b>${w}問</b> あります。<br>この${w}問だけを、もう一度解きましょう。</div>
+      <div class="stats">進み具合は保存済み。閉じても「続きから」で再開できます</div></div>`;
+    st={v:1,round:r+1,list:shuffle(st.wrong.slice()),pos:0,wrong:[]};
+    sSave();
+    btns=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="studyRender()">間違えた${w}問だけもう一度 ▶</button>`;
+  }
+  document.getElementById("bd").innerHTML=html;
+  document.getElementById("ctrl").innerHTML=btns;
+}
+
 home();
+
 </script>
 </body>
 </html>
