@@ -19,11 +19,11 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .qnum{font-size:11px;font-weight:600;color:#9e3450;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
 .mark.kihon{background:rgba(158,52,80,.13);color:#84293f}
-.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
-.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
-.mark.hosoku{background:rgba(40,90,140,.12);color:#285a8c;border:1px solid rgba(40,90,140,.3)}
+.mark.dobon{background:rgba(194,65,12,.14);color:#C2410C}
+.mark.gori{background:rgba(109,63,158,.12);color:#6D3F9E;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(138,99,20,.13);color:#8a6314}
 .q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
-.q .ng{color:#a8322e;font-weight:700}
+.q .ng{color:#6D3F9E;font-weight:700}
 .opts{display:flex;flex-direction:column;gap:9px}
 .opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
 .opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -55,14 +55,14 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .mode:hover{border-color:#9e3450;background:#fdf3f5}
 .mode .nm{font-size:16px;font-weight:600;color:#9e3450;margin-bottom:4px}
 .mode .ds{font-size:13px;color:#666;line-height:1.7}
-.mode.dob .nm{color:#c33c28}
-.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.mode.dob .nm{color:#C2410C}
+.mode.dob:hover{border-color:#C2410C;background:#fdf1ea}
 .score .big{font-size:40px;font-weight:700;color:#9e3450;margin:6px 0}
-.score.dead .big{color:#c33c28}
+.score.dead .big{color:#C2410C}
 .score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
 .score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#84293f;background:rgba(158,52,80,.09);padding:7px 16px;border-radius:20px}
 .tag{display:inline-block;font-size:12px;font-weight:600;color:#9e3450;background:rgba(158,52,80,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
-.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+.tag.dob{color:#C2410C;background:rgba(194,65,12,.12)}
 </style>
 </head>
 <body>
@@ -76,12 +76,15 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 <script>
 /* ===== 問題プール（教科書 第2章 P14〜15 ベース）=====
    choices: [表示文, 正解フラグ, その選択肢が何かの説明]
-   kihon :true … 落としちゃダメな基本問題（🎯基本／ドボンモードでは💣ドボン！）
-   gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
-   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。🎯基本にはしない
-   exp … 正解時に見せる「なぜ正しいか」 */
+   kihon :true … 🎯基本
+   dobon :true … 💣ドボン（ドボンモードで外したら終了）。🎯基本の中から選ぶ
+   gori  :true … ⚠誤りを選ぶ。true が付くのは「誤っている記述」＝選ぶべき選択肢
+   hosoku:true … 📘補足（資料外）
+   g     :"…"  … 出題グループ（1回の出題での上限は GMAX） */
 const PICK=5;
+const GMAX={ach:1, ca:1, ecc:1, trop:1};
 const POOL=[
+/* ---- ① 活動電位の発生 ---- */
 {q:"骨格筋の神経支配について正しいのはどれか。",kihon:true,
  choices:[
   ["1本の筋線維に運動終末は1つある",true,""],
@@ -90,7 +93,7 @@ const POOL=[
   ["神経の支配を受けずに自動的に収縮する",false,"自動性をもつのは心筋。骨格筋は運動神経の興奮によって収縮する。"]],
  exp:"骨格筋線維は運動神経の支配を受け、運動神経と筋線維の接合部（神経筋接合部・運動終末）は各筋線維に1つある。"},
 
-{q:"神経筋接合部で放出される神経伝達物質はどれか。",kihon:true,
+{g:"ach",q:"神経筋接合部で放出される神経伝達物質はどれか。",kihon:true,dobon:true,
  choices:[
   ["アセチルコリン",true,""],
   ["ノルアドレナリン",false,"交感神経の節後線維末端などから放出される伝達物質。"],
@@ -98,14 +101,39 @@ const POOL=[
   ["カルシウムイオン",false,"筋小胞体から放出されるイオンで、神経伝達物質ではない。"]],
  exp:"神経筋接合部ではアセチルコリンが放出され、筋細胞膜のニコチン型アセチルコリン受容体に結合する。"},
 
+{g:"ach",q:"エクソサイトーシス（開口分泌）によって放出されるのはどれか。",
+ choices:[
+  ["運動神経終末からのアセチルコリン",true,""],
+  ["筋小胞体からのCa²⁺",false,"小胞ではなく放出チャネルを通り、濃度勾配に従って出ていく。"],
+  ["筋小胞体へのCa²⁺の再取り込み",false,"ATPを使うポンプ（能動輸送）による移動で、放出ではない。"],
+  ["受容体を通る筋細胞内へのNa⁺の流入",false,"イオンチャネルを通る移動。"]],
+ exp:"アセチルコリンはシナプス小胞に詰められていて、小胞が細胞膜と融合して中身を外へ出す（エクソサイトーシス、第1章 P3）。Ca²⁺の放出は小胞ではなくチャネルを通る移動なので、混同しないこと。"},
+
+{q:"神経筋接合部の筋細胞膜にある受容体はどれか。",
+ choices:[
+  ["ニコチン型アセチルコリン受容体",true,""],
+  ["ムスカリン型アセチルコリン受容体",false,"副交感神経が支配する効果器にある受容体。"],
+  ["アドレナリンα受容体",false,"交感神経が支配する効果器にある受容体。"],
+  ["アドレナリンβ受容体",false,"心臓などで交感神経の作用を受ける受容体。"]],
+ exp:"骨格筋の終板の筋細胞膜にはニコチン型アセチルコリン受容体があり、ここにアセチルコリンが結合する（P14）。"},
+
+{q:"アセチルコリンが受容体に結合したとき、筋細胞膜に起こる変化はどれか。",kihon:true,
+ choices:[
+  ["脱分極",true,""],
+  ["過分極",false,"膜電位がより負になる変化で、興奮を抑える向き。"],
+  ["再分極",false,"活動電位のあと、静止電位へ戻っていく過程。"],
+  ["膜電位は変化しない",false,"受容体に結合すると終板電位が発生するので、変化は起こる。"]],
+ exp:"受容体への結合で膜電位が正の方向へ動き（脱分極）、終板電位となる。その加重で活動電位が発生する（P14、第3章）。"},
+
 {q:"アセチルコリンが受容体に結合したとき、筋細胞膜に最初に生じるのはどれか。",
  choices:[
   ["終板電位",true,""],
-  ["活動電位",false,"終板電位の加重によって、そのあとに発生する。"],
+  ["活動電位",false,"膜電位の小さな変化が加重して閾値を超えたときに、そのあとで発生する電位変化。"],
   ["静止電位",false,"興奮していないときの膜電位で、刺激によって生じるものではない。"],
   ["興奮収縮連関",false,"電気的興奮から機械的反応までの一連の過程の呼び名で、膜電位の名前ではない。"]],
  exp:"アセチルコリンがニコチン型アセチルコリン受容体に結合すると終板電位が発生し、その加重で活動電位が発生する。"},
 
+/* ---- ② 活動電位の伝搬 ---- */
 {q:"筋線維鞘に伝わった活動電位を筋線維の深部へ導く構造はどれか。",kihon:true,
  choices:[
   ["横行小管（T管）",true,""],
@@ -114,7 +142,7 @@ const POOL=[
   ["神経筋接合部",false,"運動神経と筋線維の接合部で、筋線維の表面にある。"]],
  exp:"筋線維鞘に伝わった活動電位は、横行小管（T管）を経て筋線維の深部へ導かれ、筋小胞体へ伝わる。"},
 
-{q:"活動電位が筋小胞体へ伝わったとき、筋線維内に放出されるのはどれか。",kihon:true,
+{g:"ca",q:"活動電位が筋小胞体へ伝わったとき、筋線維内に放出されるのはどれか。",kihon:true,dobon:true,
  choices:[
   ["Ca²⁺",true,""],
   ["Na⁺",false,"細胞外に多く、活動電位の発生に関わるイオン。"],
@@ -122,14 +150,39 @@ const POOL=[
   ["Cl⁻",false,"細胞外に多い陰イオンで、筋小胞体から放出されるものではない。"]],
  exp:"筋小胞体の内部に蓄えられたCa²⁺が筋線維内へ放出され、これをきっかけに収縮が始まる。"},
 
-{q:"放出されたCa²⁺が結合するタンパク質はどれか。",kihon:true,
+{g:"ca",q:"横行小管を活動電位が伝わった次に起こるのはどれか。",
+ choices:[
+  ["筋小胞体からCa²⁺が放出される",true,""],
+  ["神経筋接合部でアセチルコリンが放出される",false,"収縮の過程のいちばん最初の段階。"],
+  ["終板電位が発生する",false,"活動電位が発生するより前の段階。"],
+  ["Ca²⁺が筋小胞体へ再取り込みされる",false,"収縮が終わって弛緩するときの段階。"]],
+ exp:"活動電位は 筋線維鞘 → 横行小管（T管） → 筋小胞体 の順に伝わり、筋小胞体からCa²⁺が放出される（P14）。"},
+
+{g:"trop",q:"放出されたCa²⁺が結合するタンパク質はどれか。",kihon:true,dobon:true,
  choices:[
   ["トロポニン",true,""],
   ["ミオシン",false,"頭部を回転させてアクチンをたぐり込む側のタンパク質。"],
   ["アクチン",false,"細いフィラメント本体で、Ca²⁺が直接結合する相手ではない。"],
-  ["トロポミオシン",false,"細いフィラメント側の調節タンパク質だが、Ca²⁺が結合するのはその上にあるトロポニン。"]],
+  ["トロポミオシン",false,"細いフィラメント側の調節タンパク質で、Ca²⁺の結合部位はもたない。"]],
  exp:"放出されたCa²⁺がトロポミオシンの上にあるトロポニンに結合すると、アクチンがミオシンと結合できる状態になる。"},
 
+{g:"trop",q:"安静時に、ミオシンとアクチンの結合を抑えているのはどれか。",kihon:true,
+ choices:[
+  ["トロポニンとトロポミオシン",true,""],
+  ["アセチルコリンとアセチルコリン受容体",false,"神経筋接合部で興奮を伝える組合せ。"],
+  ["ATPとADP",false,"エネルギーの供給に関わる物質。"],
+  ["Z膜と横行小管",false,"サルコメアの仕切りと、活動電位を深部へ伝える管。"]],
+ exp:"トロポニンとトロポミオシンは収縮調節タンパク質。安静時は結合を抑えていて、Ca²⁺がトロポニンに結合すると抑制がとれ、アクチンとミオシンが結合できるようになる（P12・P14）。"},
+
+{g:"trop",q:"トロポニンとトロポミオシンのはたらきはどれか。",kihon:true,
+ choices:[
+  ["ミオシンとアクチンの結合を調整する",true,""],
+  ["Ca²⁺を蓄える",false,"筋小胞体のはたらき。"],
+  ["活動電位を筋線維の深部へ伝える",false,"横行小管のはたらき。"],
+  ["アセチルコリンを受け取る",false,"終板にあるニコチン型アセチルコリン受容体のはたらき。"]],
+ exp:"どちらも細いフィラメントに含まれる収縮調節タンパク質。安静時は結合を抑え、Ca²⁺がトロポニンに結合すると抑制がとれる（P12・P14）。"},
+
+/* ---- ③ 収縮と弛緩 ---- */
 {q:"筋収縮が起こるときのミオシンのはたらきで正しいのはどれか。",
  choices:[
   ["頭部（側枝）を回転させてアクチンをたぐり込む",true,""],
@@ -143,10 +196,68 @@ const POOL=[
   ["Ca²⁺が筋小胞体へ再取り込みされる",true,""],
   ["Ca²⁺がさらに放出される",false,"収縮を続けさせる向きの変化で、弛緩とは逆。"],
   ["アセチルコリンが放出される",false,"収縮を始めるときの過程。"],
-  ["横行小管が消失する",false,"構造そのものが消えることはない。"]],
+  ["横行小管が消失する",false,"横行小管は活動電位を筋線維の深部へ伝える管で、弛緩しても消えない。"]],
  exp:"約50〜70ミリ秒後にCa²⁺が筋小胞体へ再取り込みされ、筋線維中のCa²⁺濃度が下がることで筋が弛緩する。"},
 
-{q:"筋の収縮に直接用いられるエネルギー源はどれか。",kihon:true,
+{q:"Ca²⁺がトロポニンに結合しなかった場合、筋収縮はどうなるか。",
+ choices:[
+  ["アクチンとミオシンが結合できず、収縮が起こらない",true,""],
+  ["活動電位が発生しなくなる",false,"活動電位はCa²⁺放出よりも前の段階の出来事で、影響を受けない。"],
+  ["横行小管へ活動電位が伝わらなくなる",false,"これもCa²⁺放出より前の段階で、影響を受けない。"],
+  ["アセチルコリンが放出されなくなる",false,"神経筋接合部での最初の過程で、Ca²⁺とは無関係。"]],
+ exp:"Ca²⁺がトロポニンに結合してはじめて、アクチンがミオシンと結合できる状態になる。つまりCa²⁺はスイッチの役割で、ここが止まると前の段階が正常でも収縮は起こらない。"},
+
+{q:"筋収縮の過程について誤っているのはどれか。",gori:true,
+ choices:[
+  ["活動電位は筋小胞体を経て横行小管へ伝わる",true,""],
+  ["神経筋接合部でアセチルコリンが放出される",false,"教科書どおりの記述なので、正しい。"],
+  ["Ca²⁺はトロポニンに結合する",false,"教科書どおりの記述なので、正しい。"],
+  ["ミオシンは頭部を回転させてアクチンをたぐり込む",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"順序が逆。活動電位は 筋線維鞘 → 横行小管（T管） → 筋小胞体 の順に伝わり、そこでCa²⁺が放出される。"},
+
+/* ---- ④ 興奮収縮連関：g ecc ---- */
+{g:"ecc",q:"興奮収縮連関について誤っているのはどれか。",gori:true,
+ choices:[
+  ["機械的反応から始まり、最後に電気的興奮が生じる",true,""],
+  ["筋線維鞘の電気的な興奮から始まる",false,"教科書どおりの記述なので、正しい。"],
+  ["Ca²⁺の作用という化学的過程を経る",false,"教科書どおりの記述なので、正しい。"],
+  ["ミオシンとアクチンの結合という機械的反応へ移る",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"興奮収縮連関は「電気的興奮 → 化学的過程（Ca²⁺の作用） → 機械的反応（ミオシンとアクチンの結合）」の順に進む。この3段階の並びを逆にしたひっかけ。"},
+
+{g:"ecc",q:"興奮収縮連関の出発点となるのはどれか。",
+ choices:[
+  ["筋線維鞘の電気的な興奮",true,""],
+  ["Ca²⁺の作用",false,"途中の化学的過程。"],
+  ["ミオシンとアクチンの結合",false,"最後の機械的反応。"],
+  ["Ca²⁺の筋小胞体への再取り込み",false,"収縮が終わって弛緩するときの過程。"]],
+ exp:"筋収縮は筋線維鞘の電気的な興奮から始まり、化学的過程、機械的反応へと移る（P14〜15）。"},
+
+{g:"ecc",q:"興奮収縮連関で、化学的過程にあたるのはどれか。",
+ choices:[
+  ["Ca²⁺の作用",true,""],
+  ["筋線維鞘の興奮",false,"最初の電気的な段階。"],
+  ["横行小管を活動電位が伝わること",false,"電気的な段階。"],
+  ["ミオシンとアクチンの結合",false,"最後の機械的反応。"]],
+ exp:"電気的興奮 → 化学的過程（Ca²⁺の作用） → 機械的反応 の順に進む（P15）。"},
+
+{g:"ecc",q:"興奮収縮連関で、機械的反応にあたるのはどれか。",
+ choices:[
+  ["ミオシンとアクチンの結合",true,""],
+  ["Ca²⁺の作用",false,"途中の化学的過程。"],
+  ["筋線維鞘の興奮",false,"最初の電気的な段階。"],
+  ["横行小管を活動電位が伝わること",false,"電気的な段階。"]],
+ exp:"最後に機械的反応（ミオシンとアクチンの結合）が起こり、筋が張力を発揮する（P15）。"},
+
+{q:"骨格筋の活動電位と収縮の関係について正しいのはどれか。",
+ choices:[
+  ["活動電位が生じてから収縮が起こる",true,""],
+  ["収縮が起こってから活動電位が生じる",false,"順序が逆。"],
+  ["活動電位と収縮は同時に始まる",false,"電気的興奮のあとに化学的・機械的過程が続くため、収縮は遅れて起こる。"],
+  ["活動電位がなくても収縮は起こる",false,"骨格筋の収縮は筋線維鞘の興奮から始まる。"]],
+ exp:"興奮収縮連関は電気的興奮から始まる。活動電位が先、収縮があと（P14〜15）。"},
+
+/* ---- ⑤ エネルギー供給 ---- */
+{q:"筋の収縮に直接用いられるエネルギー源はどれか。",kihon:true,dobon:true,
  choices:[
   ["ATP（アデノシン三リン酸）",true,""],
   ["グリコーゲン",false,"肝臓や筋に貯蔵される糖で、直接のエネルギー源ではない。"],
@@ -157,27 +268,26 @@ const POOL=[
 {q:"ATPが分解されるときに生じるものの組合せで正しいのはどれか。",
  choices:[
   ["ADP（アデノシン二リン酸）と無機リン酸（Pi）",true,""],
-  ["AMPと無機リン酸",false,"教科書が示すのはADPとPiへの分解。"],
+  ["AMPと無機リン酸",false,"AMP（アデノシン一リン酸）は、ADPからさらにリン酸が1つはずれたもの。"],
   ["ADPとグリコーゲン",false,"グリコーゲンはATP分解の産物ではなく、糖の貯蔵形。"],
   ["ADPと乳酸",false,"乳酸はATP分解の産物ではなく、無酸素的な代謝の産物。"]],
  exp:"ATPはADPと無機リン酸（Pi）に分解されるときに大きなエネルギーを発生する。ATPのTは三を、ADPのDは二を表す。"},
 
-{q:"筋収縮の過程について誤っているのはどれか。",gori:true,
+{q:"骨格筋の収縮について正しいのはどれか。",kihon:true,
  choices:[
-  ["活動電位は筋小胞体を経て横行小管へ伝わる",true,""],
-  ["神経筋接合部でアセチルコリンが放出される",false,"教科書どおりの記述なので、正しい。"],
-  ["Ca²⁺はトロポニンに結合する",false,"教科書どおりの記述なので、正しい。"],
-  ["ミオシンは頭部を回転させてアクチンをたぐり込む",false,"教科書どおりの記述なので、正しい。"]],
- exp:"順序が逆。活動電位は 筋線維鞘 → 横行小管（T管） → 筋小胞体 の順に伝わり、そこでCa²⁺が放出される。"},
+  ["収縮に伴って熱が発生する",true,""],
+  ["収縮によってATPが合成される",false,"収縮ではATPが分解されて消費される。"],
+  ["活動電位は収縮のあとに発生する",false,"活動電位（電気的興奮）が先に起こる。"],
+  ["弛緩にはエネルギーを必要としない",false,"Ca²⁺を筋小胞体へ再取り込みするのにエネルギーを使う。"]],
+ exp:"ATPの分解で生じたエネルギーは、筋線維の収縮（力学的エネルギー）と熱エネルギーに変換される（P15）。"},
 
-/* ---- やや難（ひっかけ・複合・理由を問う） ---- */
-{q:"興奮収縮連関について誤っているのはどれか。",gori:true,
+{q:"筋の収縮・弛緩の過程でATPを必要とするのはどれか。",kihon:true,dobon:true,
  choices:[
-  ["機械的反応から始まり、最後に電気的興奮が生じる",true,""],
-  ["筋線維鞘の電気的な興奮から始まる",false,"教科書どおりの記述なので、正しい。"],
-  ["Ca²⁺の作用という化学的過程を経る",false,"教科書どおりの記述なので、正しい。"],
-  ["ミオシンとアクチンの結合という機械的反応へ移る",false,"教科書どおりの記述なので、正しい。"]],
- exp:"興奮収縮連関は「電気的興奮 → 化学的過程（Ca²⁺の作用） → 機械的反応（ミオシンとアクチンの結合）」の順に進む。この3段階の並びを逆にしたひっかけ。"},
+  ["Ca²⁺を筋小胞体へ再取り込みすること",true,""],
+  ["筋小胞体からCa²⁺が放出されること",false,"濃度勾配に従って出ていく移動なので、ATPは必要としない。"],
+  ["Ca²⁺がトロポニンに結合すること",false,"結合そのものにエネルギーは必要としない。"],
+  ["アセチルコリンが受容体に結合すること",false,"これも結合自体にATPは必要としない。"]],
+ exp:"教科書の見出しが「収縮・弛緩のためのATPによるエネルギーの供給」となっているとおり、ATPは収縮だけでなく弛緩にも必要。弛緩時のCa²⁺は濃度勾配に逆らって筋小胞体へ能動的に取り込まれるため、ATPを消費する（1章の能動輸送）。「弛緩は力を抜くだけだからエネルギーは要らない」という思い込みが落とし穴。"},
 
 {q:"ATPによるエネルギー供給について誤っているのはどれか。",gori:true,
  choices:[
@@ -186,22 +296,6 @@ const POOL=[
   ["ADPはATPへとすぐに再変換される",false,"教科書どおりの記述なので、正しい。"],
   ["ATPのTは三を、ADPのDは二を表す",false,"教科書どおりの記述なので、正しい。"]],
  exp:"激しい運動をしない限り、筋線維内のATP濃度が低下することはほとんどない。分解産物であるADPがATPへすぐに再変換されるためで、この理由とセットで押さえる。"},
-
-{q:"Ca²⁺がトロポニンに結合しなかった場合、筋収縮はどうなるか。",
- choices:[
-  ["アクチンとミオシンが結合できず、収縮が起こらない",true,""],
-  ["活動電位が発生しなくなる",false,"活動電位はCa²⁺放出よりも前の段階の出来事で、影響を受けない。"],
-  ["横行小管へ活動電位が伝わらなくなる",false,"これもCa²⁺放出より前の段階で、影響を受けない。"],
-  ["アセチルコリンが放出されなくなる",false,"神経筋接合部での最初の過程で、Ca²⁺とは無関係。"]],
- exp:"Ca²⁺がトロポニンに結合してはじめて、アクチンがミオシンと結合できる状態になる。つまりCa²⁺はスイッチの役割で、ここが止まると前の段階が正常でも収縮は起こらない。"},
-
-{q:"筋の収縮・弛緩の過程でATPを必要とするのはどれか。",
- choices:[
-  ["Ca²⁺を筋小胞体へ再取り込みすること",true,""],
-  ["筋小胞体からCa²⁺が放出されること",false,"濃度勾配に従って出ていく移動なので、ATPは必要としない。"],
-  ["Ca²⁺がトロポニンに結合すること",false,"結合そのものにエネルギーは必要としない。"],
-  ["アセチルコリンが受容体に結合すること",false,"これも結合自体にATPは必要としない。"]],
- exp:"教科書の見出しが「収縮・弛緩のためのATPによるエネルギーの供給」となっているとおり、ATPは収縮だけでなく弛緩にも必要。弛緩時のCa²⁺は濃度勾配に逆らって筋小胞体へ能動的に取り込まれるため、ATPを消費する（1章の能動輸送）。「弛緩は力を抜くだけだからエネルギーは要らない」という思い込みが落とし穴。"},
 
 /* ---- 補足知識（教科書外・国試過去問の頻出テーマ） ---- */
 {q:"アセチルコリンを酢酸とコリンに分解する酵素はどれか。",hosoku:true,
@@ -235,11 +329,20 @@ const POOL=[
   ["筋の疲労時に蓄積して収縮を妨げる",false,"疲労した骨格筋に蓄積するのは乳酸。"],
   ["Ca²⁺と結合してトロポニンを活性化する",false,"Ca²⁺が結合するのはトロポニンで、クレアチンリン酸は関与しない。"]],
  exp:"補足知識（資料外）。クレアチンリン酸はローマン反応によってADPからATPをつくり、ATPを補給する。直接のエネルギー源はあくまでATPである点を区別する。"},
+
+{q:"死後硬直の原因はどれか。",hosoku:true,
+ choices:[
+  ["ATPの枯渇",true,""],
+  ["乳酸の減少",false,"激しい運動で増える代謝産物で、硬直の原因ではない。"],
+  ["Ca²⁺の再取り込みの促進",false,"起これば筋は弛緩する向きの変化。"],
+  ["クレアチンリン酸の増加",false,"ATPを補給する物質で、増えても硬直は起こらない。"]],
+ exp:"補足知識（資料外）。ミオシン頭部がアクチンから離れるにもATPが必要。死後はATPがつくられないため、結合したまま筋が硬くなる。"},
 ];
 
 let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
-let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+let qmiss=0, totalMiss=0, firstTryCount=0;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
 
 function home(){
   document.getElementById("htt").textContent="確認テスト";
@@ -255,29 +358,28 @@ function home(){
         </button>
         <button class="mode dob" onclick="start('dobon')">
           <div class="nm">💣 ドボンチャレンジ</div>
-          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+          <div class="ds">最重要の問題が <b>💣ドボン！</b> に変身。ドボン問題を1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
         </button>
       </div>
     </div>`;
   document.getElementById("ctrl").innerHTML="";
 }
 function start(m){
-  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  mode=m; drawn=draw();
   idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
 }
 function render(){
   answered=false; qmiss=0;
   const item=drawn[idx];
   const opts=shuffle(item.choices);
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
   document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
   document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
   const L=["ア","イ","ウ","エ","オ"];
-  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
-  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>` : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
   if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
-  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  if(item.gori) markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
   const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
   let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
   opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
@@ -287,16 +389,15 @@ function render(){
 }
 function pick(el,ok){
   if(answered)return;
-  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  if(el.classList.contains("dis"))return;
   const item=drawn[idx];
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   const selText=el.querySelector("span:last-child").textContent;
   const selChoice=item.choices.find(c=>c[0]===selText);
   const exp=document.getElementById("exp");
   const nx=document.getElementById("nx");
 
   if(ok){
-    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
     answered=true;
     el.classList.add("correct");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
@@ -311,13 +412,11 @@ function pick(el,ok){
     return;
   }
 
-  // 不正解
   if(mode==="dobon"){
-    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
     answered=true;
     el.classList.add("wrong");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
-    if(item.kihon){ dead=true; }
+    if(item.dobon){ dead=true; }
     exp.className="exp show ng";
     document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
     document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
@@ -326,13 +425,11 @@ function pick(el,ok){
     return;
   }
 
-  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
   qmiss++; totalMiss++;
   el.classList.add("wrong","dis");
   exp.className="exp show ng";
   document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
   document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
-  // 「次へ」はまだ出さない（正解するまで進めない）
 }
 function next(){
   if(dead){result();return;}
@@ -349,7 +446,7 @@ function result(){
         <span class="tag dob">💣 ドボンチャレンジ</span>
         <div>ドボンを踏んでしまいました</div>
         <div class="big">${streak} 問連続正解</div>
-        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+        <div class="msg">${idx}問目まで解いたあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
       </div>`;
     }else{
       document.getElementById("bd").innerHTML=`<div class="center score">

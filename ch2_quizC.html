@@ -19,11 +19,11 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .qnum{font-size:11px;font-weight:600;color:#9e3450;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
 .mark.kihon{background:rgba(158,52,80,.13);color:#84293f}
-.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
-.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.dobon{background:rgba(194,65,12,.14);color:#C2410C}
+.mark.gori{background:rgba(109,63,158,.12);color:#6D3F9E;border:1px solid rgba(109,63,158,.35)}
 .mark.hosoku{background:rgba(40,90,140,.12);color:#285a8c;border:1px solid rgba(40,90,140,.3)}
 .q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
-.q .ng{color:#a8322e;font-weight:700}
+.q .ng{color:#6D3F9E;font-weight:700}
 .opts{display:flex;flex-direction:column;gap:9px}
 .opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
 .opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -55,14 +55,14 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .mode:hover{border-color:#9e3450;background:#fdf3f5}
 .mode .nm{font-size:16px;font-weight:600;color:#9e3450;margin-bottom:4px}
 .mode .ds{font-size:13px;color:#666;line-height:1.7}
-.mode.dob .nm{color:#c33c28}
-.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.mode.dob .nm{color:#C2410C}
+.mode.dob:hover{border-color:#C2410C;background:#fdf1ea}
 .score .big{font-size:40px;font-weight:700;color:#9e3450;margin:6px 0}
-.score.dead .big{color:#c33c28}
+.score.dead .big{color:#C2410C}
 .score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
 .score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#84293f;background:rgba(158,52,80,.09);padding:7px 16px;border-radius:20px}
 .tag{display:inline-block;font-size:12px;font-weight:600;color:#9e3450;background:rgba(158,52,80,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
-.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+.tag.dob{color:#C2410C;background:rgba(194,65,12,.12)}
 </style>
 </head>
 <body>
@@ -76,14 +76,15 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 <script>
 /* ===== 問題プール（教科書 第2章 P15〜17 ベース）=====
    choices: [表示文, 正解フラグ, その選択肢が何かの説明]
-   kihon :true … 落としちゃダメな基本問題（🎯基本／ドボンモードでは💣ドボン！）
+   kihon :true … 🎯基本（落としちゃダメな基本・頻出問題）
+   dobon :true … 💣ドボン（ドボンモードで外したら終了）。原則 kihon と併用
    gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
-   hosoku:true … 教科書に記述のない補足知識（国試過去問の頻出テーマ）。🎯基本にはしない
+   hosoku:true … 📘補足（資料外）。kihon とは併用しない
    exp … 正解時に見せる「なぜ正しいか」 */
 const PICK=5;
 const POOL=[
 /* ---- 筋線維の分類 ---- */
-{q:"遅筋線維（タイプⅠ）の特徴として正しいのはどれか。",kihon:true,
+{q:"遅筋線維（タイプⅠ）の特徴として正しいのはどれか。",kihon:true,dobon:true,
  choices:[
   ["ミトコンドリアが多く、疲労しにくい",true,""],
   ["収縮速度が高い",false,"速筋線維（タイプⅡ）の特徴。"],
@@ -103,7 +104,7 @@ const POOL=[
  choices:[
   ["SO",true,""],
   ["FG",false,"解糖系酵素活性が高いタイプ。"],
-  ["FOG",false,"SOとFGの中間型。"],
+  ["FOG",false,"酸化系と解糖系の両方の性質をもつ中間型。"],
   ["MHC",false,"ミオシン重鎖のことで、代謝特性による分類の名称ではない。"]],
  exp:"代謝特性では、酸化系酵素活性が高いSO、解糖系酵素活性が高いFG、その中間型であるFOGの3つに分類される。"},
 
@@ -115,20 +116,52 @@ const POOL=[
   ["運動単位は筋線維のタイプとは無関係に構成される",false,"タイプごとに別々のα運動ニューロンが支配して運動単位を形成する。"]],
  exp:"異なるタイプの筋線維はそれぞれ別々のα運動ニューロンによって支配され、運動単位を形成する。1つの筋には3つのタイプが混在するが、その割合は筋によって異なる。"},
 
+{q:"運動単位に含まれないのはどれか。",kihon:true,
+ choices:[
+  ["大脳皮質の錐体細胞",true,""],
+  ["脊髄前角のα運動ニューロン",false,"運動単位の起点となる神経細胞。"],
+  ["α運動ニューロンの軸索",false,"筋線維まで指令を伝える神経線維。"],
+  ["α運動ニューロンが支配する筋線維",false,"指令を受けて収縮する筋線維群。"]],
+ exp:"運動単位は、1つのα運動ニューロンとそれが支配する筋線維群のこと（P16）。錐体細胞は大脳皮質運動野の神経細胞で、運動単位より上位にある（第3章）。"},
+
 {q:"足関節底屈に関わる筋のうち、タイプⅠ線維が多いのはどれか。",
  choices:[
   ["ヒラメ筋",true,""],
-  ["腓腹筋",false,"同じ足関節底屈に作用するが、ヒラメ筋と比べてタイプⅡx線維が多い。"],
+  ["腓腹筋",false,"同じ足関節底屈に作用する筋だが、タイプⅡx線維が比較的多い。"],
   ["前脛骨筋",false,"足関節背屈に作用する筋。"],
   ["大腿四頭筋",false,"膝関節伸展に作用する筋。"]],
  exp:"1つの筋には3つのタイプの筋線維が混在するが割合は筋ごとに異なる。ヒラメ筋はタイプⅠ線維が多く、腓腹筋はヒラメ筋と比べてタイプⅡx線維が多い。"},
+
+{q:"筋の収縮時間（最大張力に達するまでの時間）が長いのはどれか。",kihon:true,
+ choices:[
+  ["遅筋線維（タイプⅠ）",true,""],
+  ["速筋線維（タイプⅡx）",false,"収縮速度が高く、最大張力に早く達する。"],
+  ["タイプⅡa線維",false,"タイプⅠとタイプⅡxの中間の特性を示す。"],
+  ["筋線維のタイプによる差はない",false,"筋線維のタイプによって収縮特性は異なる。"]],
+ exp:"筋の収縮時間は、速筋線維と比べて遅筋線維で長い（P16）。収縮速度が低いことと対応させて覚える。"},
+
+{q:"赤筋線維にあてはまるのはどれか。",dobon:true,hosoku:true,
+ choices:[
+  ["収縮速度が遅く、持続的な運動に向く",true,""],
+  ["解糖系が主なエネルギー供給源である",false,"白筋（速筋）線維の特徴。"],
+  ["ミオグロビンが少ない",false,"白筋（速筋）線維の特徴。"],
+  ["瞬発的な運動に向く",false,"白筋（速筋）線維の特徴。"]],
+ exp:"補足知識（資料外）。赤筋＝遅筋（タイプⅠ）、白筋＝速筋（タイプⅡ）。赤く見えるのはミオグロビンが多いため。過去問では「赤筋・白筋」の呼び方で頻出。"},
+
+{q:"遅筋線維と比べた速筋線維の特徴はどれか。",hosoku:true,
+ choices:[
+  ["筋線維が太い",true,""],
+  ["疲労しにくい",false,"遅筋線維の特徴。"],
+  ["ミトコンドリアが多い",false,"遅筋線維の特徴。"],
+  ["毛細血管密度が高い",false,"遅筋線維の特徴。"]],
+ exp:"補足知識（資料外）。速筋線維は径が太く、発揮する張力も大きい。遅筋線維は細い。"},
 
 /* ---- 単収縮・収縮の加重・強縮 ---- */
 {q:"1つの活動電位で生じる1回の収縮を何と呼ぶか。",kihon:true,
  choices:[
   ["単収縮",true,""],
   ["強縮",false,"収縮の加重が何回も連続して起こり、大きな収縮力が生まれた状態。"],
-  ["収縮の加重",false,"単収縮どうしが重なって張力が大きくなること。"],
+  ["収縮の加重",false,"1回目の収縮が終わる前に次の収縮が始まり、重なって張力が大きくなること。"],
   ["完全強縮",false,"強縮のうち、収縮と収縮の間に弛緩が生じないもの。"]],
  exp:"1つの活動電位で生じる1回の収縮を単収縮と呼ぶ。単収縮は筋収縮のもっとも基本的な形で、骨格筋の収縮特性を調べる際に測定されることが多い。"},
 
@@ -148,8 +181,32 @@ const POOL=[
   ["筋が疲労している",false,"張力が減少する方向の条件で、加重の条件ではない。"]],
  exp:"活動電位が生じる間隔が短く、1回目の単収縮が終わる前に2回目の単収縮が始まると、それぞれの単収縮が重なって1回の単収縮よりも大きな張力が得られる。"},
 
+{q:"単収縮と比べた強縮の特徴として正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["単収縮より大きな張力を発揮する",true,""],
+  ["1つの活動電位で生じる",false,"単収縮の説明。"],
+  ["活動電位の間隔が長いほど起こりやすい",false,"間隔が長いと、個々の活動電位に対応した単収縮が別々に生じるだけになる。"],
+  ["発揮する張力は単収縮と変わらない",false,"単収縮が重なり合うので、張力は変わる。"]],
+ exp:"収縮の加重が何回も連続して起こるのが強縮で、単収縮よりも大きな収縮力が生まれる（P17）。"},
+
+{q:"立位の保持など、日常の運動での筋収縮の主な形はどれか。",hosoku:true,
+ choices:[
+  ["強縮",true,""],
+  ["単収縮",false,"1つの活動電位で生じる1回だけの収縮。"],
+  ["弛緩",false,"張力を発揮していない状態。"],
+  ["等速性収縮",false,"関節が一定の速さで動きながら収縮する、動的収縮の特殊な場合。"]],
+ exp:"補足知識（資料外）。日常の運動は、活動電位が連続して生じる強縮がほとんどを占め、単収縮だけの運動はあまりみられない。"},
+
+{q:"絶対不応期がもっとも長いのはどれか。",hosoku:true,
+ choices:[
+  ["固有心筋線維",true,""],
+  ["骨格筋の速筋線維",false,"活動電位が数ミリ秒で終わり、不応期は約1〜2ミリ秒と短い。"],
+  ["骨格筋の遅筋線維",false,"速筋線維と同じく骨格筋で、不応期は短い。"],
+  ["有髄神経線維",false,"不応期は1ミリ秒前後と短い。"]],
+ exp:"補足知識（資料外）。心筋の活動電位にはプラトー相があり、絶対不応期は約200ミリ秒と骨格筋の100倍近い。このため心筋では収縮の加重（強縮）が起こらず、収縮は常に単収縮になる。"},
+
 /* ---- 筋収縮の様式 ---- */
-{q:"関節の角度が変化しない筋収縮はどれか。",kihon:true,
+{q:"関節の角度が変化しない筋収縮はどれか。",kihon:true,dobon:true,
  choices:[
   ["等尺性収縮",true,""],
   ["求心性（短縮性）収縮",false,"筋が短くなりながら張力を発揮する動的収縮。"],
@@ -172,6 +229,22 @@ const POOL=[
   ["等尺性収縮",false,"関節角度が変化しない静的収縮。"],
   ["不完全強縮",false,"弛緩が生じ不完全に加重される強縮。"]],
  exp:"動的収縮の特殊な場合として、等張性収縮（一定の張力を発揮）と等速性収縮（関節が一定の速さで動く）がある。"},
+
+{q:"等尺性収縮が主となる動作はどれか。",kihon:true,
+ choices:[
+  ["鉄棒にぶら下がり、ひじを曲げたまま止まる",true,""],
+  ["階段を上る",false,"筋が短くなりながら張力を発揮する動的収縮が主となる。"],
+  ["ダンベルを持ち上げる",false,"筋が短くなりながら張力を発揮する動的収縮が主となる。"],
+  ["ボールを投げる",false,"筋の長さと関節角度が変わる動的収縮が主となる。"]],
+ exp:"関節の角度を変えずに力を出し続けるのが等尺性収縮（P17）。ひじの角度を保ったまま体を支えている状態がこれにあたる。"},
+
+{q:"遠心性（伸張性）収縮となるのはどれか。",
+ choices:[
+  ["階段を下りるときの大腿四頭筋",true,""],
+  ["階段を上るときの大腿四頭筋",false,"筋が短くなりながら張力を発揮する求心性収縮。"],
+  ["ダンベルを持ち上げるときの上腕二頭筋",false,"筋が短くなりながら張力を発揮する求心性収縮。"],
+  ["椅子から立ち上がるときの大腿四頭筋",false,"膝を伸ばしながら体を持ち上げる求心性収縮。"]],
+ exp:"階段を下りるとき、膝が曲がっていく間も大腿四頭筋は体重を支えるため、伸ばされながら張力を発揮している。"},
 
 /* ---- 誤りを選ぶ ---- */
 {q:"筋線維のタイプについて誤っているのはどれか。",kihon:true,gori:true,
@@ -259,7 +332,7 @@ function home(){
         </button>
         <button class="mode dob" onclick="start('dobon')">
           <div class="nm">💣 ドボンチャレンジ</div>
-          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+          <div class="ds">絶対に落とせない最重要問題が <b>💣ドボン！</b> に変身。ドボンを1問でも外したら、解説を見てそこで終了。どの問題も選び直しなしの一発勝負。どこまで正解を続けられるか挑戦！</div>
         </button>
       </div>
     </div>`;
@@ -273,15 +346,15 @@ function render(){
   answered=false; qmiss=0;
   const item=drawn[idx];
   const opts=shuffle(item.choices);
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
   document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
   document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
   const L=["ア","イ","ウ","エ","オ"];
-  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>` : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
   if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
   if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
-  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  // 誤り選択問題は、設問中の「誤っている」を色付きにして読み飛ばしを防ぐ
   const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
   let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
   opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
@@ -293,14 +366,13 @@ function pick(el,ok){
   if(answered)return;
   if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
   const item=drawn[idx];
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   const selText=el.querySelector("span:last-child").textContent;
   const selChoice=item.choices.find(c=>c[0]===selText);
   const exp=document.getElementById("exp");
   const nx=document.getElementById("nx");
 
   if(ok){
-    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
     answered=true;
     el.classList.add("correct");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
@@ -315,13 +387,12 @@ function pick(el,ok){
     return;
   }
 
-  // 不正解
   if(mode==="dobon"){
     // ドボンモードは一発勝負：選び直しなし・正解は伏せる
     answered=true;
     el.classList.add("wrong");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
-    if(item.kihon){ dead=true; }
+    if(item.dobon){ dead=true; }
     exp.className="exp show ng";
     document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
     document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
@@ -336,7 +407,6 @@ function pick(el,ok){
   exp.className="exp show ng";
   document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
   document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
-  // 「次へ」はまだ出さない（正解するまで進めない）
 }
 function next(){
   if(dead){result();return;}
@@ -353,7 +423,7 @@ function result(){
         <span class="tag dob">💣 ドボンチャレンジ</span>
         <div>ドボンを踏んでしまいました</div>
         <div class="big">${streak} 問連続正解</div>
-        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+        <div class="msg">${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
       </div>`;
     }else{
       document.getElementById("bd").innerHTML=`<div class="center score">

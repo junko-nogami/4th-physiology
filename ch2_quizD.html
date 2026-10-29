@@ -19,11 +19,11 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .qnum{font-size:11px;font-weight:600;color:#9e3450;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
 .mark.kihon{background:rgba(158,52,80,.13);color:#84293f}
-.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
-.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.dobon{background:rgba(194,65,12,.14);color:#C2410C}
+.mark.gori{background:rgba(109,63,158,.12);color:#6D3F9E;border:1px solid rgba(109,63,158,.35)}
 .mark.hosoku{background:rgba(40,90,140,.12);color:#285a8c;border:1px solid rgba(40,90,140,.3)}
 .q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
-.q .ng{color:#a8322e;font-weight:700}
+.q .ng{color:#6D3F9E;font-weight:700}
 .opts{display:flex;flex-direction:column;gap:9px}
 .opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
 .opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -55,14 +55,14 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .mode:hover{border-color:#9e3450;background:#fdf3f5}
 .mode .nm{font-size:16px;font-weight:600;color:#9e3450;margin-bottom:4px}
 .mode .ds{font-size:13px;color:#666;line-height:1.7}
-.mode.dob .nm{color:#c33c28}
-.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.mode.dob .nm{color:#C2410C}
+.mode.dob:hover{border-color:#C2410C;background:#fdf1ea}
 .score .big{font-size:40px;font-weight:700;color:#9e3450;margin:6px 0}
-.score.dead .big{color:#c33c28}
+.score.dead .big{color:#C2410C}
 .score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
 .score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#84293f;background:rgba(158,52,80,.09);padding:7px 16px;border-radius:20px}
 .tag{display:inline-block;font-size:12px;font-weight:600;color:#9e3450;background:rgba(158,52,80,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
-.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+.tag.dob{color:#C2410C;background:rgba(194,65,12,.12)}
 </style>
 </head>
 <body>
@@ -76,18 +76,19 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 <script>
 /* ===== 問題プール（教科書 第2章 P17〜21 ベース）=====
    choices: [表示文, 正解フラグ, その選択肢が何かの説明]
-   kihon :true … 落としちゃダメな基本問題（🎯基本／ドボンモードでは💣ドボン！）
+   kihon :true … 🎯基本（落としちゃダメな基本・頻出問題）
+   dobon :true … 💣ドボン（ドボンモードで外したら終了）。原則 kihon と併用
    gori  :true … 「誤っているのはどれか」形式。true が付くのは「誤っている記述」＝選ぶべき選択肢
-   hosoku:true … 教科書に記述のない補足知識（国試過去問・夏期講習の頻出テーマ）。🎯基本にはしない
+   hosoku:true … 📘補足（資料外）。kihon とは併用しない
    exp … 正解時に見せる「なぜ正しいか」 */
 const PICK=5;
 const POOL=[
 /* ---- 長さ-張力関係 ---- */
-{q:"サルコメア長と張力の関係で、もっとも大きい張力を発揮するサルコメア長を何と呼ぶか。",kihon:true,
+{q:"サルコメア長と張力の関係で、もっとも大きい張力を発揮するサルコメア長を何と呼ぶか。",kihon:true,dobon:true,
  choices:[
   ["至適長",true,""],
-  ["上行脚",false,"至適長より短い領域のこと。"],
-  ["下行脚",false,"至適長より長い領域のこと。"],
+  ["上行脚",false,"最大張力を発揮する長さより短い領域のこと。"],
+  ["下行脚",false,"最大張力を発揮する長さより長い領域のこと。"],
   ["長さ-張力関係",false,"長さと張力の関係全体を指す呼び名で、特定の長さのことではない。"]],
  exp:"ヒトではサルコメア長が2.64〜2.81μmのときもっとも大きい張力を発揮し、このときのサルコメア長を至適長と呼ぶ。"},
 
@@ -106,6 +107,14 @@ const POOL=[
   ["至適長",false,"最大張力を発揮するサルコメア長そのもの。"],
   ["長さ-張力関係",false,"長さと張力の関係全体を指す呼び名。"]],
  exp:"至適長より長い場合は、ミオシンフィラメントとアクチンフィラメントの重なりの数が減少するため張力が小さくなる。この領域を長さ-張力関係の下行脚と呼ぶ。"},
+
+{q:"等尺性収縮で、筋の張力が最大になるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["筋が静止長付近にあるとき",true,""],
+  ["筋をできるだけ短縮させたとき",false,"アクチンフィラメント同士が重なり合うなどして、張力は小さくなる。"],
+  ["筋をできるだけ伸ばしたとき",false,"フィラメントの重なりの数が減り、張力は小さくなる。"],
+  ["筋の長さに関係なく一定",false,"張力はサルコメアの長さに依存して変化する。"]],
+ exp:"生体内の静止長付近で、フィラメントの重なりの数が最大（至適長）になり、張力が最大になる。国試では「静止長付近で張力は最大」という形で問われる。"},
 
 /* ---- 収縮速度・横断面積と張力 ---- */
 {q:"求心性（短縮性）収縮における収縮速度と張力の関係で正しいのはどれか。",kihon:true,
@@ -131,6 +140,14 @@ const POOL=[
   ["疲労耐性",false,"筋線維のタイプ（遅筋・速筋）によって決まる。"],
   ["至適長",false,"サルコメア長に関する特性で、横断面積とは別。"]],
  exp:"筋線維の横断面積（太さ）が力を、長さが収縮速度を決める解剖学的要因となる。横断面積が大きいほどミオシンとアクチンの結合の数が多い。"},
+
+{q:"筋線維が長いほど収縮速度が大きくなる理由はどれか。",
+ choices:[
+  ["直列に並ぶサルコメアの数が多くなるから",true,""],
+  ["ミオシンとアクチンの結合の数が多くなるから",false,"横断面積が大きいことの意味で、力の大きさに関わる。"],
+  ["筋線維の横断面積が大きくなるから",false,"力を決める解剖学的要因。"],
+  ["至適長が長くなるから",false,"至適長はサルコメアの長さの特性で、筋線維の長さによって変わるものではない。"]],
+ exp:"筋線維が長いほど直列するサルコメアの数が多くなり、収縮時の筋の長さの変化が大きくなる（P19）。横断面積＝力、長さ＝収縮速度。"},
 
 /* ---- 筋電図 ---- */
 {q:"筋電図の振幅値を増減させる要因の組合せで正しいのはどれか。",kihon:true,
@@ -166,7 +183,7 @@ const POOL=[
   ["骨格筋",false,"骨に付着して関節を動かす筋。"]],
  exp:"心臓を構成する心筋は、収縮を担当する固有心筋と、興奮の発生と伝導を役割とする特殊心筋の2つに分けられる。"},
 
-{q:"固有心筋線維が形態的に分離していながら機能的につながっている状態を何と呼ぶか。",
+{q:"固有心筋線維が形態的に分離していながら機能的につながっている状態を何と呼ぶか。",kihon:true,
  choices:[
   ["機能的合胞体",true,""],
   ["運動単位",false,"1つのα運動ニューロンとそれが支配する筋線維群のこと。"],
@@ -182,6 +199,38 @@ const POOL=[
   ["心房と心室",false,"心臓の部屋の名称で、特殊心筋線維の種類ではない。"]],
  exp:"特殊心筋線維のうち洞房結節と房室結節は、活動電位を自動的に生むペースメーカーの機能をもつ点で固有心筋線維と異なる。"},
 
+{q:"骨格筋線維と比べた心筋線維の構造の特徴はどれか。",kihon:true,
+ choices:[
+  ["枝分かれがある",true,""],
+  ["細胞どうしが電気的に独立している",false,"骨格筋線維の特徴。心筋線維は介在板のギャップ結合で電気的につながっている。"],
+  ["紡錘形をしている",false,"平滑筋の細胞の形。"],
+  ["多数の核をもつ多核細胞である",false,"骨格筋線維の特徴。"]],
+ exp:"心筋線維は骨格筋線維と同じく横紋筋で円柱状だが、枝分かれがあり、線維同士の接合部に介在板がある（P20）。"},
+
+{q:"心筋で強縮が起こらない理由はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["活動電位の持続時間が長い",true,""],
+  ["ギャップ結合で連結している",false,"心房・心室が一体として機能する（機能的合胞体）ためのしくみ。"],
+  ["自動能をもつ",false,"洞房結節・房室結節がペースメーカーとしてはたらく性質。"],
+  ["筋原線維が少ない",false,"特殊心筋線維の性質で、収縮能に乏しい理由。"]],
+ exp:"固有心筋線維は活動電位の持続時間が長く、前の収縮が終わるまで次の収縮が起こらないため、収縮の加重（強縮）が起こらない（P20）。"},
+
+{q:"固有心筋の活動電位でプラトー相（平坦相）を長く保つ主な要因はどれか。",hosoku:true,
+ choices:[
+  ["細胞外からのCa²⁺の流入",true,""],
+  ["Na⁺の流入",false,"活動電位の立ち上がり（急速な脱分極）を起こす流れで、ごく短時間で終わる。"],
+  ["K⁺の流出",false,"膜電位を静止電位へ戻す（再分極）方向の流れ。"],
+  ["筋小胞体へのCa²⁺の取り込み",false,"細胞内のCa²⁺濃度を下げて筋を弛緩させるはたらき。"]],
+ exp:"補足知識（資料外）。心筋では脱分極のあと細胞外からCa²⁺がゆっくり流入し続けるため、膜電位が高いまま保たれるプラトー相ができる。このため活動電位は約200ミリ秒と骨格筋の約100倍長く、不応期も長いので強縮が起こらない。詳しくは第10章（循環）で学ぶ。"},
+
+{q:"心筋が伸展されるほど大きな収縮力を発生する性質を何と呼ぶか。",hosoku:true,
+ choices:[
+  ["スターリングの心臓の法則",true,""],
+  ["全か無かの法則",false,"刺激が閾値に達すれば一定の大きさの興奮が起こるという法則。"],
+  ["滑り説",false,"アクチンフィラメントがミオシンフィラメントの間へ滑り込んで筋が収縮するという説。"],
+  ["サイズの原理",false,"小さい運動ニューロンから順に動員されるという原理。"]],
+ exp:"補足知識（資料外）。静脈還流量が増えて心筋が引き伸ばされるほど、収縮力が強くなり拍出量が増える。"},
+
 /* ---- 平滑筋 ---- */
 {q:"平滑筋の収縮・弛緩の制御方法として正しいのはどれか。",kihon:true,
  choices:[
@@ -191,11 +240,35 @@ const POOL=[
   ["介在板のギャップ結合",false,"心筋で興奮を細胞から細胞へ伝えるしくみ。"]],
  exp:"骨格筋や心筋ではアクチンフィラメント上のトロポニンやトロポミオシンで収縮・弛緩が制御されるが、平滑筋ではミオシン軽鎖のリン酸化と脱リン酸化で行われる。"},
 
+{q:"骨格筋と比べた平滑筋の特徴はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["単一の核をもつ",true,""],
+  ["横紋がみられる",false,"骨格筋・心筋（横紋筋）の特徴。"],
+  ["トロポニンで収縮が制御される",false,"骨格筋・心筋の制御方法。"],
+  ["運動神経の支配を受ける",false,"骨格筋の特徴。"]],
+ exp:"平滑筋の細胞は紡錘形で、単一の核が中央部にある（P21）。骨格筋線維は多数の核をもつ多核細胞（P12）。"},
+
+{q:"骨格筋と比べた平滑筋の収縮の特徴はどれか。",hosoku:true,
+ choices:[
+  ["ゆっくり収縮する",true,""],
+  ["収縮が速い",false,"骨格筋の特徴。"],
+  ["疲労しやすい",false,"平滑筋は骨格筋より疲労しにくい。"],
+  ["横紋がみられる",false,"骨格筋・心筋の特徴。"]],
+ exp:"補足知識（資料外）。収縮の速さは骨格筋＞心筋＞平滑筋の順。平滑筋は疲労しにくく、持続的な収縮に向く。"},
+
+{q:"平滑筋でCa²⁺が結合して収縮を開始させるタンパク質はどれか。",hosoku:true,
+ choices:[
+  ["カルモジュリン",true,""],
+  ["トロポニン",false,"骨格筋や心筋でCa²⁺が結合するタンパク質。"],
+  ["ミオグロビン",false,"筋線維内で酸素を貯蔵するタンパク質。"],
+  ["アクチン",false,"細いフィラメントを構成するタンパク質で、Ca²⁺の受け手ではない。"]],
+ exp:"補足知識（資料外）。平滑筋にはトロポニンがなく、Ca²⁺はカルモジュリンと結合する。Ca²⁺-カルモジュリン複合体がミオシン軽鎖キナーゼを活性化してミオシン軽鎖をリン酸化し、収縮が起こる。模試でも問われる。"},
+
 /* ---- 誤りを選ぶ ---- */
-{q:"心筋の性質について誤っているのはどれか。",kihon:true,gori:true,
+{q:"心筋の性質について誤っているのはどれか。",kihon:true,dobon:true,gori:true,
  choices:[
   ["固有心筋線維では収縮の加重（強縮）が起こる",true,""],
-  ["固有心筋線維は活動電位の持続時間が長い",false,"教科書どおりの記述なので、正しい。"],
+  ["心筋線維同士の接合部には介在板がある",false,"教科書どおりの記述なので、正しい。"],
   ["収縮の強さの調節は自律神経やホルモンによって行われる",false,"教科書どおりの記述なので、正しい。"],
   ["拍動ごとに全心筋線維が興奮して収縮する",false,"教科書どおりの記述なので、正しい。"]],
  exp:"固有心筋線維は活動電位の持続時間が長いため、骨格筋線維と異なり収縮の加重（強縮）が起こらない。骨格筋との重要な違い。"},
@@ -203,7 +276,7 @@ const POOL=[
 {q:"平滑筋について誤っているのはどれか。",gori:true,
  choices:[
   ["ミオシンとアクチンが規則正しく配列し、縞模様を示す",true,""],
-  ["細胞は紡錘形で、単一の核が中央部にある",false,"教科書どおりの記述なので、正しい。"],
+  ["皮膚の立毛筋にもある",false,"教科書どおりの記述なので、正しい。"],
   ["消化管や血管、子宮などの中腔臓器の壁にある",false,"教科書どおりの記述なので、正しい。"],
   ["収縮時間や収縮強度が器官ごとに大きく異なる",false,"教科書どおりの記述なので、正しい。"]],
  exp:"平滑筋はミオシンフィラメントとアクチンフィラメントが規則正しい配列をもたないため、横紋筋に特徴的な縞模様を示さない。この点で骨格筋線維や心筋線維とは形態的に大きく異なる。"},
@@ -237,7 +310,7 @@ const POOL=[
 {q:"心臓の正常なペースメーカーとしてはたらくのはどれか。",hosoku:true,
  choices:[
   ["洞房結節",true,""],
-  ["房室結節",false,"ペースメーカー機能はもつが、通常は洞房結節のリズムに従う。"],
+  ["房室結節",false,"ペースメーカー機能はもつが、通常は心房から伝わってくる興奮のリズムに従う（第二のペースメーカー）。"],
   ["プルキンエ線維",false,"心室へ興奮を伝える伝導路。"],
   ["固有心筋線維",false,"収縮を担当し、自動的に活動電位を生む機能はもたない。"]],
  exp:"補足知識（資料外）。刺激伝導系のうち、通常はもっとも発火頻度の高い洞房結節が心拍のリズムを決めている。"},
@@ -249,14 +322,6 @@ const POOL=[
   ["横隔膜",false,"呼吸に関わる骨格筋。"],
   ["咬筋",false,"咀嚼に関わる骨格筋。"]],
  exp:"補足知識（資料外）。平滑筋は中腔臓器の壁のほか、眼球の毛様体筋、皮膚の立毛筋、外分泌腺の筋上皮にもある。"},
-
-{q:"遠心性（伸張性）収縮の例として適切なのはどれか。",hosoku:true,
- choices:[
-  ["階段を下りるときの大腿四頭筋",true,""],
-  ["階段を上るときの大腿四頭筋",false,"筋が短くなりながら張力を発揮する求心性（短縮性）収縮。"],
-  ["動かない壁を押すときの上肢の筋",false,"関節角度が変化しない等尺性収縮。"],
-  ["荷物を持ったまま静止しているときの上腕二頭筋",false,"これも関節角度が変化しない等尺性収縮。"]],
- exp:"補足知識（資料外）。階段を下りるときは体重を支えながら膝が曲がるため、大腿四頭筋は伸ばされながら張力を発揮する。遅発性筋痛が起こりやすいのもこの収縮。"},
 
 {q:"筋線維が太くなり筋力が増大する現象を何と呼ぶか。",hosoku:true,
  choices:[
@@ -318,7 +383,7 @@ function home(){
         </button>
         <button class="mode dob" onclick="start('dobon')">
           <div class="nm">💣 ドボンチャレンジ</div>
-          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+          <div class="ds">絶対に落とせない最重要問題が <b>💣ドボン！</b> に変身。ドボンを1問でも外したら、解説を見てそこで終了。どの問題も選び直しなしの一発勝負。どこまで正解を続けられるか挑戦！</div>
         </button>
       </div>
     </div>`;
@@ -332,15 +397,15 @@ function render(){
   answered=false; qmiss=0;
   const item=drawn[idx];
   const opts=shuffle(item.choices);
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
   document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
   document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
   const L=["ア","イ","ウ","エ","オ"];
-  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>` : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
   if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
   if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
-  // 誤り選択問題は、設問中の「誤っている」を赤字にして読み飛ばしを防ぐ
+  // 誤り選択問題は、設問中の「誤っている」を色付きにして読み飛ばしを防ぐ
   const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
   let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
   opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
@@ -352,7 +417,7 @@ function pick(el,ok){
   if(answered)return;
   if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
   const item=drawn[idx];
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   const selText=el.querySelector("span:last-child").textContent;
   const selChoice=item.choices.find(c=>c[0]===selText);
   const exp=document.getElementById("exp");
@@ -380,7 +445,7 @@ function pick(el,ok){
     answered=true;
     el.classList.add("wrong");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
-    if(item.kihon){ dead=true; }
+    if(item.dobon){ dead=true; }
     exp.className="exp show ng";
     document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
     document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
@@ -412,7 +477,7 @@ function result(){
         <span class="tag dob">💣 ドボンチャレンジ</span>
         <div>ドボンを踏んでしまいました</div>
         <div class="big">${streak} 問連続正解</div>
-        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+        <div class="msg">${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
       </div>`;
     }else{
       document.getElementById("bd").innerHTML=`<div class="center score">
