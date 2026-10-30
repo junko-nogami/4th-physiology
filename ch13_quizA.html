@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第13章 A・B 栄養素・エネルギー代謝 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#3a6b2a;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#c8e0bd;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#c8e0bd;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#3a6b2a;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#3a6b2a;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(58,107,42,.12);color:#3a6b2a}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#9ca3af;background:#f3f4f6}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #3a6b2a;background:#3a6b2a;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#2f5822}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#3a6b2a;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#3a6b2a;background:#f1f7ee}
+.mode .nm{font-size:16px;font-weight:600;color:#3a6b2a;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#3a6b2a;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#2f5822;background:rgba(58,107,42,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#3a6b2a;background:rgba(58,107,42,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第13章 栄養と代謝｜A・B 栄養素・エネルギー代謝 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第13章 栄養と代謝 ｜ A・B 生体に必要な栄養素・エネルギー代謝（教科書 P183〜191）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第13章 P183〜191 ベース）=====
+   対応スライド：ch13_partA.html（A 生体に必要な栄養素／B エネルギー代謝）
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon :true … 🎯基本　dobon :true … 💣ドボン　gori :true … ⚠誤りを選ぶ　hosoku:true … 📘補足（資料外）
+   g … 出題グループ（GMAXで1回の出題数を制限）：vita＝ビタミン11問（上限2）／basho＝代謝経路の場所4問（上限2）
+   過去問での出題回数（過去問集6章＋宅ドリル便）：kcal/g 7回／ビタミン欠乏症 7回／脂溶性・水溶性 4回／
+   解糖系の場所・性質 4回／中性脂肪の構成 3回／ペプチド結合 3回／ATPの構成 2回／電子伝達系 2回／必須アミノ酸 2回 */
+const PICK=5;
+const GMAX={vita:2,basho:2};
+const POOL=[
+
+/* ---------- A-1 糖質（P183〜184） ---------- */
+
+{q:"日常的に摂取する糖質の大部分を占めるのはどれか。",
+ choices:[
+  ["デンプン",true,""],
+  ["グリコーゲン",false,"動物の肝臓や筋にグルコースを蓄える形。"],
+  ["スクロース",false,"グルコースとフルクトースからなる二糖類（ショ糖）。"],
+  ["食物繊維",false,"消化されにくい多糖類。"]],
+ exp:"われわれが摂取する主な糖質は<b>デンプン</b>（多糖類）で、穀類やイモ類に多く含まれる。（教科書 P183〜184）"},
+
+{q:"それ以上分解されずに小腸で吸収される糖質はどれか。",
+ choices:[
+  ["単糖類",true,""],
+  ["二糖類",false,"単糖が2分子結合したもの。"],
+  ["多糖類",false,"単糖が多数結合した高分子化合物。"],
+  ["アミノ酸",false,"タンパク質を構成する単位で、糖質ではない。"]],
+ exp:"<b>単糖類</b>は糖質の最小単位で、それ以上分解されずに小腸で吸収される。（教科書 P183）"},
+
+{q:"単糖類はどれか。",
+ choices:[
+  ["ガラクトース",true,""],
+  ["マルトース",false,"2分子のグルコースからなる二糖類（麦芽糖）。"],
+  ["ラクトース",false,"母乳や牛乳に含まれる二糖類（乳糖）。"],
+  ["アミロース",false,"グルコースが直鎖状に結合したデンプン（多糖類）。"]],
+ exp:"単糖類には<b>グルコース（ブドウ糖）・フルクトース（果糖）・ガラクトース</b>がある。（教科書 P183）"},
+
+{q:"単糖類はどれか。",
+ choices:[
+  ["フルクトース",true,""],
+  ["スクロース",false,"ショ糖と呼ばれる二糖類。"],
+  ["マルトース",false,"麦芽糖と呼ばれる二糖類。"],
+  ["アミロペクチン",false,"グルコースがふさ状に結合したデンプン（多糖類）。"]],
+ exp:"<b>フルクトース（果糖）</b>は単糖類で、それ以上分解されずに小腸で吸収される。（教科書 P183）"},
+
+{q:"単糖類はどれか。",
+ choices:[
+  ["グルコース",true,""],
+  ["ラクトース",false,"乳糖と呼ばれる二糖類。"],
+  ["スクロース",false,"ショ糖と呼ばれる二糖類。"],
+  ["グリコーゲン",false,"動物の肝臓や筋の貯蔵糖（多糖類）。"]],
+ exp:"<b>グルコース（ブドウ糖）</b>は単糖類。デンプンもグリコーゲンも、グルコースが多数結合したものである。（教科書 P183〜184）"},
+
+{q:"グルコースとフルクトースからなる二糖類はどれか。",
+ choices:[
+  ["スクロース",true,""],
+  ["マルトース",false,"2分子のグルコースからなる二糖類。"],
+  ["ラクトース",false,"グルコースとガラクトースからなる二糖類。"],
+  ["アミロペクチン",false,"グルコースがふさ状に結合したデンプン。"]],
+ exp:"<b>スクロース（ショ糖）</b>＝グルコース＋フルクトース。（教科書 P183、図13・1）"},
+
+{q:"母乳や牛乳に含まれる二糖類はどれか。",
+ choices:[
+  ["ラクトース",true,""],
+  ["マルトース",false,"デンプンをアミラーゼで加水分解して得られる二糖類。"],
+  ["スクロース",false,"いわゆるショ糖。"],
+  ["ガラクトース",false,"単糖類。"]],
+ exp:"<b>ラクトース（乳糖）</b>＝グルコース＋ガラクトース。（教科書 P183）"},
+
+{q:"デンプンのうち、ふさ状の構造をもつのはどれか。",
+ choices:[
+  ["アミロペクチン",true,""],
+  ["アミロース",false,"直鎖状のデンプン。"],
+  ["グリコーゲン",false,"動物の肝臓や筋の貯蔵糖。"],
+  ["マルトース",false,"二糖類。"]],
+ exp:"デンプンには<b>アミロース（直鎖状）</b>と<b>アミロペクチン（ふさ状）</b>がある。（教科書 P184、図13・1）"},
+
+/* ---------- A-2 タンパク質（P184〜185） ---------- */
+
+{q:"多数のアミノ酸がペプチド結合してできた高分子化合物はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["タンパク質",true,""],
+  ["トリグリセリド",false,"3分子の脂肪酸とグリセロールが結合したもの。"],
+  ["多糖類",false,"単糖が多数結合したもの。"],
+  ["リン脂質",false,"2つの脂肪酸とリン酸がグリセロールに結合したもの。"]],
+ exp:"<b>タンパク質</b>は多数のアミノ酸が結合した高分子化合物である。（教科書 P184、図13・2）"},
+
+{q:"アミノ酸どうしの結合を何と呼ぶか。",kihon:true,
+ choices:[
+  ["ペプチド結合",true,""],
+  ["高エネルギーリン酸結合",false,"ATPのリン酸どうしの結合。"],
+  ["グリコシド結合",false,"単糖どうしの結合。"],
+  ["水素結合",false,"DNAの塩基どうしなどをつなぐ弱い結合。"]],
+ exp:"アミノ酸が<b>ペプチド結合</b>で多数つながったものがタンパク質である。（教科書 P184、図13・2）"},
+
+{q:"タンパク質が分解される途中でできる、アミノ酸がいくつか結合したものはどれか。",
+ choices:[
+  ["ペプチド",true,""],
+  ["グリセロール",false,"脂肪酸と結合してトリグリセリドをつくる物質。"],
+  ["脂肪酸",false,"脂質の主な構成成分。"],
+  ["単糖類",false,"糖質の最小単位。"]],
+ exp:"タンパク質 → <b>ペプチド</b> → アミノ酸 の順に分解される。（教科書 図13・2）"},
+
+{q:"体重に占めるタンパク質の割合はどれか。",kihon:true,
+ choices:[
+  ["約20％",true,""],
+  ["約1〜2％",false,"カルシウムが体重に占める割合。"],
+  ["約60％",false,"水が体重に占める割合。"],
+  ["約8％",false,"血液が体重に占める割合（第8章）。"]],
+ exp:"生体では、体重の<b>約20％</b>をタンパク質が占める。（教科書 P184）"},
+
+{q:"タンパク質を構成するアミノ酸は何種類か。",
+ choices:[
+  ["20種類",true,""],
+  ["9種類",false,"必須アミノ酸の数。"],
+  ["50種類",false,"実際の数より多い。"],
+  ["100種類",false,"実際の数より大幅に多い。"]],
+ exp:"タンパク質を構成するアミノ酸は<b>20種類</b>あり、必須アミノ酸と非必須アミノ酸に分けられる。（教科書 P185）"},
+
+{q:"必須アミノ酸はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["トリプトファン",true,""],
+  ["グルタミン酸",false,"体内で合成できる非必須アミノ酸。"],
+  ["アラニン",false,"体内で合成できる非必須アミノ酸。"],
+  ["チロシン",false,"体内で合成できる非必須アミノ酸。"]],
+ exp:"<b>必須アミノ酸</b>は体内で合成できないため、食事からの摂取が不可欠である。（教科書 P185、表13・2）"},
+
+{q:"必須アミノ酸はどれか。",
+ choices:[
+  ["ロイシン",true,""],
+  ["グリシン",false,"非必須アミノ酸。"],
+  ["セリン",false,"非必須アミノ酸。"],
+  ["アスパラギン酸",false,"非必須アミノ酸。"]],
+ exp:"必須アミノ酸は9種類：イソロイシン・<b>ロイシン</b>・バリン・リシン・トレオニン・メチオニン・フェニルアラニン・トリプトファン・ヒスチジン。（教科書 表13・2）"},
+
+{q:"非必須アミノ酸はどれか。",
+ choices:[
+  ["プロリン",true,""],
+  ["バリン",false,"必須アミノ酸。"],
+  ["メチオニン",false,"必須アミノ酸。"],
+  ["ヒスチジン",false,"必須アミノ酸。"]],
+ exp:"<b>非必須アミノ酸</b>は体内で合成されるため、食事からの摂取は必須ではない。（教科書 P185、表13・2）"},
+
+{q:"ミオシンはタンパク質のどの機能に分類されるか。",kihon:true,
+ choices:[
+  ["収縮タンパク質",true,""],
+  ["構造物質",false,"コラーゲンやケラチンが分類される機能。"],
+  ["物質輸送",false,"トランスフェリンやヘモグロビンが分類される機能。"],
+  ["酵素",false,"消化酵素やクエン酸回路の酵素が分類される機能。"]],
+ exp:"アクチンとミオシンは<b>収縮タンパク質</b>として筋収縮を起こす。（教科書 P185、表13・1）"},
+
+{q:"タンパク質の機能と例の組合せで正しいのはどれか。",
+ choices:[
+  ["生体防御 ― 抗体（γ-グロブリン）",true,""],
+  ["酵素 ― インスリン",false,"インスリンはホルモンとしてはたらくタンパク質。"],
+  ["構造物質 ― アルブミン",false,"アルブミンは物質輸送・膠質浸透圧の維持・栄養タンパク質。"],
+  ["物質輸送 ― コラーゲン",false,"コラーゲンは構造物質。"]],
+ exp:"抗体（γ-グロブリン）やインターフェロンは<b>生体防御</b>にはたらく。（教科書 P185、表13・1）"},
+
+/* ---------- A-3 脂質（P185〜187） ---------- */
+
+{q:"1gあたりのエネルギー供給量がもっとも大きいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["脂質",true,""],
+  ["糖質",false,"1gあたり4 kcal。"],
+  ["タンパク質",false,"1gあたり4 kcal。"],
+  ["ミネラル",false,"エネルギー源にならない。"]],
+ exp:"糖質・タンパク質は4 kcal/g、<b>脂質は9 kcal/g</b>。（教科書 P185）"},
+
+{q:"中性脂肪（トリグリセリド）の構成はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["3分子の脂肪酸と1分子のグリセロール",true,""],
+  ["2分子の脂肪酸とリン酸とグリセロール",false,"リン脂質の構成。"],
+  ["1分子の脂肪酸と3分子のグリセロール",false,"脂肪酸とグリセロールの数が逆。"],
+  ["多数のグルコース",false,"多糖類の構成。"]],
+ exp:"トリグリセリドは<b>3つの脂肪酸がグリセロール分子と結合したもの</b>。脂肪組織に貯蔵され、飢餓時のエネルギー源になる。（教科書 P186）"},
+
+{q:"細胞膜を構成する主な成分はどれか。",kihon:true,
+ choices:[
+  ["リン脂質",true,""],
+  ["トリグリセリド",false,"脂肪組織に貯蔵される中性脂肪。"],
+  ["遊離脂肪酸",false,"アルブミンと結合して血中を運ばれる脂肪酸。"],
+  ["カイロミクロン",false,"リポタンパク質の一種。"]],
+ exp:"<b>リン脂質</b>は細胞膜を構成する主な成分で、コレステロールとともに膜をつくる。（教科書 P186）"},
+
+{q:"必須脂肪酸と呼ばれるのはどれか。",
+ choices:[
+  ["ω-3脂肪酸",true,""],
+  ["飽和脂肪酸",false,"代謝過程でコレステロールへ変化しやすい脂肪酸。"],
+  ["コレステロール",false,"動物性食品から摂取される脂質。"],
+  ["グリセロール",false,"脂肪酸と結合してトリグリセリドをつくる物質。"]],
+ exp:"多価不飽和脂肪酸の<b>ω-3脂肪酸とω-6脂肪酸</b>は体内で合成できず、食事で摂取する必要があるため必須脂肪酸と呼ばれる。（教科書 P186）"},
+
+{q:"コレステロールを材料にして合成されるのはどれか。",
+ choices:[
+  ["胆汁酸",true,""],
+  ["インスリン",false,"タンパク質からなるホルモン。"],
+  ["グリコーゲン",false,"グルコースが多数結合したもの。"],
+  ["ヘモグロビン",false,"赤血球の色素タンパク質。"]],
+ exp:"コレステロールは<b>ステロイドホルモン・胆汁酸・ビタミンD</b>の合成材料となる。（教科書 P186）"},
+
+{q:"血中の遊離脂肪酸と結合して運ぶタンパク質はどれか。",
+ choices:[
+  ["アルブミン",true,""],
+  ["ヘモグロビン",false,"酸素を運ぶタンパク質。"],
+  ["トランスフェリン",false,"鉄を運ぶ物質輸送タンパク質。"],
+  ["γ-グロブリン",false,"抗体としてはたらくタンパク質。"]],
+ exp:"脂肪酸は<b>アルブミン</b>と結合した遊離脂肪酸として血液中を運ばれ、各組織の細胞へ供給される。（教科書 P186）"},
+
+{q:"リポタンパク質の粒子の内側にあるのはどれか。",
+ choices:[
+  ["トリグリセリド",true,""],
+  ["リン脂質",false,"粒子の外側にある。"],
+  ["アポリポタンパク質",false,"粒子の外側にある。"],
+  ["遊離コレステロール",false,"粒子の外側にある。"]],
+ exp:"リポタンパク質の内側には<b>トリグリセリドとコレステロールエステル</b>が含まれる。（教科書 P186〜187、図13・3）"},
+
+{q:"粒子径がもっとも大きいリポタンパク質はどれか。",
+ choices:[
+  ["カイロミクロン",true,""],
+  ["超低密度リポタンパク質（VLDL）",false,"2番目に大きく、トリグリセリドが多い。"],
+  ["低密度リポタンパク質（LDL）",false,"コレステロール含有量がもっとも多い。"],
+  ["高密度リポタンパク質（HDL）",false,"比重がもっとも大きい。"]],
+ exp:"粒子径・分子量・トリグリセリド含有量は<b>カイロミクロン</b>で最大。（教科書 P187、図13・4）"},
+
+{q:"コレステロール含有量がもっとも多いリポタンパク質はどれか。",
+ choices:[
+  ["低密度リポタンパク質（LDL）",true,""],
+  ["カイロミクロン",false,"コレステロール含有量がもっとも少ない。"],
+  ["超低密度リポタンパク質（VLDL）",false,"トリグリセリドが多い。"],
+  ["高密度リポタンパク質（HDL）",false,"比重がもっとも大きい。"]],
+ exp:"コレステロール含有量は<b>LDL</b>でもっとも多く、カイロミクロンでもっとも少ない。（教科書 P187、図13・4）"},
+
+{q:"比重がもっとも大きいリポタンパク質はどれか。",
+ choices:[
+  ["高密度リポタンパク質（HDL）",true,""],
+  ["カイロミクロン",false,"粒子径がもっとも大きく、比重はもっとも小さい。"],
+  ["超低密度リポタンパク質（VLDL）",false,"トリグリセリドが多い。"],
+  ["低密度リポタンパク質（LDL）",false,"コレステロール含有量がもっとも多い。"]],
+ exp:"比重とリン脂質の含有量は、カイロミクロン→VLDL→IDL→LDL→<b>HDL</b>の順に増える。（教科書 P187、図13・4）"},
+
+/* ---------- A-4 ミネラル（P187〜188） ---------- */
+
+{q:"体重に占めるミネラルの割合はどれか。",kihon:true,
+ choices:[
+  ["約4％",true,""],
+  ["約60％",false,"水が体重に占める割合。"],
+  ["約8％",false,"血液が体重に占める割合（第8章）。"],
+  ["約40％",false,"実際の値より大幅に多い。"]],
+ exp:"ミネラルは体重の<b>約4％</b>を占め、ほとんどが骨格系にある。（教科書 P187）"},
+
+{q:"体内でもっとも多いミネラルはどれか。",kihon:true,
+ choices:[
+  ["カルシウム",true,""],
+  ["リン",false,"85％が骨と歯にあり、ATPの構成成分にもなる。"],
+  ["ナトリウム",false,"細胞外液の主な陽イオン。"],
+  ["鉄",false,"3分の2がヘモグロビンの中にある。"]],
+ exp:"<b>カルシウム</b>は体重の1〜2％を占め、その99％は骨と歯にある。（教科書 表13・3）"},
+
+{q:"カルシウムのはたらきはどれか。",kihon:true,
+ choices:[
+  ["血液凝固",true,""],
+  ["細胞外液量の維持",false,"ナトリウムのはたらき。"],
+  ["ヘモグロビンの合成",false,"銅のはたらき。"],
+  ["インスリンの作用の増強",false,"クロムのはたらき。"]],
+ exp:"カルシウムは<b>血液凝固</b>や神経・筋の活動に関わる。ビタミンDで吸収が促進される。（教科書 表13・3）"},
+
+{q:"骨格筋で、筋小胞体から放出されて筋収縮の引き金になるイオンはどれか。",kihon:true,
+ choices:[
+  ["Ca²⁺",true,""],
+  ["Na⁺",false,"細胞内へ流入して活動電位を発生させるイオン。"],
+  ["K⁺",false,"細胞内液の主な陽イオンで、静止膜電位の形成に関わる。"],
+  ["Cl⁻",false,"細胞外液の主な陰イオン。"]],
+ exp:"筋小胞体から放出された<b>Ca²⁺</b>がトロポニンに結合すると、アクチンとミオシンが結合して収縮が起こる。（第2章 筋の生理学、教科書 表13・3）"},
+
+{q:"神経終末に流入して、神経伝達物質の放出を引き起こすイオンはどれか。",
+ choices:[
+  ["Ca²⁺",true,""],
+  ["Na⁺",false,"活動電位の発生で細胞内へ流入するイオン。"],
+  ["K⁺",false,"再分極のときに細胞外へ流出するイオン。"],
+  ["Cl⁻",false,"抑制性シナプスで流入し、興奮を抑えるイオン。"]],
+ exp:"活動電位が神経終末に届くと<b>Ca²⁺</b>が流入し、シナプス小胞から伝達物質が放出される。（第3章 神経の生理学、教科書 表13・3）"},
+
+{q:"微量ミネラルはどれか。",
+ choices:[
+  ["亜鉛",true,""],
+  ["カリウム",false,"多量ミネラル。"],
+  ["マグネシウム",false,"多量ミネラル。"],
+  ["リン",false,"多量ミネラル。"]],
+ exp:"カルシウム・リン・ナトリウムなどは多量ミネラル、鉄や<b>亜鉛</b>などは微量ミネラルに分類される。（教科書 P187、表13・3）"},
+
+{q:"細胞内液の主な陽イオンはどれか。",
+ choices:[
+  ["カリウム",true,""],
+  ["ナトリウム",false,"細胞外液の主な陽イオン。"],
+  ["マグネシウム",false,"体内の50〜60％が骨にある。"],
+  ["亜鉛",false,"炭酸脱水酵素に含まれる微量ミネラル。"]],
+ exp:"<b>カリウム</b>は細胞内液の主な陽イオンで、浸透圧・pHの調節や、神経・筋の興奮伝導を担う。（教科書 表13・3）"},
+
+{q:"甲状腺ホルモンの構成成分となるミネラルはどれか。",
+ choices:[
+  ["ヨウ素",true,""],
+  ["セレン",false,"抗酸化酵素（グルタチオンペルオキシダーゼ）の構成成分。"],
+  ["銅",false,"ヘモグロビンの合成に関与する。"],
+  ["マンガン",false,"さまざまな酵素の構成成分になったり、酵素を活性化したりする。"]],
+ exp:"<b>ヨウ素</b>は昆布などの海藻に多く含まれる微量ミネラル。甲状腺ホルモン（サイロキシン）はヨウ素を含むアミノ酸からできていて、ヨウ素がないとつくれない。（教科書 表13・3）"},
+
+/* ---------- A-5 ビタミン（P187〜189） ---------- */
+
+{q:"脂溶性ビタミンはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["ビタミンK",true,""],
+  ["ビタミンB6",false,"水溶性ビタミン。"],
+  ["ビタミンB12",false,"水溶性ビタミン。"],
+  ["葉酸",false,"水溶性ビタミン。"]],
+ exp:"脂溶性ビタミンは<b>A・D・E・K</b>の4つ。（教科書 表13・4）"},
+
+{q:"水溶性ビタミンはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["ビタミンC",true,""],
+  ["ビタミンA",false,"脂溶性ビタミン。"],
+  ["ビタミンD",false,"脂溶性ビタミン。"],
+  ["ビタミンE",false,"脂溶性ビタミン。"]],
+ exp:"水溶性ビタミンは<b>ビタミンB群とビタミンC</b>。（教科書 表13・4）"},
+
+{q:"脂溶性ビタミンの特徴はどれか。",kihon:true,
+ choices:[
+  ["過剰摂取でさまざまな症状を招くことがある",true,""],
+  ["過剰に摂取した分は尿中へ排泄される",false,"水溶性ビタミンの特徴。"],
+  ["調理時に食品から失われやすい",false,"水溶性ビタミンの特徴。"],
+  ["すべてが補酵素としてはたらく",false,"ビタミンB群の特徴。"]],
+ exp:"脂溶性ビタミンは脂肪組織に蓄積されやすいため、<b>過剰摂取で症状が出る</b>ことがある。脂質と一緒に摂取すると吸収率が高まる。（教科書 P188）"},
+
+{g:"vita",q:"ビタミンAの欠乏症はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["夜盲症",true,""],
+  ["ペラグラ",false,"ナイアシンの欠乏症。"],
+  ["口角炎",false,"ビタミンB2の欠乏症。"],
+  ["皮膚炎",false,"ビオチンの欠乏症。"]],
+ exp:"ビタミンA（レチノール）は体内でレチナールになり、オプシンというタンパク質と結合して、網膜の杆体にある視物質<b>ロドプシン</b>をつくる。不足するとロドプシンが減って暗い所で見えにくくなる＝<b>夜盲症</b>。角膜乾燥症も起こる。（教科書 表13・4）"},
+
+{g:"vita",q:"欠乏により脚気をきたすビタミンはどれか。",kihon:true,
+ choices:[
+  ["ビタミンB1",true,""],
+  ["ビタミンB2",false,"欠乏で口角炎・舌炎をきたす。"],
+  ["ナイアシン",false,"欠乏でペラグラをきたす。"],
+  ["ビタミンE",false,"欠乏で溶血性貧血をきたす。"]],
+ exp:"<b>ビタミンB1</b>（チアミン）は糖質の代謝に関与し、欠乏で脚気・多発性神経炎をきたす。（教科書 表13・4）"},
+
+{g:"vita",q:"ビタミンCの欠乏症はどれか。",kihon:true,
+ choices:[
+  ["壊血病",true,""],
+  ["ペラグラ",false,"ナイアシンの欠乏症。"],
+  ["口角炎",false,"ビタミンB2の欠乏症。"],
+  ["溶血性貧血",false,"ビタミンEの欠乏症。"]],
+ exp:"ビタミンC（アスコルビン酸）は抗酸化作用をもつ水溶性ビタミン。欠乏すると歯ぐきや皮下に出血が起こる（<b>壊血病</b>）。（教科書 表13・4）"},
+
+{g:"vita",q:"欠乏により骨軟化症をきたすビタミンはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["ビタミンD",true,""],
+  ["ビタミンE",false,"抗酸化作用をもち、欠乏で溶血性貧血をきたす。"],
+  ["ビタミンB2",false,"脱水素反応・酸化反応に関与する。"],
+  ["ビオチン",false,"炭酸固定反応の補酵素としてはたらく。"]],
+ exp:"<b>ビタミンD</b>の欠乏で、くる病（小児）・骨軟化症（成人）・骨粗鬆症（高齢者）をきたす。（教科書 表13・4）"},
+
+{g:"vita",q:"小腸でのカルシウム吸収を促進するビタミンはどれか。",
+ choices:[
+  ["ビタミンD",true,""],
+  ["ビタミンA",false,"視覚・免疫などに関与する。"],
+  ["ビタミンB6",false,"アミノ酸代謝に関与する。"],
+  ["葉酸",false,"ホルミル基やメチル基の転移反応に関与する。"]],
+ exp:"<b>ビタミンD</b>は小腸でのカルシウム吸収を促進し、カルシウムやリンの血中濃度を調節して骨密度を維持する。（教科書 表13・4）"},
+
+{g:"vita",q:"血液凝固に関与するビタミンはどれか。",
+ choices:[
+  ["ビタミンK",true,""],
+  ["ビタミンA",false,"視覚・免疫に関与し、欠乏で夜盲症をきたす。"],
+  ["ビタミンD",false,"小腸でのカルシウム吸収を促進する。"],
+  ["ビタミンE",false,"抗酸化作用をもち、欠乏で溶血性貧血をきたす。"]],
+ exp:"<b>ビタミンK</b>のKは、ドイツ語で血液凝固を意味するKoagulationの頭文字。欠乏で血液凝固能の低下・新生児メレナをきたす。（教科書 P187、表13・4）"},
+
+{g:"vita",q:"抗酸化作用をもち、欠乏で溶血性貧血をきたすビタミンはどれか。",
+ choices:[
+  ["ビタミンE",true,""],
+  ["ビタミンA",false,"視覚・免疫に関与し、欠乏で夜盲症をきたす。"],
+  ["ビタミンD",false,"小腸でのカルシウム吸収を促進する。"],
+  ["ビタミンK",false,"欠乏で血液凝固能が低下する。"]],
+ exp:"<b>ビタミンE</b>（トコフェロール）は抗酸化作用をもつ脂溶性ビタミン。抗酸化作用はビタミンCにもあるが、欠乏で溶血性貧血をきたすのはビタミンE。（教科書 表13・4）"},
+
+{g:"vita",q:"欠乏により悪性貧血（巨赤芽球性貧血）をきたすビタミンはどれか。",
+ choices:[
+  ["ビタミンB12",true,""],
+  ["ビタミンB2",false,"欠乏で口角炎・舌炎をきたす。"],
+  ["パントテン酸",false,"補酵素A（CoA）生合成の前駆体。"],
+  ["ビオチン",false,"欠乏で皮膚炎をきたす。"]],
+ exp:"<b>ビタミンB12</b>（シアノコバラミン）は造血に関与する。葉酸の欠乏でも同じ貧血が起こる。（教科書 表13・4）"},
+
+{g:"vita",q:"ビタミンB12の欠乏症はどれか。",
+ choices:[
+  ["悪性貧血（巨赤芽球性貧血）",true,""],
+  ["ペラグラ",false,"ナイアシンの欠乏症。"],
+  ["口角炎",false,"ビタミンB2の欠乏症。"],
+  ["皮膚炎",false,"ビオチンの欠乏症。"]],
+ exp:"ビタミンB12（シアノコバラミン）は造血に関与し、欠乏で<b>悪性貧血（巨赤芽球性貧血）</b>をきたす。第8章で学んだ赤血球の成熟とも関係する。（教科書 表13・4）"},
+
+{g:"vita",q:"コラーゲンの合成に関与するビタミンはどれか。",
+ choices:[
+  ["ビタミンC",true,""],
+  ["ビタミンA",false,"視覚・免疫などに関与する。"],
+  ["ビタミンE",false,"抗酸化作用をもつ脂溶性ビタミン。"],
+  ["ビタミンB6",false,"アミノ酸代謝に関与する。"]],
+ exp:"<b>ビタミンC</b>は抗酸化作用をもち、コラーゲンやカテコールアミンの合成に関与する。（教科書 表13・4）"},
+
+{g:"vita",q:"体内でアミノ酸から微量ながらつくられる水溶性ビタミンはどれか。",
+ choices:[
+  ["ナイアシン",true,""],
+  ["ビタミンB2",false,"脱水素反応・酸化反応に関与する。"],
+  ["ビタミンB6",false,"アミノ酸代謝に関与する。"],
+  ["葉酸",false,"ホルミル基やメチル基の転移反応に関与する。"]],
+ exp:"<b>ナイアシン</b>は、必須アミノ酸であるトリプトファンから微量ながら体内でつくられる。（教科書 P188）"},
+
+/* ---------- B エネルギー代謝（P189〜191） ---------- */
+
+{q:"生体内でエネルギーのやりとりを仲介する物質はどれか。",kihon:true,
+ choices:[
+  ["ATP（アデノシン三リン酸）",true,""],
+  ["ADP（アデノシン二リン酸）",false,"ATPが分解されてできる物質。"],
+  ["NADH",false,"電子伝達系へ電子を運ぶ物質。"],
+  ["グリコーゲン",false,"グルコースの貯蔵形。"]],
+ exp:"栄養素が分解されて放出されたエネルギーの一部が<b>ATP</b>に蓄えられ、ATPがADPとリン酸に分解されるときのエネルギーが使われる。（教科書 P189〜190）"},
+
+{q:"ATPを構成する物質の組合せはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["アデニン・リボース・リン酸",true,""],
+  ["アデニン・デオキシリボース・リン酸",false,"デオキシリボースはDNAを構成する糖。"],
+  ["アデニン・リボース・アミノ酸",false,"アミノ酸はタンパク質の構成単位。"],
+  ["グアニン・リボース・リン酸",false,"グアニンはATPに含まれない塩基。"]],
+ exp:"ATPは、アデノシン（<b>アデニン＋リボース</b>）に3つの<b>リン酸</b>が結合したもの。（教科書 図13・5）"},
+
+{q:"ATPのエネルギーを用いた仕事のうち、化学的仕事にあたるのはどれか。",
+ choices:[
+  ["多糖類などの高分子化合物の合成",true,""],
+  ["筋収縮による運動",false,"機械的仕事。"],
+  ["濃度勾配に逆らった分子の移動",false,"物質の輸送（能動輸送）。"],
+  ["神経細胞の興奮",false,"物質の輸送。"]],
+ exp:"化学的仕事とは、タンパク質・脂質・多糖類などの<b>高分子化合物を合成すること</b>。（教科書 P190）"},
+
+{q:"筋収縮（機械的仕事）に使われたエネルギーの大部分は何として失われるか。",
+ choices:[
+  ["熱エネルギー",true,""],
+  ["電気的エネルギー",false,"神経の興奮伝導に使われるエネルギー。"],
+  ["化学的エネルギー",false,"生体物質の合成に使われるエネルギー。"],
+  ["光エネルギー",false,"生体のエネルギー変換には含まれない。"]],
+ exp:"筋収縮に使ったエネルギーの大部分は<b>熱</b>になって失われる。この熱は体温の維持にも使われる。（教科書 P183、P190）"},
+
+{q:"1 kcalの定義はどれか。",
+ choices:[
+  ["1 kgの水を14.5℃から15.5℃へ上昇させる熱量",true,""],
+  ["1 gの水を1℃上昇させる熱量",false,"1 calにあたる熱量。"],
+  ["1 kgの水を沸騰させる熱量",false,"定義とは異なる。"],
+  ["1 Lの空気を1℃上昇させる熱量",false,"定義とは異なる。"]],
+ exp:"カロリーは熱量の単位。<b>1 kcal</b>は、1 kgの水の温度を1℃（14.5℃→15.5℃）上げるのに必要な熱量。（教科書 P189）"},
+
+{g:"basho",q:"解糖系が進行する場所はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["細胞質",true,""],
+  ["ミトコンドリア基質",false,"クエン酸回路が進む場所。"],
+  ["ミトコンドリア内膜",false,"電子伝達系がある場所。"],
+  ["核",false,"DNAがある場所。"]],
+ exp:"解糖系は酸素を用いない嫌気的代謝で、<b>細胞質</b>で進行する。（教科書 P190、図13・6）"},
+
+{g:"basho",q:"細胞質で進行する代謝経路はどれか。",kihon:true,
+ choices:[
+  ["解糖系",true,""],
+  ["クエン酸回路",false,"ミトコンドリア基質で進む経路。"],
+  ["電子伝達系",false,"ミトコンドリア内膜にある経路。"],
+  ["β酸化",false,"ミトコンドリア基質で起こる脂肪酸の代謝経路。"]],
+ exp:"<b>解糖系</b>は酸素を用いない嫌気的代謝で、ミトコンドリアを必要としない。（教科書 P190、図13・6）"},
+
+{g:"basho",q:"ミトコンドリア基質で進行する代謝経路はどれか。",
+ choices:[
+  ["クエン酸回路",true,""],
+  ["解糖系",false,"細胞質で進む経路。"],
+  ["電子伝達系",false,"ミトコンドリア内膜にある経路。"],
+  ["酸化的リン酸化",false,"電子伝達系で起こるATPの合成。"]],
+ exp:"ピルビン酸はミトコンドリア基質へ移り、アセチルCoAとなって<b>クエン酸回路</b>に入る。（教科書 P190〜191）"},
+
+{g:"basho",q:"ミトコンドリア内膜にあるのはどれか。",
+ choices:[
+  ["電子伝達系",true,""],
+  ["解糖系",false,"細胞質で進む経路。"],
+  ["クエン酸回路",false,"ミトコンドリア基質で進む経路。"],
+  ["β酸化",false,"ミトコンドリア基質で起こる脂肪酸の代謝経路。"]],
+ exp:"NADHやFADH₂が運んだ電子が、内膜にある酵素群（<b>電子伝達系</b>）に渡され、酸化的リン酸化が起こる。（教科書 P191、図13・6）"},
+
+{q:"解糖系でグルコースが分解されて生じるのはどれか。",kihon:true,
+ choices:[
+  ["ピルビン酸",true,""],
+  ["アセチルCoA",false,"ミトコンドリア基質で生じる物質。"],
+  ["オキサロ酢酸",false,"アセチルCoAと結合してクエン酸になる物質。"],
+  ["尿素",false,"アミノ基の窒素から肝臓でつくられる物質。"]],
+ exp:"解糖系ではグルコースが<b>ピルビン酸</b>へ分解される。（教科書 P190）"},
+
+{q:"酸素不足の状態で、ピルビン酸から生じるのはどれか。",kihon:true,
+ choices:[
+  ["乳酸",true,""],
+  ["アセチルCoA",false,"酸素がある状態でミトコンドリア内で生じる物質。"],
+  ["クエン酸",false,"アセチルCoAとオキサロ酢酸から生じる物質。"],
+  ["二酸化炭素",false,"クエン酸回路で生じる物質。"]],
+ exp:"酸素不足の状態では、解糖系で生じたピルビン酸が<b>乳酸</b>へ変化する。（教科書 P190）"},
+
+{q:"解糖系で1分子のグルコースから正味で得られるATPはどれか。",kihon:true,
+ choices:[
+  ["2分子",true,""],
+  ["1分子",false,"実際の値より少ない。"],
+  ["6分子",false,"実際の値より多い。"],
+  ["38分子",false,"好気的代謝全体で得られる数。"]],
+ exp:"解糖系では正味<b>2分子のATP</b>と2分子のNADHが生成される。（教科書 P190）"},
+
+{q:"1分子のグルコースからもっとも多くのATPを合成する過程はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["電子伝達系",true,""],
+  ["解糖系",false,"正味2分子のATPを生成する過程。"],
+  ["クエン酸回路",false,"1分子のグルコースあたり2分子のGTP（→ATP）を生成する過程。"],
+  ["β酸化",false,"脂肪酸からアセチルCoAを取り出す経路。"]],
+ exp:"<b>電子伝達系</b>では、電子の移動に伴う酸化的リン酸化でATPが大量に合成される。（教科書 P191）"},
+
+{q:"酸素がある状態で、1分子のグルコースからつくられるATPはどれか。",kihon:true,
+ choices:[
+  ["約38分子",true,""],
+  ["2分子",false,"解糖系だけで得られる数。"],
+  ["約20分子",false,"実際の値より少ない。"],
+  ["約120分子",false,"実際の値より多い。"]],
+ exp:"好気的代謝では<b>36分子または38分子</b>のATPを合成できる。（教科書 P190〜191）"},
+
+{q:"二酸化炭素が発生するのはどれか。",
+ choices:[
+  ["クエン酸回路",true,""],
+  ["解糖系",false,"グルコースがピルビン酸に分解される経路。"],
+  ["電子伝達系",false,"酸化的リン酸化でATPがつくられる経路。"],
+  ["β酸化",false,"脂肪酸からアセチルCoAを取り出す経路。"]],
+ exp:"<b>クエン酸回路</b>が1回転する間に2分子の二酸化炭素が生じる。（教科書 P191）"},
+
+{q:"電子伝達系で、酸素が電子を受け取って最終的に生じるのはどれか。",kihon:true,
+ choices:[
+  ["水",true,""],
+  ["二酸化炭素",false,"クエン酸回路で生じる物質。"],
+  ["乳酸",false,"酸素不足でピルビン酸から生じる物質。"],
+  ["ピルビン酸",false,"解糖系で生じる物質。"]],
+ exp:"電子伝達系で運ばれた電子は、最後に酸素に渡されて<b>水</b>ができる。（教科書 図13・6）"},
+
+/* ---------- ⚠ 誤りを選ぶ ---------- */
+
+{q:"栄養素について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["必須アミノ酸は体内で合成できる",true,""],
+  ["糖質はもっともよく利用されるエネルギー源である",false,"教科書どおりの記述なので、正しい。"],
+  ["ミネラルはエネルギー源にならない",false,"教科書どおりの記述なので、正しい。"],
+  ["水は体重の約60％を占める",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"必須アミノ酸は<b>体内で合成できない</b>ため、食事からの摂取が不可欠。（教科書 P185）"},
+
+{q:"ビタミンについて誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["水溶性ビタミンは脂肪組織に蓄積されやすい",true,""],
+  ["脂溶性ビタミンは脂質と一緒に摂取すると吸収率が高まる",false,"教科書どおりの記述なので、正しい。"],
+  ["ビタミンB群はすべて補酵素としてはたらく",false,"教科書どおりの記述なので、正しい。"],
+  ["ほとんどのビタミンは体内で合成できない",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"脂肪組織に蓄積されやすいのは<b>脂溶性</b>ビタミン。水溶性ビタミンの過剰分は尿中へ排泄される。（教科書 P188）"},
+
+{q:"解糖系について誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["酸素を必要とする",true,""],
+  ["NADHが生成される",false,"教科書どおりの記述なので、正しい。"],
+  ["嫌気的代謝である",false,"教科書どおりの記述なので、正しい。"],
+  ["得られるATPは好気的代謝より少ない",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"解糖系は<b>酸素を用いない</b>嫌気的代謝。（教科書 P190）"},
+
+/* ---------- 📘 補足（資料外） ---------- */
+
+{q:"糖質4・脂質9・タンパク質4 kcal/gのように、1gあたりのエネルギー量を表す係数を何と呼ぶか。",hosoku:true,
+ choices:[
+  ["アトウォーターの係数",true,""],
+  ["呼吸商",false,"二酸化炭素排出量と酸素消費量の比。"],
+  ["エネルギー代謝率",false,"運動強度を表す指標。"],
+  ["ヘマトクリット値",false,"血液に占める赤血球の体積の比率。"]],
+ exp:"補足知識（資料外）。<b>アトウォーターの係数</b>を摂取した栄養素の量にかけると、エネルギー量を推測できる。"},
+
+{q:"ピルビン酸からアセチルCoAへの反応で補酵素としてはたらくビタミンはどれか。",hosoku:true,
+ choices:[
+  ["ビタミンB1",true,""],
+  ["ビタミンC",false,"コラーゲンの合成に関与する。"],
+  ["ビタミンK",false,"血液凝固に関与する。"],
+  ["ビタミンD",false,"小腸でのカルシウム吸収を促進する。"]],
+ exp:"補足知識（資料外）。<b>ビタミンB1</b>が不足すると、ピルビン酸から乳酸ができやすくなり、アシドーシスを起こす。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=draw();
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を色付きにして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent="正解！";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
