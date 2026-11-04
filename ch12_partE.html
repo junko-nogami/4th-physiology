@@ -22,6 +22,9 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
 .tbl tr:last-child td{border-bottom:none}
 .tbl td:first-child{font-weight:600;color:#4a3a6b;white-space:nowrap;min-width:110px}
+.tbl.wide td:first-child{white-space:normal;min-width:88px}
+.kw{font-weight:700;color:#4a3a6b}
+.hs{display:inline-block;font-size:11px;font-weight:700;color:#8a6314;background:rgba(160,110,20,.12);border-radius:4px;padding:1px 7px;margin-right:6px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
 .tf{background:rgba(74,58,107,.12);color:#4a3a6b}
@@ -39,10 +42,11 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .btnp{background:#4a3a6b;color:#fff;border-color:#4a3a6b}
 .btnp:hover{background:#3d305a}
 .cnt{font-size:11px;color:#888;margin-left:auto}
-.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
 .dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
 .dot.a{background:#4a3a6b}
 .pg{font-size:11px;color:#888;margin-left:auto}
+@media (max-width:520px){.two{grid-template-columns:1fr}.bd{padding:16px 14px}.hd{padding:12px 16px}.ctrl,.nav{padding-left:14px;padding-right:14px}.tbl{font-size:12px}.tbl td,.tbl th{padding:6px 6px}}
 </style>
 </head>
 <body>
@@ -50,9 +54,9 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 <div class="slide">
   <div id="sc"></div>
   <div class="ctrl">
-    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="nextBlank()">次のカッコを開く ▶</button>
     <button class="btn" onclick="showAll()">すべて表示</button>
-    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn" onclick="resetAll()">リセット</button>
     <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
     <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
     <span class="cnt" id="cnt"></span>
@@ -61,109 +65,100 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 </div>
 <script>
 const S=[
-{t:"体液の調節の概要",ch:"第12章 尿の生成と排泄 ｜ E 腎臓による体液の調節",type:"p",
+{t:"腎臓による体液の調節",ch:"第12章 尿の生成と排泄 ｜ E 腎臓による体液の調節 ｜ P180",type:"p",
 rows:[
-{t:"ヒトの体液は，電解質や血漿タンパク質などで [浸透圧] が一定に保たれている．",b:["浸透圧"]},
-{t:"細胞活動で生じる老廃物は呼吸や尿で排泄されることで [pH] も一定に維持される．",b:["pH"]},
-{t:"体液の量・浸透圧・pHは，[食事] などでの水分や塩分の摂取のほか，尿の量や組成を調節する [ホルモン] が腎臓にはたらくことで厳密にコントロールされる．",b:["食事","ホルモン"]},
+"ヒトの体液は，電解質や血漿タンパク質などで [浸透圧] が一定に保たれている．",
+"細胞活動で生じる老廃物が呼吸や尿で排泄されることで，[pH] も一定に維持される．",
+"体液の量・浸透圧・pHは，水分や塩分の摂取のほか，尿の量や組成を調節する [ホルモン] が腎臓にはたらくことで，厳密にコントロールされる．",
+"体液の量や浸透圧の変化は，それぞれ固有の [受容器] で感知され，その情報に基づいて各種ホルモンの分泌が促される．",
 ]},
-{t:"バソプレシンによる水分調節",ch:"第12章 尿の生成と排泄 ｜ E-1 ホルモンによる調節",type:"p",
+{t:"バソプレシン",ch:"第12章 尿の生成と排泄 ｜ E-1 ホルモンによる調節 ｜ P180",type:"p",
 rows:[
-{t:"脱水などで血漿浸透圧が上昇した場合，[視床下部] にある浸透圧受容器が刺激される．",b:["視床下部"]},
-{t:"その情報が視床下部の [視索上核] と [室傍核] に伝わると，下垂体後葉からの [バソプレシン] の分泌が促される．",b:["視索上核","室傍核","バソプレシン"]},
-{t:"バソプレシンは [集合管] での水の再吸収を促すことで血漿浸透圧を低下させる．",b:["集合管"]},
-{t:"逆に，血漿浸透圧が低下した場合，バソプレシンの分泌が低下し水の再吸収が [抑制] される．",b:["抑制"]},
-{t:"血液量や胸腔内圧が減少すると，心房の [低圧受容器]（伸展受容器）がそれを感知してバソプレシンの分泌が促進される．",b:["低圧受容器"]},
+"脱水などで血漿浸透圧が上昇すると，[視床下部] にある [浸透圧受容器] が刺激される（図12・8）．",
+"その情報が視床下部の [視索上核] と [室傍核] に伝わると，[下垂体後葉] からの [バソプレシン] の分泌が促される．",
+"バソプレシンは [集合管] での水の再吸収を促すことで，血漿浸透圧を [低下] させる．",
+"逆に，血漿浸透圧が低下すると，バソプレシンの分泌が低下し，水の再吸収が [抑制] される．",
+"血液量や胸腔内圧が減少すると，心房の [低圧受容器]（伸展受容器）がそれを感知して，バソプレシンの分泌が [促進] される．",
 ]},
-{t:"レニン-アンジオテンシン-アルドステロン系",ch:"第12章 尿の生成と排泄 ｜ E-1 ホルモンによる調節",type:"p",
+{t:"レニン-アンジオテンシン-アルドステロン系",ch:"第12章 尿の生成と排泄 ｜ E-1 ホルモンによる調節 ｜ P181",type:"p",
 rows:[
-{t:"塩分の過剰摂取などで体液量が増加すると [傍糸球体装置] がそれを感知して [レニン] の分泌を抑制する．",b:["傍糸球体装置","レニン"]},
-{t:"レニンは [アンジオテンシン] の分泌抑制を介して副腎からの [アルドステロン] 分泌を抑制する．",b:["アンジオテンシン","アルドステロン"]},
-{t:"その結果，遠位尿細管や集合管での [Na⁺] の再吸収が減少し，それとともに水の再吸収量が減少して [尿量] が増える．",b:["Na⁺","尿量"]},
+"塩分の過剰摂取などで体液量が増加すると，[傍糸球体装置] がそれを感知して [レニン] の分泌を抑制する（図12・9）．",
+"レニンは [アンジオテンシン] の分泌抑制を介して，副腎からの [アルドステロン] 分泌を抑制する．",
+"その結果，[遠位尿細管] や集合管での [Na⁺] の再吸収が減少し，それとともに水の再吸収量が減少して [尿量] が増える．",
 ]},
-{t:"心房性ナトリウム利尿ペプチド（ANP）",ch:"第12章 尿の生成と排泄 ｜ E-1 ホルモンによる調節",type:"p",
+{t:"心房性ナトリウム利尿ペプチド",ch:"第12章 尿の生成と排泄 ｜ E-1 ホルモンによる調節 ｜ P182",type:"p",
 rows:[
-{t:"体内の血液量が増加し心臓へ流れ込む血液量が増えると，心房の [低圧受容器] が興奮する．",b:["低圧受容器"]},
-{t:"心房から [心房性ナトリウム利尿ペプチド]（ANP）が分泌される．",b:["心房性ナトリウム利尿ペプチド"]},
-{t:"ANPは集合管での [Na⁺] の再吸収を抑制し水の再吸収量が減り，[尿量] が増える．",b:["Na⁺","尿量"]},
-{t:"ANPはレニン分泌も [抑制] することで，レニン-アンジオテンシン-アルドステロン系にも影響を与える．",b:["抑制"]},
+"体内の血液量が増加し心臓へ流れ込む血液量が増えると，心房の [低圧受容器] が興奮する．",
+"その結果，心房から [心房性ナトリウム利尿ペプチド] が分泌される．",
+"心房性ナトリウム利尿ペプチドは集合管での [Na⁺] の再吸収を抑制し，水の再吸収量が減って [尿量] が増える（図12・9）．",
 ]},
-{t:"3つのホルモンによる体液調節のまとめ",ch:"第12章 尿の生成と排泄 ｜ E-1 ホルモンによる調節",type:"tbl",
-cols:["ホルモン","分泌部位","刺激","主な作用"],
+{t:"3つのホルモンのまとめ",ch:"第12章 尿の生成と排泄 ｜ E-1 ホルモンによる調節 ｜ P180〜182",type:"tbl",
+cols:["ホルモン","分泌されるところ","分泌を変えるもの","腎臓での作用"],
 rows:[
-["[バソプレシン]（ADH）","[脳下垂体後葉]","血漿浸透圧↑・血液量↓","集合管での[水]の再吸収↑→尿量↓"],
-["[アルドステロン]","[副腎皮質]","体液量↓（レニン↑経由）","遠位尿細管・集合管での[Na⁺]再吸収↑→尿量↓"],
-["[ANP]（心房性Na利尿ペプチド）","[心房]","血液量↑","集合管での[Na⁺]再吸収↓→尿量↑"],
-],
-blanks:["バソプレシン","脳下垂体後葉","水","アルドステロン","副腎皮質","Na⁺","ANP","心房","Na⁺"]
-},
-{t:"飲水での調節（口渇中枢）",ch:"第12章 尿の生成と排泄 ｜ E-2 飲水での調節",type:"p",
-rows:[
-{t:"水分摂取の制限や塩分の過剰摂取などで体液の浸透圧が上昇したとき，のどが渇いて水を飲む．",b:[]},
-{t:"[浸透圧受容器] や容積受容器などからの情報が中枢で総合される結果，飲水行動が起こる．",b:["浸透圧受容器"]},
-{t:"この中枢を [口渇中枢]（飲水中枢）と呼ぶ．",b:["口渇中枢"]},
-{t:"発汗・下痢・出血などで大量の体液が失われた場合も [口渇中枢] が刺激されて飲水行動が起こる．",b:["口渇中枢"]},
+["[バソプレシン]","[下垂体後葉]","血漿浸透圧の [上昇]・血液量の減少で促進","[集合管] での水の再吸収↑ → 尿量↓"],
+["[アルドステロン]","副腎","体液量の増加で [レニン] とともに抑制","遠位尿細管・集合管での [Na⁺] の再吸収↑"],
+["[心房性ナトリウム利尿ペプチド]","[心房]","血液量の増加で亢進","集合管での Na⁺の再吸収↓ → 尿量 [↑]"],
 ]},
-{t:"pHの調節",ch:"第12章 尿の生成と排泄 ｜ E-3 pHの調節",type:"p",
+{t:"飲水での調節",ch:"第12章 尿の生成と排泄 ｜ E-2 飲水での調節 ｜ P182",type:"p",
 rows:[
-{t:"体液は中性に近い弱アルカリ性である [pH 7.4] となるよう厳密にコントロールされている．",b:["pH 7.4"]},
-{t:"ヒトは代謝に伴い，1日に約 [15 mol] の酸（水素イオン）を産生する．",b:["15 mol"]},
-{t:"このうち揮発性の酸（CO₂）は主に [呼吸] で排泄される．",b:["呼吸"]},
-{t:"不揮発性の酸および塩基は [腎臓] で処理される．腎臓は酸を尿中へ排泄するほか，酸の緩衝で重要な [重炭酸イオン] を再吸収することで酸を処理する．",b:["腎臓","重炭酸イオン"]},
-{t:"体液のpHがアルカリ側に傾いた場合には，体液中のアルカリを炭酸で中和して [重炭酸塩] とし，これを尿中に排泄することでアルカリを処理する．",b:["重炭酸塩"]},
+"水分摂取の制限や塩分の過剰摂取などで体液の [浸透圧] が上昇したときや，発汗・下痢・出血などで大量の体液が失われたときは，のどが渇いて水を飲む．",
+"[浸透圧受容器] や [容積受容器] などからの情報が中枢で総合される結果，飲水行動が起こる．",
+"この中枢を [口渇中枢]（飲水中枢）と呼ぶ（図12・8）．",
+]},
+{t:"pHの調節",ch:"第12章 尿の生成と排泄 ｜ E-3 pHの調節 ｜ P182",type:"p",
+rows:[
+"体液は，中性に近い弱アルカリ性である pH [7.4] となるよう厳密にコントロールされている．代謝を担う [酵素] がこのpHでもっとも活性化するためである．",
+"ヒトは代謝に伴い，1日に約 [15 mol] の酸（水素イオン）を産生する．",
+"このうち揮発性の酸（CO₂）は主に [呼吸] で排泄される．不揮発性の酸および塩基は [腎臓] で処理される（図12・10）．",
+"腎臓は酸を尿中へ排泄するほか，酸の緩衝で重要な [重炭酸イオン] を再吸収することで酸を処理する．リン酸水素イオンや [アンモニア] の分泌でも酸は処理される．",
+"pHがアルカリ側に傾いたときは，体液中のアルカリを炭酸で中和して [重炭酸塩] とし，尿中に排泄する．",
 ]},
 {t:"パートEまとめ",ch:"第12章 尿の生成と排泄 ｜ パートEまとめ",type:"tbl",
 cols:["項目","内容"],
 rows:[
-["バソプレシン","血漿浸透圧↑→[視床下部]浸透圧受容器→[バソプレシン]分泌→集合管の水再吸収↑"],
-["アルドステロン","体液量↓→[レニン]↑→アンジオテンシン↑→[アルドステロン]↑→Na⁺再吸収↑"],
-["ANP","血液量↑→心房→[ANP]分泌→Na⁺再吸収[抑制]→尿量↑"],
-["口渇中枢","浸透圧↑・体液量↓→[口渇中枢]刺激→[飲水行動]"],
-["pHの正常値","体液は [pH 7.4] の弱アルカリ性"],
-["pH調節","揮発性の酸→[呼吸]で排泄・不揮発性の酸→[腎臓]で処理"],
-],
-blanks:["視床下部","バソプレシン","レニン","アルドステロン","ANP","抑制","口渇中枢","飲水行動","pH 7.4","呼吸","腎臓"]
-},
+["バソプレシン","血漿浸透圧↑ → [視床下部] の浸透圧受容器 → [下垂体後葉] から分泌 → 集合管で水の再吸収↑"],
+["レニン-アンジオテンシン-アルドステロン系","体液量↑ → [傍糸球体装置] でレニン分泌↓ → [アルドステロン]↓ → Na⁺・水の再吸収↓ → 尿量↑"],
+["心房性ナトリウム利尿ペプチド","血液量↑ → [心房] から分泌 → 集合管でNa⁺の再吸収↓ → 尿量↑"],
+["飲水","浸透圧↑・体液の喪失 → [口渇中枢]（飲水中枢）→ 飲水行動"],
+["pH","体液は pH [7.4]．揮発性の酸（CO₂）＝[呼吸]／不揮発性の酸・塩基＝[腎臓]"],
+]},
 ];
 let cur=0,bs=[];
-function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="revealBlank('${id}')"><span>${ans}</span></span>`;}
+function fill(t){t=t.replace(/\{\{([^{}]+)\}\}/g,'<span class="kw">$1</span>');t=t.replace(/【補足】/g,'<span class="hs">📘 補足知識（資料外）</span>');return t.replace(/\[([^\[\]]+)\]/g,(m,a)=>{const id="b"+bs.length;bs.push({id,on:false});return bl(id,a);});}
 function buildSlide(i){
   const s=S[i];bs=[];
   let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
   if(s.type==="p"){
     h+=`<div class="sec">重要事項</div><div class="box">`;
-    s.rows.forEach(r=>{
-      let t=r.t;
-      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
-      h+=`<span class="row">${t}</span>`;
-    });
+    s.rows.forEach(r=>{h+=`<span class="row">${fill(r)}</span>`;});
     h+=`</div>`;
   }else if(s.type==="tbl"){
-    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl${s.cols.length>2?' wide':''}"><thead><tr>`;
     s.cols.forEach(c=>h+=`<th>${c}</th>`);
     h+=`</tr></thead><tbody>`;
-    s.rows.forEach(row=>{
-      h+=`<tr>`;
-      row.forEach(cell=>{
-        let t=cell;
-        if(s.blanks)s.blanks.forEach(a=>{
-          if(t.includes("["+a+"]")){const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));}
-        });
-        h+=`<td>${t}</td>`;
-      });
-      h+=`</tr>`;
-    });
+    s.rows.forEach(row=>{h+=`<tr>`;row.forEach(cell=>{h+=`<td>${fill(cell)}</td>`;});h+=`</tr>`;});
     h+=`</tbody></table></div>`;
+    if(s.note){h+=`<div class="box" style="font-size:13px;line-height:1.8">${fill(s.note)}</div>`;}
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${fill(r)}</p>`;});
+      h+=`</div>`;
+    });
+    h+=`</div>`;
   }
   h+=`</div>`;
   document.getElementById("sc").innerHTML=h;
   upd();bldNav();
 }
-function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
-function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
-function showAll(){bs.forEach(b=>rb(b.id));}
-function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
-function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function revealBlank(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nextBlank(){const u=bs.find(x=>!x.on);if(u){revealBlank(u.id);const el=document.getElementById(u.id);if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}}
+function showAll(){bs.forEach(b=>revealBlank(b.id));}
+function resetAll(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=bs.length?d+"/"+bs.length+" 表示済み":"参照用スライド（カッコなし）";}
 function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
 function bldNav(){
   let h="";

@@ -21,7 +21,10 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .tbl th{background:#4a3a6b;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
 .tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
 .tbl tr:last-child td{border-bottom:none}
-.tbl td:first-child{font-weight:600;color:#4a3a6b;white-space:nowrap;min-width:100px}
+.tbl td:first-child{font-weight:600;color:#4a3a6b;white-space:nowrap;min-width:110px}
+.tbl.wide td:first-child{white-space:normal;min-width:88px}
+.kw{font-weight:700;color:#4a3a6b}
+.hs{display:inline-block;font-size:11px;font-weight:700;color:#8a6314;background:rgba(160,110,20,.12);border-radius:4px;padding:1px 7px;margin-right:6px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
 .tf{background:rgba(74,58,107,.12);color:#4a3a6b}
@@ -39,20 +42,21 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .btnp{background:#4a3a6b;color:#fff;border-color:#4a3a6b}
 .btnp:hover{background:#3d305a}
 .cnt{font-size:11px;color:#888;margin-left:auto}
-.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
 .dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
 .dot.a{background:#4a3a6b}
 .pg{font-size:11px;color:#888;margin-left:auto}
+@media (max-width:520px){.two{grid-template-columns:1fr}.bd{padding:16px 14px}.hd{padding:12px 16px}.ctrl,.nav{padding-left:14px;padding-right:14px}.tbl{font-size:12px}.tbl td,.tbl th{padding:6px 6px}}
 </style>
 </head>
 <body>
-<h1>生理学 第12章 尿の生成と排泄｜パートC：尿の濃縮・希釈・体液調節</h1>
+<h1>生理学 第12章 尿の生成と排泄｜パートC：腎血流量</h1>
 <div class="slide">
   <div id="sc"></div>
   <div class="ctrl">
-    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="nextBlank()">次のカッコを開く ▶</button>
     <button class="btn" onclick="showAll()">すべて表示</button>
-    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn" onclick="resetAll()">リセット</button>
     <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
     <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
     <span class="cnt" id="cnt"></span>
@@ -61,119 +65,106 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 </div>
 <script>
 const S=[
-{t:"尿の濃縮と希釈",ch:"第12章 尿の生成と排泄 ｜ C 尿の濃縮と希釈",type:"p",
+{t:"成人の腎血流量",ch:"第12章 尿の生成と排泄 ｜ C-1 腎血流量と尿量の変化 ｜ P177",type:"p",
 rows:[
-{t:"腎臓は体内の水分量に応じて [濃縮尿] または [希釈尿] を生成する．",b:["濃縮尿","希釈尿"]},
-{t:"尿の濃縮・希釈の程度を示す指標として [尿浸透圧] や [尿比重] がある．",b:["尿浸透圧","尿比重"]},
-{t:"血漿浸透圧の正常値は約 [280〜290mOsm/L] である．",b:["280〜290mOsm/L"]},
-{t:"最大濃縮時の尿浸透圧は約 [1200mOsm/L] に達する．",b:["1200mOsm/L"]},
-{t:"尿比重の正常範囲は [1.001〜1.030] である．",b:["1.001〜1.030"]},
+"成人の腎臓は1対で約 [300 g] で，全体重の [0.5%] にすぎない．",
+"[腎血流量]（RBF）は1分間に [1.2〜1.3 L] にも上り，心拍出量の約 [25%] を占める．",
+"100 g当たり約400 mL/分の血液が流れ，他の臓器に比べて血流量が非常に [多い] 臓器である．",
+"腎血流量の [90%] は [皮質] を流れる．",
+"髄質内層への血流量は腎血流量の約 [1%] にすぎないが，安静時の筋血流量と比べると約15倍も多い．",
 ]},
-{t:"対向流増幅系のしくみ",ch:"第12章 尿の生成と排泄 ｜ C 尿の濃縮と希釈",type:"p",
+{t:"腎血流量の変化",ch:"第12章 尿の生成と排泄 ｜ C-1 腎血流量と尿量の変化 ｜ P177",type:"p",
 rows:[
-{t:"髄質の高い浸透圧勾配を形成するしくみを [対向流増幅系] という．",b:["対向流増幅系"]},
-{t:"ヘンレのループの [下行脚] では水が浸透圧差により受動的に再吸収される．",b:["下行脚"]},
-{t:"ヘンレのループの [上行脚] ではNa⁺とCl⁻が能動的に再吸収されるが，水は通さない．",b:["上行脚"]},
-{t:"この結果，[髄質] の浸透圧が皮質よりも高くなり浸透圧勾配が形成される．",b:["髄質"]},
-{t:"[集合管] を通る尿はこの浸透圧勾配を利用して水を再吸収し，尿が濃縮される．",b:["集合管"]},
+"腎血流量は，運動時や [出血] 時のほか，[交感神経] を刺激した場合にも著明に減少する．",
+"これは緊急時に血管を収縮させ，腎以外への血流を増加させる [予備循環] としての役割をもつ．",
+"アドレナリンとノルアドレナリンを少量投与すると，[輸出細動脈] が収縮して腎血流量が減少する．しかし濾過圧は変わらないため，[GFR] や尿量は維持される．",
+"強い交感神経刺激やアドレナリンの大量投与では，[輸入細動脈] も収縮する．この場合はGFRが低下し，[尿量] が減少する．",
 ]},
-{t:"バソプレシン（ADH）による水分調節",ch:"第12章 尿の生成と排泄 ｜ C 体液調節",type:"p",
+{t:"腎血流の自動調節",ch:"第12章 尿の生成と排泄 ｜ C-1 腎血流量と尿量の変化 ｜ P177",type:"p",
 rows:[
-{t:"バソプレシン（ADH）は [脳下垂体後葉] から分泌される．",b:["脳下垂体後葉"]},
-{t:"血漿浸透圧の [上昇] や循環血液量の [低下] でバソプレシン分泌が増加する．",b:["上昇","低下"]},
-{t:"バソプレシンは集合管の水チャネル（[アクアポリン]）を増加させ，水の再吸収を促進する．",b:["アクアポリン"]},
-{t:"バソプレシン分泌↑ → 尿量 [減少]・尿浸透圧 [上昇]（濃縮尿）",b:["減少","上昇"]},
-{t:"バソプレシン分泌↓ → 尿量 [増加]・尿浸透圧 [低下]（希釈尿）",b:["増加","低下"]},
+"動脈圧が [80〜180 mmHg] の範囲で変動しても，腎血流量の変動は約 [10%] 以下にとどまる．",
+"[GFR] もほぼ一定に保たれるため，血圧がある程度変動しても尿の産生を続けられる．",
+"大量出血によるショックなどで血圧が [60 mmHg] 以下になると自動調節がはたらかず，尿はほとんど産生されなくなる．",
+"この自動調節は腎の神経支配を除いても認められるため，しくみは [腎の内部] にあると考えられている．",
 ]},
-{t:"体液の組成と区分",ch:"第12章 尿の生成と排泄 ｜ C 体液調節",type:"tbl",
-cols:["区分","割合（体重比）","主な成分"],
+{t:"クリアランス法によるGFRの測定",ch:"第12章 尿の生成と排泄 ｜ C-2 クリアランスによる腎機能の測定 ｜ P177〜178",type:"p",
 rows:[
-["[細胞内液]","体重の約 [40%]","K⁺・タンパク質・リン酸"],
-["[細胞外液]","体重の約 [20%]","Na⁺・Cl⁻・HCO₃⁻"],
-["　血漿","体重の約 [5%]","Na⁺・タンパク質"],
-["　組織間液","体重の約 [15%]","Na⁺・Cl⁻"],
-],
-blanks:["細胞内液","40%","細胞外液","20%","5%","15%"]
-},
-{t:"腎臓による酸塩基平衡の調節",ch:"第12章 尿の生成と排泄 ｜ C 体液調節",type:"p",
-rows:[
-{t:"血液のpHは通常 [7.35〜7.45] に維持されている．",b:["7.35〜7.45"]},
-{t:"腎臓は [H⁺] を尿中へ分泌し，[HCO₃⁻] を再吸収することでpHを調節する．",b:["H⁺","HCO₃⁻"]},
-{t:"血液が酸性に傾く（pH低下）と，腎臓は [H⁺] の分泌を増やし，[HCO₃⁻] の再吸収を増やす．",b:["H⁺","HCO₃⁻"]},
-{t:"血液が塩基性に傾く（pH上昇）と，腎臓は [HCO₃⁻] の排泄を増やす．",b:["HCO₃⁻"]},
+"GFRや腎血流量は，[クリアランス法] を用いて間接的に求められる．",
+"濾過されたあと，尿細管や集合管で再吸収も分泌も受けない物質Xを使えば，GFR × Px ＝ Ux × V となる（Px：血漿濃度，Ux：尿中濃度，V：1分間の尿量）．",
+"したがって GFR ＝（[Ux × V]）／ [Px] で求められる．",
+"GFRの測定にもっとも適した物質は [イヌリン]（分子量5,500の [多糖類]）である．",
+"臨床では，体内で比較的一定の量で産生され，尿細管での分泌をほぼ無視できる [クレアチニン] を用いた，[内因性クレアチニンクリアランス] が測定される．",
+"成人男子のGFRの正常値は，体表面積1.73 m²当たり [125 mL/分]．成人女性はこれより約 [10%] 少ない．",
 ]},
-{t:"尿の成分と正常値",ch:"第12章 尿の生成と排泄 ｜ C 尿の性状",type:"tbl",
-cols:["項目","正常値・特徴"],
+{t:"腎血漿流量の測定",ch:"第12章 尿の生成と排泄 ｜ C-2 クリアランスによる腎機能の測定 ｜ P178",type:"p",
 rows:[
-["尿量","[1〜2L/日]（多尿：3L以上，乏尿：400mL以下）"],
-["尿比重","[1.001〜1.030]"],
-["pH","[4.5〜8.0]（平均約6.0：弱酸性）"],
-["色","[淡黄色]（ウロビリンによる）"],
-["尿糖","正常では [陰性]（血糖値が腎糖閾値を超えると陽性）"],
-["尿タンパク","正常では [陰性]（腎機能障害で陽性となる）"],
-],
-blanks:["1〜2L/日","1.001〜1.030","4.5〜8.0","淡黄色","陰性","陰性"]
-},
-{t:"多尿・乏尿・無尿の定義",ch:"第12章 尿の生成と排泄 ｜ C 尿の性状",type:"tbl",
-cols:["状態","定義","主な原因"],
+"[パラアミノ馬尿酸]（PAH）は，ほとんどが糸球体で濾過され，[近位尿細管] から分泌されて尿中へ排泄される．",
+"このため腎静脈血漿中のPAHはほとんど [0] に近づき，PAHのクリアランスから [腎血漿流量]（RPF）を求められる．",
+"腎血流量 ＝ 腎血漿流量 ÷（1 − [ヘマトクリット]／100）",
+"腎血漿流量は男性 [650 mL/分]，女性 [600 mL/分]（体表面積1.73 m²当たり）で，心拍出量の [1/4] に相当する．",
+]},
+{t:"濾過率と尿細管のはたらきの解析",ch:"第12章 尿の生成と排泄 ｜ C-2 クリアランスによる腎機能の測定 ｜ P178〜179",type:"p",
 rows:[
-["[多尿]","[3L/日以上]","糖尿病・尿崩症・過剰な水分摂取"],
-["[乏尿]","[400mL/日以下]","脱水・腎不全・ショック"],
-["[無尿]","[100mL/日以下]","重篤な腎不全・尿路閉塞"],
-],
-blanks:["多尿","3L/日以上","乏尿","400mL/日以下","無尿","100mL/日以下"]
-},
+"腎臓へ流入する血漿のうち，糸球体で濾過されるものの割合を [濾過率]（FF）と呼ぶ．",
+"濾過率は [イヌリン] クリアランスと [PAH] クリアランスの比で求められ，正常値は約 [0.2] である．",
+"ある物質のクリアランスがイヌリンのクリアランス（GFR）より [小さい] ときは，その分が尿細管で [再吸収] されたことを示す（例：尿素）．",
+"イヌリンのクリアランスより [大きい] ときは，その物質が尿細管から [分泌] されたことを示す．",
+"尿の濃縮や [希釈] のはたらきも，クリアランスの測定で解析できる．",
+]},
+{t:"クリアランスに使う物質",ch:"第12章 尿の生成と排泄 ｜ C-2 クリアランスによる腎機能の測定 ｜ P178",type:"tbl",
+cols:["物質","腎臓での扱い","求められるもの"],
+rows:[
+["[イヌリン]","濾過されるだけで，再吸収も [分泌] もされない","[GFR]"],
+["[クレアチニン]","体内で一定量産生され，分泌をほぼ無視できる","臨床でのGFR（[内因性クレアチニンクリアランス]）"],
+["[パラアミノ馬尿酸]（PAH）","濾過されたうえ，[近位尿細管] から分泌される","[腎血漿流量]"],
+]},
 {t:"パートCまとめ",ch:"第12章 尿の生成と排泄 ｜ パートCまとめ",type:"tbl",
 cols:["項目","内容"],
 rows:[
-["尿の濃縮のしくみ","[対向流増幅系]（ヘンレのループ）＋[バソプレシン]（集合管）"],
-["体液の区分","細胞内液 [40%]・細胞外液 [20%]（血漿5%＋組織間液15%）"],
-["血液pH","正常 [7.35〜7.45]（腎臓でH⁺分泌・HCO₃⁻再吸収で調節）"],
-["尿量の正常値","[1〜2L/日]（多尿：3L以上，乏尿：400mL以下）"],
-["バソプレシン↑","尿量 [減少]・尿浸透圧 [上昇]"],
-],
-blanks:["対向流増幅系","バソプレシン","40%","20%","7.35〜7.45","1〜2L/日","減少","上昇"]
-},
+["腎血流量","1分間に [1.2〜1.3 L]．心拍出量の約 [25%]．[90%] は皮質を流れる"],
+["交感神経刺激","少量：[輸出細動脈] 収縮→GFR維持／強い刺激：[輸入細動脈] も収縮→尿量減少"],
+["自動調節","動脈圧 [80〜180 mmHg] で腎血流量・GFRがほぼ一定．[60 mmHg] 以下ではたらかない"],
+["GFRの測定","[イヌリン]（臨床では [クレアチニン]）．男子の正常値 [125 mL/分]"],
+["腎血漿流量","[PAH] で測定．男性 [650 mL/分]"],
+["濾過率","イヌリン／PAHクリアランス ＝ 約 [0.2]"],
+]},
 ];
 let cur=0,bs=[];
-function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="revealBlank('${id}')"><span>${ans}</span></span>`;}
+function fill(t){t=t.replace(/\{\{([^{}]+)\}\}/g,'<span class="kw">$1</span>');t=t.replace(/【補足】/g,'<span class="hs">📘 補足知識（資料外）</span>');return t.replace(/\[([^\[\]]+)\]/g,(m,a)=>{const id="b"+bs.length;bs.push({id,on:false});return bl(id,a);});}
 function buildSlide(i){
   const s=S[i];bs=[];
   let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
   if(s.type==="p"){
     h+=`<div class="sec">重要事項</div><div class="box">`;
-    s.rows.forEach(r=>{
-      let t=r.t;
-      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
-      h+=`<span class="row">${t}</span>`;
-    });
+    s.rows.forEach(r=>{h+=`<span class="row">${fill(r)}</span>`;});
     h+=`</div>`;
   }else if(s.type==="tbl"){
-    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl${s.cols.length>2?' wide':''}"><thead><tr>`;
     s.cols.forEach(c=>h+=`<th>${c}</th>`);
     h+=`</tr></thead><tbody>`;
-    s.rows.forEach(row=>{
-      h+=`<tr>`;
-      row.forEach(cell=>{
-        let t=cell;
-        if(s.blanks)s.blanks.forEach(a=>{
-          if(t.includes("["+a+"]")){const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));}
-        });
-        h+=`<td>${t}</td>`;
-      });
-      h+=`</tr>`;
-    });
+    s.rows.forEach(row=>{h+=`<tr>`;row.forEach(cell=>{h+=`<td>${fill(cell)}</td>`;});h+=`</tr>`;});
     h+=`</tbody></table></div>`;
+    if(s.note){h+=`<div class="box" style="font-size:13px;line-height:1.8">${fill(s.note)}</div>`;}
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${fill(r)}</p>`;});
+      h+=`</div>`;
+    });
+    h+=`</div>`;
   }
   h+=`</div>`;
   document.getElementById("sc").innerHTML=h;
   upd();bldNav();
 }
-function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
-function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
-function showAll(){bs.forEach(b=>rb(b.id));}
-function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
-function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function revealBlank(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nextBlank(){const u=bs.find(x=>!x.on);if(u){revealBlank(u.id);const el=document.getElementById(u.id);if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}}
+function showAll(){bs.forEach(b=>revealBlank(b.id));}
+function resetAll(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=bs.length?d+"/"+bs.length+" 表示済み":"参照用スライド（カッコなし）";}
 function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
 function bldNav(){
   let h="";

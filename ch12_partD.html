@@ -22,6 +22,9 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
 .tbl tr:last-child td{border-bottom:none}
 .tbl td:first-child{font-weight:600;color:#4a3a6b;white-space:nowrap;min-width:110px}
+.tbl.wide td:first-child{white-space:normal;min-width:88px}
+.kw{font-weight:700;color:#4a3a6b}
+.hs{display:inline-block;font-size:11px;font-weight:700;color:#8a6314;background:rgba(160,110,20,.12);border-radius:4px;padding:1px 7px;margin-right:6px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
 .tf{background:rgba(74,58,107,.12);color:#4a3a6b}
@@ -39,20 +42,21 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .btnp{background:#4a3a6b;color:#fff;border-color:#4a3a6b}
 .btnp:hover{background:#3d305a}
 .cnt{font-size:11px;color:#888;margin-left:auto}
-.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
 .dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
 .dot.a{background:#4a3a6b}
 .pg{font-size:11px;color:#888;margin-left:auto}
+@media (max-width:520px){.two{grid-template-columns:1fr}.bd{padding:16px 14px}.hd{padding:12px 16px}.ctrl,.nav{padding-left:14px;padding-right:14px}.tbl{font-size:12px}.tbl td,.tbl th{padding:6px 6px}}
 </style>
 </head>
 <body>
-<h1>生理学 第12章 尿の生成と排泄｜パートD：排尿のしくみ・第12章まとめ</h1>
+<h1>生理学 第12章 尿の生成と排泄｜パートD：排尿</h1>
 <div class="slide">
   <div id="sc"></div>
   <div class="ctrl">
-    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="nextBlank()">次のカッコを開く ▶</button>
     <button class="btn" onclick="showAll()">すべて表示</button>
-    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn" onclick="resetAll()">リセット</button>
     <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
     <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
     <span class="cnt" id="cnt"></span>
@@ -61,110 +65,91 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 </div>
 <script>
 const S=[
-{t:"膀胱の構造",ch:"第12章 尿の生成と排泄 ｜ D 排尿のしくみ",type:"p",
+{t:"排尿とは",ch:"第12章 尿の生成と排泄 ｜ D 排尿 ｜ P179",type:"p",
 rows:[
-{t:"膀胱は尿を一時的に [貯留] する袋状の臓器である．",b:["貯留"]},
-{t:"膀胱壁には [排尿筋]（逼尿筋）と呼ばれる平滑筋がある．",b:["排尿筋"]},
-{t:"膀胱の出口には [内尿道括約筋]（平滑筋・不随意筋）がある．",b:["内尿道括約筋"]},
-{t:"尿道の途中には [外尿道括約筋]（横紋筋・随意筋）がある．",b:["外尿道括約筋"]},
-{t:"成人の膀胱容量は約 [400〜500mL] で，約 [150〜300mL] で尿意を感じる．",b:["400〜500mL","150〜300mL"]},
+"膀胱に運ばれた尿は，[尿道] を通って排泄される．これを [排尿] と呼ぶ．",
+"尿が膀胱にたまる（[蓄尿]）と [尿意] を催し，排尿の準備ができる．",
 ]},
-{t:"蓄尿のしくみ",ch:"第12章 尿の生成と排泄 ｜ D 排尿のしくみ",type:"p",
+{t:"排尿にかかわる筋",ch:"第12章 尿の生成と排泄 ｜ D-1 排尿にかかわる筋 ｜ P179〜180",type:"tbl",
+cols:["筋","種類","はたらき"],
 rows:[
-{t:"蓄尿中は [交感神経] が優位にはたらく．",b:["交感神経"]},
-{t:"交感神経の興奮により [排尿筋] が弛緩し，膀胱に尿がたまる．",b:["排尿筋"]},
-{t:"同時に [内尿道括約筋] が収縮して尿の漏れを防ぐ．",b:["内尿道括約筋"]},
-{t:"[外尿道括約筋] は大脳皮質からの随意的な収縮で尿を我慢できる．",b:["外尿道括約筋"]},
+["[排尿筋]","[平滑筋]（膀胱の平滑筋）","排尿時に [収縮] する"],
+["[内尿道括約筋]","[平滑筋]（排尿筋が出口で厚くなったもの）","排尿に伴って [自動的] に弛緩する"],
+["[外尿道括約筋]","[横紋筋]","[陰部神経] のはたらきで収縮し，排尿を抑える"],
+],
+note:"膀胱は袋のような臓器で，粘膜と平滑筋で構成される（図12・7）．"},
+{t:"蓄尿",ch:"第12章 尿の生成と排泄 ｜ D-2 蓄尿 ｜ P180",type:"p",
+rows:[
+"尿道は，内尿道括約筋と外尿道括約筋で通常閉ざされている．",
+"尿量が [150〜300 mL] で尿意を感じるが，通常は我慢でき，排尿反射がすぐに起こることはない．",
+"膀胱内圧が上がると，膀胱壁の緊張が [骨盤神経] の求心路を通じて [腰仙髄] 排尿中枢へ伝えられる．",
+"そこから出る [下腹神経]（[交感神経]）を介して，排尿筋を反射性に [弛緩] させると同時に，内尿道括約筋を [収縮] させる．",
+"さらに前頭葉や上位中枢からの抑制を受け，[陰部神経] を介して外尿道括約筋の収縮を高めて排尿を抑える．これを [蓄尿反射] と呼ぶ．",
 ]},
-{t:"排尿反射のしくみ",ch:"第12章 尿の生成と排泄 ｜ D 排尿のしくみ",type:"p",
+{t:"排尿",ch:"第12章 尿の生成と排泄 ｜ D-3 排尿 ｜ P180",type:"p",
 rows:[
-{t:"膀胱に尿がたまると膀胱壁の [伸展受容器] が刺激される．",b:["伸展受容器"]},
-{t:"その情報が [仙髄] の排尿中枢へ伝わる．",b:["仙髄"]},
-{t:"排尿中枢から [副交感神経] を介して排尿筋が収縮し，内尿道括約筋が弛緩する．",b:["副交感神経"]},
-{t:"同時に [外尿道括約筋] が弛緩して排尿が起こる．",b:["外尿道括約筋"]},
-{t:"排尿は上位中枢（[橋]・[大脳皮質]）による随意的なコントロールも受ける．",b:["橋","大脳皮質"]},
+"尿量が [400〜500 mL] に達すると，膀胱内圧は急激に上昇する．",
+"排尿の準備が整い，大脳からの抑制を意識的に解除すると排尿が行われる．",
+"排尿は，[橋] 排尿中枢を介した [仙髄] 排尿中枢の反射で起こる．",
+"[骨盤神経]（[副交感神経]）の遠心路を通じて，排尿筋が強く [収縮] する．",
+"同時に，[下腹神経] の活動が低下して内尿道括約筋が，[陰部神経] の活動が低下して外尿道括約筋が，それぞれ [弛緩] する．",
+"その結果，尿道が開いて排尿が行われる．これを [排尿反射] と呼ぶ．",
+"【補足】仙髄の排尿中枢は第 [2〜4] 仙髄（S2〜S4）にある．",
 ]},
-{t:"排尿に関わる神経のまとめ",ch:"第12章 尿の生成と排泄 ｜ D 排尿のしくみ",type:"tbl",
-cols:["神経","作用","状態"],
+{t:"排尿にかかわる神経",ch:"第12章 尿の生成と排泄 ｜ D 排尿 ｜ P180・図12・7",type:"tbl",
+cols:["神経","種類","蓄尿時","排尿時"],
 rows:[
-["[交感神経]（下腹神経）","排尿筋 [弛緩]・内括約筋 [収縮]","[蓄尿] 時に優位"],
-["[副交感神経]（骨盤神経）","排尿筋 [収縮]・内括約筋 [弛緩]","[排尿] 時に優位"],
-["[陰部神経]（体性神経）","外括約筋の [随意的] コントロール","我慢・排尿の意識的制御"],
-],
-blanks:["交感神経","弛緩","収縮","蓄尿","副交感神経","収縮","弛緩","排尿","陰部神経","随意的"]
-},
-{t:"排尿障害",ch:"第12章 尿の生成と排泄 ｜ D 排尿のしくみ",type:"tbl",
-cols:["障害","原因","特徴"],
+["[下腹神経]","[交感神経]","排尿筋を [弛緩]・内尿道括約筋を [収縮]","活動が低下→内尿道括約筋が弛緩"],
+["[骨盤神経]","[副交感神経]","求心路：膀胱壁の緊張を排尿中枢へ伝える","遠心路：排尿筋を [収縮]"],
+["[陰部神経]","—","外尿道括約筋の収縮を [高める]","活動が低下→外尿道括約筋が [弛緩]"],
+]},
+{t:"パートDまとめ",ch:"第12章 尿の生成と排泄 ｜ パートDまとめ",type:"tbl",
+cols:["項目","内容"],
 rows:[
-["[尿失禁]","外括約筋の弛緩・脊髄損傷など","[随意的] な尿の制御ができない"],
-["[神経因性膀胱]","脊髄損傷・糖尿病性神経障害など","排尿反射の [障害] により排尿困難または失禁"],
-["[前立腺肥大]","男性に多い加齢による前立腺の肥大","尿道が圧迫されて [排尿困難] となる"],
-["[過活動膀胱]","排尿筋の過活動","少量の尿でも [尿意切迫感] が生じる"],
-],
-blanks:["尿失禁","随意的","神経因性膀胱","障害","前立腺肥大","排尿困難","過活動膀胱","尿意切迫感"]
-},
-{t:"第12章 全体まとめ①",ch:"第12章 尿の生成と排泄 ｜ 全体まとめ",type:"tbl",
-cols:["テーマ","キーワード"],
-rows:[
-["腎臓の構造","[ネフロン]（腎小体＋尿細管）・約[100万個]/腎臓"],
-["尿生成の3ステップ","[濾過]（糸球体）→[再吸収]（尿細管）→[分泌]（尿細管）"],
-["GFR","正常値 [125mL/分]・測定物質：[イヌリン]"],
-["近位尿細管","[グルコース]・アミノ酸・Na⁺・水を再吸収（原尿の約60〜70%）"],
-["レニン-アンジオテンシン系","[傍糸球体装置]→レニン→アンジオテンシンⅡ→[血圧上昇]"],
-],
-blanks:["ネフロン","100万個","濾過","再吸収","分泌","125mL/分","イヌリン","グルコース","傍糸球体装置","血圧上昇"]
-},
-{t:"第12章 全体まとめ②",ch:"第12章 尿の生成と排泄 ｜ 全体まとめ",type:"tbl",
-cols:["テーマ","キーワード"],
-rows:[
-["アルドステロン","[副腎皮質]から分泌・[Na⁺]再吸収↑・[K⁺]排泄↑"],
-["バソプレシン","[脳下垂体後葉]から分泌・集合管での[水]再吸収↑→尿量減少"],
-["対向流増幅系","[ヘンレのループ]による髄質の浸透圧勾配形成"],
-["尿量の正常値","[1〜2L/日]・多尿[3L以上]・乏尿[400mL以下]"],
-["排尿反射","[仙髄]の排尿中枢・[副交感神経]→排尿筋収縮→排尿"],
-],
-blanks:["副腎皮質","Na⁺","K⁺","脳下垂体後葉","水","ヘンレのループ","1〜2L/日","3L以上","400mL以下","仙髄","副交感神経"]
-},
+["排尿筋","膀胱の [平滑筋]．排尿時に収縮"],
+["内尿道括約筋","[平滑筋]．排尿に伴って自動的に弛緩"],
+["外尿道括約筋","[横紋筋]．[陰部神経] で収縮"],
+["尿意","尿量 [150〜300 mL]"],
+["蓄尿反射","[下腹神経]（交感神経）：排尿筋弛緩・内尿道括約筋収縮"],
+["排尿反射","尿量 [400〜500 mL]．[橋] 排尿中枢を介した [仙髄] 排尿中枢の反射．[骨盤神経]（副交感神経）で排尿筋収縮"],
+]},
 ];
 let cur=0,bs=[];
-function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="revealBlank('${id}')"><span>${ans}</span></span>`;}
+function fill(t){t=t.replace(/\{\{([^{}]+)\}\}/g,'<span class="kw">$1</span>');t=t.replace(/【補足】/g,'<span class="hs">📘 補足知識（資料外）</span>');return t.replace(/\[([^\[\]]+)\]/g,(m,a)=>{const id="b"+bs.length;bs.push({id,on:false});return bl(id,a);});}
 function buildSlide(i){
   const s=S[i];bs=[];
   let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
   if(s.type==="p"){
     h+=`<div class="sec">重要事項</div><div class="box">`;
-    s.rows.forEach(r=>{
-      let t=r.t;
-      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
-      h+=`<span class="row">${t}</span>`;
-    });
+    s.rows.forEach(r=>{h+=`<span class="row">${fill(r)}</span>`;});
     h+=`</div>`;
   }else if(s.type==="tbl"){
-    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl${s.cols.length>2?' wide':''}"><thead><tr>`;
     s.cols.forEach(c=>h+=`<th>${c}</th>`);
     h+=`</tr></thead><tbody>`;
-    s.rows.forEach(row=>{
-      h+=`<tr>`;
-      row.forEach(cell=>{
-        let t=cell;
-        if(s.blanks)s.blanks.forEach(a=>{
-          if(t.includes("["+a+"]")){const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));}
-        });
-        h+=`<td>${t}</td>`;
-      });
-      h+=`</tr>`;
-    });
+    s.rows.forEach(row=>{h+=`<tr>`;row.forEach(cell=>{h+=`<td>${fill(cell)}</td>`;});h+=`</tr>`;});
     h+=`</tbody></table></div>`;
+    if(s.note){h+=`<div class="box" style="font-size:13px;line-height:1.8">${fill(s.note)}</div>`;}
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${fill(r)}</p>`;});
+      h+=`</div>`;
+    });
+    h+=`</div>`;
   }
   h+=`</div>`;
   document.getElementById("sc").innerHTML=h;
   upd();bldNav();
 }
-function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
-function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
-function showAll(){bs.forEach(b=>rb(b.id));}
-function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
-function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function revealBlank(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nextBlank(){const u=bs.find(x=>!x.on);if(u){revealBlank(u.id);const el=document.getElementById(u.id);if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}}
+function showAll(){bs.forEach(b=>revealBlank(b.id));}
+function resetAll(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=bs.length?d+"/"+bs.length+" 表示済み":"参照用スライド（カッコなし）";}
 function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
 function bldNav(){
   let h="";

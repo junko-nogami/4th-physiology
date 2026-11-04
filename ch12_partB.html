@@ -21,7 +21,14 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .tbl th{background:#4a3a6b;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
 .tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
 .tbl tr:last-child td{border-bottom:none}
-.tbl td:first-child{font-weight:600;color:#4a3a6b;white-space:nowrap;min-width:100px}
+.tbl td:first-child{font-weight:600;color:#4a3a6b;white-space:nowrap;min-width:110px}
+.tbl.wide td:first-child{white-space:normal;min-width:88px}
+.kw{font-weight:700;color:#4a3a6b}
+.hs{display:inline-block;font-size:11px;font-weight:700;color:#8a6314;background:rgba(160,110,20,.12);border-radius:4px;padding:1px 7px;margin-right:6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
+.tf{background:rgba(74,58,107,.12);color:#4a3a6b}
+.tb{background:rgba(180,60,30,.12);color:#b43c1e}
 .blank{display:inline-block;min-width:72px;border-bottom:2.5px solid #4a3a6b;border-radius:3px 3px 0 0;cursor:pointer;text-align:center;padding:0 5px;transition:all .22s;position:relative;vertical-align:baseline}
 .blank::after{content:"？";font-size:12px;color:#4a3a6b;opacity:.45;position:absolute;left:50%;transform:translateX(-50%)}
 .blank span{visibility:hidden;font-weight:600;color:#4a3a6b;font-size:14px;opacity:0;transition:opacity .22s;display:inline-block}
@@ -35,20 +42,21 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .btnp{background:#4a3a6b;color:#fff;border-color:#4a3a6b}
 .btnp:hover{background:#3d305a}
 .cnt{font-size:11px;color:#888;margin-left:auto}
-.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
 .dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
 .dot.a{background:#4a3a6b}
 .pg{font-size:11px;color:#888;margin-left:auto}
+@media (max-width:520px){.two{grid-template-columns:1fr}.bd{padding:16px 14px}.hd{padding:12px 16px}.ctrl,.nav{padding-left:14px;padding-right:14px}.tbl{font-size:12px}.tbl td,.tbl th{padding:6px 6px}}
 </style>
 </head>
 <body>
-<h1>生理学 第12章 尿の生成と排泄｜パートB：糸球体濾過・再吸収・分泌</h1>
+<h1>生理学 第12章 尿の生成と排泄｜パートB：尿の生成</h1>
 <div class="slide">
   <div id="sc"></div>
   <div class="ctrl">
-    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="nextBlank()">次のカッコを開く ▶</button>
     <button class="btn" onclick="showAll()">すべて表示</button>
-    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn" onclick="resetAll()">リセット</button>
     <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
     <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
     <span class="cnt" id="cnt"></span>
@@ -57,115 +65,131 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 </div>
 <script>
 const S=[
-{t:"糸球体濾過とは",ch:"第12章 尿の生成と排泄 ｜ B 糸球体濾過",type:"p",
+{t:"尿の生成の流れ",ch:"第12章 尿の生成と排泄 ｜ B 尿の生成 ｜ P173",type:"p",
 rows:[
-{t:"糸球体の毛細血管から [ボーマン嚢] へ血漿成分が濾過される．この液体を [原尿] という．",b:["ボーマン嚢","原尿"]},
-{t:"濾過の駆動力は [糸球体毛細血管圧] である．",b:["糸球体毛細血管圧"]},
-{t:"[血球] や [タンパク質] などの大分子は濾過されない．",b:["血球","タンパク質"]},
-{t:"1日に生成される原尿の量は約 [150〜180L] である．",b:["150〜180L"]},
-{t:"実際に排泄される尿量は約 [1〜2L] であり，残りは再吸収される．",b:["1〜2L"]},
+"通常，1日で約 [1.5 L] の尿が排泄される．",
+"尿量は摂取した水分量で増減するが，下限がある．下限は1日 [400〜500 mL] で，1日の [代謝産物] を排泄するために不可欠な量である．",
+"尿は，血液が [糸球体] で濾過されてできる [原尿] が，尿細管での [再吸収] と [分泌] を受け，[濃縮] されることで生成される．",
+"【補足】1日の尿量が [400 mL] 以下を乏尿，[100 mL] 以下を無尿，3,000 mL以上を多尿という．",
 ]},
-{t:"糸球体濾過量（GFR）",ch:"第12章 尿の生成と排泄 ｜ B 糸球体濾過",type:"p",
+{t:"糸球体での濾過",ch:"第12章 尿の生成と排泄 ｜ B-1 糸球体での濾過 ｜ P173",type:"p",
 rows:[
-{t:"単位時間あたりに糸球体で濾過される量を [糸球体濾過量]（GFR）という．",b:["糸球体濾過量"]},
-{t:"成人男子のGFRの正常値は体表面積1.73m²当たり [125mL/分] である．",b:["125mL/分"]},
-{t:"GFRの測定には，尿細管で再吸収・分泌されない [イヌリン] が使用される．",b:["イヌリン"]},
-{t:"臨床では体内で一定量産生される [クレアチニン] を用いた内因性クレアチニンクリアランスが測定される．",b:["クレアチニン"]},
-{t:"GFRは [輸入細動脈] の収縮・拡張により調節される．",b:["輸入細動脈"]},
+"血液が糸球体毛細血管を流れる間に，水・Na⁺・K⁺・[グルコース] などの血漿成分の一部が [ボーマン嚢] へ出る（図12・4）．",
+"分子量が大きい [タンパク質] などの成分や [血球] などは，通常濾過されない．",
+"糸球体で濾過される原尿の量は，1日で約 [180 L] に上る．",
 ]},
-{t:"近位尿細管での再吸収",ch:"第12章 尿の生成と排泄 ｜ B 再吸収",type:"p",
+{t:"糸球体濾過量（GFR）",ch:"第12章 尿の生成と排泄 ｜ B-1 糸球体での濾過 ｜ P173〜174",type:"p",
 rows:[
-{t:"原尿の約 [60〜70%] が近位尿細管で再吸収される．",b:["60〜70%"]},
-{t:"[グルコース] はすべて近位尿細管で再吸収される（通常尿中には出ない）．",b:["グルコース"]},
-{t:"[アミノ酸] もほぼすべて近位尿細管で再吸収される．",b:["アミノ酸"]},
-{t:"[Na⁺] の再吸収に伴い，[水] が浸透圧差によって受動的に再吸収される．",b:["Na⁺","水"]},
-{t:"血糖値が [腎糖閾値]（約180mg/dL）を超えると，グルコースが尿中に出る（[尿糖]）．",b:["腎糖閾値","尿糖"]},
+"1分間に濾過される原尿の量を [糸球体濾過量]（GFR）と呼ぶ．",
+"GFRは，成人男性で約 [120 mL/分]，成人女性で約 [110 mL/分] である．",
+"GFRは，糸球体毛細血管での [濾過圧] や [血流量] のほか，濾過膜の [透過性] で決まる．",
+"ショックで [血圧] が著しく低下したときや，腎結石で [ボーマン嚢内圧] が上昇したときには [減少] する．",
+"[血漿タンパク質濃度] が低下したときには [増加] する．",
 ]},
-{t:"各部位での再吸収の特徴",ch:"第12章 尿の生成と排泄 ｜ B 再吸収",type:"tbl",
-cols:["部位","主な再吸収物質","特徴"],
+{t:"有効濾過圧",ch:"第12章 尿の生成と排泄 ｜ B-1 糸球体での濾過 ｜ P174",type:"p",
 rows:[
-["[近位尿細管]","グルコース・アミノ酸・Na⁺・水","原尿の[60〜70%]を再吸収"],
-["[ヘンレのループ]","Na⁺・Cl⁻・水","[髄質] の浸透圧勾配形成に重要"],
-["[遠位尿細管]","Na⁺・水","[アルドステロン] により調節"],
-["[集合管]","水","[バソプレシン]（ADH）により調節"],
+"血液が濾過される際の原動力となる圧力を [有効濾過圧] と呼ぶ（図12・4）．",
+"糸球体毛細血管の [血圧] は濾過を進める．これに逆らうのが [血漿膠質浸透圧] と [ボーマン嚢内圧] である．",
+"有効濾過圧 ＝ 血圧 −（[血漿膠質浸透圧] ＋ [ボーマン嚢内圧]）",
+"例：血圧55 mmHg，血漿膠質浸透圧25 mmHg，ボーマン嚢内圧15 mmHg のとき，有効濾過圧は [15 mmHg]",
+]},
+{t:"糸球体濾過膜の透過性",ch:"第12章 尿の生成と排泄 ｜ B-1 糸球体での濾過 ｜ P174",type:"p",
+rows:[
+"糸球体濾過膜は，[血管内皮細胞]・[基底膜]・スリット膜からなる（図12・4）．",
+"有効濾過圧は小さいが，濾過膜の [透過性] が非常に高いため，原尿は効果的に濾過される．",
+"[7 nm] 以上の粒子は通過しにくい．",
+"タンパク質は，強い [陰電荷] をもつ [足細胞] で通過が妨げられる．",
+"腎炎や [ネフローゼ] で濾過膜に病変が生じるとタンパク質が濾過され，[タンパク尿] がみられる．",
+]},
+{t:"尿細管での再吸収",ch:"第12章 尿の生成と排泄 ｜ B-2 尿細管での再吸収 ｜ P175",type:"p",
+rows:[
+"原尿は尿細管を通過する間にほとんどが再吸収され，尿細管の周りを囲む [毛細血管] へ取り込まれる（図12・5）．",
+"再吸収される物質：水・Na⁺・Cl⁻・K⁺のほか，[グルコース] や [アミノ酸] など，からだに必要な成分が多い．",
+"代謝産物である [クレアチニン] や硫酸塩などは，再吸収されにくい．",
+"水は [99%] が再吸収される．このため尿は，再吸収されない物質とともに約 [100倍] に濃縮される．",
+]},
+{t:"水・Na⁺・Cl⁻の再吸収",ch:"第12章 尿の生成と排泄 ｜ B-2 尿細管での再吸収 ｜ P175〜176",type:"tbl",
+cols:["部位","再吸収のしかた"],
+rows:[
+["[近位尿細管]","[Na⁺] の再吸収と並行して水が再吸収される．濾過された水分の約 [80%] を再吸収する（水の透過性が高く，細胞間の結合が [緩やか] なため）"],
+["ヘンレループ下行脚","水は [浸透圧] で透過するが，Na⁺は透過 [しない]"],
+["ヘンレループ上行脚","水は透過 [しない] が，Na⁺などのイオンの透過性はよい．太い部分では [Cl⁻] も再吸収される"],
+["遠位尿細管・集合管","近位尿細管で吸収されなかった水の [大部分] を再吸収する．集合管では体液の水分量に応じて [ホルモン] がはたらき，再吸収される水やNa⁺の量が増減する"],
 ],
-blanks:["近位尿細管","60〜70%","ヘンレのループ","髄質","遠位尿細管","アルドステロン","集合管","バソプレシン"]
-},
-{t:"尿細管分泌",ch:"第12章 尿の生成と排泄 ｜ B 分泌",type:"p",
+note:"図12・5：遠位尿細管・集合管でのNa⁺の再吸収は [アルドステロン] 依存性，集合管での水の再吸収は [バソプレシン] 依存性（くわしくはパートE）"},
+{t:"グルコースの再吸収",ch:"第12章 尿の生成と排泄 ｜ B-2 尿細管での再吸収 ｜ P176",type:"p",
 rows:[
-{t:"尿細管分泌とは，血液中の物質を尿細管腔へ [能動的] に排出するしくみである．",b:["能動的"]},
-{t:"[H⁺]（水素イオン）は遠位尿細管・集合管から分泌されてpHの調節に関わる．",b:["H⁺"]},
-{t:"[K⁺]（カリウムイオン）はアルドステロンの影響で遠位尿細管から分泌される．",b:["K⁺"]},
-{t:"[薬物] や毒素なども尿細管から分泌されて排泄される．",b:["薬物"]},
-{t:"PAH（パラアミノ馬尿酸）は糸球体で濾過され，[近位尿細管] から分泌されて尿中へ排泄される．",b:["近位尿細管"]},
+"グルコースは，健常者の尿中にはほとんど認められない．",
+"濾過されたグルコースは，すべて [近位尿細管] の [グルコース輸送体] で [能動的] に再吸収される．",
+"血糖値が [170 mg/dL] 以上になると，一部のグルコースが尿中へ排泄される．これを [糖尿] と呼ぶ．",
+"濾過量が [尿細管最大輸送量] を超えると，再吸収しきれないグルコースが尿に出る（図12・6）．",
+"食後に血糖値が上昇して尿に糖が認められるものを [食事性糖尿] と呼び，健康者でも認められる．",
 ]},
-{t:"アルドステロンとバソプレシンの役割",ch:"第12章 尿の生成と排泄 ｜ B 再吸収の調節",type:"tbl",
-cols:["ホルモン","分泌臓器","作用部位","作用"],
+{t:"尿細管での分泌",ch:"第12章 尿の生成と排泄 ｜ B-3 尿細管での分泌 ｜ P176",type:"tbl",
+cols:["分泌される物質","部位","しくみ・はたらき"],
 rows:[
-["[アルドステロン]","[副腎皮質]","遠位尿細管・集合管","[Na⁺] 再吸収↑・[K⁺] 排泄↑→血圧上昇"],
-["[バソプレシン]（ADH）","[脳下垂体後葉]","[集合管]","水の再吸収↑→尿量減少・尿濃縮"],
+["[K⁺]","[遠位尿細管]・集合管","[ナトリウム-カリウムポンプ] で分泌され，体内のK⁺濃度が維持される．[アルドステロン] で分泌量が増加する"],
+["[H⁺]・アンモニア","[近位尿細管]・遠位尿細管・集合管","体液の [酸塩基平衡] にあずかる"],
+["外来物質（[パラアミノ馬尿酸]・フェノール赤・ペニシリンなど）","[近位尿細管]","体内に本来存在しない薬品などを排泄する"],
 ],
-blanks:["アルドステロン","副腎皮質","Na⁺","K⁺","バソプレシン","脳下垂体後葉","集合管"]
-},
-{t:"レニン-アンジオテンシン系",ch:"第12章 尿の生成と排泄 ｜ B 再吸収の調節",type:"p",
+note:"からだに不要な物質は尿細管や集合管で原尿中へ分泌される．集められた尿は [腎杯] → [腎盂] → [尿管] を経て膀胱へ送られる．"},
+{t:"尿の成分",ch:"第12章 尿の生成と排泄 ｜ B-4 尿の成分 ｜ P177",type:"p",
 rows:[
-{t:"血圧低下や血液量減少を感知した [傍糸球体装置] から [レニン] が分泌される．",b:["傍糸球体装置","レニン"]},
-{t:"レニンは [アンジオテンシノーゲン] を [アンジオテンシンⅠ] に変換する．",b:["アンジオテンシノーゲン","アンジオテンシンⅠ"]},
-{t:"アンジオテンシンⅠはACEにより [アンジオテンシンⅡ] に変換される．",b:["アンジオテンシンⅡ"]},
-{t:"アンジオテンシンⅡは [血管収縮] と [アルドステロン] 分泌促進により血圧を上昇させる．",b:["血管収縮","アルドステロン"]},
+"尿は通常，pH [6] 前後の [弱酸性] を示す．野菜などをたくさん食べると [アルカリ性] になる．",
+"新鮮な尿は [ウロクロム] と呼ばれる黄色の色素を含むため，透明に近い黄色を示す．",
+"1日1.5 Lの尿のうち [95%] は水分で，残りの5%は無機物や有機物が溶けたものである．",
+"無機物としては [塩化ナトリウム] が主で約10 g，有機物としては [尿素] を中心とした窒素代謝産物が20〜30 g含まれる．",
+"尿量が増加すると，尿中のそれらの濃度は [低く] なる．",
 ]},
 {t:"パートBまとめ",ch:"第12章 尿の生成と排泄 ｜ パートBまとめ",type:"tbl",
 cols:["項目","内容"],
 rows:[
-["原尿の量","約 [150〜180L/日]（実際の尿は [1〜2L]）"],
-["GFR正常値","[125mL/分]（イヌリンで測定）"],
-["近位尿細管","[グルコース]・アミノ酸・Na⁺・水を再吸収"],
-["アルドステロン","[Na⁺]↑・[K⁺]↓（副腎皮質から分泌）"],
-["バソプレシン","集合管での [水] 再吸収↑→尿量減少"],
-["レニン-アンジオテンシン系","[傍糸球体装置]→レニン→最終的に [血圧上昇]"],
-],
-blanks:["150〜180L/日","1〜2L","125mL/分","グルコース","Na⁺","K⁺","水","傍糸球体装置","血圧上昇"]
-},
+["尿量","1日約 [1.5 L]．下限は [400〜500 mL]"],
+["原尿","1日約 [180 L]．タンパク質や [血球] は濾過されない"],
+["GFR","男性約 [120 mL/分]・女性約 [110 mL/分]"],
+["有効濾過圧","血圧 −（[血漿膠質浸透圧]＋[ボーマン嚢内圧]）"],
+["水の再吸収","全体で [99%]．近位尿細管で約 [80%]"],
+["グルコース","[近位尿細管] ですべて再吸収．血糖値 [170 mg/dL] 以上で糖尿"],
+["分泌","K⁺＝遠位尿細管・集合管／H⁺＝近位・遠位・集合管／外来物質＝[近位尿細管]"],
+["尿の成分","pH6前後の [弱酸性]・色素は [ウロクロム]・[95%] が水分"],
+]},
 ];
 let cur=0,bs=[];
-function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="revealBlank('${id}')"><span>${ans}</span></span>`;}
+function fill(t){t=t.replace(/\{\{([^{}]+)\}\}/g,'<span class="kw">$1</span>');t=t.replace(/【補足】/g,'<span class="hs">📘 補足知識（資料外）</span>');return t.replace(/\[([^\[\]]+)\]/g,(m,a)=>{const id="b"+bs.length;bs.push({id,on:false});return bl(id,a);});}
 function buildSlide(i){
   const s=S[i];bs=[];
   let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
   if(s.type==="p"){
     h+=`<div class="sec">重要事項</div><div class="box">`;
-    s.rows.forEach(r=>{
-      let t=r.t;
-      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
-      h+=`<span class="row">${t}</span>`;
-    });
+    s.rows.forEach(r=>{h+=`<span class="row">${fill(r)}</span>`;});
     h+=`</div>`;
   }else if(s.type==="tbl"){
-    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl${s.cols.length>2?' wide':''}"><thead><tr>`;
     s.cols.forEach(c=>h+=`<th>${c}</th>`);
     h+=`</tr></thead><tbody>`;
-    s.rows.forEach(row=>{
-      h+=`<tr>`;
-      row.forEach(cell=>{
-        let t=cell;
-        if(s.blanks)s.blanks.forEach(a=>{
-          if(t.includes("["+a+"]")){const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));}
-        });
-        h+=`<td>${t}</td>`;
-      });
-      h+=`</tr>`;
-    });
+    s.rows.forEach(row=>{h+=`<tr>`;row.forEach(cell=>{h+=`<td>${fill(cell)}</td>`;});h+=`</tr>`;});
     h+=`</tbody></table></div>`;
+    if(s.note){h+=`<div class="box" style="font-size:13px;line-height:1.8">${fill(s.note)}</div>`;}
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${fill(r)}</p>`;});
+      h+=`</div>`;
+    });
+    h+=`</div>`;
   }
   h+=`</div>`;
   document.getElementById("sc").innerHTML=h;
   upd();bldNav();
 }
-function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
-function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
-function showAll(){bs.forEach(b=>rb(b.id));}
-function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
-function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function revealBlank(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nextBlank(){const u=bs.find(x=>!x.on);if(u){revealBlank(u.id);const el=document.getElementById(u.id);if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}}
+function showAll(){bs.forEach(b=>revealBlank(b.id));}
+function resetAll(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=bs.length?d+"/"+bs.length+" 表示済み":"参照用スライド（カッコなし）";}
 function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
 function bldNav(){
   let h="";

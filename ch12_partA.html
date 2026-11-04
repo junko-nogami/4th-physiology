@@ -21,7 +21,10 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .tbl th{background:#4a3a6b;color:#fff;padding:8px 10px;font-weight:500;text-align:left;font-size:12px}
 .tbl td{padding:8px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#222;line-height:1.7}
 .tbl tr:last-child td{border-bottom:none}
-.tbl td:first-child{font-weight:600;color:#4a3a6b;white-space:nowrap;min-width:100px}
+.tbl td:first-child{font-weight:600;color:#4a3a6b;white-space:nowrap;min-width:110px}
+.tbl.wide td:first-child{white-space:normal;min-width:88px}
+.kw{font-weight:700;color:#4a3a6b}
+.hs{display:inline-block;font-size:11px;font-weight:700;color:#8a6314;background:rgba(160,110,20,.12);border-radius:4px;padding:1px 7px;margin-right:6px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:7px}
 .tf{background:rgba(74,58,107,.12);color:#4a3a6b}
@@ -39,20 +42,21 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .btnp{background:#4a3a6b;color:#fff;border-color:#4a3a6b}
 .btnp:hover{background:#3d305a}
 .cnt{font-size:11px;color:#888;margin-left:auto}
-.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.nav{display:flex;align-items:center;gap:7px;padding:9px 28px 11px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
 .dot{width:8px;height:8px;border-radius:50%;background:#d1d5db;cursor:pointer;transition:background .18s;flex-shrink:0}
 .dot.a{background:#4a3a6b}
 .pg{font-size:11px;color:#888;margin-left:auto}
+@media (max-width:520px){.two{grid-template-columns:1fr}.bd{padding:16px 14px}.hd{padding:12px 16px}.ctrl,.nav{padding-left:14px;padding-right:14px}.tbl{font-size:12px}.tbl td,.tbl th{padding:6px 6px}}
 </style>
 </head>
 <body>
-<h1>生理学 第12章 尿の生成と排泄｜パートA：腎臓の構造</h1>
+<h1>生理学 第12章 尿の生成と排泄｜パートA：腎臓の構造と機能</h1>
 <div class="slide">
   <div id="sc"></div>
   <div class="ctrl">
-    <button class="btn" onclick="nxt()">次のカッコを開く ▶</button>
+    <button class="btn" onclick="nextBlank()">次のカッコを開く ▶</button>
     <button class="btn" onclick="showAll()">すべて表示</button>
-    <button class="btn" onclick="rst()">リセット</button>
+    <button class="btn" onclick="resetAll()">リセット</button>
     <button class="btn btnp" onclick="go(cur-1)">◀ 前へ</button>
     <button class="btn btnp" onclick="go(cur+1)">次へ ▶</button>
     <span class="cnt" id="cnt"></span>
@@ -61,118 +65,100 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 </div>
 <script>
 const S=[
-{t:"腎臓の位置と形態",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"p",
+{t:"腎臓の形と位置",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造と機能 ｜ P171",type:"p",
 rows:[
-{t:"腎臓は [後腹膜] に位置する左右1対の臓器である．",b:["後腹膜"]},
-{t:"成人の腎臓は [握りこぶし] 大で，重さは約 [150g] である．",b:["握りこぶし","150g"]},
-{t:"腎臓の内側のくぼみを [腎門] といい，血管・神経・尿管が出入りする．",b:["腎門"]},
-{t:"腎臓の断面は外側の [皮質] と内側の [髄質] に分けられる．",b:["皮質","髄質"]},
-{t:"髄質には [腎錐体] があり，その先端（[腎乳頭]）から尿が腎杯へ排出される．",b:["腎錐体","腎乳頭"]},
+"腎臓は [ソラマメ] のような形で，[こぶし] と同じくらいの大きさの臓器である．",
+"[横隔膜] の下側で，[背中側] の左右に1つずつある（図12・1）．",
+"内側の陥没した部分は [腎門] と呼ばれ，[腎動脈]・[腎静脈]・[尿管] などが出入りする．",
+"腎臓は体内で生じた [老廃物] を排泄する尿を生成し，体液中の物質の組成が一定になるようはたらくことで，生体の [恒常性] を維持する．",
 ]},
-{t:"ネフロンの構造",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"p",
+{t:"皮質と髄質",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造と機能 ｜ P171",type:"two",
+left:{label:"皮質",rows:["[表層] にある部分","[赤褐色] をしている","[腎小体] がある"]},
+right:{label:"髄質",rows:["[深部] にある部分","[鮮紅色] をしている","数個の [腎錐体] を形成する"]}},
+{t:"腎錐体から尿管まで",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造と機能 ｜ P171",type:"p",
 rows:[
-{t:"腎臓の機能単位を [ネフロン]（腎単位）という．",b:["ネフロン"]},
-{t:"1個の腎臓には約 [100万個] のネフロンがある．",b:["100万個"]},
-{t:"ネフロンは [腎小体] と [尿細管] で構成される．",b:["腎小体","尿細管"]},
-{t:"腎小体は [糸球体] と [ボーマン嚢] からなる．",b:["糸球体","ボーマン嚢"]},
-{t:"腎小体は腎臓の [皮質] に存在する．",b:["皮質"]},
+"髄質は数個の [腎錐体] を形成している．",
+"腎錐体の先端部は [乳頭] となって，[腎杯] の中へ突き出ている．",
+"腎杯は集まって [腎盂] を形成し，[尿管] へ移行する．",
 ]},
-{t:"尿細管の構造と走行",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"tbl",
+{t:"ネフロン",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造と機能 ｜ P171",type:"p",
+rows:[
+"左右の腎臓には，[ネフロン] と呼ばれる構造がそれぞれ約 [100万個] ある（図12・2）．",
+"ネフロンは [腎小体] とそれに続く [尿細管] で構成される．",
+"腎小体は [皮質] にあり，尿細管は皮質と [髄質] にまたがっている．",
+]},
+{t:"腎小体",ch:"第12章 尿の生成と排泄 ｜ A-1 腎小体 ｜ P171〜172",type:"p",
+rows:[
+"腎小体は [糸球体] と [ボーマン嚢] で構成される（図12・3）．",
+"糸球体は20〜40の [毛細血管] の束で構成される．",
+"ボーマン嚢は，糸球体の毛細血管を中に [収めて] いる．",
+"[輸入細動脈] から糸球体の毛細血管へ流れ込んだ血液は，[濾過] されたのち [輸出細動脈] に入る．",
+"輸入細動脈が糸球体に入るところには [傍糸球体装置] がある（図12・3）．",
+]},
+{t:"尿細管の構成",ch:"第12章 尿の生成と排泄 ｜ A-2 尿細管 ｜ P172〜173",type:"tbl",
 cols:["部位","走行・特徴"],
 rows:[
-["[近位尿細管]","ボーマン嚢に続く・[皮質] に存在・再吸収が最も盛ん"],
-["[ヘンレのループ]","髄質へ下降後，上行する U字型の構造"],
-["[遠位尿細管]","皮質へ戻る・[集合管] へ続く"],
-["[集合管]","複数の尿細管が合流・[髄質] を通り腎乳頭へ"],
-],
-blanks:["近位尿細管","皮質","ヘンレのループ","遠位尿細管","集合管","集合管","髄質"]
-},
-{t:"糸球体と傍糸球体装置",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"p",
-rows:[
-{t:"糸球体は [輸入細動脈] から血液が流入し，[輸出細動脈] から流出する毛細血管の塊である．",b:["輸入細動脈","輸出細動脈"]},
-{t:"輸入細動脈と遠位尿細管の接触部には [傍糸球体装置] がある．",b:["傍糸球体装置"]},
-{t:"傍糸球体装置は [レニン] を分泌し，血圧・体液量の調節に関わる．",b:["レニン"]},
-{t:"糸球体の毛細血管壁は [有窓型] で，血漿成分が濾過されやすい構造になっている．",b:["有窓型"]},
+["[近位尿細管]","ボーマン嚢と [ヘンレループ] の間の部分．[皮質] の主な部分を占める．糸球体の近くで屈曲したのち髄質へ下行する．濾過された物質（グルコース・水・イオンなど）の [大部分] がここで再吸収される"],
+["[ヘンレループ]","[下行脚] と [上行脚] で構成される．下行脚は髄質の深いところで尿の [濃縮] に関与したのち，Uターンして上行脚として皮質へ戻る"],
+["[遠位尿細管]","糸球体に近づいたところでヘンレループから移行し，[集合管] へ移行する"],
+["[集合管]","皮質から [髄質] へ下行する．ヘンレループと並行して走り，合流して [乳頭管] となって [腎杯] へ開く"],
 ]},
-{t:"腎臓の血液循環",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"p",
+{t:"腎臓の血管系",ch:"第12章 尿の生成と排泄 ｜ A-3 血管系 ｜ P173",type:"p",
 rows:[
-{t:"腎臓への血液供給は [腎動脈] から行われる．",b:["腎動脈"]},
-{t:"心拍出量の約 [1/4]（約1L/分）が腎臓へ流れる．",b:["1/4"]},
-{t:"輸入細動脈 → [糸球体毛細血管] → [輸出細動脈] → [尿細管周囲毛細血管] の順に流れる．",b:["糸球体毛細血管","輸出細動脈","尿細管周囲毛細血管"]},
-{t:"尿細管周囲毛細血管は尿細管での [再吸収] や [分泌] に関わる．",b:["再吸収","分泌"]},
+"[腎門] から入った [腎動脈] は，分岐して皮質と髄質に分布する．",
+"皮質へ向かう動脈の枝は [輸入細動脈] となり，[糸球体] へ入る．",
+"糸球体から出た [輸出細動脈] は [毛細血管] となって [尿細管] の周りを下行し，合流して [静脈] となる．",
+"尿細管で再吸収された物質は，尿細管の周りを囲む [毛細血管] に取り込まれる（P175）．",
 ]},
-{t:"腎臓の機能概要",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"tbl",
-cols:["機能","内容"],
-rows:[
-["[尿の生成]","老廃物・余分な水分・電解質を尿として排泄"],
-["[体液の調節]","血漿浸透圧・pH・電解質バランスの維持"],
-["[血圧の調節]","[レニン] 分泌による血圧調節"],
-["[造血の促進]","[エリスロポエチン] 分泌→赤血球産生促進"],
-["[ビタミンDの活性化]","活性型 [ビタミンD] を産生→Ca吸収促進"],
-],
-blanks:["尿の生成","体液の調節","血圧の調節","レニン","造血の促進","エリスロポエチン","ビタミンDの活性化","ビタミンD"]
-},
-{t:"尿の生成の3ステップ",ch:"第12章 尿の生成と排泄 ｜ A 腎臓の構造",type:"tbl",
-cols:["ステップ","場所","内容"],
-rows:[
-["[濾過]","[糸球体]→ボーマン嚢","血漿成分が原尿として濾過される"],
-["[再吸収]","[尿細管]・集合管","必要な物質を血液へ取り戻す"],
-["[分泌]","[尿細管]・集合管","不要な物質を尿細管腔へ追加排泄"],
-],
-blanks:["濾過","糸球体","再吸収","尿細管","分泌","尿細管"]
-},
 {t:"パートAまとめ",ch:"第12章 尿の生成と排泄 ｜ パートAまとめ",type:"tbl",
 cols:["項目","内容"],
 rows:[
-["腎臓の機能単位","[ネフロン]（約100万個/腎臓）"],
-["腎小体","[糸球体]＋[ボーマン嚢]（皮質に存在）"],
-["尿細管の順序","近位尿細管→[ヘンレのループ]→遠位尿細管→[集合管]"],
-["傍糸球体装置","[レニン] 分泌→血圧調節"],
-["腎臓のホルモン産生","[エリスロポエチン]（造血）・活性型[ビタミンD]（Ca吸収）"],
-["尿生成の3ステップ","[濾過]→[再吸収]→[分泌]"],
-],
-blanks:["ネフロン","糸球体","ボーマン嚢","ヘンレのループ","集合管","レニン","エリスロポエチン","ビタミンD","濾過","再吸収","分泌"]
-},
+["形と位置","[ソラマメ] 形・こぶし大．[横隔膜] の下，背中側の左右"],
+["腎門","[腎動脈]・[腎静脈]・[尿管] が出入りする"],
+["皮質と髄質","皮質＝表層・[赤褐色]／髄質＝深部・[鮮紅色]・[腎錐体]"],
+["尿の通り道","集合管 → [乳頭管] → [腎杯] → [腎盂] → 尿管"],
+["ネフロン","[腎小体]＋[尿細管]．腎臓1つに約 [100万個]"],
+["腎小体","[糸球体]＋[ボーマン嚢]．[皮質] にある"],
+["尿細管","[近位尿細管] → [ヘンレループ] → [遠位尿細管] → [集合管]"],
+["血液の流れ","腎動脈 → [輸入細動脈] → 糸球体 → [輸出細動脈] → 尿細管周囲の [毛細血管] → 静脈"],
+]},
 ];
 let cur=0,bs=[];
-function bl(id,ans){return `<span class="blank" id="${id}" onclick="rb('${id}')"><span>${ans}</span></span>`;}
+function bl(id,ans){return `<span class="blank" id="${id}" onclick="revealBlank('${id}')"><span>${ans}</span></span>`;}
+function fill(t){t=t.replace(/\{\{([^{}]+)\}\}/g,'<span class="kw">$1</span>');t=t.replace(/【補足】/g,'<span class="hs">📘 補足知識（資料外）</span>');return t.replace(/\[([^\[\]]+)\]/g,(m,a)=>{const id="b"+bs.length;bs.push({id,on:false});return bl(id,a);});}
 function buildSlide(i){
   const s=S[i];bs=[];
   let h=`<div class="hd"><div class="ch">${s.ch}</div><div class="tt">${s.t}</div></div><div class="bd">`;
   if(s.type==="p"){
     h+=`<div class="sec">重要事項</div><div class="box">`;
-    s.rows.forEach(r=>{
-      let t=r.t;
-      r.b.forEach(a=>{const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));});
-      h+=`<span class="row">${t}</span>`;
-    });
+    s.rows.forEach(r=>{h+=`<span class="row">${fill(r)}</span>`;});
     h+=`</div>`;
   }else if(s.type==="tbl"){
-    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr>`;
+    h+=`<div class="sec">重要事項</div><div class="box" style="padding:0;overflow:hidden"><table class="tbl${s.cols.length>2?' wide':''}"><thead><tr>`;
     s.cols.forEach(c=>h+=`<th>${c}</th>`);
     h+=`</tr></thead><tbody>`;
-    s.rows.forEach(row=>{
-      h+=`<tr>`;
-      row.forEach(cell=>{
-        let t=cell;
-        if(s.blanks)s.blanks.forEach(a=>{
-          if(t.includes("["+a+"]")){const id="b"+bs.length;bs.push({id,on:false});t=t.replace("["+a+"]",bl(id,a));}
-        });
-        h+=`<td>${t}</td>`;
-      });
-      h+=`</tr>`;
-    });
+    s.rows.forEach(row=>{h+=`<tr>`;row.forEach(cell=>{h+=`<td>${fill(cell)}</td>`;});h+=`</tr>`;});
     h+=`</tbody></table></div>`;
+    if(s.note){h+=`<div class="box" style="font-size:13px;line-height:1.8">${fill(s.note)}</div>`;}
+  }else if(s.type==="two"){
+    h+=`<div class="two">`;
+    ["left","right"].forEach(side=>{
+      const d=s[side];const tc=side==="left"?"tf":"tb";
+      h+=`<div class="box"><span class="tag ${tc}">${d.label}</span>`;
+      d.rows.forEach(r=>{h+=`<p style="font-size:13px;line-height:1.8;border-bottom:1px solid #e5e7eb;padding:4px 0">${fill(r)}</p>`;});
+      h+=`</div>`;
+    });
+    h+=`</div>`;
   }
   h+=`</div>`;
   document.getElementById("sc").innerHTML=h;
   upd();bldNav();
 }
-function rb(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
-function nxt(){const u=bs.find(x=>!x.on);if(u)rb(u.id);}
-function showAll(){bs.forEach(b=>rb(b.id));}
-function rst(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
-function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=d+"/"+bs.length+" 表示済み";}
+function revealBlank(id){const b=bs.find(x=>x.id===id);if(b&&!b.on){b.on=true;document.getElementById(id).classList.add("on");}upd();}
+function nextBlank(){const u=bs.find(x=>!x.on);if(u){revealBlank(u.id);const el=document.getElementById(u.id);if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}}
+function showAll(){bs.forEach(b=>revealBlank(b.id));}
+function resetAll(){bs.forEach(b=>{b.on=false;const el=document.getElementById(b.id);if(el)el.classList.remove("on");});upd();}
+function upd(){const d=bs.filter(x=>x.on).length;document.getElementById("cnt").textContent=bs.length?d+"/"+bs.length+" 表示済み":"参照用スライド（カッコなし）";}
 function go(i){if(i>=0&&i<S.length){cur=i;buildSlide(cur);}}
 function bldNav(){
   let h="";
