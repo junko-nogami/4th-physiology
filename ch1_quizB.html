@@ -16,11 +16,14 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .bar{height:5px;background:#e5e7eb;overflow:hidden}
 .bar > i{display:block;height:100%;background:#0e6b6b;transition:width .3s;width:0}
 .bd{padding:22px 28px 18px;background:#fff;min-height:300px}
-.qnum{font-size:11px;font-weight:600;color:#0e6b6b;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.qnum{font-size:11px;font-weight:600;color:#0e6b6b;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
 .mark.kihon{background:rgba(14,107,107,.13);color:#0b5c5c}
 .mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
 .q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
 .opts{display:flex;flex-direction:column;gap:9px}
 .opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
 .opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -39,7 +42,7 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .exp.ng .vd{color:#d0483f}
 .exp .tx{color:#333}
 .exp .tx b{color:#111}
-.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
 .btn{padding:9px 18px;border-radius:7px;border:1px solid #0e6b6b;background:#0e6b6b;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
 .btn:hover{background:#0a5555}
 .btn:disabled{opacity:.4;cursor:default}
@@ -65,135 +68,216 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 <body>
 <h1>生理学 第1章 生理学とは｜パートB 確認テスト</h1>
 <div class="slide">
-  <div class="hd"><div><div class="ch">第1章 生理学とは ｜ B 核・DNA・染色体・細胞内小器官</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="hd"><div><div class="ch">第1章 生理学とは ｜ A-2 核・A-3 染色体と遺伝・A-4 細胞内小器官</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
   <div class="bar"><i id="bar"></i></div>
   <div class="bd" id="bd"></div>
   <div class="ctrl" id="ctrl"></div>
 </div>
 <script>
-/* choices: [表示文, 正解フラグ, その選択肢が何かの説明]  kihon:true=🎯基本(=💣ドボン)  exp=正解時の解説 */
+/* ===== 問題プール（教科書 第1章 P4〜7 ベース）=====
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon:true … 🎯基本　dobon:true … 💣ドボン（ドボンモードで外したら終了）
+   gori:true … ⚠誤りを選ぶ　hosoku:true … 📘補足（資料外）
+   g:"…" … 出題グループ（1回の出題での上限は GMAX）
+   2026年11月 全面改訂（初版15問 → 24問、ドボン分離・グループ上限の新エンジン） */
 const PICK=5;
+const GMAX={enki:1,fukusei:1,tr:1,shoki:2,shoutai:1,kokkaku:1};
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
 const POOL=[
-{q:"遺伝情報を担うDNAを内部に含み、核膜で細胞質基質と隔てられている構造はどれか。",kihon:true,
+/* ---------- A-2 核（P4〜5） ---------- */
+{q:"核膜にある小孔（核膜孔）のはたらきはどれか。",
  choices:[
-  ["核",true,""],
-  ["リボソーム",false,"mRNAの情報からタンパク質を合成する場。DNAを収める構造ではない。"],
-  ["ゴルジ装置",false,"分泌タンパク質の修飾・濃縮や分泌顆粒の生成にはたらく。"],
-  ["リソソーム",false,"加水分解酵素を含み、物質や老廃物を分解する顆粒。"]],
- exp:"核は核膜で細胞質基質と隔てられ、内部にDNA（デオキシリボ核酸）を含む。核膜には核膜孔がある。"},
+  ["核の内外の物質輸送を担う",true,""],
+  ["核と細胞質基質を隔てる",false,"核膜そのもののはたらき。小孔はその膜にあいた穴。"],
+  ["核の中でDNAを分解する",false,"DNAは遺伝情報を保つもので、核膜孔が分解することはない。"],
+  ["細胞外の物質を受容体で取り込む",false,"細胞膜で起こるエンドサイトーシスのはたらき。"]],
+ exp:"核膜には、核内外の物質輸送を担う小孔（<b>核膜孔</b>）がある。DNAの情報を写し取ったmRNAは、核から細胞質へ出ていく。（P4・P5）"},
 
-{q:"DNAの構成単位で、リン酸・デオキシリボース・塩基からなるものはどれか。",kihon:true,
+{q:"ヌクレオチドとは何か。",kihon:true,
  choices:[
-  ["ヌクレオチド",true,""],
-  ["アミノ酸",false,"タンパク質の構成単位で、DNAの単位ではない。"],
-  ["ヒストン",false,"DNAが巻きつくタンパク質。DNAの構成単位ではない。"],
-  ["クロマチン",false,"DNAとヒストンが集まった染色質のことで、構成“単位”ではない。"]],
- exp:"DNAは、リン酸・デオキシリボース・塩基からなるヌクレオチドが鎖状につながった高分子化合物。"},
+  ["DNAを構成する単位で、リン酸・デオキシリボース・塩基からなるもの",true,""],
+  ["タンパク質を構成する単位",false,"アミノ酸の説明。"],
+  ["リン酸基の頭部と2本の脂肪酸の尾部からなり、細胞膜をつくる分子",false,"リン脂質の説明。"],
+  ["1つの配偶子（卵子または精子）にある遺伝情報の全体",false,"ゲノムの説明。"]],
+ exp:"DNAは、リン酸・デオキシリボース・塩基からなる<b>ヌクレオチド</b>が鎖状につながった高分子化合物。（P4）"},
 
-{q:"DNAでアデニン（A）と相補的に結合する塩基はどれか。",kihon:true,
+{q:"DNAで、アデニン（A）と相補的に結合する塩基はどれか。",kihon:true,g:"enki",
  choices:[
   ["チミン（T）",true,""],
-  ["グアニン（G）",false,"Gはシトシン（C）と相補的に結合する。"],
-  ["シトシン（C）",false,"Cはグアニン（G）と相補的に結合する。"],
-  ["ウラシル（U）",false,"RNAでAと対をなす塩基で、DNAには含まれない。"]],
- exp:"DNAの塩基はA-T、G-Cが相補的に結合し、二重らせんを形成する。"},
+  ["グアニン（G）",false,"シトシン（C）と相補的に結合する塩基。"],
+  ["シトシン（C）",false,"グアニン（G）と相補的に結合する塩基。"],
+  ["アデニン（A）",false,"同じ塩基どうしは結合しない。"]],
+ exp:"<b>AとT</b>、GとCが相補的に結合して2本のヌクレオチド鎖を結びつけ、二重らせんをつくる。（P4）"},
 
-{q:"DNAの複製で、一本鎖の塩基に相補的な塩基を結びつけるタンパク質はどれか。",
+{q:"DNAの2本のヌクレオチド鎖を結びつけているのはどれか。",g:"enki",
  choices:[
-  ["DNAポリメラーゼ",true,""],
-  ["リボソーム",false,"翻訳（タンパク質合成）の場で、DNA複製の酵素ではない。"],
-  ["ヒストン",false,"DNAが巻きつくタンパク質で、複製反応を担うわけではない。"],
-  ["リソソーム",false,"加水分解酵素で分解を行う顆粒で、複製とは無関係。"]],
- exp:"複製では二重らせんがほどけて一本鎖になり、DNAポリメラーゼが相補的な塩基を結びつけて新たな二重鎖をつくる。"},
+  ["相補的な塩基どうしの結合",true,""],
+  ["デオキシリボース",false,"ヌクレオチドに含まれる糖。2本の鎖の間をつなぐのは別の部分。"],
+  ["DNAポリメラーゼ",false,"複製のときにはたらくタンパク質で、ふだん2本の鎖をつなぎとめているものではない。"],
+  ["メッセンジャーRNA（mRNA）",false,"DNAの遺伝情報を写し取った別の分子で、DNAの鎖をつなぐものではない。"]],
+ exp:"相補性のあるAとT、GとCがそれぞれ結合して2本の鎖を結びつけ、<b>二重らせん</b>を形成している。（P4）"},
 
-{q:"DNAの遺伝情報がmRNAに写し取られる過程はどれか。",kihon:true,
+{q:"DNAに含まれない塩基はどれか。",hosoku:true,g:"enki",
+ choices:[
+  ["ウラシル（U）",true,""],
+  ["チミン（T）",false,"アデニン（A）と相補的に結合する、DNAの塩基。"],
+  ["グアニン（G）",false,"シトシン（C）と相補的に結合する、DNAの塩基。"],
+  ["シトシン（C）",false,"グアニン（G）と相補的に結合する、DNAの塩基。"]],
+ exp:"補足知識（資料外）。<b>ウラシル</b>はRNA（リボ核酸）に含まれる塩基で、RNAではチミンの代わりにアデニンと対をなす。DNAの塩基はA・T・G・Cの4種類。"},
+
+{q:"DNAの複製で、DNAポリメラーゼが行うはたらきはどれか。",g:"fukusei",
+ choices:[
+  ["一本鎖になったDNAの塩基に、相補性をもつ塩基を結びつける",true,""],
+  ["二重らせんの結合を切って、一本鎖にする",false,"DNAポリメラーゼは、結合が切れて一本鎖になったところに結合してはたらく。結合を切ることはしない。"],
+  ["DNAの遺伝情報をメッセンジャーRNA（mRNA）に写し取る",false,"DNAの情報からmRNAをつくるはたらきで、DNAを増やすものではない。"],
+  ["DNAを核膜孔から細胞質へ運び出す",false,"核から細胞質へ出ていくのはmRNAで、DNAは運び出されない。"]],
+ exp:"二重らせんの結合が切れて一本鎖DNAになると、<b>DNAポリメラーゼ</b>が結合し、それぞれの塩基に相補的な塩基を結びつけて新たな二重鎖DNAをつくる。（P4）"},
+
+{q:"細胞分裂でできた娘細胞が、親細胞と同じ遺伝情報をもつのはなぜか。",g:"fukusei",
+ choices:[
+  ["分裂の際に、DNAが同じ構造の二重らせん2つに複製されるから",true,""],
+  ["親細胞のメッセンジャーRNA（mRNA）が、娘細胞に受け渡されるから",false,"mRNAはタンパク質をつくるために遺伝情報を写し取ったもので、次の細胞へ遺伝情報を伝えるはたらきはない。"],
+  ["1組のDNAが、2つの娘細胞に半分ずつ分けられるから",false,"半分ずつでは、それぞれの娘細胞に遺伝情報の全部がそろわない。"],
+  ["娘細胞のリボソームが、親細胞と同じDNAを合成するから",false,"リボソームはmRNAの情報からタンパク質を合成する場で、DNAはつくらない。"]],
+ exp:"二重らせんがほどけた2本の一本鎖それぞれに相補的な塩基が結びつけられ、同じ構造のDNAが2つできる（<b>複製</b>）。これが娘細胞へ分けられ、親細胞の遺伝情報が伝えられる。（P4）"},
+
+{q:"DNAの遺伝情報がメッセンジャーRNA（mRNA）に写し取られる過程はどれか。",kihon:true,dobon:true,g:"tr",
  choices:[
   ["転写",true,""],
   ["翻訳",false,"mRNAの情報をもとにタンパク質が合成される過程。"],
-  ["複製",false,"DNAが同じ構造の2本に複製される過程。"],
+  ["複製",false,"DNAが同じ構造の2つにつくられる過程。"],
   ["分化",false,"細胞が異なる形態や機能をもつようになること。"]],
- exp:"DNAの遺伝情報はmRNA（メッセンジャーRNA）に転写され、その後リボソームで翻訳されてタンパク質になる。"},
+ exp:"DNAの遺伝情報はmRNAに<b>転写</b>される。mRNAは核から細胞質へ出て、その情報に基づいてタンパク質が合成される（翻訳）。（P5）"},
 
-{q:"mRNAの情報をもとにタンパク質が合成される場はどれか。",
+{q:"メッセンジャーRNA（mRNA）に写し取られた情報に基づいて、タンパク質が合成される過程はどれか。",kihon:true,g:"tr",
+ choices:[
+  ["翻訳",true,""],
+  ["転写",false,"DNAの遺伝情報がmRNAに写し取られる過程。"],
+  ["複製",false,"DNAが同じ構造の2つにつくられる過程。"],
+  ["エクソサイトーシス",false,"分泌顆粒に蓄えたタンパク質などを細胞外へ放出するしくみ。"]],
+ exp:"mRNAは核から細胞質へ出て、写し取られた情報に基づいてタンパク質が合成される。これを<b>翻訳</b>と呼ぶ。合成されたタンパク質は膜タンパク質や酵素としてはたらいたり、ホルモンとして分泌されたりする。（P5）"},
+
+{q:"DNAの遺伝情報に基づいて、タンパク質が合成される場はどれか。",kihon:true,dobon:true,g:"shoki",
  choices:[
   ["リボソーム",true,""],
-  ["核",false,"DNAを収める場所で、mRNAはここから細胞質へ出ていく。"],
+  ["滑面小胞体",false,"表面に粒子が付着していない小胞体で、タンパク質の合成は行わない。"],
   ["ミトコンドリア",false,"クエン酸回路や電子伝達系でATPを産生する小器官。"],
-  ["ゴルジ装置",false,"合成後の分泌タンパク質の修飾・濃縮を担う。"]],
- exp:"mRNAは核から細胞質へ出てリボソームと結合し、リボソームで翻訳されてタンパク質が合成される。"},
+  ["ゴルジ装置",false,"合成された分泌タンパク質を修飾・濃縮し、分泌顆粒をつくる小器官。"]],
+ exp:"mRNAは核から細胞質へ出て<b>リボソーム</b>と結合し、写し取られた情報に基づいてタンパク質が合成される。リボソームが付着した小胞体が粗面小胞体。（P5・P6）"},
 
-{q:"ヒトの体細胞がもつ染色体の数はどれか。",kihon:true,
- choices:[
-  ["46本（23対）",true,""],
-  ["44本（22対）",false,"常染色体だけの数で、性染色体2本が抜けている。"],
-  ["23本",false,"配偶子（卵子・精子）がもつ染色体の数。"],
-  ["48本",false,"ヒトの染色体数ではない。"]],
- exp:"ヒトの染色体は、常染色体44本（22対）＋性染色体2本（1対）＝計46本（23対）。"},
-
-{q:"ヒトの常染色体の数はどれか。",
- choices:[
-  ["44本（22対）",true,""],
-  ["46本（23対）",false,"常染色体と性染色体を合わせた総数。"],
-  ["2本（1対）",false,"性染色体の数。"],
-  ["23本",false,"配偶子がもつ染色体の数。"]],
- exp:"男女で共通の常染色体は44本（22対）。これに性染色体2本（1対）を加えて計46本になる。"},
-
-{q:"男性の性染色体の組合せはどれか。",
- choices:[
-  ["XY",true,""],
-  ["XX",false,"女性の性染色体の組合せ。"],
-  ["YY",false,"X染色体に生命維持に必要な遺伝子があるため、この構成では生存できない。"],
-  ["XXX",false,"通常の男女いずれの性染色体構成でもない。"]],
- exp:"男性の性染色体はXY、女性はXX。対の一方は卵子由来、他方は精子由来である。"},
-
-{q:"DNAが巻きついているタンパク質はどれか。",
+/* ---------- A-3 染色体と遺伝（P5〜6） ---------- */
+{q:"DNAが巻きついて、染色質（クロマチン）という構造物をつくっているタンパク質はどれか。",
  choices:[
   ["ヒストン",true,""],
-  ["DNAポリメラーゼ",false,"DNA複製で塩基を結びつける酵素で、DNAが巻きつく相手ではない。"],
+  ["DNAポリメラーゼ",false,"DNAの複製のときにはたらくタンパク質で、DNAが巻きつく相手ではない。"],
   ["ミオシン",false,"筋の収縮に関わるタンパク質。"],
   ["アルブミン",false,"血漿に多く含まれるタンパク質。"]],
- exp:"DNAはヒストンに巻きついて染色質（クロマチン）を形成し、分裂期には染色体になる。"},
+ exp:"DNAは<b>ヒストン</b>と呼ばれるタンパク質に巻きついており、この構造物を染色質（クロマチン）と呼ぶ。（P5）"},
 
-{q:"クエン酸回路や電子伝達系でATPを産生する細胞内小器官はどれか。",kihon:true,
+{q:"染色質（クロマチン）は、細胞が分裂期に入るとどうなるか。",
+ choices:[
+  ["棒状の構造体（染色体）に変化する",true,""],
+  ["ほどけて一本鎖のDNAになる",false,"DNAの複製の際に、二重らせんの結合が切れたときの状態。"],
+  ["メッセンジャーRNA（mRNA）に変化する",false,"mRNAはDNAの情報を写し取ってつくられる別の分子で、クロマチンが形を変えたものではない。"],
+  ["ヌクレオチドに分解される",false,"ヌクレオチドはDNAを構成する単位。分裂期にDNAが分解されることはない。"]],
+ exp:"DNAはヒストンに巻きついて染色質（クロマチン）をつくっている。細胞が分裂期に入ると、クロマチンは棒状の構造体（<b>染色体</b>）に変化する。（P5）"},
+
+{q:"ヒトの体細胞の染色体の構成で正しいのはどれか。",kihon:true,
+ choices:[
+  ["常染色体44本＋性染色体2本＝計46本",true,""],
+  ["常染色体46本＋性染色体2本＝計48本",false,"この組合せでは、ヒトの体細胞の染色体数より多くなる。"],
+  ["常染色体22本＋性染色体1本＝計23本",false,"配偶子（卵子・精子）がもつ染色体の数。"],
+  ["常染色体44本＋性染色体1本＝計45本",false,"性染色体は対になっているので、1本だけということはない。"]],
+ exp:"男女で共通の常染色体44本（22対）と、性を決める性染色体2本（1対）の、<b>計46本（23対）</b>。対の一方は卵子、他方は精子に由来する。（P5）"},
+
+{q:"性染色体の構成がYYの個体が生存できないのはなぜか。",
+ choices:[
+  ["生命維持に必要な遺伝子がX染色体にあるから",true,""],
+  ["Y染色体の遺伝子が多すぎるから",false,"Y染色体はX染色体に比べて小さく、遺伝子の数は極端に少ない。"],
+  ["染色体の総数が46本にならないから",false,"YYでも、常染色体と合わせた総数は46本になる。"],
+  ["Y染色体どうしが結合して1本になってしまうから",false,"染色体どうしが結合して1本になるしくみはない。"]],
+ exp:"<b>X染色体</b>には生命維持に必要な遺伝子が含まれる。そのため、X染色体をもたないYYの個体は生存できない。（P6）"},
+
+{q:"X染色体の異常による遺伝性の疾患が、女性より男性で発症しやすいのはなぜか。",
+ choices:[
+  ["男性はX染色体を1本しかもたないから",true,""],
+  ["男性はY染色体を2本もつから",false,"男性の性染色体はXYで、Y染色体は1本。"],
+  ["Y染色体のほうがX染色体より大きいから",false,"実際はY染色体のほうが小さく、遺伝子も極端に少ない。"],
+  ["男性は常染色体の数が女性より少ないから",false,"常染色体は男女で共通の44本。"]],
+ exp:"女性はX染色体を2本もつが、男性は<b>1本しかない</b>ため、X染色体の異常による疾患が発症しやすい。性染色体上の遺伝子によるこうした遺伝を伴性遺伝と呼ぶ。（P6）"},
+
+{q:"ヒトの染色体について誤っているのはどれか。",gori:true,
+ choices:[
+  ["対になる2本の染色体は、どちらも卵子に由来する",true,""],
+  ["常染色体は、男女で共通である",false,"教科書どおりの記述なので、正しい。"],
+  ["男性の性染色体は、XYと表す",false,"教科書どおりの記述なので、正しい。"],
+  ["1つの配偶子にある遺伝情報を、ゲノムと呼ぶ",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"対の一方は<b>卵子</b>由来、他方は<b>精子</b>由来。（P5）"},
+
+/* ---------- A-4 細胞内小器官（P6〜7） ---------- */
+{q:"クエン酸回路や電子伝達系によってATPを産生するのはどれか。",kihon:true,dobon:true,g:"shoki",
  choices:[
   ["ミトコンドリア",true,""],
-  ["リボソーム",false,"タンパク質を合成する構造で、ATP産生の場ではない。"],
-  ["リソソーム",false,"加水分解酵素で物質や老廃物を分解する顆粒。"],
-  ["中心体",false,"核の近くにあり、細胞分裂やべん毛の形成に関与する。"]],
- exp:"ミトコンドリアは内膜がクリステという折りたたみ構造をもち、クエン酸回路・電子伝達系でATPを産生する。心筋や骨格筋で多い。"},
+  ["中心体",false,"核の近くにあり、細胞分裂やべん毛の形成に関与する。"],
+  ["リソソーム",false,"多種類の加水分解酵素を含む顆粒。"],
+  ["ゴルジ装置",false,"分泌タンパク質の修飾・濃縮と、分泌顆粒の生成にたずさわる。"]],
+ exp:"<b>ミトコンドリア</b>は外膜・内膜・内腔からなり、内膜はクリステという折りたたみ構造をもつ。代謝の激しい心筋や骨格筋などに多い。（P6）"},
 
-{q:"リボソームが付着し、タンパク質を合成する小胞体はどれか。",
- choices:[
-  ["粗面小胞体",true,""],
-  ["滑面小胞体",false,"リボソームが付着せず、脂質やステロイドホルモンを合成する。"],
-  ["ゴルジ装置",false,"合成された分泌タンパク質の修飾・濃縮を担う。"],
-  ["リソソーム",false,"加水分解酵素で分解を行う顆粒。"]],
- exp:"リボソームが付着した小胞体が粗面小胞体で、タンパク質を合成する。付着しないものが滑面小胞体。"},
-
-{q:"多種類の加水分解酵素を含み、取り込んだ物質や老廃物を分解する小器官はどれか。",
+{q:"白血球が食作用で取り込んだバクテリアを分解するのにはたらく小器官はどれか。",kihon:true,dobon:true,g:"shoki",
  choices:[
   ["リソソーム",true,""],
-  ["ゴルジ装置",false,"分泌タンパク質の修飾・濃縮や分泌顆粒の生成を担う。"],
-  ["中心体",false,"細胞分裂やべん毛の形成に関与する。"],
-  ["粗面小胞体",false,"リボソームが付着しタンパク質を合成する。"]],
- exp:"リソソームは多種類の加水分解酵素を含み、細胞内へ取り込んだ物質や老廃物を分解処理する。"},
+  ["ゴルジ装置",false,"分泌タンパク質の修飾・濃縮と、分泌顆粒の生成にたずさわる。"],
+  ["ミトコンドリア",false,"クエン酸回路や電子伝達系でATPを産生する。"],
+  ["粗面小胞体",false,"表面に粒子が付着した小胞体で、タンパク質を合成する。"]],
+ exp:"<b>リソソーム</b>は多種類の加水分解酵素を含む顆粒で、細胞内へ取り込んだ物質や老廃物を分解処理する。食作用で取り込まれたバクテリアもここで分解される。（P7、食作用はP3〜4）"},
 
-/* ---- やや難 ---- */
-{q:"ヒトのゲノムを構成する塩基対の数として最も近いのはどれか。",
+{q:"粗面小胞体で合成された分泌タンパク質を修飾・濃縮し、分泌顆粒をつくるのはどれか。",g:"shoki",
  choices:[
-  ["約30億塩基対",true,""],
-  ["約2万2千塩基対",false,"これはゲノムに含まれる“遺伝子の数”の概数で、塩基対の数ではない。"],
-  ["約46塩基対",false,"46はヒトの染色体の“本数”。"],
-  ["約200万塩基対",false,"ヒトゲノムの塩基対数としては大幅に少ない。"]],
- exp:"ゲノムは約30億の塩基対で構成され、23対の染色体にたたみ込まれている。遺伝子は約2万2千個と推定される。"},
+  ["ゴルジ装置",true,""],
+  ["リソソーム",false,"多種類の加水分解酵素を含み、取り込んだ物質や老廃物を分解する顆粒。"],
+  ["中心体",false,"核の近くにあり、細胞分裂やべん毛の形成に関与する。"],
+  ["ミトコンドリア",false,"クエン酸回路や電子伝達系でATPを産生する。"]],
+ exp:"<b>ゴルジ装置</b>は扁平な袋状の膜が幾重にも重なった構造。粗面小胞体で合成された分泌タンパク質を修飾・濃縮し、分泌顆粒をつくる。分泌顆粒の中身は、エクソサイトーシスで細胞外へ放出される。（P7、エクソサイトーシスはP3）"},
 
-{q:"アクチンフィラメントとも呼ばれ、筋細胞の収縮や貪食細胞の遊走に関与する細胞骨格はどれか。",
+{q:"中心体のはたらきはどれか。",g:"shoki",
+ choices:[
+  ["細胞分裂に関与する",true,""],
+  ["クエン酸回路や電子伝達系でATPを産生する",false,"ミトコンドリアのはたらき。"],
+  ["取り込んだ物質や老廃物を加水分解酵素で分解する",false,"リソソームのはたらき。"],
+  ["分泌タンパク質を修飾・濃縮し、分泌顆粒をつくる",false,"ゴルジ装置のはたらき。"]],
+ exp:"中心体は核の近くにあり、<b>細胞分裂</b>やべん毛の形成に関与する。（P7）"},
+
+{q:"滑面小胞体のはたらきはどれか。",g:"shoutai",
+ choices:[
+  ["脂質やステロイドホルモンを合成する",true,""],
+  ["タンパク質を合成する",false,"表面に粒子が付着した粗面小胞体のはたらき。"],
+  ["分泌タンパク質を修飾・濃縮し、分泌顆粒をつくる",false,"ゴルジ装置のはたらき。"],
+  ["取り込んだ物質や老廃物を加水分解酵素で分解する",false,"リソソームのはたらき。"]],
+ exp:"滑面小胞体は表面に粒子が付着していない小胞体で、<b>脂質やステロイドホルモン</b>などを合成するほか、肝細胞ではアルコールなどを無毒化する。（P6）"},
+
+{q:"小胞体について誤っているのはどれか。",kihon:true,gori:true,g:"shoutai",
+ choices:[
+  ["滑面小胞体は、タンパク質を合成する",true,""],
+  ["小胞体は、表面の粒子の付着の有無で2種類に分けられる",false,"教科書どおりの記述なので、正しい。"],
+  ["滑面小胞体は、脂質やステロイドホルモンを合成する",false,"教科書どおりの記述なので、正しい。"],
+  ["滑面小胞体は、肝細胞でアルコールなどを無毒化する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"タンパク質を合成するのは、表面に粒子が付着した<b>粗面小胞体</b>。滑面小胞体は脂質やステロイドホルモンの合成と、肝細胞でのアルコールなどの無毒化を担う。（P6）"},
+
+{q:"白血球などの貪食細胞が移動（遊走）するときにはたらく細胞骨格はどれか。",g:"kokkaku",
  choices:[
   ["マイクロフィラメント",true,""],
-  ["微小管",false,"細胞骨格のうち最も太く、形態維持や細胞内の物質輸送を担う。"],
-  ["中間径フィラメント",false,"形態保持や細胞間接着、細胞内小器官の配置に関わる。"],
-  ["クリステ",false,"ミトコンドリア内膜の折りたたみ構造で、細胞骨格ではない。"]],
- exp:"細胞骨格は太い順に微小管・中間径フィラメント・マイクロフィラメント。マイクロフィラメント（アクチンフィラメント）は収縮や遊走など細胞の動きに関与する。"},
+  ["微小管",false,"細胞骨格のうちもっとも太く、細胞の形態維持と細胞内の物質輸送を担う。"],
+  ["中間径フィラメント",false,"細胞の形態維持のほか、細胞間接着や細胞内小器官の空間的配置に関わる。"],
+  ["クリステ",false,"ミトコンドリアの内膜の折りたたみ構造で、細胞骨格ではない。"]],
+ exp:"<b>マイクロフィラメント</b>はアクチンフィラメントとも呼ばれ、筋細胞の収縮や貪食細胞の遊走など、細胞の動きに関与する。細胞骨格は、太い順に微小管・中間径フィラメント・マイクロフィラメント。（P7）"},
+
+{q:"細胞骨格について誤っているのはどれか。",gori:true,g:"kokkaku",
+ choices:[
+  ["中間径フィラメントは、細胞内の物質輸送を担う",true,""],
+  ["微小管は、細胞の形態維持に関与する",false,"教科書どおりの記述なので、正しい。"],
+  ["中間径フィラメントは、細胞間の接着に関わる",false,"教科書どおりの記述なので、正しい。"],
+  ["マイクロフィラメントは、アクチンフィラメントとも呼ばれる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"細胞内の物質輸送を担うのは<b>微小管</b>。中間径フィラメントは、形態維持、細胞間接着、細胞内小器官の空間的配置に関わる。（P7）"},
 ];
 
 let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
@@ -206,35 +290,40 @@ function home(){
   document.getElementById("bar").style.width="0";
   document.getElementById("bd").innerHTML=`
     <div class="center">
-      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から5問が出題されます。</p>
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
       <div class="modes">
         <button class="mode" onclick="start('normal')">
           <div class="nm">通常モード</div>
-          <div class="ds">5問を最後まで解いて採点します。まちがえても正解するまで選び直せます。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題。</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。まちがえても正解するまで選び直せます。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題。</div>
         </button>
         <button class="mode dob" onclick="start('dobon')">
           <div class="nm">💣 ドボンチャレンジ</div>
-          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。外したら選び直しなしで即終了。どこまで連続正解できるか挑戦！</div>
+          <div class="ds">絶対に落とせない問題が <b>💣ドボン！</b> に変身。外したら選び直しなしで即終了。どこまで連続正解できるか挑戦！</div>
         </button>
       </div>
     </div>`;
   document.getElementById("ctrl").innerHTML="";
 }
 function start(m){
-  mode=m; drawn=shuffle(POOL).slice(0,Math.min(PICK,POOL.length));
+  mode=m; drawn=draw();
   idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
 }
 function render(){
   answered=false; qmiss=0;
   const item=drawn[idx];
   const opts=shuffle(item.choices);
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
   document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
   document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
   const L=["ア","イ","ウ","エ","オ"];
-  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
-  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${item.q}</div><div class="opts">`;
+  let markHtml="";
+  if(isDob) markHtml+=`<span class="mark dobon">💣 ドボン！</span>`;
+  else if(item.kihon) markHtml+=`<span class="mark kihon">🎯 基本</span>`;
+  if(item.gori) markHtml+=`<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml+=`<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qt=item.gori?item.q.replace("誤っている",'<span class="ng">誤っている</span>'):item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qt}</div><div class="opts">`;
   opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
   h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
   document.getElementById("bd").innerHTML=h;
@@ -244,7 +333,7 @@ function pick(el,ok){
   if(answered)return;
   if(el.classList.contains("dis"))return;
   const item=drawn[idx];
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   const selText=el.querySelector("span:last-child").textContent;
   const selChoice=item.choices.find(c=>c[0]===selText);
   const exp=document.getElementById("exp");
@@ -268,7 +357,7 @@ function pick(el,ok){
     answered=true;
     el.classList.add("wrong");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
-    if(item.kihon){ dead=true; }
+    if(item.dobon){ dead=true; }
     exp.className="exp show ng";
     document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
     document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
@@ -296,8 +385,8 @@ function result(){
       document.getElementById("bd").innerHTML=`<div class="center score dead">
         <span class="tag dob">💣 ドボンチャレンジ</span>
         <div>ドボンを踏んでしまいました</div>
-        <div class="big">${streak} 問連続正解</div>
-        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+        <div class="big">${score} 問正解</div>
+        <div class="msg">${idx+1}問目でドボン。<br>解説を復習して再挑戦しましょう。</div>
       </div>`;
     }else{
       document.getElementById("bd").innerHTML=`<div class="center score">

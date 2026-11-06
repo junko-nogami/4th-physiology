@@ -16,11 +16,14 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .bar{height:5px;background:#e5e7eb;overflow:hidden}
 .bar > i{display:block;height:100%;background:#0e6b6b;transition:width .3s;width:0}
 .bd{padding:22px 28px 18px;background:#fff;min-height:300px}
-.qnum{font-size:11px;font-weight:600;color:#0e6b6b;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.qnum{font-size:11px;font-weight:600;color:#0e6b6b;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
 .mark.kihon{background:rgba(14,107,107,.13);color:#0b5c5c}
 .mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(109,63,158,.12);color:#6d3f9e;border:1px solid rgba(109,63,158,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
 .q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#6d3f9e;font-weight:700}
 .opts{display:flex;flex-direction:column;gap:9px}
 .opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
 .opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -39,7 +42,7 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 .exp.ng .vd{color:#d0483f}
 .exp .tx{color:#333}
 .exp .tx b{color:#111}
-.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;flex-wrap:wrap}
 .btn{padding:9px 18px;border-radius:7px;border:1px solid #0e6b6b;background:#0e6b6b;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
 .btn:hover{background:#0a5555}
 .btn:disabled{opacity:.4;cursor:default}
@@ -65,118 +68,229 @@ h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.
 <body>
 <h1>生理学 第1章 生理学とは｜パートA 確認テスト</h1>
 <div class="slide">
-  <div class="hd"><div><div class="ch">第1章 生理学とは ｜ A 生理学とは・細胞膜</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="hd"><div><div class="ch">第1章 生理学とは ｜ 生理学とは・A-1 細胞膜</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
   <div class="bar"><i id="bar"></i></div>
   <div class="bd" id="bd"></div>
   <div class="ctrl" id="ctrl"></div>
 </div>
 <script>
-/* ===== 問題プール（教科書ベース）=====
+/* ===== 問題プール（教科書 第1章 P1〜4 ベース）=====
    choices: [表示文, 正解フラグ, その選択肢が何かの説明]
-   kihon:true … 落としちゃダメな基本問題（🎯基本／ドボンモードでは💣ドボン！）
-   exp … 正解時に見せる「なぜ正しいか」 */
+   kihon:true … 🎯基本　dobon:true … 💣ドボン（ドボンモードで外したら終了）
+   gori:true … ⚠誤りを選ぶ　hosoku:true … 📘補足（資料外）
+   2026年11月 全面改訂（初版12問 → 25問、ドボン分離の新エンジン） */
 const PICK=5;
 const POOL=[
+/* ---------- 生理学とは（P1） ---------- */
 {q:"からだの構造を明らかにする学問はどれか。",kihon:true,
  choices:[
   ["解剖学",true,""],
   ["生理学",false,"物理学的・化学的方法で生命活動（しくみとはたらき）を探究する学問。"],
   ["生化学",false,"生体内の化学反応や物質を扱う学問で、構造そのものを対象とはしない。"],
   ["病理学",false,"病気による組織や細胞の変化を扱う学問。"]],
- exp:"解剖学はからだの構造を明らかにする学問。生理学はそのしくみとはたらきを扱う。"},
+ exp:"<b>解剖学</b>はからだの構造を明らかにする学問。生理学は健康なヒトのからだのしくみとはたらきを扱う。（P1）"},
 
+{q:"人体のすべての細胞が同一のDNAをもつのはなぜか。",
+ choices:[
+  ["すべて1個の受精卵が分裂して生じたから",true,""],
+  ["分化によって同じ形態と機能をもつようになるから",false,"分化は、細胞が異なる形態や機能をもつようになること。"],
+  ["細胞どうしがDNAを受け渡し合うから",false,"細胞の間でDNAを交換して同じにするしくみはない。"],
+  ["同じ器官に属する細胞の集まりだから",false,"器官は組織の組み合わせでできたもので、人体の細胞は多くの器官に分かれている。"]],
+ exp:"人体の約数十兆個の細胞は、すべて<b>1個の受精卵</b>が分裂して生じたため、同一のDNAをもつ。発達に伴って分化しても、DNAは同じ。（P1）"},
+
+/* ---------- 細胞の構造（P1） ---------- */
 {q:"細胞を構成する基本要素の組合せで正しいのはどれか。",kihon:true,
  choices:[
   ["細胞膜・細胞質・核",true,""],
   ["細胞膜・血漿・核",false,"血漿は細胞外液（体液）の成分で、細胞そのものの構成要素ではない。"],
   ["細胞質・核・染色体",false,"染色体は核の中にある構造で、細胞膜が抜けている。"],
   ["細胞膜・組織液・核",false,"組織液は細胞の外を満たす体液で、細胞の構成要素ではない。"]],
- exp:"細胞は、細胞膜に覆われた細胞質と核で構成されている。"},
+ exp:"細胞は、<b>細胞膜</b>に覆われた<b>細胞質</b>と<b>核</b>で構成されている。（P1）"},
 
-{q:"細胞膜のリン脂質について正しいのはどれか。",
+/* ---------- 細胞膜の構造（P2） ---------- */
+{q:"細胞膜のリン脂質について誤っているのはどれか。",kihon:true,gori:true,
  choices:[
-  ["頭部はリン酸基からなり親水性である",true,""],
-  ["頭部は疎水性である",false,"頭部はリン酸基からなり“親水性”。疎水性は尾部の性質。"],
-  ["尾部は親水性である",false,"尾部は2本の脂肪酸からなり“疎水性”で膜の内側に向く。"],
-  ["脂質二重層をつくらない",false,"リン脂質は二層に重なって脂質二重層を形成する。"]],
- exp:"リン脂質は頭部（リン酸基・親水性）と尾部（脂肪酸・疎水性）からなり、脂質二重層をつくる。"},
+  ["尾部は親水性である",true,""],
+  ["頭部はリン酸基からなる",false,"教科書どおりの記述なので、正しい。"],
+  ["尾部は2本の脂肪酸からなる",false,"教科書どおりの記述なので、正しい。"],
+  ["二重に重なって膜をつくる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"尾部は2本の脂肪酸からなり、膜の内側にあって<b>疎水性</b>。親水性なのはリン酸基からなる頭部。（P2）"},
+
+{q:"膜タンパク質の存在のしかたで正しいのはどれか。",
+ choices:[
+  ["脂質二重層の中に島状に埋め込まれている",true,""],
+  ["細胞膜の外側の表面にだけ付着している",false,"膜タンパク質は膜の中に埋め込まれ、物質の通り道になる。表面に付くだけでは、物質を膜の向こうへ通せない。"],
+  ["2層のリン脂質の間に、1枚の層となって挟まれている",false,"膜タンパク質は層をつくらず、島のように点在している。"],
+  ["細胞質基質に浮かんでいて、必要なときだけ膜に移動する",false,"膜タンパク質は細胞膜に埋め込まれた状態で物質の輸送を担う。"]],
+ exp:"膜タンパク質は細胞膜に<b>島状に埋め込まれた</b>タンパク質で、物質の輸送を担う。（P2）"},
+
+{q:"細胞膜のはたらきでないのはどれか。",kihon:true,
+ choices:[
+  ["ATPを産生する",true,""],
+  ["特定のイオンを選択的に通過させる",false,"チャネルのはたらき。"],
+  ["濃度勾配に逆らって物質を運ぶ",false,"膜タンパク質が仕事をする能動輸送のはたらき。"],
+  ["細胞外の物質を受容体に結合させて取り込む",false,"エンドサイトーシスのはたらき。"]],
+ exp:"ATPを産生するのは<b>ミトコンドリア</b>で、クエン酸回路や電子伝達系による。細胞膜は膜タンパク質や受容体を使って物質の出入りを担う。（P2〜3、P6）"},
 
 {q:"特定のイオンを選択的に通過させる膜タンパク質はどれか。",kihon:true,
  choices:[
   ["チャネル",true,""],
-  ["輸送体",false,"結合部位にぴったり合う物質やイオンしか通さない膜タンパク質。“選択的なイオン通過”とは役割が異なる。"],
+  ["輸送体",false,"結合部位にぴったり合う物質やイオンしか通さない膜タンパク質。"],
   ["ヒストン",false,"DNAが巻きつくタンパク質で、膜輸送には関与しない。"],
   ["リボソーム",false,"タンパク質を合成する構造で、膜のイオン通過とは無関係。"]],
- exp:"チャネルは特定のイオンを選択的に通過させる。"},
+ exp:"<b>チャネル</b>は特定のイオンを選択的に通過させる。輸送体は結合部位に合う物質やイオンしか通さない。（P2）"},
 
-{q:"物質が濃度の高いほうから低いほうへ自然に移動する現象はどれか。",kihon:true,
+/* ---------- 拡散・浸透・濾過（P3） ---------- */
+{q:"細胞膜を自由に通過できる物質はどれか。",kihon:true,
+ choices:[
+  ["酸素",true,""],
+  ["ナトリウムイオン",false,"イオンは自由に通過できず、チャネルや輸送体を必要とする。"],
+  ["タンパク質",false,"大きな物質は自由に通れず、エンドサイトーシスで取り込まれる。"],
+  ["グルコース",false,"水溶性の栄養素で、輸送体を介して運ばれる。"]],
+ exp:"細胞膜は半透膜の性質をもち、<b>酸素</b>・二酸化炭素や脂溶性のアルコールなどは自由に通過できる。（P3）"},
+
+{q:"物質が濃度の高いほうから低いほうへ自然に移動する現象はどれか。",kihon:true,dobon:true,
  choices:[
   ["拡散",true,""],
   ["浸透",false,"濃度の高い場所へ“水”が移動して水溶液を薄める現象。移動するのは物質ではなく水。"],
   ["濾過",false,"小さな穴に水溶液を通し、大きな物質を分ける現象。"],
-  ["能動輸送",false,"濃度勾配に“逆らって”物質を移動させ、エネルギーを必要とする輸送。"]],
- exp:"拡散は、物質が濃度勾配に従って高いほうから低いほうへ自然に移動する現象。"},
+  ["能動輸送",false,"濃度勾配に“逆らって”物質を移動させ、膜タンパク質の仕事を必要とする輸送。"]],
+ exp:"<b>拡散</b>は、物質が濃度勾配に従って高いほうから低いほうへ自然に移動する現象。（P3）"},
 
-{q:"濃度の高い場所へ水が移動して水溶液を薄める現象で、このときはたらく力はどれか。",
+{q:"代謝によって細胞内の酸素分圧が下がると、酸素が細胞外から細胞内へ移動する。このしくみはどれか。",
  choices:[
-  ["浸透圧",true,""],
-  ["拡散圧",false,"拡散は濃度勾配に従う物質の移動で、“浸透の力”を表す語ではない。"],
-  ["濾過圧",false,"濾過を起こす圧に関する語で、水が移動して薄める力（浸透）とは別。"],
-  ["静水圧",false,"液体が静止しているときに壁などへかかる圧で、浸透の力ではない。"]],
- exp:"濃度の高い場所へ水が移動する現象が浸透で、このときにはたらく力が浸透圧。"},
+  ["拡散",true,""],
+  ["浸透",false,"水が、濃度の高い側へ移動する現象。"],
+  ["濾過",false,"圧力によって、水溶液を小さな穴に通して分けること。"],
+  ["一次能動輸送",false,"ATPのエネルギーを使い、濃度勾配に逆らって運ぶ輸送。"]],
+ exp:"酸素は細胞膜を自由に通過できるので、多い細胞外から少ない細胞内へ<b>拡散</b>する。（P3）"},
 
-{q:"能動輸送について正しいのはどれか。",
+{q:"半透膜で仕切った容器の一方に濃い食塩水、もう一方に薄い食塩水を入れた。水はどちらへ移動するか。",kihon:true,dobon:true,
  choices:[
-  ["濃度勾配に逆らって物質を移動させる",true,""],
-  ["濃度勾配に従って移動する",false,"これは受動輸送の説明。能動輸送は勾配に逆らう。"],
-  ["駆動力を必要としない",false,"これも受動輸送の特徴。能動輸送は膜タンパク質が仕事（エネルギー）を必要とする。"],
-  ["半透膜による現象である",false,"半透膜の性質で説明されるのは拡散・浸透などで、能動輸送そのものの定義ではない。"]],
- exp:"能動輸送は濃度勾配に逆らって物質を移動させ、膜タンパク質が仕事（エネルギー）を必要とする。"},
+  ["濃い食塩水の側へ",true,""],
+  ["薄い食塩水の側へ",false,"この向きに水が動くと、濃さの差がさらに広がってしまう。"],
+  ["どちらへも移動しない",false,"濃度に差がある限り、水は移動する。"],
+  ["両側へ同じ量ずつ移動する",false,"差し引きでは水が動かないのと同じになり、濃度の差が縮まらない。"]],
+ exp:"浸透は、物質の濃度が高い場所へ水が移動し、水溶液を薄める現象。水は<b>濃い食塩水の側</b>へ移動する。（P3）"},
 
-{q:"一次能動輸送が利用するエネルギー源はどれか。",
+{q:"浸透圧の説明で正しいのはどれか。",
  choices:[
-  ["ATP",true,""],
-  ["電気化学的勾配",false,"これを利用するのは“二次”能動輸送。一次はATPを直接使う。"],
-  ["浸透圧",false,"水の移動に関わる力で、能動輸送のエネルギー源ではない。"],
-  ["熱エネルギー",false,"ATP分解では熱も生じるが、輸送を動かすエネルギー源はATPそのもの。"]],
- exp:"一次能動輸送はATP（アデノシン三リン酸）のエネルギーを利用する。二次能動輸送はイオンの電気化学的勾配を利用。"},
+  ["水を、濃度の高い側へ引き寄せる力",true,""],
+  ["物質を、濃度の高い側から低い側へ押し出す力",false,"濃度勾配に従って物質が自然に移るのは拡散で、力で押し出すものではない。"],
+  ["水溶液を小さな穴に押し通す力",false,"濾過を起こす圧の説明。"],
+  ["物質を濃度勾配に逆らって運ぶ力",false,"膜タンパク質が仕事をして運ぶ能動輸送の説明。"]],
+ exp:"物質の濃度が高い場所へ水が移動し水溶液を薄める現象が浸透で、このときはたらく力が<b>浸透圧</b>。（P3）"},
 
-{q:"エンドサイトーシスのうち、白血球などが死んだ細胞やバクテリアを取り込んで消化するはたらきはどれか。",
+{q:"腎臓の糸球体で、血球やタンパク質が血管内に残るしくみはどれか。",kihon:true,
  choices:[
-  ["食作用",true,""],
-  ["開口分泌",false,"エクソサイトーシスの別名で、分泌顆粒の内容を細胞“外”へ放出するはたらき。取り込みではない。"],
-  ["拡散",false,"濃度勾配に従う物質の移動で、大きな物質の取り込みではない。"],
-  ["濾過",false,"小さな穴で大小を分ける現象で、細胞内への取り込みではない。"]],
- exp:"食作用（ファゴサイトーシス）は、エンドサイトーシスのうち死んだ細胞やバクテリアを取り込んで消化するはたらき。"},
+  ["濾過",true,""],
+  ["拡散",false,"濃度の高いほうから低いほうへ物質が自然に移動すること。大きさで物質を分けるしくみではない。"],
+  ["浸透",false,"濃度の高い場所へ水が移動すること。圧力でこし出すしくみではない。"],
+  ["エンドサイトーシス",false,"細胞外の大きな物質を、小胞として細胞内へ取り込むこと。"]],
+ exp:"<b>濾過</b>は、小さな穴に水溶液を通して大きな物質を分けること。毛細血管の壁などで行われる。（P3。糸球体は第12章）"},
 
+/* ---------- 受動輸送・能動輸送（P3） ---------- */
 {q:"細胞膜を介した物質の移動のうち、駆動力を必要としないものはどれか。",
  choices:[
   ["受動輸送",true,""],
   ["一次能動輸送",false,"ATPのエネルギーを使って勾配に逆らう輸送で、駆動力が必要。"],
-  ["二次能動輸送",false,"イオンの電気化学的勾配を使って物質を運ぶ能動輸送で、受動的ではない。"],
-  ["エンドサイトーシス",false,"大きな物質を小胞として取り込むはたらきで、受動的な移動とは異なる。"]],
- exp:"膜タンパク質を通る物質が濃度勾配に従って移動するとき、駆動力を必要とせず受動的なので受動輸送と呼ぶ。"},
+  ["二次能動輸送",false,"イオンの電気化学的勾配を使って物質を運ぶ能動輸送。"],
+  ["エンドサイトーシス",false,"大きな物質を小胞として取り込むはたらきで、膜タンパク質を通る移動ではない。"]],
+ exp:"膜タンパク質を通る物質が濃度勾配に従って移動するときは、駆動力を必要とせず受動的なので<b>受動輸送</b>と呼ぶ。（P3）"},
 
-/* ---- やや難（ひっかけ・複合） ---- */
-{q:"細胞膜が半透膜の性質をもつことに関して、自由に通過できる物質はどれか。",
+{q:"能動輸送について正しいのはどれか。",kihon:true,dobon:true,
  choices:[
-  ["酸素",true,""],
-  ["ナトリウムイオン",false,"イオンは自由に通過できず、チャネルや輸送体を必要とする。"],
-  ["タンパク質",false,"大きな物質は自由に通れず、小胞（エンドサイトーシス）などで取り込まれる。"],
-  ["グルコース",false,"水溶性の栄養素で、輸送体を介して運ばれ、単純拡散では自由に通れない。"]],
- exp:"細胞膜は半透膜の性質をもち、酸素・二酸化炭素や脂溶性のアルコールなどは自由に通過できる。"},
+  ["濃度勾配に逆らって物質を移動させる",true,""],
+  ["濃度勾配に従って移動する",false,"これは受動輸送の説明。"],
+  ["駆動力を必要としない",false,"これも受動輸送の特徴。能動輸送は膜タンパク質が仕事をする必要がある。"],
+  ["半透膜による現象である",false,"半透膜の性質で説明されるのは拡散・浸透などで、膜タンパク質の仕事による輸送ではない。"]],
+ exp:"<b>能動輸送</b>は濃度勾配に逆らって物質を移動させ、膜タンパク質が仕事をする必要がある。（P3）"},
 
-{q:"次のうち、二次能動輸送を最もよく説明しているのはどれか。",
+{q:"一次能動輸送が利用するエネルギー源はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["ATP",true,""],
+  ["電気化学的勾配",false,"イオンの電気化学的勾配を利用するのは“二次”能動輸送。"],
+  ["浸透圧",false,"水の移動に関わる力で、能動輸送のエネルギー源ではない。"],
+  ["熱エネルギー",false,"体内で生じる熱は、物質の輸送を動かすエネルギー源にはならない。"]],
+ exp:"一次能動輸送は<b>ATP（アデノシン三リン酸）</b>のエネルギーを利用する。二次能動輸送はイオンの電気化学的勾配を利用する。（P3）"},
+
+{q:"二次能動輸送を最もよく説明しているのはどれか。",
  choices:[
   ["ATPを直接使わず、イオンの電気化学的勾配を利用して物質を運ぶ",true,""],
   ["ATPを直接分解してそのエネルギーで物質を運ぶ",false,"これは“一次”能動輸送の説明。"],
   ["濃度勾配に従って駆動力なしに移動する",false,"これは受動輸送の説明で、能動輸送ではない。"],
-  ["半透膜を通して水が移動する",false,"これは浸透の説明で、輸送体による能動輸送とは別。"]],
- exp:"二次能動輸送はATPを直接使わず、イオンの電気化学的勾配を利用して物質を輸送する能動輸送。"},
+  ["半透膜を通して水が移動する",false,"これは浸透の説明。"]],
+ exp:"<b>二次能動輸送</b>はATPを直接使わず、イオンの電気化学的勾配を利用して物質を輸送する能動輸送。（P3）"},
+
+{q:"細胞膜を介した物質の移動について誤っているのはどれか。",gori:true,
+ choices:[
+  ["浸透では、溶けている物質が濃度の高いほうから低いほうへ移動する",true,""],
+  ["脂溶性のアルコールは、細胞膜を自由に通過できる",false,"教科書どおりの記述なので、正しい。"],
+  ["拡散では、物質が濃度の高いほうから低いほうへ移動する",false,"教科書どおりの記述なので、正しい。"],
+  ["受動輸送は、駆動力を必要としない",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"これは拡散の説明。浸透で移動するのは<b>水</b>で、物質の濃度が高い場所へ移動して水溶液を薄める。（P3）"},
+
+/* ---------- ナトリウムポンプ・共輸送（補足） ---------- */
+{q:"ナトリウムポンプのはたらきで正しいのはどれか。",dobon:true,hosoku:true,
+ choices:[
+  ["Na⁺を細胞外へ、K⁺を細胞内へ運ぶ",true,""],
+  ["Na⁺を細胞内へ、K⁺を細胞外へ運ぶ",false,"運ぶ向きが逆。"],
+  ["Na⁺もK⁺も細胞外へ運ぶ",false,"2つのイオンは反対向きに運ばれる。"],
+  ["濃度勾配に従ってNa⁺を細胞内へ通す",false,"Na⁺チャネルを通る受動的な移動の説明。"]],
+ exp:"補足知識（資料外）。ATPを分解したエネルギーで、3個のNa⁺を<b>細胞外へ</b>、2個のK⁺を<b>細胞内へ</b>、濃度勾配に逆らって運ぶ。このはたらきで、細胞外液にNa⁺、細胞内液にK⁺が多い状態が保たれる（パートC）。"},
+
+{q:"ナトリウムポンプによる輸送はどれか。",hosoku:true,
+ choices:[
+  ["一次能動輸送",true,""],
+  ["二次能動輸送",false,"ATPを直接使わず、イオンの電気化学的勾配を利用する輸送。"],
+  ["受動輸送",false,"濃度勾配に従い、駆動力を必要としない移動。"],
+  ["エクソサイトーシス",false,"分泌顆粒の中の物質を細胞外へ放出するしくみ。"]],
+ exp:"補足知識（資料外）。ナトリウムポンプはATPのエネルギーを直接使って物質を運ぶので、<b>一次能動輸送</b>にあたる。"},
+
+{q:"小腸の上皮細胞が、Na⁺の濃度勾配を利用してグルコースを取り込む輸送はどれか。",hosoku:true,
+ choices:[
+  ["二次能動輸送",true,""],
+  ["一次能動輸送",false,"ATPのエネルギーを直接使って物質を運ぶ輸送。"],
+  ["拡散",false,"濃度の高いほうから低いほうへの自然な移動。グルコースは細胞膜を自由に通れない。"],
+  ["エンドサイトーシス",false,"大きな細胞外物質を、小胞として取り込むしくみ。"]],
+ exp:"補足知識（資料外）。Na⁺が濃度勾配に従って細胞内へ入ろうとする力（電気化学的勾配）を利用して、グルコースを一緒に運び入れる。ATPを直接使わないので<b>二次能動輸送</b>。このNa⁺の濃度勾配は、ナトリウムポンプがつくっている。"},
+
+/* ---------- エクソサイトーシス・エンドサイトーシス（P3〜4） ---------- */
+{q:"細胞内で合成されたタンパク質などを、分泌顆粒から細胞外へ放出するしくみはどれか。",kihon:true,
+ choices:[
+  ["エクソサイトーシス",true,""],
+  ["エンドサイトーシス",false,"細胞外の大きな物質を、細胞内へ取り込むしくみ。"],
+  ["食作用",false,"エンドサイトーシスのうち、死んだ細胞やバクテリアを取り込んで消化するはたらき。"],
+  ["拡散",false,"濃度勾配に従う自然な移動で、分泌顆粒は使わない。"]],
+ exp:"<b>エクソサイトーシス</b>（開口分泌）では、分泌顆粒に蓄えられたタンパク質などが細胞外へ放出される。（P3）"},
+
+{q:"エクソサイトーシスについて誤っているのはどれか。",gori:true,
+ choices:[
+  ["分泌顆粒は、細胞膜を通り抜けて細胞外へ出る",true,""],
+  ["分泌顆粒は、細胞質内を移動して細胞膜へ近づく",false,"教科書どおりの記述なので、正しい。"],
+  ["分泌顆粒膜と細胞膜が融合する",false,"教科書どおりの記述なので、正しい。"],
+  ["分泌顆粒の内腔が、細胞外とつながる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"分泌顆粒は膜を通り抜けるのではない。分泌顆粒膜と細胞膜が<b>融合</b>して内腔が細胞外とつながり、中の物質が放出される。（P3）"},
+
+{q:"エンドサイトーシスで、細胞外の物質が細胞膜上の受容体に結合したあとに起こることはどれか。",
+ choices:[
+  ["その部分の細胞膜が細胞質内にはまり込み、小胞として取り込まれる",true,""],
+  ["物質が受容体ごと細胞膜を通り抜ける",false,"大きな物質は細胞膜をそのまま通れないので、膜で包んで取り込む。"],
+  ["分泌顆粒膜と融合して、物質が細胞外へ放出される",false,"エクソサイトーシスの説明。"],
+  ["チャネルが開き、物質が濃度勾配に従って流れ込む",false,"チャネルを通るイオンの受動的な移動の説明。"]],
+ exp:"タンパク質などの大きな細胞外物質が受容体に結合すると、その部分が細胞質内にはまり込み、<b>被覆小胞</b>として取り込まれる。（P3）"},
+
+{q:"エンドサイトーシスのうち、白血球などが死んだ細胞やバクテリアを取り込んで消化するはたらきはどれか。",
+ choices:[
+  ["食作用",true,""],
+  ["開口分泌",false,"エクソサイトーシスの別名で、分泌顆粒の内容を細胞“外”へ放出するはたらき。"],
+  ["拡散",false,"濃度勾配に従う物質の移動で、大きな物質の取り込みではない。"],
+  ["濾過",false,"小さな穴で大小を分ける現象で、細胞内への取り込みではない。"]],
+ exp:"<b>食作用</b>（ファゴサイトーシス）は、エンドサイトーシスのうち死んだ細胞やバクテリアを取り込んで消化するはたらき。（P3〜4）"},
 ];
 
 let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
-let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+let qmiss=0, totalMiss=0, firstTryCount=0;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
 function home(){
@@ -185,15 +299,15 @@ function home(){
   document.getElementById("bar").style.width="0";
   document.getElementById("bd").innerHTML=`
     <div class="center">
-      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール12問から5問が出題されます。</p>
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
       <div class="modes">
         <button class="mode" onclick="start('normal')">
           <div class="nm">通常モード</div>
-          <div class="ds">5問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題。</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。まちがえても正解するまで選び直せます。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題。</div>
         </button>
         <button class="mode dob" onclick="start('dobon')">
           <div class="nm">💣 ドボンチャレンジ</div>
-          <div class="ds">🎯基本の問題は <b>💣ドボン！</b> に変身。1問でも外したら、解説を見てそこで終了。どこまで正解を続けられるか挑戦！</div>
+          <div class="ds">絶対に落とせない問題が <b>💣ドボン！</b> に変身。外したら選び直しなしで即終了。どこまで連続正解できるか挑戦！</div>
         </button>
       </div>
     </div>`;
@@ -207,13 +321,18 @@ function render(){
   answered=false; qmiss=0;
   const item=drawn[idx];
   const opts=shuffle(item.choices);
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
   document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
   document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
   const L=["ア","イ","ウ","エ","オ"];
-  let markHtml = item.kihon ? (isDob?`<span class="mark dobon">💣 ドボン！</span>`:`<span class="mark kihon">🎯 基本</span>`) : "";
-  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${item.q}</div><div class="opts">`;
+  let markHtml="";
+  if(isDob) markHtml+=`<span class="mark dobon">💣 ドボン！</span>`;
+  else if(item.kihon) markHtml+=`<span class="mark kihon">🎯 基本</span>`;
+  if(item.gori) markHtml+=`<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml+=`<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qt=item.gori?item.q.replace("誤っている",'<span class="ng">誤っている</span>'):item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qt}</div><div class="opts">`;
   opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
   h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
   document.getElementById("bd").innerHTML=h;
@@ -221,16 +340,15 @@ function render(){
 }
 function pick(el,ok){
   if(answered)return;
-  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  if(el.classList.contains("dis"))return;
   const item=drawn[idx];
-  const isDob=(mode==="dobon" && item.kihon);
+  const isDob=(mode==="dobon" && item.dobon);
   const selText=el.querySelector("span:last-child").textContent;
   const selChoice=item.choices.find(c=>c[0]===selText);
   const exp=document.getElementById("exp");
   const nx=document.getElementById("nx");
 
   if(ok){
-    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
     answered=true;
     el.classList.add("correct");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
@@ -244,14 +362,11 @@ function pick(el,ok){
     nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
     return;
   }
-
-  // 不正解
   if(mode==="dobon"){
-    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
     answered=true;
     el.classList.add("wrong");
     document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
-    if(item.kihon){ dead=true; }
+    if(item.dobon){ dead=true; }
     exp.className="exp show ng";
     document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
     document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
@@ -259,14 +374,11 @@ function pick(el,ok){
     nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
     return;
   }
-
-  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
   qmiss++; totalMiss++;
   el.classList.add("wrong","dis");
   exp.className="exp show ng";
   document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
   document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
-  // 「次へ」はまだ出さない（正解するまで進めない）
 }
 function next(){
   if(dead){result();return;}
@@ -282,8 +394,8 @@ function result(){
       document.getElementById("bd").innerHTML=`<div class="center score dead">
         <span class="tag dob">💣 ドボンチャレンジ</span>
         <div>ドボンを踏んでしまいました</div>
-        <div class="big">${streak} 問連続正解</div>
-        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+        <div class="big">${score} 問正解</div>
+        <div class="msg">${idx+1}問目でドボン。<br>解説を復習して再挑戦しましょう。</div>
       </div>`;
     }else{
       document.getElementById("bd").innerHTML=`<div class="center score">
