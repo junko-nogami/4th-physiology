@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第9章 パートB 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#4a5560;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#d5dbe0;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#d5dbe0;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#4a5560;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#4a5560;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(74,85,96,.13);color:#38414a}
+.mark.dobon{background:rgba(200,60,40,.14);color:#c33c28}
+.mark.gori{background:rgba(168,50,46,.13);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#4a5560;background:#eef0f2}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #4a5560;background:#4a5560;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#38414a}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#4a5560;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#4a5560;background:#eef0f2}
+.mode .nm{font-size:16px;font-weight:600;color:#4a5560;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c33c28}
+.mode.dob:hover{border-color:#c33c28;background:#fdefec}
+.score .big{font-size:40px;font-weight:700;color:#4a5560;margin:6px 0}
+.score.dead .big{color:#c33c28}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#38414a;background:rgba(74,85,96,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#4a5560;background:rgba(74,85,96,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c33c28;background:rgba(200,60,40,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第9章 骨の生理｜パートB 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第9章 骨の生理 ｜ B-2 骨形成と骨吸収・B-3 カルシウム代謝・B-4 骨年齢</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第9章 P136〜138 ベース）=====
+   範囲：B-2 骨形成と骨吸収・B-3 骨のカルシウム代謝の調節・B-4 骨年齢（スライド ch9_partB）
+   2026年11月：12問追加。骨年齢8問を nenrei（上限2）、分泌器官2問を bunpi（上限1）にした
+   過去問（13章 骨＋宅ドリル）での出題回数：パラソルモンの作用7／ビタミンDの活性化臓器5／
+   ビタミンDと腸管Ca吸収4／紫外線3／Ca調節ホルモン3／Caの99％3／Caのはたらき3／テタニー3／
+   骨芽細胞・破骨細胞3／骨の病気3／Ca低下時の反応2／エストロゲン2 */
+const PICK=5;
+const GMAX={pth:2,horm:2,vd:2,shikkan:1,ca:1,canodo:1,nenrei:2,bunpi:1};
+const POOL=[
+
+/* ---------- B-2 骨形成と骨吸収（P136） ---------- */
+
+{q:"骨芽細胞と破骨細胞が存在するのはどこか。",kihon:true,
+ choices:[
+  ["骨膜",true,""],
+  ["関節軟骨",false,"関節面を覆う軟骨。"],
+  ["成長軟骨",false,"成長期に増殖・骨化して、骨を長軸方向に伸ばす軟骨。"],
+  ["関節液",false,"関節腔を満たす液体で、関節の動きをなめらかにする。"]],
+ exp:"長管骨は関節面が関節軟骨で、それ以外が骨膜で覆われている。<b>骨膜</b>には骨芽細胞と破骨細胞が存在する。（教科書 P136）"},
+
+{q:"手根骨や足根骨が成長するしくみはどれか。",
+ choices:[
+  ["骨化が起こる部位が徐々に大きくなる",true,""],
+  ["成長軟骨が増殖して骨化する",false,"長管骨が長軸方向に伸びるしくみ。"],
+  ["破骨細胞が骨を吸収する",false,"成長時に骨の形を修正するしくみ（モデリング）。"],
+  ["関節軟骨が骨に置き換わる",false,"関節軟骨は成長後も関節面に残る。"]],
+ exp:"手根骨や足根骨などの短骨は、長管骨と異なり、<b>骨化が起こる部位が徐々に大きくなる</b>ことで成長する。（教科書 P136）"},
+
+{q:"骨吸収を行う細胞はどれか。",kihon:true,
+ choices:[
+  ["破骨細胞",true,""],
+  ["骨芽細胞",false,"骨膜に存在し、骨を形成する細胞。"],
+  ["軟骨細胞",false,"軟骨をつくる細胞。成長軟骨で増殖する。"],
+  ["巨核球",false,"骨髄にある大きな細胞で、血小板をつくる（第8章）。"]],
+ exp:"<b>破骨細胞</b>は骨を吸収するはたらきをもつ。骨芽細胞は骨を形成する。（教科書 P136）"},
+
+{q:"骨吸収でカルシウムが骨から溶け出すと、血中カルシウム濃度はどうなるか。",kihon:true,
+ choices:[
+  ["上昇する",true,""],
+  ["低下する",false,"骨形成でカルシウムが骨へ沈着したときの変化。"],
+  ["変化しない",false,"骨とのカルシウムの出入りは、血中カルシウム濃度を変化させる。"],
+  ["いったん低下したのち上昇する",false,"そのような二段階の変化は起こらない。"]],
+ exp:"血中カルシウム濃度は、骨吸収でカルシウムが骨から溶け出ると<b>上昇</b>し、骨形成でカルシウムが骨へ沈着すると低下する。（教科書 P136）"},
+
+{q:"骨芽細胞について正しいのはどれか。",hosoku:true,
+ choices:[
+  ["コラーゲンなどの骨基質を分泌する",true,""],
+  ["骨を吸収する",false,"破骨細胞のはたらき。"],
+  ["多数の核をもつ巨大な細胞である",false,"破骨細胞の特徴。"],
+  ["骨髄で血小板をつくる",false,"巨核球のはたらき（第8章）。"]],
+ exp:"補足知識（資料外）。骨芽細胞は<b>コラーゲンなどの骨基質を分泌</b>して骨をつくり、やがて自らが骨基質に埋もれて骨細胞になる。"},
+
+{q:"骨のリモデリングとはどれか。",kihon:true,
+ choices:[
+  ["骨芽細胞による骨形成と、破骨細胞による骨吸収のサイクル",true,""],
+  ["成長時に、骨の形を修正すること",false,"モデリング。成長時に破骨細胞が行う。"],
+  ["成長軟骨が増殖して骨化すること",false,"長管骨が長軸方向に伸びるしくみ。"],
+  ["成長が終わり、成長軟骨が消失すること",false,"骨端線閉鎖。"]],
+ exp:"骨芽細胞による骨形成と、破骨細胞による骨吸収のサイクルを骨の<b>リモデリング</b>（再構築）と呼ぶ。これがバランスよく行われることで骨量や骨質が維持される。（教科書 P136）"},
+
+{g:"shikkan",q:"リモデリングのバランスが崩れて骨量が減少すると発症するのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["骨粗鬆症",true,""],
+  ["大理石病",false,"骨吸収ができず、骨密度が異常に高くなる病気。"],
+  ["変形性関節症",false,"関節軟骨がすり減り、関節が変形する病気。"],
+  ["痛風",false,"尿酸の結晶が関節にたまって炎症を起こす病気。"]],
+ exp:"何らかの原因でリモデリングのバランスが崩れ、骨量が減少すると<b>骨粗鬆症</b>が発症する。（教科書 P136）"},
+
+{q:"骨粗鬆症が起こりやすい状況として誤っているのはどれか。",gori:true,
+ choices:[
+  ["スポーツ選手として長年トレーニングを続けている",true,""],
+  ["高齢である",false,"教科書どおりの記述なので、正しい。"],
+  ["長期間、臥床している",false,"教科書どおりの記述なので、正しい。"],
+  ["無重力空間で長期間過ごす",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"<b>スポーツ選手では骨が太くなる</b>。このことから、リモデリングは<b>骨への力学的ストレス</b>で促進されると考えられている。骨粗鬆症は、高齢者・長期臥床の患者・宇宙飛行士で起こりやすい。（教科書 P136）"},
+
+{q:"骨のリモデリングを促進すると考えられているのはどれか。",kihon:true,
+ choices:[
+  ["骨への力学的ストレス",true,""],
+  ["長期間の臥床",false,"骨粗鬆症が起こりやすくなる状況の1つ。"],
+  ["副腎皮質ホルモン（コルチゾル）の増加",false,"骨芽細胞の活動を抑制するホルモン。"],
+  ["紫外線を浴びない生活",false,"皮膚でのビタミンDの合成が減る。"]],
+ exp:"スポーツ選手では骨が太くなることから、骨のリモデリングは<b>骨への力学的ストレス</b>で促進されると考えられている。（教科書 P136）"},
+
+{g:"shikkan",q:"骨密度が異常に高くなるのはどれか。",hosoku:true,
+ choices:[
+  ["大理石病",true,""],
+  ["骨粗鬆症",false,"骨量が減少し、骨がもろくなる病気。"],
+  ["骨軟化症",false,"成人で骨の石灰化が障害される病気。"],
+  ["くる病",false,"小児で骨の石灰化が障害される病気。"]],
+ exp:"補足知識（資料外）。<b>大理石病</b>は破骨細胞のはたらきが欠けるため骨吸収ができず、骨密度が異常に高くなる。"},
+
+{g:"shikkan",q:"成人で、カルシウムやビタミンDの不足によって骨の石灰化が障害されるのはどれか。",hosoku:true,
+ choices:[
+  ["骨軟化症",true,""],
+  ["くる病",false,"小児で同様の障害が起こる病気。"],
+  ["大理石病",false,"骨吸収ができず、骨密度が異常に高くなる病気。"],
+  ["骨粗鬆症",false,"骨量が減少する病気で、石灰化そのものの障害ではない。"]],
+ exp:"補足知識（資料外）。カルシウムやビタミンDの不足で石灰化が障害される病気は、成人では<b>骨軟化症</b>、小児ではくる病と呼ばれる。"},
+
+/* ---------- B-3 骨のカルシウム代謝の調節（P136〜138） ---------- */
+
+{g:"ca",q:"カルシウムが関わるはたらきはどれか。",kihon:true,
+ choices:[
+  ["血液凝固",true,""],
+  ["浸透圧の維持",false,"主にNa⁺とCl⁻が担うはたらき（第8章）。"],
+  ["酸素の運搬",false,"赤血球のヘモグロビンが担うはたらき（第8章）。"],
+  ["体液のpHの緩衝",false,"主にHCO₃⁻が担うはたらき（第8章）。"]],
+ exp:"カルシウムは骨形成のほか、細胞膜での活動電位の発生や<b>血液凝固</b>に関わる（Ca²⁺は血液凝固第Ⅳ因子＝第8章）。（教科書 P136）"},
+
+{g:"ca",q:"カルシウムが関わるはたらきはどれか。",
+ choices:[
+  ["細胞膜での活動電位の発生",true,""],
+  ["浸透圧の維持",false,"主にNa⁺とCl⁻が担うはたらき（第8章）。"],
+  ["酸素の運搬",false,"赤血球のヘモグロビンが担うはたらき（第8章）。"],
+  ["体液のpHの緩衝",false,"主にHCO₃⁻が担うはたらき（第8章）。"]],
+ exp:"カルシウムは<b>細胞膜での活動電位の発生</b>に関わる。筋収縮の興奮収縮連関にも関わる（第2章）。（教科書 P136）"},
+
+{g:"canodo",q:"血漿カルシウム濃度（mg/dL）はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["9〜10",true,""],
+  ["0.9〜1.0",false,"生理食塩水のNaCl濃度（0.9％）とまぎらわしい数字で、低すぎる値。"],
+  ["20〜25",false,"高すぎる値。この濃度では著しい高カルシウム血症になる。"],
+  ["90〜100",false,"空腹時血糖値（mg/dL）に近い値。"]],
+ exp:"血漿カルシウム濃度は<b>9〜10 mg/dL</b>。このうち遊離Ca²⁺は約5 mg/dL。（教科書 P137、図9・5）"},
+
+{g:"canodo",q:"血漿中の遊離Ca²⁺の濃度はおよそどれか。",
+ choices:[
+  ["約5 mg/dL",true,""],
+  ["約1 mg/dL",false,"低すぎる値。"],
+  ["約9 mg/dL",false,"結合型を含めた血漿カルシウム全体に近い値。"],
+  ["約20 mg/dL",false,"血漿カルシウム全体よりも高い値で、ありえない。"]],
+ exp:"血漿カルシウム濃度9〜10 mg/dLのうち、遊離Ca²⁺は<b>約5 mg/dL</b>。（教科書 P137、図9・5）"},
+
+{q:"体内のカルシウムの約99％が存在するのはどこか。",dobon:true,hosoku:true,
+ choices:[
+  ["骨や歯",true,""],
+  ["血液",false,"血液中にあるのは、体内カルシウムのごく一部。"],
+  ["骨格筋",false,"筋小胞体にカルシウムを蓄えるが、量は体内全体のごく一部。"],
+  ["肝臓",false,"カルシウムの主な貯蔵場所ではない。"]],
+ exp:"補足知識（資料外）。体内のカルシウムの約99％は<b>骨や歯</b>に存在し、残りが血液・筋・神経などに存在する。"},
+
+{q:"血中カルシウム濃度の調節に主に関わるホルモンはどれか。",kihon:true,
+ choices:[
+  ["副甲状腺ホルモン（パラソルモン）",true,""],
+  ["バソプレシン",false,"下垂体後葉から分泌され、腎臓での水の再吸収を促す（抗利尿ホルモン）。"],
+  ["グルカゴン",false,"膵臓のA細胞から分泌され、血糖値を上げる。"],
+  ["オキシトシン",false,"下垂体後葉から分泌され、子宮の収縮や射乳を起こす。"]],
+ exp:"骨代謝は、<b>副甲状腺ホルモン（パラソルモン）</b>・カルシトニン・ビタミンDなどのはたらきで調節される。この3つを「カルシウム調節ホルモン」ともいう。（教科書 P136）"},
+
+{g:"pth",q:"パラソルモンの作用で正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["骨吸収を促進する",true,""],
+  ["骨吸収を抑制する",false,"カルシトニンやエストロゲンの作用。"],
+  ["腎臓でのカルシウムの再吸収を抑制する",false,"パラソルモンは、腎臓でのカルシウムの再吸収を促進する。"],
+  ["血中カルシウム濃度を低下させる",false,"カルシトニンが骨吸収を抑えることで起こる方向の変化。"]],
+ exp:"パラソルモン（副甲状腺ホルモン。上皮小体ホルモンともいう）は、破骨細胞の<b>骨吸収を促進</b>し、血中カルシウム濃度を上昇させる。（教科書 P137〜138、表9・1）"},
+
+{g:"pth",q:"副甲状腺ホルモンの作用で正しいのはどれか。",kihon:true,
+ choices:[
+  ["腎臓でのビタミンDの活性化を促進する",true,""],
+  ["ビタミンDを不活化する",false,"ビタミンDを不活化するはたらきはない。"],
+  ["腎臓からのカルシウムの排泄を増加させる",false,"カルシトニンの腎臓での作用。"],
+  ["腸管からのカルシウムの吸収を抑制する",false,"副腎皮質ホルモンの作用。"]],
+ exp:"副甲状腺ホルモン（パラソルモン。上皮小体ホルモンともいう）は、<b>腎臓でのビタミンDの活性化</b>と、腎臓でのカルシウムの再吸収を促進する。（教科書 P137〜138、表9・1）"},
+
+{g:"pth",q:"パラソルモンが血中リン濃度に及ぼす作用はどれか。",
+ choices:[
+  ["低下させる",true,""],
+  ["上昇させる",false,"リンの再吸収に対する作用と、向きが合わない。"],
+  ["変化させない",false,"パラソルモンは、腎臓でのリンの扱いを変化させる。"],
+  ["上昇させたのち低下させる",false,"そのような二段階の変化は起こらない。"]],
+ exp:"パラソルモン（副甲状腺ホルモン。上皮小体ホルモンともいう）は腎臓でリンの再吸収を抑制し、血中リン濃度を<b>低下</b>させる。（教科書 P137〜138、表9・1）"},
+
+{g:"bunpi",q:"パラソルモンを分泌する器官はどれか。",kihon:true,
+ choices:[
+  ["副甲状腺",true,""],
+  ["甲状腺",false,"カルシトニンやサイロキシン（甲状腺ホルモン）を分泌する。"],
+  ["下垂体前葉",false,"甲状腺刺激ホルモンや副腎皮質刺激ホルモンなどを分泌する。"],
+  ["副腎皮質",false,"コルチゾルやアルドステロンを分泌する。"]],
+ exp:"パラソルモンは<b>副甲状腺</b>（上皮小体）から分泌されるので、副甲状腺ホルモン・上皮小体ホルモンとも呼ばれる。（教科書 P137、表9・1）"},
+
+{g:"pth",q:"副甲状腺ホルモンを間欠的に投与したときの、骨への作用はどれか。",
+ choices:[
+  ["骨形成を促進する",true,""],
+  ["骨端線を閉鎖させる",false,"骨端線閉鎖は成長軟骨の消失で起こり、間欠投与とは関係がない。"],
+  ["骨芽細胞の活動を抑制する",false,"副腎皮質ホルモンの作用。"],
+  ["骨への作用はみられない",false,"間欠投与でも骨に作用する。"]],
+ exp:"副甲状腺ホルモン（パラソルモン。上皮小体ホルモンともいう）は骨吸収を促進するが、<b>間欠的に投与すると骨形成を促進</b>する。（教科書 P138）"},
+
+{g:"pth",q:"血中カルシウム濃度が低下したときに起こる反応はどれか。",kihon:true,
+ choices:[
+  ["副甲状腺ホルモン（パラソルモン）の分泌が増加する",true,""],
+  ["カルシトニンの分泌が増加する",false,"カルシトニンは血中カルシウム濃度を下げる方向にはたらくので、低下時には分泌が減る。"],
+  ["活性型ビタミンDの産生が低下する",false,"活性型ビタミンDは腸管からのカルシウム吸収を促すので、低下時には増える方向に反応する。"],
+  ["腎臓でのカルシウムの再吸収が低下する",false,"体内にカルシウムを保つ方向に反応するので、再吸収は増える。"]],
+ exp:"血中カルシウム濃度が低下すると、濃度を上げる方向にはたらく<b>パラソルモン（副甲状腺ホルモン）の分泌が増える</b>。その結果、骨吸収・腎臓でのカルシウム再吸収・ビタミンDの活性化が促進される。（教科書 P137〜138、図9・5）"},
+
+{q:"血中カルシウム濃度の低下で起こるのはどれか。",hosoku:true,
+ choices:[
+  ["テタニー",true,""],
+  ["浮腫",false,"組織間液が過剰にたまった状態。"],
+  ["黄疸",false,"ビリルビンが増えて、皮膚や白目が黄色くなる状態。"],
+  ["貧血",false,"血液中のヘモグロビン濃度が低下した状態。"]],
+ exp:"補足知識（資料外）。血中Ca²⁺が低下すると神経・筋の興奮性が高まり、手足の筋が痙攣する<b>テタニー</b>が起こる。手首と親指が屈曲する「トルーソー徴候」が知られる。"},
+
+{q:"カルシトニンの作用で正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["破骨細胞による骨吸収を抑制する",true,""],
+  ["骨吸収を促進する",false,"パラソルモンや甲状腺ホルモンの作用。"],
+  ["血中カルシウム濃度を上昇させる",false,"パラソルモンの作用。"],
+  ["腎臓でのカルシウムの再吸収を促進する",false,"パラソルモンの作用。"]],
+ exp:"カルシトニンは甲状腺から分泌され、破骨細胞に作用して<b>骨吸収を抑制</b>する。カルシウムやリンの骨への沈着も促進する。（教科書 P137〜138、表9・1）"},
+
+{g:"bunpi",q:"カルシトニンを分泌する器官はどれか。",kihon:true,
+ choices:[
+  ["甲状腺",true,""],
+  ["副甲状腺",false,"パラソルモン（副甲状腺ホルモン）を分泌する。"],
+  ["下垂体前葉",false,"成長ホルモンなどを分泌する。"],
+  ["卵巣",false,"エストロゲンなどを分泌する。"]],
+ exp:"カルシトニンは<b>甲状腺</b>から分泌され、破骨細胞に作用して骨吸収を抑制する。（教科書 P137、表9・1）"},
+
+{q:"カルシトニンが血中カルシウム濃度に及ぼす作用はどれか。",kihon:true,
+ choices:[
+  ["低下させる",true,""],
+  ["上昇させる",false,"パラソルモン（副甲状腺ホルモン）の作用の向き。"],
+  ["変化させない",false,"骨とのカルシウムの出入りを変えるので、濃度は変化する。"],
+  ["上昇させたのち低下させる",false,"そのような二段階の変化は起こらない。"]],
+ exp:"カルシトニンは骨吸収を抑え、カルシウムやリンの骨への沈着を促進する。骨形成でカルシウムが骨へ沈着すると血中カルシウム濃度は下がるので、カルシトニンは濃度を<b>低下</b>させる方向にはたらく。（教科書 P136〜137、表9・1）"},
+
+{q:"カルシトニンの腎臓での作用はどれか。",
+ choices:[
+  ["尿中へのカルシウムやリンの排泄を増加させる",true,""],
+  ["ビタミンDを活性化する",false,"パラソルモンが腎臓で促進する作用。"],
+  ["ナトリウムの再吸収を促進する",false,"アルドステロンの作用。"],
+  ["水の再吸収を促進する",false,"バソプレシン（抗利尿ホルモン）の作用。"]],
+ exp:"カルシトニンは、腎臓では<b>尿中へのカルシウムやリンの排泄を増加</b>させる。また腸管でのカルシウム吸収を間接的に促進する。（教科書 P138）"},
+
+{g:"vd",q:"ビタミンDが活性型ビタミンDになるために代謝される臓器はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["肝臓と腎臓",true,""],
+  ["肺と心臓",false,"ビタミンDの代謝には関わらない臓器。"],
+  ["脾臓と膵臓",false,"ビタミンDの代謝には関わらない臓器。"],
+  ["胃と小腸",false,"消化・吸収を担う臓器で、ビタミンDを活性化する場所ではない。"]],
+ exp:"ビタミンDは<b>肝臓と腎臓</b>で代謝され、活性型ビタミンDとなる。（教科書 P138）<br><span style='font-size:12px;color:#888'>※教科書は「腎臓と肝臓」の順で記載しているが、代謝される順は肝臓→腎臓。</span>"},
+
+{g:"vd",q:"活性型ビタミンDの作用はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["腸管でのカルシウムの吸収を促進する",true,""],
+  ["骨吸収を抑制する",false,"カルシトニンやエストロゲンの作用。"],
+  ["腎臓からのカルシウムの排泄を増加させる",false,"カルシトニンの作用。"],
+  ["血中カルシウム濃度を低下させる",false,"活性型ビタミンDは、血中カルシウム濃度を上げる方向にはたらく。"]],
+ exp:"活性型ビタミンDは<b>腸管でのカルシウムの吸収を促進</b>する。（教科書 P137〜138、表9・1）"},
+
+{g:"vd",q:"ビタミンDが皮膚で合成されるのに必要なのはどれか。",kihon:true,
+ choices:[
+  ["紫外線",true,""],
+  ["赤外線",false,"熱として感じられる光。"],
+  ["可視光線",false,"目に見える光。"],
+  ["X線",false,"骨の撮影などに使う放射線。"]],
+ exp:"ビタミンDは食物から摂取されるほか、<b>紫外線</b>を浴びることで皮膚で合成される。（教科書 P138）"},
+
+{g:"vd",q:"ビタミンDを体内に取り入れる経路として正しいのはどれか。",
+ choices:[
+  ["食物からの摂取と、皮膚での合成",true,""],
+  ["皮膚での合成のみ",false,"食物から摂取する経路が抜けている。"],
+  ["腸内細菌による合成",false,"腸内細菌が合成するのは、ビタミンKなど。"],
+  ["骨髄での合成",false,"骨髄は血球をつくる造血の場。"]],
+ exp:"ビタミンDは<b>食物から摂取</b>されるほか、紫外線を浴びることで<b>皮膚で合成</b>される。（教科書 P138）"},
+
+{g:"vd",q:"ビタミンDがホルモンとして扱われる理由はどれか。",
+ choices:[
+  ["特定の標的器官に作用を及ぼすから",true,""],
+  ["体内で合成できないから",false,"ビタミンDは体内でも合成される。"],
+  ["水に溶けやすいから",false,"ビタミンDは脂溶性ビタミン（第13章）。"],
+  ["尿中にそのまま排泄されるから",false,"ホルモンとして扱われる理由とは関係がない。"]],
+ exp:"ビタミンDはビタミンの一種だが、<b>特定の標的器官に作用を及ぼす</b>ことからホルモンとして扱われる。（教科書 P138）"},
+
+{g:"horm",q:"骨吸収を促進するホルモンはどれか。",kihon:true,
+ choices:[
+  ["サイロキシン（甲状腺ホルモン）",true,""],
+  ["プロラクチン",false,"下垂体前葉から分泌され、乳汁の産生を促す。"],
+  ["バソプレシン",false,"下垂体後葉から分泌され、腎臓での水の再吸収を促す。"],
+  ["メラトニン",false,"松果体から分泌され、睡眠や概日リズムに関わる。"]],
+ exp:"<b>甲状腺ホルモン</b>は骨吸収を促進する。（教科書 P137、表9・1）"},
+
+{g:"horm",q:"骨吸収を抑制するホルモンはどれか。",kihon:true,
+ choices:[
+  ["エストロゲン",true,""],
+  ["インスリン",false,"膵臓のB細胞から分泌され、血糖値を下げる。"],
+  ["オキシトシン",false,"下垂体後葉から分泌され、子宮の収縮や射乳を起こす。"],
+  ["グルカゴン",false,"膵臓のA細胞から分泌され、血糖値を上げる。"]],
+ exp:"卵巣から分泌される<b>エストロゲン</b>は、骨吸収を抑制し、骨形成を維持する。（教科書 P137、表9・1）"},
+
+{g:"horm",q:"エストロゲンの骨への作用で正しいのはどれか。",
+ choices:[
+  ["成長軟骨を抑制して、身長の増加を抑える",true,""],
+  ["成長軟骨を刺激して、身長を伸ばし続ける",false,"成長軟骨への作用の向きが合わない。"],
+  ["骨形成を抑制する",false,"エストロゲンは骨形成を維持する。"],
+  ["腸管でのカルシウムの吸収を抑制する",false,"副腎皮質ホルモンの作用。"]],
+ exp:"エストロゲンは<b>成長軟骨を抑制して身長の増加を抑制</b>する。（教科書 P137、表9・1）"},
+
+{g:"horm",q:"骨吸収を抑制し、骨形成を維持するホルモンを分泌する臓器はどれか。",
+ choices:[
+  ["卵巣",true,""],
+  ["副甲状腺",false,"骨吸収を促進するパラソルモンを分泌する。"],
+  ["副腎皮質",false,"骨芽細胞の活動を抑制するコルチゾルを分泌する。"],
+  ["下垂体後葉",false,"バソプレシンやオキシトシンを分泌する。"]],
+ exp:"<b>卵巣</b>から分泌されるエストロゲンは、骨吸収を抑制し、骨形成を維持する。（教科書 P137、表9・1）"},
+
+{g:"horm",q:"閉経後の女性で骨粗鬆症が起こりやすい理由はどれか。",hosoku:true,
+ choices:[
+  ["エストロゲンの分泌が減少するため",true,""],
+  ["カルシトニンの分泌が増加するため",false,"カルシトニンが増えれば、骨吸収はむしろ抑えられる。"],
+  ["成長ホルモンの分泌が増加するため",false,"閉経で成長ホルモンの分泌が増えることはない。"],
+  ["副甲状腺ホルモン（パラソルモン）の分泌が減少するため",false,"パラソルモンが減れば、骨吸収はむしろ減る。"]],
+ exp:"補足知識（資料外）。閉経で<b>エストロゲンが減少</b>すると、骨吸収を抑えるはたらきが弱まり骨量が減少する（エストロゲンの作用は教科書 P137、表9・1）。"},
+
+{g:"horm",q:"成長ホルモンの骨への作用はどれか。",kihon:true,
+ choices:[
+  ["インスリン様成長因子-1（IGF-1）を介して、成長期の成長軟骨に作用する",true,""],
+  ["破骨細胞による骨吸収を抑制する",false,"カルシトニンの作用。"],
+  ["腸管でのカルシウムの吸収を抑制する",false,"副腎皮質ホルモンの作用。"],
+  ["腎臓でのカルシウムの再吸収を促進する",false,"パラソルモンの作用。"]],
+ exp:"成長ホルモンは<b>インスリン様成長因子-1（IGF-1）を介して成長期の成長軟骨に作用</b>し、骨の成長を司る。（教科書 P137、表9・1）<br><span style='font-size:12px;color:#888'>※教科書表9・1の「IFG-1」は誤植。正しくはIGF-1。</span>"},
+
+{g:"horm",q:"成長ホルモンを分泌する器官はどれか。",
+ choices:[
+  ["下垂体前葉",true,""],
+  ["下垂体後葉",false,"バソプレシンやオキシトシンを分泌する。"],
+  ["甲状腺",false,"サイロキシンやカルシトニンを分泌する。"],
+  ["卵巣",false,"エストロゲンやプロゲステロンを分泌する。"]],
+ exp:"成長ホルモンは<b>脳下垂体前葉</b>から分泌される。（教科書 P137、表9・1）"},
+
+{g:"horm",q:"コルチゾル（副腎皮質ホルモン）の骨代謝への作用はどれか。",
+ choices:[
+  ["骨芽細胞の活動を抑制する",true,""],
+  ["骨吸収を抑制する",false,"カルシトニンやエストロゲンの作用。"],
+  ["カルシウムの骨への沈着を促進する",false,"カルシトニンの作用。"],
+  ["腸管でのカルシウムの吸収を促進する",false,"活性型ビタミンDの作用。コルチゾルはこれを抑制する。"]],
+ exp:"副腎皮質ホルモンは<b>骨芽細胞の活動を抑制</b>し、腸管でのカルシウムの吸収も抑制する。（教科書 P137、表9・1）"},
+
+{g:"horm",q:"骨代謝に関わるホルモンについて誤っているのはどれか。",gori:true,
+ choices:[
+  ["コルチゾル（副腎皮質ホルモン）は腸管でのカルシウムの吸収を促進する",true,""],
+  ["エストロゲンは骨形成を維持する",false,"教科書どおりの記述なので、正しい。"],
+  ["カルシトニンはカルシウムやリンの骨への沈着を促進する",false,"教科書どおりの記述なので、正しい。"],
+  ["副甲状腺ホルモン（パラソルモン）は腎臓でのカルシウムの再吸収を促進する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"副腎皮質ホルモンは、腸管でのカルシウムの吸収を<b>抑制</b>する。（教科書 P137、表9・1）"},
+
+/* ---------- B-4 骨年齢（P138） ---------- */
+
+{g:"nenrei",q:"骨年齢の評価に用いるのはどれか。",kihon:true,
+ choices:[
+  ["単純X線像",true,""],
+  ["血液検査",false,"血液の成分を調べる検査で、骨の成長の程度はわからない。"],
+  ["心電図",false,"心臓の電気的活動を記録する検査。"],
+  ["筋電図",false,"筋の電気的活動を記録する検査。"]],
+ exp:"<b>単純X線像</b>を観ることで骨年齢を評価し、その時点からどのくらい骨が成長するのかを予測できる。（教科書 P138、図9・6）"},
+
+{g:"nenrei",q:"X線像で骨年齢を評価できる理由はどれか。",
+ choices:[
+  ["X線は、軟骨組織を透過するが骨化部分は透過しない",true,""],
+  ["X線は、骨化部分を透過するが軟骨組織は透過しない",false,"透過する組織と透過しない組織が逆になっている。"],
+  ["X線は、骨髄組織だけを写し出す",false,"X線像は骨髄組織だけを写すものではない。"],
+  ["X線は、骨膜だけを写し出す",false,"X線像は骨膜だけを写すものではない。"]],
+ exp:"X線は<b>軟骨組織を透過するが骨化部分は透過しない</b>。そのため骨化の進み具合がX線像でわかる。（教科書 P138、図9・6）"},
+
+{g:"nenrei",q:"骨年齢について誤っているのはどれか。",gori:true,
+ choices:[
+  ["女児は男児に比較して1〜2年ほど成長が遅い",true,""],
+  ["矯正治療での適切な矯正量の決定に有用である",false,"教科書どおりの記述なので、正しい。"],
+  ["成長障害の診断に有用である",false,"教科書どおりの記述なので、正しい。"],
+  ["その時点からどのくらい骨が成長するかを予測できる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"成長が1〜2年ほど遅いのは<b>男児</b>のほう。骨年齢を評価するときに注意が必要。（教科書 P138）"},
+
+{g:"nenrei",q:"骨年齢の評価が有用なのはどれか。",kihon:true,
+ choices:[
+  ["骨変形や骨短縮の矯正治療での、適切な矯正量の決定",true,""],
+  ["貧血の診断",false,"血液中のヘモグロビン濃度などで評価する。"],
+  ["不整脈の診断",false,"心電図で評価する。"],
+  ["糖尿病の診断",false,"血糖値などで評価する。"]],
+ exp:"骨年齢は、<b>骨変形や骨短縮の矯正治療での適切な矯正量の決定</b>や、<b>骨疾患・成長障害の診断・治療効果の判定</b>で有用となる。（教科書 P138）"},
+
+{g:"nenrei",q:"骨年齢の評価が有用なのはどれか。",
+ choices:[
+  ["成長障害の診断",true,""],
+  ["不整脈の診断",false,"心電図で評価する。"],
+  ["糖尿病の診断",false,"血糖値などで評価する。"],
+  ["呼吸機能の評価",false,"スパイロメーターで肺活量などを測って評価する。"]],
+ exp:"骨年齢は、<b>骨変形や骨短縮の矯正治療での適切な矯正量の決定</b>や、<b>骨疾患・成長障害の診断・治療効果の判定</b>で有用となる。（教科書 P138）"},
+
+{g:"nenrei",q:"骨年齢の評価が有用なのはどれか。",
+ choices:[
+  ["骨疾患の治療効果の判定",true,""],
+  ["貧血の診断",false,"血液中のヘモグロビン濃度などで評価する。"],
+  ["糖尿病の診断",false,"血糖値などで評価する。"],
+  ["呼吸機能の評価",false,"スパイロメーターで肺活量などを測って評価する。"]],
+ exp:"骨年齢は、<b>骨変形や骨短縮の矯正治療での適切な矯正量の決定</b>や、<b>骨疾患・成長障害の診断・治療効果の判定</b>で有用となる。（教科書 P138）"},
+
+{g:"nenrei",q:"単純X線像で骨年齢を評価すると、予測できるのはどれか。",kihon:true,
+ choices:[
+  ["その時点からどのくらい骨が成長するか",true,""],
+  ["骨折が治るまでの期間",false,"骨年齢は骨化の進み具合を表すもので、骨折の治癒期間を表すものではない。"],
+  ["将来の血中カルシウム濃度",false,"血液検査で測るもの。"],
+  ["筋力の発達の程度",false,"筋力測定で評価するもの。"]],
+ exp:"単純X線像で骨年齢を評価し、<b>その時点からどのくらい骨が成長するのか</b>を予測できる。（教科書 P138）"},
+
+{g:"nenrei",q:"骨年齢を評価するときに注意すべき男女差はどれか。",kihon:true,
+ choices:[
+  ["男児は女児に比較して、1〜2年ほど成長が遅い",true,""],
+  ["女児は男児に比較して、1〜2年ほど成長が遅い",false,"男女が逆になっている。"],
+  ["男女で成長の進み方に差はない",false,"男女で差があるため、評価時には注意が必要。"],
+  ["男児は女児に比較して、5〜6年ほど成長が遅い",false,"差が大きすぎる。"]],
+ exp:"<b>男児は女児に比較して1〜2年ほど成長が遅い</b>ため、骨年齢の評価時には注意が必要。（教科書 P138）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0;
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=draw();
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent="正解！";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  document.getElementById("htt").textContent="結果";
+  if(mode==="dobon"){
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
