@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第12章 パートB 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#4a3a6b;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#c4b5e8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#c4b5e8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#4a3a6b;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#4a3a6b;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(74,58,107,.12);color:#4a3a6b}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(168,50,46,.12);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#4a3a6b;background:#f6f3fb}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #4a3a6b;background:#4a3a6b;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#3d305a}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#4a3a6b;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#4a3a6b;background:#f6f3fb}
+.mode .nm{font-size:16px;font-weight:600;color:#4a3a6b;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#4a3a6b;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#3d305a;background:rgba(74,58,107,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#4a3a6b;background:rgba(74,58,107,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第12章 尿の生成と排泄｜パートB 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第12章 尿の生成と排泄 ｜ B 尿の生成（教科書 P173〜177）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第12章 P173〜P177 ベース）=====
+   対応スライド：ch12_partB.html（B 尿の生成）
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon/dobon/gori/hosoku の意味は他章と同じ。g … 出題グループ（GMAXで1回の出題数を制限）
+
+   内訳：全44問／🎯基本18問／💣ドボン7問／⚠誤りを選ぶ3問／📘補足5問
+   2026年11月追加：模試（尿の生成と排泄）との照合で「GFRが増加する＝糸球体毛細血管の血圧の上昇」を追加。
+   GFRの値は P173（男性約120・女性約110 mL/分）と P178（体表面積補正で男性125 mL/分）の両方を解説に記載
+   グループ（すべて上限1）：同じテーマの問題や、先に出た問題の解説・ダミー説明が次の答えになる組を同じグループにした。
+     ryo（尿量）／gfr（GFRの増減）／atsu（濾過圧）／henle（ヘンレループ）／nyochu（尿中に出るもの）
+     glu（グルコース）／horm（バソプレシン・アルドステロン）／bunpi（H⁺・アンモニアの分泌）
+     chisso（窒素代謝産物：尿素・尿酸・アンモニア・クレアチン系）／nyo（尿の性質）
+
+   過去問（尿の生成と排泄 (2)尿の生成）でこの範囲に関わるもの：
+   近位尿細管での再吸収6回／有効濾過圧・GFR5回／再吸収されにくい物質（クレアチニン）4回／分泌（H⁺）3回
+   正常な尿の成分3回／尿量・乏尿・無尿3回／濾過されないもの2回 */
+const PICK=5;
+const GMAX={ryo:1,gfr:1,atsu:1,henle:1,nyochu:1,glu:1,horm:1,bunpi:1,chisso:1,nyo:1};
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
+const POOL=[
+/* ---------- 尿量（P173） ---------- */
+
+{g:"ryo",q:"健常成人が1日に排泄する尿量はどれか。",kihon:true,
+ choices:[
+  ["約1.5 L",true,""],
+  ["約180 L",false,"1日に糸球体で濾過される原尿の量。"],
+  ["約150 mL",false,"乏尿の基準（400 mL以下）にあてはまる少ない量。"],
+  ["約15 L",false,"実際の尿量の10倍にあたる量。"]],
+ exp:"通常、1日で<b>約1.5 L</b>の尿が排泄される。（教科書 P173）"},
+
+{q:"1日の尿量には下限（400〜500 mL）がある。その理由はどれか。",
+ choices:[
+  ["1日の代謝産物を排泄するのに必要な量だから",true,""],
+  ["膀胱が尿意を感じる量だから",false,"尿意は膀胱に150〜300 mLたまったときに感じる（パートD）。"],
+  ["糸球体で濾過される量の下限だから",false,"糸球体で濾過される原尿は尿量よりはるかに多く、尿量の下限とは関係しない。"],
+  ["尿細管が再吸収できる水の上限を超えた分だから",false,"尿量は水の再吸収量を調節して増減する。再吸収の上限で決まるわけではない。"]],
+ exp:"尿量は飲んだ水分量で増減するが、1日400〜500 mLが下限。これは<b>1日の代謝産物を排泄する</b>のに欠かせない量である。（教科書 P173）"},
+
+{g:"ryo",q:"成人の乏尿の基準はどれか。",hosoku:true,
+ choices:[
+  ["1日400 mL以下",true,""],
+  ["1日100 mL以下",false,"無尿の基準。"],
+  ["1日1,500 mL以下",false,"健常成人のふつうの1日尿量くらい。"],
+  ["1日3,000 mL以上",false,"多尿の基準。"]],
+ exp:"補足知識（資料外）。1日の尿量が<b>400 mL以下</b>を乏尿、100 mL以下を無尿、3,000 mL以上を多尿という。"},
+
+{g:"ryo",q:"成人の無尿の基準はどれか。",hosoku:true,
+ choices:[
+  ["1日100 mL以下",true,""],
+  ["1日400 mL以下",false,"乏尿の基準。"],
+  ["1日0 mL（まったく出ない）のときだけ",false,"尿がごく少量出ていても無尿という。"],
+  ["1日3,000 mL以上",false,"多尿の基準。"]],
+ exp:"補足知識（資料外）。1日の尿量が<b>100 mL以下</b>を無尿、400 mL以下を乏尿という。"},
+
+/* ---------- 糸球体での濾過（P173〜174） ---------- */
+
+{q:"糸球体で通常濾過されないのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["タンパク質",true,""],
+  ["グルコース",false,"糸球体で濾過され、尿細管で再吸収される糖。"],
+  ["Na⁺",false,"糸球体で濾過される電解質。"],
+  ["水",false,"原尿の大部分を占め、濾過される。"]],
+ exp:"水・Na⁺・K⁺・グルコースなどは濾過されてボーマン嚢へ出る。分子量の大きい<b>タンパク質</b>や血球は通常濾過されない。（教科書 P173・図12・4）"},
+
+{q:"糸球体での濾過について誤っているのはどれか。",gori:true,
+ choices:[
+  ["血球は濾過されて原尿に含まれる",true,""],
+  ["水・Na⁺・グルコースなどの血漿成分の一部がボーマン嚢へ出る",false,"教科書どおりの記述なので、正しい。"],
+  ["濾過膜の透過性が非常に高いため、有効濾過圧が小さくても効果的に濾過される",false,"教科書どおりの記述なので、正しい。"],
+  ["7 nm以上の粒子は濾過膜を通過しにくい",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"<b>血球</b>は大きく、通常は糸球体で濾過されない。（教科書 P173〜174）"},
+
+{q:"1分間に糸球体で濾過される原尿の量を何というか。",kihon:true,
+ choices:[
+  ["糸球体濾過量（GFR）",true,""],
+  ["腎血流量",false,"1分間に腎臓を流れる血液の量（パートC）。"],
+  ["有効濾過圧",false,"血液が濾過される際の原動力となる圧。"],
+  ["濾過率",false,"腎臓へ流入する血漿のうち、糸球体で濾過されるものの割合（パートC）。"]],
+ exp:"1分間に濾過される原尿の量を<b>糸球体濾過量（GFR）</b>という。成人男性で約120 mL/分、成人女性で約110 mL/分。（教科書 P173）なお、体表面積1.73 m²当たりで補正した成人男性の正常値は125 mL/分とされる（教科書 P178、パートC）。"},
+
+{g:"gfr",q:"糸球体濾過量（GFR）が増加するのはどれか。",
+ choices:[
+  ["血漿タンパク質濃度の低下",true,""],
+  ["ショックによる血圧の著しい低下",false,"濾過を進める力が弱まる変化。"],
+  ["腎結石によるボーマン嚢内圧の上昇",false,"濾過に逆らう力が強まる変化。"],
+  ["糸球体毛細血管の血流量の減少",false,"濾過される血液そのものが減る変化。"]],
+ exp:"<b>血漿タンパク質濃度が下がる</b>と、濾過に逆らう血漿膠質浸透圧が小さくなり、GFRは増加する。（教科書 P174）"},
+
+{g:"gfr",q:"糸球体濾過量（GFR）が増加するのはどれか。",
+ choices:[
+  ["糸球体毛細血管の血圧の上昇",true,""],
+  ["ボーマン嚢内圧の上昇",false,"濾過に逆らう力が強まる変化。"],
+  ["血漿膠質浸透圧の上昇",false,"水を血管内に引き戻す力が強まる変化。"],
+  ["膀胱内圧の上昇",false,"膀胱にたまった尿の圧で、糸球体での濾過には直接かかわらない。"]],
+ exp:"濾過を進める<b>糸球体毛細血管の血圧が上がる</b>と、有効濾過圧が大きくなり、GFRは増加する。（教科書 P174）"},
+
+{g:"gfr",q:"糸球体濾過量（GFR）が減少するのはどれか。",
+ choices:[
+  ["腎結石によるボーマン嚢内圧の上昇",true,""],
+  ["血漿タンパク質濃度の低下",false,"濾過に逆らう血漿膠質浸透圧が小さくなる変化。"],
+  ["糸球体毛細血管の血圧の上昇",false,"濾過を進める力が強まる変化。"],
+  ["濾過膜の透過性の上昇",false,"物質が膜を通りやすくなる変化。"]],
+ exp:"<b>ボーマン嚢内圧が上がる</b>と濾過に逆らう力が強まり、GFRは減少する。ショックで血圧が著しく下がったときも減少する。（教科書 P174）"},
+
+{g:"atsu",q:"糸球体での濾過の原動力となるのはどれか。",kihon:true,
+ choices:[
+  ["糸球体毛細血管の血圧",true,""],
+  ["血漿膠質浸透圧",false,"血漿タンパク質がつくる浸透圧。水を血管内に引き戻す向きにはたらく。"],
+  ["ボーマン嚢内圧",false,"ボーマン嚢の中の圧。濾過される液を押し返す向きにはたらく。"],
+  ["尿細管内の浸透圧",false,"尿細管での水の再吸収に関わる圧。"]],
+ exp:"<b>糸球体毛細血管の血圧</b>が濾過を進め、血漿膠質浸透圧とボーマン嚢内圧がこれに逆らう。（教科書 P174・図12・4）"},
+
+{g:"atsu",q:"有効濾過圧を求める式で正しいのはどれか（血圧＝糸球体毛細血管の血圧）。",kihon:true,dobon:true,
+ choices:[
+  ["血圧 −（血漿膠質浸透圧 ＋ ボーマン嚢内圧）",true,""],
+  ["血圧 ＋ 血漿膠質浸透圧 ＋ ボーマン嚢内圧",false,"濾過に逆らう2つの圧まで足している。"],
+  ["血圧 ＋ 血漿膠質浸透圧 − ボーマン嚢内圧",false,"血漿膠質浸透圧を、濾過を進める側に入れている。"],
+  ["血漿膠質浸透圧 −（血圧 ＋ ボーマン嚢内圧）",false,"濾過を進める圧を、逆らう側に入れている。"]],
+ exp:"濾過を進める血圧から、逆らう血漿膠質浸透圧とボーマン嚢内圧の和を引いた圧が<b>有効濾過圧</b>。（教科書 P174）"},
+
+{g:"atsu",q:"糸球体毛細血管の血圧60 mmHg、血漿膠質浸透圧25 mmHg、ボーマン嚢内圧15 mmHgのとき、有効濾過圧はどれか。",
+ choices:[
+  ["20 mmHg",true,""],
+  ["100 mmHg",false,"3つの圧をすべて足した値。"],
+  ["50 mmHg",false,"血圧にボーマン嚢内圧を足し、血漿膠質浸透圧を引いた値。"],
+  ["35 mmHg",false,"血圧から血漿膠質浸透圧だけを引いた値。"]],
+ exp:"60 −（25＋15）＝<b>20 mmHg</b>。教科書の例（55 −（25＋15）＝15 mmHg）と同じ考え方。（教科書 P174）"},
+
+{q:"有効濾過圧を決める血漿成分はどれか。",kihon:true,
+ choices:[
+  ["アルブミン",true,""],
+  ["グルコース",false,"糸球体で濾過される糖。膠質浸透圧はつくらない。"],
+  ["尿素",false,"タンパク質の代謝でできる窒素代謝産物。"],
+  ["Na⁺",false,"血漿中に多い電解質で、糸球体で濾過される。"]],
+ exp:"濾過に逆らう血漿膠質浸透圧は、血漿タンパク質（とくに<b>アルブミン</b>）がつくる。（教科書 P174・第8章）"},
+
+{q:"タンパク質は分子が大きいため糸球体濾過膜を通りにくい。大きさのほかに、タンパク質の通過を妨げているのはどれか。",
+ choices:[
+  ["ボーマン嚢の内側をおおう足細胞が、強い陰電荷をもつこと",true,""],
+  ["濾過膜の透過性が非常に低いこと",false,"濾過膜の透過性は実際には非常に高い。"],
+  ["有効濾過圧が非常に大きいこと",false,"有効濾過圧は比較的小さい（15 mmHg程度）。"],
+  ["ボーマン嚢内圧がタンパク質だけを押し返すこと",false,"ボーマン嚢内圧は濾過される液全体を押し返す圧で、物質を選ぶはたらきはない。"]],
+ exp:"タンパク質は2段階で止められる。①7 nm以上の粒子は濾過膜を通りにくい（大きさ）。②<b>強い陰電荷をもつ足細胞</b>が通過を妨げる（電荷）。腎炎やネフローゼでこのしくみが壊れるとタンパク尿がみられる。（教科書 P174・図12・4）"},
+
+{q:"腎炎やネフローゼで糸球体濾過膜に病変が生じたときにみられるのはどれか。",
+ choices:[
+  ["タンパク尿",true,""],
+  ["糖尿",false,"尿中にグルコースが排泄される状態。"],
+  ["多尿",false,"1日の尿量が異常に多い状態。"],
+  ["アルカリ性の尿",false,"野菜を多く食べたときなどにみられる尿。"]],
+ exp:"濾過膜に病変が生じるとタンパク質が濾過されてボーマン嚢へ入り、<b>タンパク尿</b>がみられる。（教科書 P174）"},
+
+/* ---------- 尿細管での再吸収（P175〜176） ---------- */
+
+{q:"原尿中の水が尿細管で再吸収される割合はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["約99％",true,""],
+  ["約80％",false,"近位尿細管だけで再吸収される割合。"],
+  ["約50％",false,"実際よりかなり少ない。"],
+  ["約1％",false,"尿として排泄される割合。"]],
+ exp:"水は<b>99％</b>が再吸収される。このため尿は、再吸収されない物質とともに約100倍に濃縮される。（教科書 P175）"},
+
+{q:"近位尿細管で水が再吸収されるしくみとして正しいのはどれか。",
+ choices:[
+  ["Na⁺が再吸収されて尿細管内の浸透圧が低くなり、水が透過しやすくなる",true,""],
+  ["バソプレシンのはたらきで水の透過性が高まる",false,"尿細管の後半部で水の再吸収を調節するホルモンのしくみ。"],
+  ["水だけが能動輸送で汲み出される",false,"水の移動は能動輸送ではない（図12・5では受動輸送）。"],
+  ["尿細管内のグルコース濃度が上がって水を引き込む",false,"尿細管内の浸透圧が上がると、水はむしろ尿細管内に引き留められる。"]],
+ exp:"水の再吸収は<b>Na⁺の再吸収と並行</b>して起こる。Na⁺が再吸収されて尿細管内の浸透圧が下がると、水が受動的に再吸収される。近位尿細管は水の透過性が高く、細胞間の結合が緩やかなため、濾過された水の約80％を再吸収する。（教科書 P175・図12・5）"},
+
+{g:"henle",q:"ヘンレループ下行脚について正しいのはどれか。",kihon:true,
+ choices:[
+  ["水は透過するが、Na⁺は透過しない",true,""],
+  ["Na⁺は透過するが、水は透過しない",false,"ヘンレループ上行脚の性質。"],
+  ["水もNa⁺も透過しない",false,"下行脚・上行脚のどちらの性質でもない。"],
+  ["太い部分でCl⁻が再吸収される",false,"ヘンレループ上行脚の太い部分の性質。"]],
+ exp:"下行脚では<b>水は浸透圧で透過するが、Na⁺は透過しない</b>。（教科書 P175・図12・5）"},
+
+{g:"henle",q:"ヘンレループ上行脚について正しいのはどれか。",
+ choices:[
+  ["Na⁺などのイオンは透過するが、水は透過しない",true,""],
+  ["水は透過するが、Na⁺は透過しない",false,"ヘンレループ下行脚の性質。"],
+  ["水もNa⁺も透過しない",false,"下行脚・上行脚のどちらの性質でもない。"],
+  ["糸球体で濾過された原尿を受け取る",false,"ボーマン嚢のはたらき。"]],
+ exp:"上行脚では<b>水は透過しないが、Na⁺をはじめとするイオンの透過性はよい</b>。太い部分ではCl⁻も再吸収される。（教科書 P175）"},
+
+{g:"henle",q:"尿細管での再吸収について誤っているのはどれか。",gori:true,
+ choices:[
+  ["ヘンレループ上行脚では、水がよく再吸収される",true,""],
+  ["再吸収された物質は、尿細管の周りを囲む毛細血管へ取り込まれる",false,"教科書どおりの記述なので、正しい。"],
+  ["アミノ酸は、からだに必要な成分として再吸収される",false,"教科書どおりの記述なので、正しい。"],
+  ["近位尿細管で吸収されなかった水の大部分は、遠位尿細管と集合管で再吸収される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"<b>上行脚は水を透過しない</b>（Na⁺などのイオンは透過する）。（教科書 P175）"},
+
+/* ---------- ホルモンによる調節（g:horm 上限1） ---------- */
+
+{g:"horm",q:"バソプレシン（抗利尿ホルモン）が作用して水の再吸収を促す部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["集合管",true,""],
+  ["遠位尿細管",false,"アルドステロンのはたらきでNa⁺が再吸収される部位。"],
+  ["近位尿細管",false,"濾過された物質の大部分を再吸収する部位。"],
+  ["ヘンレループ下行脚",false,"髄質の深いところで尿の濃縮に関与する部位。"]],
+ exp:"バソプレシンは<b>集合管</b>に作用して水の再吸収を促す。その結果、尿は濃縮され、尿量は減る（くわしくはパートE）。（教科書 P176・図12・5）"},
+
+{g:"horm",q:"アルドステロンが遠位尿細管と集合管で再吸収を促すのはどれか。",kihon:true,
+ choices:[
+  ["Na⁺",true,""],
+  ["水",false,"集合管でバソプレシンのはたらきにより再吸収が促される。"],
+  ["K⁺",false,"アルドステロンのはたらきで、再吸収とは逆向きに運ばれる量が増える。"],
+  ["グルコース",false,"ホルモンの調節を受けず、からだに必要な成分としてすべて再吸収される糖。"]],
+ exp:"アルドステロンは遠位尿細管と集合管で<b>Na⁺</b>の再吸収を促す。水はバソプレシンが集合管で再吸収を促す。2つのホルモンは再吸収させるものが違う。（教科書 P175〜176・図12・5）"},
+
+{g:"horm",q:"アルドステロンのはたらきでNa⁺の再吸収が促される部位はどれか。",
+ choices:[
+  ["遠位尿細管",true,""],
+  ["近位尿細管",false,"濾過された物質の大部分を再吸収する部位。"],
+  ["ヘンレループ下行脚",false,"髄質の深いところで尿の濃縮に関与する部位。"],
+  ["ボーマン嚢",false,"糸球体で濾過された原尿を受け取る袋。"]],
+ exp:"アルドステロンは<b>遠位尿細管</b>でNa⁺の再吸収を促す。集合管でも同じはたらきをする。（教科書 P175〜176・図12・5）"},
+
+/* ---------- 尿中に出るもの（g:nyochu 上限1） ---------- */
+
+{g:"nyochu",q:"尿細管でほとんど再吸収されないのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["クレアチニン",true,""],
+  ["グルコース",false,"からだに必要な成分として再吸収される糖。"],
+  ["アミノ酸",false,"からだに必要な成分として再吸収される、タンパク質の材料。"],
+  ["Na⁺",false,"水とともに大部分が再吸収される電解質。"]],
+ exp:"水・Na⁺・グルコース・アミノ酸など、からだに必要な成分は再吸収される。代謝産物の<b>クレアチニン</b>や硫酸塩は再吸収されにくい。（教科書 P175）"},
+
+{g:"nyochu",q:"糸球体で濾過されたのち、尿細管でほとんど再吸収されず、尿中に多く出てくるのはどれか。",kihon:true,
+ choices:[
+  ["クレアチニン",true,""],
+  ["グルコース",false,"からだに必要な成分として再吸収される糖。"],
+  ["アミノ酸",false,"からだに必要な成分として再吸収される、タンパク質の材料。"],
+  ["水",false,"濾過された量の大部分が再吸収される。"]],
+ exp:"代謝産物の<b>クレアチニン</b>は再吸収されにくいため、濾過された分がほぼそのまま尿に出る。（教科書 P175）"},
+
+{g:"nyochu",q:"健常者の尿中にほとんど認められないのはどれか。",kihon:true,
+ choices:[
+  ["グルコース",true,""],
+  ["尿素",false,"尿中の有機物の中心となる窒素代謝産物。"],
+  ["塩化ナトリウム",false,"尿中の無機物の主成分で、1日約10 g含まれる。"],
+  ["クレアチニン",false,"再吸収されにくい代謝産物。"]],
+ exp:"<b>グルコース</b>は濾過されるが、からだに必要な成分としてすべて再吸収されるため、健常者の尿中にはほとんど認められない。（教科書 P176）"},
+
+/* ---------- グルコースの再吸収（g:glu 上限1） ---------- */
+
+{g:"glu",q:"グルコースの再吸収について正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["近位尿細管の輸送体で能動的に再吸収される",true,""],
+  ["ホルモンのはたらきで再吸収量が調節される",false,"ホルモンで再吸収量が調節されるのは、尿細管の後半部での水やNa⁺。"],
+  ["遠位尿細管で拡散によって再吸収される",false,"拡散は濃度の高いほうから低いほうへ物質が移動すること。グルコースの再吸収はこのしくみではない。"],
+  ["糸球体で濾過されないため、再吸収の必要がない",false,"グルコースは糸球体で濾過される物質。"]],
+ exp:"濾過されたグルコースは、すべて<b>近位尿細管</b>のグルコース輸送体で<b>能動的</b>に再吸収される。（教科書 P176）"},
+
+{g:"glu",q:"尿細管がグルコースを再吸収できる量の上限で、濾過量がこれを超えると尿に糖が出るのはどれか。",
+ choices:[
+  ["尿細管最大輸送量",true,""],
+  ["有効濾過圧",false,"血液が濾過される際の原動力となる圧。"],
+  ["腎血漿流量",false,"1分間に腎臓へ流れ込む血漿の量（パートC）。"],
+  ["濾過率",false,"腎臓へ流入する血漿のうち、糸球体で濾過されるものの割合（パートC）。"]],
+ exp:"グルコース輸送体が運べる量には上限（<b>尿細管最大輸送量</b>）がある。濾過量がこれを超えると、再吸収しきれないグルコースが尿に出る。これを糖尿という。（教科書 P176・図12・6）"},
+
+{g:"glu",q:"グルコースについて誤っているのはどれか。",gori:true,
+ choices:[
+  ["健康な人では、食後でも尿に糖が出ることはない",true,""],
+  ["濾過されるが、健常者の尿中にはほとんど認められない",false,"教科書どおりの記述なので、正しい。"],
+  ["近位尿細管で能動的に再吸収される",false,"教科書どおりの記述なので、正しい。"],
+  ["血糖値が170 mg/dL以上になると一部が尿中へ排泄される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"食後に血糖値が上がって尿に糖が出ることがあり、これを<b>食事性糖尿</b>という。健康な人でも認められる。（教科書 P176）"},
+
+/* ---------- 尿細管での分泌（P176） ---------- */
+
+{g:"bunpi",q:"尿細管で分泌されるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["水素イオン（H⁺）",true,""],
+  ["グルコース",false,"濾過されたのち再吸収される糖。"],
+  ["アミノ酸",false,"濾過されたのち再吸収される、タンパク質の材料。"],
+  ["Na⁺",false,"濾過されたのち大部分が再吸収される電解質。"]],
+ exp:"<b>H⁺</b>やアンモニアは近位尿細管・遠位尿細管・集合管で分泌され、体液の酸塩基平衡にあずかる。（教科書 P176）"},
+
+{g:"bunpi",q:"尿細管でのH⁺やアンモニアの分泌が関わるはたらきはどれか。",
+ choices:[
+  ["体液の酸塩基平衡",true,""],
+  ["血糖値の維持",false,"血液中のグルコース濃度を保つこと。主にホルモンが担う。"],
+  ["体液の浸透圧の維持",false,"体液中の物質の濃さを保つこと。水の再吸収の調節などが担う。"],
+  ["体温の維持",false,"視床下部を中枢として、熱の産生と放散を調節すること。"]],
+ exp:"H⁺やアンモニアの分泌は、<b>体液の酸塩基平衡</b>（pHを一定に保つこと）にあずかる。（教科書 P176）"},
+
+{g:"bunpi",q:"H⁺やアンモニアが分泌される部位の組合せはどれか。",
+ choices:[
+  ["近位尿細管・遠位尿細管・集合管",true,""],
+  ["近位尿細管のみ",false,"尿細管の最初の部分だけ。"],
+  ["遠位尿細管・集合管のみ",false,"尿細管の後半部だけ。"],
+  ["糸球体・ボーマン嚢",false,"血液が濾過され、原尿を受け取る部位。"]],
+ exp:"H⁺やアンモニアは、<b>近位尿細管・遠位尿細管・集合管</b>のすべてで分泌される。（教科書 P176）"},
+
+{q:"カリウムイオン（K⁺）の分泌について正しいのはどれか。",kihon:true,
+ choices:[
+  ["遠位尿細管や集合管で、ナトリウム-カリウムポンプによって行われる",true,""],
+  ["糸球体で、濾過によって行われる",false,"濾過は分泌とは別の過程で、血漿成分がボーマン嚢へ出ること。"],
+  ["バソプレシンのはたらきで分泌量が増加する",false,"バソプレシンは水の再吸収を促し、尿量を減らすホルモン。"],
+  ["ヘンレループ下行脚で行われる",false,"髄質の深いところで尿の濃縮に関与する部位。"]],
+ exp:"K⁺は<b>遠位尿細管や集合管</b>で<b>ナトリウム-カリウムポンプ</b>により分泌される。ポンプがNa⁺を尿細管の外へ汲み出すと同時にK⁺を尿細管内へ汲み入れ、体内のK⁺濃度が維持される。（教科書 P176）"},
+
+{g:"horm",q:"K⁺の分泌量を増加させるホルモンはどれか。",
+ choices:[
+  ["アルドステロン",true,""],
+  ["バソプレシン",false,"水の再吸収を促し、尿量を減らすホルモン。"],
+  ["心房性ナトリウム利尿ペプチド",false,"Na⁺の再吸収を抑制し、尿量を増やすホルモン。"],
+  ["副甲状腺ホルモン（パラソルモン）",false,"副甲状腺から分泌され、血中Ca²⁺濃度を上げるホルモン。"]],
+ exp:"K⁺の分泌量は<b>アルドステロン</b>のはたらきで増加する。（教科書 P176）"},
+
+{q:"体内に本来存在しない外来物質（パラアミノ馬尿酸やペニシリンなど）が分泌される部位はどれか。",
+ choices:[
+  ["近位尿細管",true,""],
+  ["糸球体",false,"血液が濾過される部位。"],
+  ["集合管",false,"合流して乳頭管となり、腎杯へ開く管。"],
+  ["ヘンレループ上行脚",false,"髄質から皮質へ戻り、遠位尿細管へ移行する部分。"]],
+ exp:"検査や治療で静脈内に投与された薬品（パラアミノ馬尿酸・フェノール赤・ペニシリンなど）は、<b>近位尿細管</b>で分泌され排泄される。（教科書 P176）"},
+
+/* ---------- 窒素代謝産物（g:chisso 上限1） ---------- */
+
+{g:"chisso",q:"アミノ酸の分解で生じたアンモニアから肝臓でつくられ、尿中の有機物の中心となるのはどれか。",kihon:true,
+ choices:[
+  ["尿素",true,""],
+  ["尿酸",false,"核酸（プリン体）が分解されてできる最終産物。"],
+  ["クレアチニン",false,"筋肉で生じる代謝産物。"],
+  ["ウロクロム",false,"尿の黄色のもとになる色素。"]],
+ exp:"アミノ酸から外れたアミノ基の窒素は肝臓でアンモニアとなり、<b>尿素</b>に合成されて尿中へ排泄される。尿には尿素を中心とした窒素代謝産物が1日20〜30 g含まれる。（教科書 P177・第13章 P193）"},
+
+{g:"chisso",q:"核酸（プリン体）が分解されてできる最終産物はどれか。",hosoku:true,
+ choices:[
+  ["尿酸",true,""],
+  ["尿素",false,"アミノ酸由来のアンモニアから肝臓でつくられる物質。"],
+  ["アンモニア",false,"アミノ酸からアミノ基が外れて生じる物質。"],
+  ["クレアチニン",false,"筋肉で生じる代謝産物。"]],
+ exp:"補足知識（資料外）。<b>尿酸</b>はプリン体の最終産物で、尿中に排泄される。窒素を含む老廃物は、もとの物質で区別すると覚えやすい（アミノ酸→アンモニア→尿素／アミノ酸→クレアチン→クレアチニン／核酸→尿酸）。"},
+
+{g:"chisso",q:"アミノ酸の分解で生じ、肝臓で尿素に合成されるほか、尿細管から尿中へ分泌されるのはどれか。",
+ choices:[
+  ["アンモニア",true,""],
+  ["尿酸",false,"核酸（プリン体）が分解されてできる最終産物。"],
+  ["クレアチニン",false,"筋肉で生じ、尿細管でほとんど再吸収されない代謝産物。"],
+  ["グルコース",false,"からだに必要な成分として再吸収される糖。"]],
+ exp:"<b>アンモニア</b>は肝臓で尿素に合成される。また、尿細管からH⁺とともに分泌され、体液の酸塩基平衡にあずかる。（教科書 P176・第13章 P193）"},
+
+{g:"chisso",q:"クレアチニンが尿に出るまでの流れとして正しいのはどれか。",hosoku:true,
+ choices:[
+  ["アミノ酸 →（肝臓・腎臓）クレアチン →（筋）クレアチンリン酸 → クレアチニン → 尿",true,""],
+  ["アミノ酸 →（肝臓）アンモニア → 尿素 → クレアチニン → 尿",false,"尿素ができる流れにクレアチニンをつないだもの。尿素とクレアチニンは別の経路でできる。"],
+  ["核酸 → クレアチン → クレアチンリン酸 → クレアチニン → 尿",false,"核酸（プリン体）が分解されてできるのは尿酸。"],
+  ["アミノ酸 → クレアチニン → クレアチンリン酸 → クレアチン → 尿",false,"順番が逆。クレアチニンは最後にできる代謝産物。"]],
+ exp:"補足知識（資料外）。アミノ酸から肝臓・腎臓で<b>クレアチン</b>がつくられる。クレアチンは筋に取り込まれ、<b>クレアチンリン酸</b>としてエネルギーを蓄える（第2章）。クレアチン（クレアチンリン酸）が代謝されて<b>クレアチニン</b>になり、尿細管でほとんど再吸収されずに尿へ出る。"},
+
+{g:"chisso",q:"筋でATPを再合成するためのエネルギーを蓄え、代謝されるとクレアチニンになるのはどれか。",hosoku:true,
+ choices:[
+  ["クレアチンリン酸",true,""],
+  ["グリコーゲン",false,"ブドウ糖がつながってできた多糖類で、肝臓や筋に蓄えられる。"],
+  ["乳酸",false,"酸素が少ないときに、解糖の結果として生じる物質。"],
+  ["尿素",false,"アミノ酸由来のアンモニアから肝臓でつくられる窒素代謝産物。"]],
+ exp:"補足知識（資料外）。<b>クレアチンリン酸</b>は筋でADPにリン酸を渡し、ATPを再合成する（第2章）。クレアチン・クレアチンリン酸が代謝されてできるのがクレアチニンで、尿中へ排泄される。"},
+
+/* ---------- 尿の性質（同じ設問で答え違い・g:nyo 上限1） ---------- */
+
+{g:"nyo",q:"健常成人の尿について正しいのはどれか。",kihon:true,
+ choices:[
+  ["通常、pH 6前後の弱酸性を示す",true,""],
+  ["野菜をたくさん食べると酸性に傾く",false,"誤り。野菜を多く食べると逆の性質になる。"],
+  ["新鮮な尿は無色透明である",false,"誤り。新鮮な尿は色素を含み、透明に近い黄色を示す。"],
+  ["約50％が水分である",false,"誤り。尿の大部分が水分で、50％よりはるかに多い。"]],
+ exp:"尿はふつう<b>pH 6前後の弱酸性</b>で、野菜を多く食べるとアルカリ性になる。（教科書 P177）"},
+
+{g:"nyo",q:"健常成人の尿について正しいのはどれか。",
+ choices:[
+  ["新鮮な尿の黄色は、ウロクロムという色素による",true,""],
+  ["通常はアルカリ性を示す",false,"誤り。通常は弱酸性。"],
+  ["1日の尿に含まれる有機物の中心はグルコースである",false,"誤り。グルコースは健常者の尿にはほとんど含まれない。"],
+  ["尿量が増えると、尿中の成分の濃度は高くなる",false,"誤り。尿量が増えると成分は薄まる。"]],
+ exp:"新鮮な尿は<b>ウロクロム</b>と呼ばれる黄色の色素を含むため、透明に近い黄色を示す。（教科書 P177）"},
+
+{g:"nyo",q:"健常成人の尿について正しいのはどれか。",
+ choices:[
+  ["1日の尿の約95％は水分である",true,""],
+  ["無機物の主成分は尿素である",false,"誤り。尿素は有機物の中心。"],
+  ["新鮮な尿は無色透明である",false,"誤り。透明に近い黄色を示す。"],
+  ["野菜をたくさん食べると酸性に傾く",false,"誤り。野菜を多く食べると逆の性質になる。"]],
+ exp:"1日1.5 Lの尿のうち<b>95％は水分</b>。残りの5％は、塩化ナトリウム（約10 g）などの無機物と、尿素を中心とした有機物である。（教科書 P177）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=draw();
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent="正解！";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>

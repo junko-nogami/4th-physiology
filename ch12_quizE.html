@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第12章 パートE 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#4a3a6b;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#c4b5e8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#c4b5e8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#4a3a6b;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#4a3a6b;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(74,58,107,.12);color:#4a3a6b}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(168,50,46,.12);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#4a3a6b;background:#f6f3fb}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #4a3a6b;background:#4a3a6b;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#3d305a}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#4a3a6b;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#4a3a6b;background:#f6f3fb}
+.mode .nm{font-size:16px;font-weight:600;color:#4a3a6b;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#4a3a6b;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#3d305a;background:rgba(74,58,107,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#4a3a6b;background:rgba(74,58,107,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第12章 尿の生成と排泄｜パートE 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第12章 尿の生成と排泄 ｜ E 腎臓による体液の調節（教科書 P180〜182）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第12章 P180〜P182 ベース）=====
+   対応スライド：ch12_partE.html（E 腎臓による体液の調節）
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon/dobon/gori/hosoku の意味は他章と同じ。g … 出題グループ（GMAXで1回の出題数を制限）
+
+   グループ（すべて上限1）：同じテーマの問題や、先に出た問題の解説・ダミー説明が次の答えになる組を同じグループにした。
+     bui（受容器・分泌部位）／anp（心房性ナトリウム利尿ペプチド）／nyou（尿の量と濃さ）／raas（レニン-アンジオテンシン-アルドステロン系）
+     insui（飲水）／ph（pHの調節）／adh（バソプレシン分泌の促進・抑制）
+   2026年11月追加：模試との照合で「バソプレシン分泌の抑制」「腎臓に作用しないホルモン＝エリスロポエチン（第6章P97）」を追加
+
+   過去問（尿の章・内分泌の章）＋模試（尿・内分泌）＋実力試験：バソプレシン＝集合管で水の再吸収7回以上／
+   浸透圧上昇でバソプレシン分泌6回／アルドステロン＝Na⁺の再吸収5回／心房性ナトリウム利尿ペプチド3回／腎臓のpH調節3回／
+   レニン＝傍糸球体装置2回／バソプレシン＝下垂体後葉2回。アルドステロンとK⁺・飲酒・アンジオテンシンⅡ・バソプレシンの血管収縮は📘 */
+const PICK=5;
+const GMAX={bui:1,anp:1,nyou:1,raas:1,insui:1,ph:1,adh:1};
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
+const POOL=[
+/* ---------- バソプレシン（P180・図12・8） ---------- */
+
+{q:"バソプレシンが水の再吸収を促す部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["集合管",true,""],
+  ["近位尿細管",false,"濾過された水の大部分（約80％）が再吸収される部位。"],
+  ["ヘンレループの上行脚",false,"水をほとんど通さず、Na⁺やCl⁻を再吸収する部位。"],
+  ["糸球体",false,"血漿が濾過される部位。"]],
+ exp:"バソプレシンは<b>集合管</b>での水の再吸収を促し、血漿浸透圧を低下させる。（教科書 P180・図12・8）"},
+
+{g:"bui",q:"血漿浸透圧の上昇を感知する浸透圧受容器がある部位はどれか。",kihon:true,
+ choices:[
+  ["視床下部",true,""],
+  ["下垂体後葉",false,"浸透圧受容器からの情報を受けて、バソプレシンを分泌する部位。"],
+  ["心房",false,"血液量の変化を感知する低圧受容器がある部位。"],
+  ["傍糸球体装置",false,"体液量の増加を感知し、レニンの分泌を調節する部位。"]],
+ exp:"脱水などで血漿浸透圧が上がると、<b>視床下部</b>の浸透圧受容器が刺激され、その情報が視索上核と室傍核に伝わる。（教科書 P180）"},
+
+{g:"adh",q:"バソプレシンの分泌が促進されるのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["血漿浸透圧の上昇",true,""],
+  ["血漿浸透圧の低下",false,"このときはバソプレシンの分泌が低下し、水の再吸収が抑えられる。"],
+  ["血液量の増加",false,"心房の低圧受容器が興奮し、尿量を増やす方向にはたらく変化。"],
+  ["動脈血の酸素分圧の上昇",false,"呼吸の調節にかかわる変化で、バソプレシンの分泌とは関係しない。"]],
+ exp:"<b>血漿浸透圧が上がる</b>と浸透圧受容器が刺激され、下垂体後葉からのバソプレシンの分泌が促される。血液量の減少でも分泌が促される。（教科書 P180）"},
+
+{g:"adh",q:"バソプレシンの分泌が抑制されるのはどれか。",
+ choices:[
+  ["血漿浸透圧の低下",true,""],
+  ["大量の発汗",false,"脱水で血漿浸透圧が上がり、分泌が促される。"],
+  ["出血による血液量の減少",false,"心房の低圧受容器を通じて、分泌が促される。"],
+  ["血漿浸透圧の上昇",false,"浸透圧受容器が刺激され、分泌が促される。"]],
+ exp:"<b>血漿浸透圧が下がる</b>と、バソプレシンの分泌が低下し、水の再吸収が抑えられる。（教科書 P180）"},
+
+{g:"nyou",q:"バソプレシンの分泌が増えると、尿はどうなるか。",kihon:true,dobon:true,
+ choices:[
+  ["量が減り、濃くなる",true,""],
+  ["量が増え、薄くなる",false,"バソプレシンの分泌が低下したときの変化。"],
+  ["量が増え、濃くなる",false,"水の再吸収が増えれば尿量は減るので、この組合せにはならない。"],
+  ["量も濃さも変わらない",false,"集合管での水の再吸収が変わるので、尿の量と濃さも変わる。"]],
+ exp:"集合管で水の再吸収が増えるため、尿は<b>少なく濃く</b>なり、血漿浸透圧は下がる。（教科書 P180・図12・8）"},
+
+{g:"nyou",q:"バソプレシンの分泌が低下すると、尿はどうなるか。",kihon:true,
+ choices:[
+  ["量が増え、薄くなる",true,""],
+  ["量が減り、濃くなる",false,"バソプレシンの分泌が増えたときの変化。"],
+  ["量が減り、薄くなる",false,"水の再吸収が減れば尿量は増えるので、この組合せにはならない。"],
+  ["量も濃さも変わらない",false,"集合管での水の再吸収が変わるので、尿の量と濃さも変わる。"]],
+ exp:"血漿浸透圧が下がるとバソプレシンの分泌が低下し、集合管での水の再吸収が抑えられる。そのため、<b>薄い尿がたくさん</b>出る。（教科書 P180・図12・8）"},
+
+{g:"bui",q:"バソプレシンを分泌する部位はどれか。",kihon:true,
+ choices:[
+  ["下垂体後葉",true,""],
+  ["下垂体前葉",false,"成長ホルモンや甲状腺刺激ホルモンなどを分泌する部位。"],
+  ["副腎",false,"アルドステロンを分泌する部位。"],
+  ["心房",false,"血液量の増加を感知する低圧受容器があり、尿量を増やすホルモンを分泌する部位。"]],
+ exp:"浸透圧受容器の情報が視床下部の視索上核と室傍核に伝わると、<b>下垂体後葉</b>からバソプレシンが分泌される。（教科書 P180）"},
+
+{q:"出血などで血液量が減ったとき、それを感知してバソプレシンの分泌を促す受容器はどれか。",
+ choices:[
+  ["心房の低圧受容器（伸展受容器）",true,""],
+  ["視床下部の浸透圧受容器",false,"血漿浸透圧の上昇を感知する受容器。"],
+  ["傍糸球体装置",false,"体液量の増加を感知して、レニンの分泌を抑える部位。"],
+  ["頸動脈小体",false,"動脈血の酸素分圧の低下を感知し、呼吸を促す受容器。"]],
+ exp:"血液量や胸腔内圧が減ると、<b>心房の低圧受容器</b>が感知してバソプレシンの分泌を促す。（教科書 P180・図12・8）"},
+
+/* ---------- レニン-アンジオテンシン-アルドステロン系（P181・図12・9） ---------- */
+
+{g:"raas",q:"アルドステロンの腎臓での作用はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["遠位尿細管や集合管で、Na⁺の再吸収を促す",true,""],
+  ["集合管で、水の再吸収を直接促す",false,"バソプレシンの作用。"],
+  ["Na⁺の再吸収を抑え、尿量を増やす",false,"心房性ナトリウム利尿ペプチドの作用。"],
+  ["近位尿細管で、グルコースをすべて再吸収する",false,"近位尿細管の輸送体のはたらきで、ホルモンの作用ではない。"]],
+ exp:"アルドステロンは<b>遠位尿細管や集合管でNa⁺の再吸収を促し</b>、水の再吸収も増やす。分泌が抑えられると、Na⁺と水の再吸収が減って尿量が増える。（教科書 P181・図12・9）"},
+
+{g:"raas",q:"塩分をとりすぎて体液量が増えたときの変化として正しいのはどれか。",kihon:true,
+ choices:[
+  ["レニンの分泌が抑えられ、アルドステロンの分泌も減る",true,""],
+  ["レニンの分泌が増え、アルドステロンの分泌も増える",false,"体液量が減ったときの変化。"],
+  ["心房性ナトリウム利尿ペプチドの分泌が減る",false,"血液量が減ったときの変化。"],
+  ["集合管でのNa⁺の再吸収が増える",false,"アルドステロンが増えたときの変化。"]],
+ exp:"体液量が増えると、傍糸球体装置が<b>レニンの分泌を抑える</b>。アンジオテンシンを介して<b>アルドステロンの分泌も抑えられ</b>、Na⁺と水の再吸収が減って尿量が増える。（教科書 P181・図12・9）"},
+
+{g:"bui",q:"体液量の増加を感知して、レニンの分泌を抑える部位はどれか。",kihon:true,
+ choices:[
+  ["傍糸球体装置",true,""],
+  ["副腎",false,"アルドステロンを分泌する部位。"],
+  ["心房",false,"血液量の増加を感知する低圧受容器があり、尿量を増やすホルモンを分泌する部位。"],
+  ["視床下部",false,"血漿浸透圧の上昇を感知する浸透圧受容器がある部位。"]],
+ exp:"レニンは腎臓の<b>傍糸球体装置</b>から分泌される。体液量が増えると、傍糸球体装置がそれを感知してレニンの分泌を抑える。（教科書 P181）"},
+
+/* ---------- 心房性ナトリウム利尿ペプチド（P182・図12・9） ---------- */
+
+{g:"anp",q:"心房性ナトリウム利尿ペプチドの作用はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["集合管でNa⁺の再吸収を抑え、尿量を増やす",true,""],
+  ["集合管で水の再吸収を促し、尿量を減らす",false,"バソプレシンの作用。"],
+  ["遠位尿細管や集合管で、Na⁺の再吸収を促す",false,"アルドステロンの作用。"],
+  ["膀胱の排尿筋を収縮させる",false,"骨盤神経（副交感神経）のはたらき。"]],
+ exp:"血液量が増えて心房の低圧受容器が興奮すると、心房から心房性ナトリウム利尿ペプチドが分泌される。集合管で<b>Na⁺の再吸収を抑える</b>ので、水の再吸収も減って<b>尿量が増える</b>。（教科書 P182・図12・9）"},
+
+{g:"anp",q:"血液量が増えて心房の低圧受容器が興奮すると、心房から分泌されるホルモンはどれか。",kihon:true,
+ choices:[
+  ["心房性ナトリウム利尿ペプチド",true,""],
+  ["バソプレシン",false,"血液量が減ったときに分泌が促され、尿量を減らすホルモン。"],
+  ["アルドステロン",false,"副腎から分泌されるホルモンで、体液量が増えると分泌が抑えられる。"],
+  ["レニン",false,"腎臓から分泌され、体液量が増えると分泌が抑えられる。"]],
+ exp:"心臓へ流れ込む血液量が増えると、心房の低圧受容器が興奮し、心房から<b>心房性ナトリウム利尿ペプチド</b>が分泌される。集合管でのNa⁺の再吸収を抑え、尿量を増やす。（教科書 P182）"},
+
+{g:"anp",q:"心房性ナトリウム利尿ペプチドの分泌が高まるのはどれか。",
+ choices:[
+  ["血液量が増え、心臓へ流れ込む血液が増えたとき",true,""],
+  ["血漿浸透圧が上がったとき",false,"バソプレシンの分泌が促される変化。"],
+  ["出血で血液量が減ったとき",false,"心房の低圧受容器を通じて、バソプレシンの分泌が促される変化。"],
+  ["発汗で体液が失われたとき",false,"脱水で血漿浸透圧が上がり、バソプレシンの分泌が促される変化。"]],
+ exp:"<b>心臓へ流れ込む血液量が増える</b>と心房の低圧受容器が興奮し、心房性ナトリウム利尿ペプチドが分泌される。（教科書 P182）"},
+
+{g:"anp",q:"尿量が増えるのはどれか。",kihon:true,
+ choices:[
+  ["血液量が増え、心房の低圧受容器の興奮が高まる",true,""],
+  ["血漿浸透圧が上昇する",false,"バソプレシンの分泌が増え、尿量は減る。"],
+  ["大量に出血する",false,"血液量が減り、バソプレシンの分泌が増えて尿量は減る。"],
+  ["アルドステロンの分泌が増える",false,"Na⁺と水の再吸収が増え、尿量は減る。"]],
+ exp:"<b>心房の低圧受容器が興奮</b>すると、心房性ナトリウム利尿ペプチドが分泌され、集合管でのNa⁺の再吸収が抑えられる。水の再吸収も減り、尿量が増える。（教科書 P182・図12・9）"},
+
+{g:"nyou",q:"尿の浸透圧が上がる（尿が濃くなる）のはどれか。",
+ choices:[
+  ["大量に汗をかく",true,""],
+  ["大量に水を飲む",false,"血漿浸透圧が下がり、薄い尿がたくさん出る。"],
+  ["血液量が増える",false,"心房性ナトリウム利尿ペプチドが分泌され、尿量が増える。"],
+  ["塩分の多い食事で体液量が増える",false,"レニンとアルドステロンの分泌が抑えられ、尿量が増える。"]],
+ exp:"<b>大量の発汗</b>で脱水になると血漿浸透圧が上がり、バソプレシンの分泌が増える。集合管で水の再吸収が増え、少ない量の濃い尿になる。（教科書 P180・図12・8）"},
+
+{q:"腎臓に作用しないホルモンはどれか。",kihon:true,
+ choices:[
+  ["エリスロポエチン",true,""],
+  ["アルドステロン",false,"副腎から分泌され、腎臓の遠位尿細管や集合管にはたらくホルモン。"],
+  ["心房性ナトリウム利尿ペプチド",false,"心房から分泌され、腎臓の集合管にはたらくホルモン。"],
+  ["バソプレシン",false,"下垂体後葉から分泌され、腎臓の集合管にはたらくホルモン。"]],
+ exp:"<b>エリスロポエチン</b>は腎臓から分泌されるホルモンで、腎臓ではなく骨髄にはたらいて赤血球の産生を促す。低酸素や出血で分泌が増える。（教科書 第6章 P97）"},
+
+/* ---------- 飲水での調節（P182） ---------- */
+
+{g:"insui",q:"のどが渇いて水を飲みたくなるのはどれか。",
+ choices:[
+  ["下痢で大量の体液を失ったとき",true,""],
+  ["大量に水を飲んだとき",false,"体液の浸透圧が下がり、薄い尿がたくさん出る。"],
+  ["血液量が増えたとき",false,"心房性ナトリウム利尿ペプチドが分泌され、尿量が増える。"],
+  ["膀胱に尿がたまったとき",false,"膀胱壁の緊張が骨盤神経を通じて伝わり、尿意が起こる。"]],
+ exp:"体液の浸透圧が上がったときや、発汗・<b>下痢</b>・出血などで<b>大量の体液を失った</b>ときは、のどが渇いて水を飲む。（教科書 P182）"},
+
+{g:"insui",q:"飲水行動を起こす中枢（口渇中枢）がはたらくきっかけになる情報はどれか。",
+ choices:[
+  ["浸透圧受容器や容積受容器からの情報",true,""],
+  ["膀胱壁の伸展受容器からの情報",false,"骨盤神経の求心路を通じて伝わり、尿意を起こす。"],
+  ["血糖値の低下を感じる受容器からの情報",false,"空腹感を起こし、摂食行動につながる。"],
+  ["汗腺の受容器からの情報",false,"汗腺は汗を分泌する腺で、浸透圧などを感知する受容器はもたない。"]],
+ exp:"<b>浸透圧受容器や容積受容器</b>などからの情報が中枢で総合された結果、飲水行動が起こる。この中枢を口渇中枢（飲水中枢）と呼ぶ。（教科書 P182・図12・8）"},
+
+/* ---------- pHの調節（P182・図12・10） ---------- */
+
+{q:"体液のpHが7.4前後に厳密に保たれている理由はどれか。",
+ choices:[
+  ["代謝を担う酵素が、このpHでもっともよくはたらくから",true,""],
+  ["体液が中性（pH 7.0）でないと細胞膜がこわれるから",false,"体液は中性ではなく、弱アルカリ性に保たれている。"],
+  ["尿をつくるのに必要な条件だから",false,"尿のpHは体液と別に変わり、尿の生成を保つ理由ではない。"],
+  ["血漿の浸透圧を一定にするため",false,"浸透圧を一定に保っているのは、電解質や血漿タンパク質。"]],
+ exp:"体液は中性に近い弱アルカリ性（pH 7.4）に保たれている。これは、<b>代謝を担う酵素がこのpHでもっとも活性化する</b>ためである。（教科書 P182）"},
+
+{q:"代謝で生じる揮発性の酸（二酸化炭素）を、主に体外へ出す器官はどれか。",kihon:true,
+ choices:[
+  ["肺",true,""],
+  ["腎臓",false,"不揮発性の酸や塩基を処理する器官。"],
+  ["肝臓",false,"アンモニアを尿素に変える器官。"],
+  ["皮膚",false,"汗を出し、体温の調節にはたらく器官。"]],
+ exp:"揮発性の酸（二酸化炭素）は主に<b>呼吸</b>で排泄され、不揮発性の酸と塩基は腎臓で処理される。（教科書 P182・図12・10）"},
+
+{g:"ph",q:"体液が酸性に傾いたときの腎臓のはたらきはどれか。",kihon:true,
+ choices:[
+  ["重炭酸イオンを再吸収し、水素イオンを尿中へ分泌する",true,""],
+  ["重炭酸イオンを尿中へ分泌する",false,"重炭酸イオンは酸を中和するのに使われるので、尿中に捨てずに取り戻す。"],
+  ["水素イオンを再吸収する",false,"体液をさらに酸性に傾ける変化。"],
+  ["アンモニアを再吸収する",false,"アンモニアは尿中へ分泌されて、酸の処理に使われる。"]],
+ exp:"腎臓は、酸（水素イオン）を尿中へ排泄するほか、酸の緩衝で重要な<b>重炭酸イオンを再吸収</b>して酸を処理する。リン酸水素イオンやアンモニアの分泌でも酸は処理される。（教科書 P182）"},
+
+{g:"ph",q:"体液がアルカリ側に傾いたときの腎臓のはたらきはどれか。",
+ choices:[
+  ["アルカリを炭酸で中和して重炭酸塩とし、尿中へ排泄する",true,""],
+  ["重炭酸イオンの再吸収を増やす",false,"体液が酸性に傾いたときのはたらき。"],
+  ["水素イオンの尿中への分泌を増やす",false,"体液が酸性に傾いたときのはたらき。"],
+  ["呼吸を速くして、二酸化炭素を多く出す",false,"体液をさらにアルカリ側に傾ける変化で、腎臓のはたらきでもない。"]],
+ exp:"体液のpHがアルカリ側に傾いたときは、アルカリを炭酸で中和して<b>重炭酸塩</b>とし、尿中に排泄する。（教科書 P182）"},
+
+/* ---------- 追加（視索上核・補足・誤りを選ぶ） ---------- */
+
+{g:"bui",q:"血漿浸透圧が上がったという情報が伝わり、バソプレシンの分泌につながる視床下部の神経核はどれか。",
+ choices:[
+  ["視索上核と室傍核",true,""],
+  ["視交叉上核",false,"1日のリズム（概日リズム）をつくる中枢がある部位。"],
+  ["視床下部の外側野",false,"摂食中枢がある部位。"],
+  ["視床下部の腹内側核",false,"満腹中枢がある部位。"]],
+ exp:"浸透圧受容器からの情報が<b>視索上核と室傍核</b>に伝わると、下垂体後葉からバソプレシンが分泌される。（教科書 P180）"},
+
+{g:"raas",q:"アルドステロンの分泌が増えると、血漿のK⁺濃度はどうなるか。",hosoku:true,
+ choices:[
+  ["低下する",true,""],
+  ["上昇する",false,"尿中へのK⁺の排泄が減ったときの変化。"],
+  ["変わらない",false,"アルドステロンは、Na⁺だけでなくK⁺の排泄にもかかわる。"]],
+ exp:"補足知識（資料外）。アルドステロンは遠位尿細管や集合管で、Na⁺の再吸収とあわせて<b>K⁺の分泌（尿中への排泄）を促す</b>。そのため、血漿のK⁺濃度は下がる。"},
+
+{g:"nyou",q:"お酒を飲むと尿量が増える理由はどれか。",hosoku:true,
+ choices:[
+  ["バソプレシンの分泌が抑えられるから",true,""],
+  ["アルドステロンの分泌が増えるから",false,"Na⁺と水の再吸収が増え、尿量は減る方向。"],
+  ["心房性ナトリウム利尿ペプチドの分泌が減るから",false,"Na⁺の再吸収が増え、尿量は減る方向。"],
+  ["膀胱の排尿筋が弛緩するから",false,"尿をためる方向の変化で、つくられる尿の量とは関係しない。"]],
+ exp:"補足知識（資料外）。アルコールは<b>バソプレシンの分泌を抑える</b>。集合管での水の再吸収が減るため、薄い尿がたくさん出る。"},
+
+{g:"raas",q:"体液量が減ってレニンの分泌が増えたとき、アンジオテンシンⅡのはたらきとして正しいのはどれか。",hosoku:true,
+ choices:[
+  ["血管を収縮させて血圧を上げ、アルドステロンの分泌を促す",true,""],
+  ["血管を拡張させて、血圧を下げる",false,"心房性ナトリウム利尿ペプチドなどにみられる作用。"],
+  ["アルドステロンの分泌を抑える",false,"体液量が増えて、レニンの分泌が抑えられたときの変化。"],
+  ["集合管で、水の再吸収を直接促す",false,"バソプレシンの作用。"]],
+ exp:"補足知識（資料外）。レニンのはたらきでアンジオテンシンⅡがつくられる。アンジオテンシンⅡは<b>血管を収縮させて血圧を上げ</b>、副腎からの<b>アルドステロンの分泌を促す</b>。教科書は、体液量が増えてこの流れが抑えられる側を説明している。（教科書 P181・図12・9）"},
+
+{g:"bui",q:"バソプレシンについて誤っているのはどれか。",gori:true,
+ choices:[
+  ["下垂体前葉から分泌される",true,""],
+  ["集合管で水の再吸収を促す",false,"教科書どおりの記述なので、正しい。"],
+  ["血漿浸透圧が下がると、分泌が低下する",false,"教科書どおりの記述なので、正しい。"],
+  ["血液量が減ると、分泌が促される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"バソプレシンは<b>下垂体後葉</b>から分泌される。（教科書 P180）"},
+
+{g:"anp",q:"腎臓による体液の調節について誤っているのはどれか。",gori:true,
+ choices:[
+  ["心房性ナトリウム利尿ペプチドは、集合管でNa⁺の再吸収を促す",true,""],
+  ["体液量が増えると、レニンの分泌が抑えられる",false,"教科書どおりの記述なので、正しい。"],
+  ["アルドステロンの分泌が減ると、尿量が増える",false,"教科書どおりの記述なので、正しい。"],
+  ["血漿浸透圧が上がると、視床下部の浸透圧受容器が刺激される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"心房性ナトリウム利尿ペプチドは、集合管で<b>Na⁺の再吸収を抑え</b>、尿量を増やす。（教科書 P182）"},
+
+{g:"ph",q:"pHの調節について誤っているのはどれか。",gori:true,
+ choices:[
+  ["腎臓は、重炭酸イオンを尿中へ分泌して酸を処理する",true,""],
+  ["体液は、中性に近い弱アルカリ性に保たれている",false,"教科書どおりの記述なので、正しい。"],
+  ["揮発性の酸（二酸化炭素）は、主に呼吸で排泄される",false,"教科書どおりの記述なので、正しい。"],
+  ["アンモニアの分泌でも、酸は処理される",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"腎臓は重炭酸イオンを分泌するのではなく<b>再吸収</b>して、酸の緩衝に使う。（教科書 P182）"},
+
+{g:"bui",q:"バソプレシンの、腎臓以外での作用はどれか。",hosoku:true,
+ choices:[
+  ["血管を収縮させて、血圧を上げる",true,""],
+  ["血管を拡張させて、血圧を下げる",false,"心房性ナトリウム利尿ペプチドなどにみられる作用。"],
+  ["心拍数を増やして、心拍出量を増やす",false,"交感神経やアドレナリンの作用。"],
+  ["口渇中枢にはたらいて、飲水を促す",false,"血漿浸透圧が上がったときに起こる口渇中枢のはたらきで、バソプレシンの作用ではない。"]],
+ exp:"補足知識（資料外）。バソプレシンは、集合管で水の再吸収を促す（抗利尿作用）だけでなく、<b>血管の平滑筋を収縮させて血圧を上げる</b>作用ももつ。「バソ（血管）＋プレシン（圧を上げる）」という名前は、この作用に由来する。腎臓での作用から、抗利尿ホルモンとも呼ばれる。"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=draw();
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent="正解！";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>

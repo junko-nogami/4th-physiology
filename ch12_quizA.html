@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第12章 パートA 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#4a3a6b;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#c4b5e8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#c4b5e8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#4a3a6b;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#4a3a6b;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(74,58,107,.12);color:#4a3a6b}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(168,50,46,.12);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#4a3a6b;background:#f6f3fb}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #4a3a6b;background:#4a3a6b;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#3d305a}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#4a3a6b;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#4a3a6b;background:#f6f3fb}
+.mode .nm{font-size:16px;font-weight:600;color:#4a3a6b;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#4a3a6b;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#3d305a;background:rgba(74,58,107,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#4a3a6b;background:rgba(74,58,107,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第12章 尿の生成と排泄｜パートA 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第12章 尿の生成と排泄 ｜ A 腎臓の構造と機能（教科書 P171〜173）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第12章 P171〜P173 ベース）=====
+   対応スライド：ch12_partA.html（A 腎臓の構造と機能）
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon/dobon/gori/hosoku の意味は他章と同じ。g … 出題グループ（GMAXで1回の出題数を制限）
+
+   内訳：全19問／🎯基本10問（53%）／💣ドボン3問（16%）／⚠誤りを選ぶ3問／📘補足0問
+   方針：生理学なので構造そのものより「どこで何が起こるか」を問う。構造は解剖学で出題されるため最小限。
+   グループ：nephron・blood は同じ設問で答えの違う問題（4問ずつ）。先に出た問題の解説が次の答えにならないよう上限1。
+
+   過去問（尿の生成と排泄 (1)腎臓・(2)尿の生成）でこの範囲に関わるもの：
+   近位尿細管の再吸収7回／濾過は腎小体（糸球体）1回／再吸収物質は腎静脈を通る1回 */
+const PICK=5;
+const GMAX={nephron:1,blood:1};
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
+const POOL=[
+/* ---------- A 腎臓の構造と機能（P171〜173） ---------- */
+
+{q:"腎臓のはたらきとして正しいのはどれか。",kihon:true,
+ choices:[
+  ["老廃物を排泄する尿を生成し、体液の組成を一定に保つ",true,""],
+  ["胆汁を生成して十二指腸へ送る",false,"肝臓のはたらき。"],
+  ["古くなった赤血球を破壊する",false,"脾臓などのはたらき。"],
+  ["体温調節の中枢としてはたらく",false,"視床下部のはたらき。"]],
+ exp:"腎臓は<b>老廃物を排泄する尿を生成</b>し、体液中の物質の組成が一定になるようにはたらくことで、<b>恒常性</b>を維持する。（教科書 P171）"},
+
+{q:"血液が濾過される部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["糸球体",true,""],
+  ["近位尿細管",false,"ボーマン嚢に続く、尿細管の最初の部分。"],
+  ["集合管",false,"皮質から髄質へ下行し、合流して乳頭管となる管。"],
+  ["腎盂",false,"腎杯が集まってでき、尿管へ移行する部分。"]],
+ exp:"輸入細動脈から<b>糸球体</b>の毛細血管へ流れ込んだ血液は、ここで濾過されたのち輸出細動脈に入る。（教科書 P172）"},
+
+{q:"濾過された物質（グルコース・水・イオンなど）の大部分が再吸収される部位はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["近位尿細管",true,""],
+  ["遠位尿細管",false,"ヘンレループ上行脚に続き、集合管へ移行する部分。"],
+  ["集合管",false,"皮質から髄質へ下行し、合流して乳頭管となる管。"],
+  ["ボーマン嚢",false,"糸球体を包む袋。"]],
+ exp:"<b>近位尿細管</b>は皮質の主な部分を占め、濾過された物質の大部分がここで再吸収される。（教科書 P173）"},
+
+{q:"髄質の深いところで尿の濃縮に関与する部位はどれか。",kihon:true,
+ choices:[
+  ["ヘンレループ下行脚",true,""],
+  ["近位尿細管",false,"皮質の主な部分を占める尿細管。"],
+  ["遠位尿細管",false,"皮質へ戻ったあと集合管へ移行する部分。"],
+  ["糸球体",false,"20〜40の毛細血管の束。"]],
+ exp:"<b>ヘンレループ下行脚</b>は髄質の深いところで尿の濃縮に関与したのち、Uターンして上行脚として皮質へ戻る。（教科書 P173）"},
+
+{q:"糸球体で濾過されたものが最初に入るのはどれか。",
+ choices:[
+  ["ボーマン嚢",true,""],
+  ["輸出細動脈",false,"糸球体から、濾過されなかった血液が出ていく血管。"],
+  ["腎盂",false,"腎杯が集まってでき、尿管へ移行する部分。"],
+  ["腎静脈",false,"腎臓から血液が出ていく血管。"]],
+ exp:"<b>ボーマン嚢</b>は糸球体の毛細血管を中に収めており、濾過されたもの（原尿）を受け取る。（教科書 P171〜172）"},
+
+{q:"糸球体で濾過されたものが流れる順として正しいのはどれか。",kihon:true,
+ choices:[
+  ["ボーマン嚢 → 近位尿細管 → ヘンレループ → 遠位尿細管 → 集合管",true,""],
+  ["ボーマン嚢 → 遠位尿細管 → ヘンレループ → 近位尿細管 → 集合管",false,"近位と遠位の順が逆になっている。"],
+  ["ボーマン嚢 → 近位尿細管 → 遠位尿細管 → ヘンレループ → 集合管",false,"ヘンレループの位置が違う。ヘンレループは髄質へ下ってUターンし、そのあと遠位側へ続く。"],
+  ["ボーマン嚢 → 集合管 → 近位尿細管 → ヘンレループ → 遠位尿細管",false,"集合管の位置が違う。集合管は尿細管の最後の部分。"]],
+ exp:"尿細管は<b>近位尿細管・ヘンレループ・遠位尿細管・集合管</b>で構成される。（教科書 P172〜173）"},
+
+{q:"尿細管の周りを囲む毛細血管のはたらきはどれか。",
+ choices:[
+  ["尿細管で再吸収された物質を取り込む",true,""],
+  ["血液を濾過して原尿をつくる",false,"糸球体の毛細血管のはたらき。"],
+  ["尿を腎盂へ送る",false,"集合管や乳頭管のはたらき。"],
+  ["血液に酸素を取り込む",false,"肺の毛細血管のはたらき。"]],
+ exp:"糸球体を出た輸出細動脈は毛細血管となって尿細管の周りを下行する。原尿から再吸収された物質は<b>この毛細血管に取り込まれる</b>。（教科書 P173・175）"},
+
+{q:"できた尿が腎臓から出ていく順として正しいのはどれか。",
+ choices:[
+  ["集合管 → 乳頭管 → 腎杯 → 腎盂 → 尿管",true,""],
+  ["集合管 → 乳頭管 → 腎盂 → 腎杯 → 尿管",false,"腎杯と腎盂の順が逆。腎杯が集まって腎盂になる。"],
+  ["乳頭管 → 集合管 → 腎杯 → 腎盂 → 尿管",false,"集合管と乳頭管の順が逆。集合管が合流して乳頭管になる。"],
+  ["集合管 → 腎杯 → 乳頭管 → 腎盂 → 尿管",false,"乳頭管の位置が違う。乳頭管は腎杯へ開く。"]],
+ exp:"集合管は合流して<b>乳頭管</b>となって<b>腎杯</b>へ開く。腎杯は集まって<b>腎盂</b>を形成し、<b>尿管</b>へ移行する。（教科書 P171・173）"},
+
+/* ---------- ネフロン（同じ設問で答え違い・g:nephron 上限1） ---------- */
+
+{g:"nephron",q:"ネフロンについて正しいのはどれか。",kihon:true,
+ choices:[
+  ["腎臓1つに約100万個ある",true,""],
+  ["腎小体と腎杯で構成される",false,"誤り。腎杯は腎錐体の先端が突き出る部分で、ネフロンには含まれない。"],
+  ["腎小体は髄質にある",false,"誤り。腎小体は皮質にある。"],
+  ["尿細管は皮質の中だけを走る",false,"誤り。尿細管は皮質と髄質にまたがっている。"]],
+ exp:"ネフロンは腎小体（糸球体＋ボーマン嚢）とそれに続く尿細管で構成され、左右の腎臓にそれぞれ<b>約100万個</b>ある。腎小体は皮質にあり、尿細管は皮質と髄質にまたがる。（教科書 P171）"},
+
+{g:"nephron",q:"ネフロンについて正しいのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["腎小体と尿細管で構成される",true,""],
+  ["腎臓1つに約1万個ある",false,"誤り。実際の数より大幅に少ない。"],
+  ["腎小体は腎盂の中にある",false,"誤り。腎盂は腎杯が集まってできる部分。"],
+  ["血液の濾過は尿細管で行われる",false,"誤り。濾過は糸球体で行われる。"]],
+ exp:"ネフロンは<b>腎小体</b>（糸球体＋ボーマン嚢）とそれに続く<b>尿細管</b>で構成され、左右の腎臓にそれぞれ約100万個ある。腎小体は皮質にあり、尿細管は皮質と髄質にまたがる。（教科書 P171）"},
+
+{g:"nephron",q:"ネフロンについて正しいのはどれか。",
+ choices:[
+  ["腎小体は皮質にある",true,""],
+  ["腎臓1つに約1,000万個ある",false,"誤り。実際の数より大幅に多い。"],
+  ["糸球体と集合管で構成される",false,"誤り。糸球体は腎小体の一部、集合管は尿細管の最後の部分にすぎない。"],
+  ["尿細管は髄質の中だけを走る",false,"誤り。尿細管は皮質と髄質にまたがっている。"]],
+ exp:"ネフロンは腎小体（糸球体＋ボーマン嚢）とそれに続く尿細管で構成され、左右の腎臓にそれぞれ約100万個ある。<b>腎小体は皮質</b>にあり、尿細管は皮質と髄質にまたがる。（教科書 P171）"},
+
+{g:"nephron",q:"ネフロンについて正しいのはどれか。",
+ choices:[
+  ["尿細管は皮質と髄質にまたがっている",true,""],
+  ["腎臓1つに約10万個ある",false,"誤り。実際の数より少ない。"],
+  ["腎小体と腎錐体で構成される",false,"誤り。腎錐体は髄質がつくる円錐状の構造。"],
+  ["腎小体は髄質にある",false,"誤り。腎小体は皮質にある。"]],
+ exp:"ネフロンは腎小体（糸球体＋ボーマン嚢）とそれに続く尿細管で構成され、左右の腎臓にそれぞれ約100万個ある。腎小体は皮質にあり、<b>尿細管は皮質と髄質にまたがる</b>。（教科書 P171）"},
+
+/* ---------- 血液の流れ（同じ設問で答え違い・g:blood 上限1） ---------- */
+
+{g:"blood",q:"腎臓の血液の流れについて正しいのはどれか。",kihon:true,
+ choices:[
+  ["輸入細動脈から糸球体へ血液が流れ込む",true,""],
+  ["糸球体を出た血液はそのまま腎静脈に入る",false,"誤り。糸球体を出た血液は、まず別の細動脈に入る。"],
+  ["腎動脈は腎杯から腎臓に入る",false,"誤り。腎動脈は腎門から入る。"],
+  ["再吸収された物質は尿管を通って腎臓を出る",false,"誤り。尿管を通るのは尿。"]],
+ exp:"腎動脈 → <b>輸入細動脈</b> → 糸球体 → 輸出細動脈 → 尿細管の周りの毛細血管（再吸収された物質を取り込む）→ 静脈 → 腎静脈。（教科書 P172〜173・175）"},
+
+{g:"blood",q:"腎臓の血液の流れについて正しいのはどれか。",
+ choices:[
+  ["糸球体を出た血液は輸出細動脈に入る",true,""],
+  ["腎動脈は髄質だけに分布する",false,"誤り。腎動脈は皮質と髄質に分布する。"],
+  ["尿細管の周りの毛細血管は合流して腎動脈になる",false,"誤り。合流して静脈になる。"],
+  ["輸出細動脈は集合管につながる",false,"誤り。集合管は尿が流れる管で、血管とはつながらない。"]],
+ exp:"腎動脈 → 輸入細動脈 → 糸球体 → <b>輸出細動脈</b> → 尿細管の周りの毛細血管（再吸収された物質を取り込む）→ 静脈 → 腎静脈。（教科書 P172〜173・175）"},
+
+{g:"blood",q:"腎臓の血液の流れについて正しいのはどれか。",
+ choices:[
+  ["輸出細動脈は毛細血管となって尿細管の周りを下行する",true,""],
+  ["糸球体へは腎静脈から血液が流れ込む",false,"誤り。腎静脈は腎臓から血液が出ていく血管。"],
+  ["腎動脈は腎盂から腎臓に入る",false,"誤り。腎動脈は腎門から入る。"],
+  ["再吸収された物質はリンパ管だけを通って腎臓を出る",false,"誤り。リンパ管は組織液を回収する管。"]],
+ exp:"腎動脈 → 輸入細動脈 → 糸球体 → 輸出細動脈 → <b>尿細管の周りの毛細血管</b>（再吸収された物質を取り込む）→ 静脈 → 腎静脈。（教科書 P172〜173・175）"},
+
+{g:"blood",q:"腎臓の血液の流れについて正しいのはどれか。",kihon:true,
+ choices:[
+  ["尿細管で再吸収された物質は腎静脈から腎臓を出ていく",true,""],
+  ["糸球体を出た血液は輸入細動脈に入る",false,"誤り。輸入細動脈は糸球体へ血液を送り込む血管。"],
+  ["腎動脈は皮質だけに分布する",false,"誤り。腎動脈は皮質と髄質に分布する。"],
+  ["輸出細動脈は直接尿管につながる",false,"誤り。尿管は腎盂から膀胱へ尿を運ぶ管。"]],
+ exp:"腎動脈 → 輸入細動脈 → 糸球体 → 輸出細動脈 → 尿細管の周りの毛細血管（再吸収された物質を取り込む）→ 静脈 → <b>腎静脈</b>。（教科書 P172〜173・175）"},
+
+/* ---------- ⚠ 誤りを選ぶ ---------- */
+
+{q:"ネフロンのはたらきについて誤っているのはどれか。",kihon:true,gori:true,
+ choices:[
+  ["集合管で血液が濾過される",true,""],
+  ["糸球体で血液が濾過される",false,"教科書どおりの記述なので、正しい。"],
+  ["近位尿細管で濾過された物質の大部分が再吸収される",false,"教科書どおりの記述なので、正しい。"],
+  ["ヘンレループ下行脚は尿の濃縮に関与する",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"血液が濾過されるのは<b>糸球体</b>である。集合管は、合流して乳頭管となり腎杯へ開く管である。（教科書 P172〜173）"},
+
+{q:"腎臓について誤っているのはどれか。",gori:true,
+ choices:[
+  ["腎門からは尿道が出る",true,""],
+  ["腎門から腎動脈が入る",false,"教科書どおりの記述なので、正しい。"],
+  ["腎杯は集まって腎盂をつくる",false,"教科書どおりの記述なので、正しい。"],
+  ["腎錐体の先端は乳頭となって腎杯へ突き出る",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"腎門から出るのは<b>尿管</b>である。尿道は膀胱から体外へ尿を出す管。（教科書 P171・179）"},
+
+{q:"尿細管について誤っているのはどれか。",gori:true,
+ choices:[
+  ["ヘンレループ上行脚は髄質の深いところへ下行する",true,""],
+  ["近位尿細管は皮質の主な部分を占める",false,"教科書どおりの記述なので、正しい。"],
+  ["遠位尿細管は集合管へ移行する",false,"教科書どおりの記述なので、正しい。"],
+  ["集合管は合流して乳頭管となる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"髄質の深いところへ下行するのは<b>下行脚</b>である。上行脚はUターンして皮質へ戻る。（教科書 P173）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=draw();
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  // ドボン対象の問題だけ💣に変わる。それ以外の🎯基本は通常どおり🎯のまま表示する
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  // 誤り選択問題は、設問中の「誤っている」を色付きにして読み飛ばしを防ぐ
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return; // 無効化済みの選択肢は再カウントしない
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    // 正解：ここで確定。正解した選択肢だけ緑にする（不正解の選択肢は先に色を変えない）
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent="正解！";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  // 不正解
+  if(mode==="dobon"){
+    // ドボンモードは一発勝負：選び直しなし・正解は伏せる
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; } // 💣ドボン対象を外したときだけ終了
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  // 通常モード：ミスを数え、選んだ選択肢だけ赤にして無効化。正解は伏せたまま選び直せる
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+  // 「次へ」はまだ出さない（正解するまで進めない）
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>

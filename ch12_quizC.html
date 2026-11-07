@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第12章 パートC 確認テスト｜生理学</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 12px}
+h1{font-size:14px;color:#555;margin-bottom:16px;font-weight:400;letter-spacing:.05em}
+.slide{width:100%;max-width:820px;background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.10);overflow:hidden}
+.hd{background:#4a3a6b;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd .ch{font-size:11px;color:#c4b5e8;font-weight:500;letter-spacing:.07em;margin-bottom:3px}
+.hd .tt{font-size:19px;font-weight:500;color:#fff}
+.hd .pg{font-size:12px;color:#c4b5e8;font-weight:500;white-space:nowrap;margin-left:14px}
+.bar{height:5px;background:#e5e7eb;overflow:hidden}
+.bar > i{display:block;height:100%;background:#4a3a6b;transition:width .3s;width:0}
+.bd{padding:22px 28px 18px;background:#fff;min-height:300px}
+.qnum{font-size:11px;font-weight:600;color:#4a3a6b;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mark{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.mark.kihon{background:rgba(74,58,107,.12);color:#4a3a6b}
+.mark.dobon{background:rgba(194,65,12,.14);color:#c2410c}
+.mark.gori{background:rgba(168,50,46,.12);color:#a8322e;border:1px solid rgba(168,50,46,.35)}
+.mark.hosoku{background:rgba(160,110,20,.14);color:#8a6314;border:1px solid rgba(160,110,20,.35)}
+.q{font-size:16px;line-height:1.8;color:#1a1a1a;font-weight:500;margin-bottom:18px}
+.q .ng{color:#a8322e;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-size:14.5px;line-height:1.6;color:#222;background:#f8f9fb;border:1.5px solid #e5e7eb;border-radius:9px;padding:12px 15px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1.5px solid #c3c8d0;color:#888;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt:not(.dis):hover{border-color:#4a3a6b;background:#f6f3fb}
+.opt.dis{cursor:default}
+.opt.correct{border-color:#1f9d6b;background:#e9f8f1}
+.opt.correct .mk{border-color:#1f9d6b;background:#1f9d6b;color:#fff}
+.opt.wrong{border-color:#d0483f;background:#fdeceb}
+.opt.wrong .mk{border-color:#d0483f;background:#d0483f;color:#fff}
+.exp{margin-top:16px;border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.ok{background:#e9f8f1;border:1px solid #b6e6d1}
+.exp.ng{background:#fdeceb;border:1px solid #f2c4c0}
+.exp .vd{font-weight:700;font-size:15px;margin-bottom:4px}
+.exp.ok .vd{color:#1f9d6b}
+.exp.ng .vd{color:#d0483f}
+.exp .tx{color:#333}
+.exp .tx b{color:#111}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 28px 14px;background:#f8f9fb;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px}
+.btn{padding:9px 18px;border-radius:7px;border:1px solid #4a3a6b;background:#4a3a6b;color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;margin-left:auto}
+.btn:hover{background:#3d305a}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;color:#4a3a6b;border-color:#d1d5db;margin-left:0}
+.btn.sub:hover{background:#f0f2f5}
+.center{text-align:center;padding:14px 10px}
+.center .lead{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px}
+.modes{display:flex;flex-direction:column;gap:12px;max-width:470px;margin:0 auto}
+.mode{text-align:left;border:1.5px solid #e5e7eb;border-radius:11px;padding:15px 18px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.mode:hover{border-color:#4a3a6b;background:#f6f3fb}
+.mode .nm{font-size:16px;font-weight:600;color:#4a3a6b;margin-bottom:4px}
+.mode .ds{font-size:13px;color:#666;line-height:1.7}
+.mode.dob .nm{color:#c2410c}
+.mode.dob:hover{border-color:#c2410c;background:#fdf1ea}
+.score .big{font-size:40px;font-weight:700;color:#4a3a6b;margin:6px 0}
+.score.dead .big{color:#c2410c}
+.score .msg{font-size:15px;color:#444;line-height:1.8;margin-top:8px}
+.score .stats{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:#3d305a;background:rgba(74,58,107,.09);padding:7px 16px;border-radius:20px}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:#4a3a6b;background:rgba(74,58,107,.1);padding:3px 12px;border-radius:20px;margin-bottom:6px}
+.tag.dob{color:#c2410c;background:rgba(194,65,12,.12)}
+</style>
+</head>
+<body>
+<h1>生理学 第12章 尿の生成と排泄｜パートC 確認テスト</h1>
+<div class="slide">
+  <div class="hd"><div><div class="ch">第12章 尿の生成と排泄 ｜ C 腎血流量（教科書 P177〜179）</div><div class="tt" id="htt">確認テスト</div></div><div class="pg" id="pg"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="bd" id="bd"></div>
+  <div class="ctrl" id="ctrl"></div>
+</div>
+<script>
+/* ===== 問題プール（教科書 第12章 P177〜P179 ベース）=====
+   対応スライド：ch12_partC.html（C 腎血流量）
+   choices: [表示文, 正解フラグ, その選択肢が何かの説明]
+   kihon/dobon/gori/hosoku の意味は他章と同じ。g … 出題グループ（GMAXで1回の出題数を制限）
+
+   グループ（すべて上限1）：同じテーマの問題や、先に出た問題の解説・ダミー説明が次の答えになる組を同じグループにした。
+     suchi（腎血流量・GFRの数値）／jido（自動調節）／henka（腎血流量の減少・予備循環）／adr（少量のアドレナリン）
+     kyo（強い交感神経刺激）／hitsuyo（クリアランスに必要な値）／hikaku（GFRとの比較）
+     busshitsu（イヌリン・クレアチニン・PAH）／ht（ヘマトクリット）／ff（濾過率）
+
+   過去問（尿の生成と排泄）でこの範囲に関わるもの：すべてクリアランス関係の7問
+   クリアランスに必要でない値2回／クレアチニン2回／イヌリン＝GFRの指標1回／濾過率約20％1回（PAHは解説中のみ）
+   2026年11月追加：模試（尿の生成と排泄）との照合で「量の比較（腎血漿流量＞GFR＞尿量）」「濃度差が最大＝クレアチニン（PAHなし）」を追加。
+   GFRの値は P178（体表面積補正で男性125 mL/分）と P173（男性約120・女性約110 mL/分）の両方を解説に記載 */
+const PICK=5;
+const GMAX={suchi:1,jido:1,henka:1,adr:1,kyo:1,hitsuyo:1,hikaku:1,busshitsu:1,ht:1,ff:1};
+function draw(){const out=[],cnt={};for(const q of shuffle(POOL)){const g=q.g;if(g&&GMAX[g]!==undefined){if((cnt[g]||0)>=GMAX[g])continue;cnt[g]=(cnt[g]||0)+1;}out.push(q);if(out.length>=PICK)break;}return out;}
+const POOL=[
+/* ---------- 成人の腎血流量（P177） ---------- */
+
+{g:"suchi",q:"成人の腎血流量は、心拍出量の約何％にあたるか。",kihon:true,
+ choices:[
+  ["約25％",true,""],
+  ["約5％",false,"実際の5分の1にあたる割合。"],
+  ["約50％",false,"実際の2倍にあたる割合。"],
+  ["約0.5％",false,"腎臓の重さが全体重に占める割合。"]],
+ exp:"腎臓は全体重の0.5％ほどしかないが、心拍出量の<b>約25％</b>もの血液が流れる。（教科書 P177）"},
+
+{g:"suchi",q:"成人の腎血流量（1分間）はどれか。",kihon:true,
+ choices:[
+  ["1.2〜1.3 L",true,""],
+  ["約0.4 L",false,"腎臓100 gあたりに1分間に流れる血液の量。"],
+  ["約12 L",false,"実際の約10倍にあたる量。"],
+  ["約0.12 L",false,"実際の約10分の1にあたる量。"]],
+ exp:"腎血流量（RBF）は1分間に<b>1.2〜1.3 L</b>で、心拍出量の約25％を占める。（教科書 P177）"},
+
+{g:"suchi",q:"腎臓の血流について正しいのはどれか。",
+ choices:[
+  ["軽い臓器だが、重さあたりの血流量は他の臓器に比べて非常に多い",true,""],
+  ["全体重の約5％を占める大きな臓器なので、血流量も多い",false,"誤り。腎臓は1対で約300 g、全体重の約0.5％にすぎない。"],
+  ["1分間に流れる血液は、心拍出量の約5％にすぎない",false,"誤り。実際はその5倍ほどの割合。"],
+  ["安静時の骨格筋より、血流量が少ない",false,"誤り。腎臓の中で血流の少ない部分でさえ、安静時の筋よりずっと多い。"]],
+ exp:"腎臓は100 gあたり約400 mL/分の血液が流れ、<b>重さあたりの血流量が非常に多い</b>臓器である。（教科書 P177）"},
+
+{g:"suchi",q:"腎臓の中の血流の分布について正しいのはどれか。",
+ choices:[
+  ["腎血流量の大部分は皮質を流れる",true,""],
+  ["皮質と髄質に、ほぼ半分ずつ流れる",false,"誤り。皮質と髄質で、流れる量に大きな差がある。"],
+  ["髄質内層に、腎血流量の半分以上が流れる",false,"誤り。髄質内層へ流れるのはごくわずか。"],
+  ["腎臓の中では、どこもほぼ同じ量の血液が流れる",false,"誤り。部位によって流れる量が大きく違う。"]],
+ exp:"腎血流量の約90％は<b>皮質</b>を流れる。（教科書 P177）"},
+
+{g:"suchi",q:"成人男子の糸球体濾過量（GFR）（体表面積1.73 m²当たり）の正常値はどれか。",kihon:true,
+ choices:[
+  ["125 mL/分",true,""],
+  ["650 mL/分",false,"成人男性の腎血漿流量。"],
+  ["約1 mL/分",false,"1分間につくられる尿の量くらい（1日約1.5 L）。"],
+  ["約12.5 mL/分",false,"実際の10分の1にあたる量。"]],
+ exp:"成人男子は<b>125 mL/分</b>で、女性はこれより約10％少ない。体の大きさが違う人どうしは、体表面積で補正して比べる。（教科書 P178）おおよその値として、成人男性で約120 mL/分、成人女性で約110 mL/分とも書かれる（教科書 P173、パートB）。"},
+
+{g:"suchi",q:"1分間あたりの量を大きい順に並べたものはどれか。",
+ choices:[
+  ["腎血漿流量 ＞ 糸球体濾過量 ＞ 尿量",true,""],
+  ["糸球体濾過量 ＞ 腎血漿流量 ＞ 尿量",false,"流れ込む血漿より多くを濾過することになり、ありえない順。"],
+  ["腎血漿流量 ＞ 尿量 ＞ 糸球体濾過量",false,"原尿の水の約99％が再吸収されるので、尿量は糸球体濾過量よりずっと少ない。"],
+  ["尿量 ＞ 糸球体濾過量 ＞ 腎血漿流量",false,"大小の順がすべて逆。"]],
+ exp:"<b>腎血漿流量</b>（男性で約650 mL/分）のうち約20％が濾過され、<b>糸球体濾過量</b>は125 mL/分。原尿の水の約99％が再吸収されるので、<b>尿</b>は約1 mL/分（1日約1.5 L）になる。（教科書 P173・175・178）"},
+
+/* ---------- 腎血流量の変化（P177） ---------- */
+
+{g:"henka",q:"大量に出血したとき、腎血流量はどうなるか。",kihon:true,
+ choices:[
+  ["著明に減少する",true,""],
+  ["増える",false,"実際とは逆向きの変化。"],
+  ["自動調節によって、ほぼ一定に保たれる",false,"動脈圧が80〜180 mmHgの範囲で変動したときの変化。"],
+  ["皮質への血流だけが増える",false,"実際にはみられない変化。"]],
+ exp:"運動時や出血時、交感神経を刺激したときには、腎血流量が<b>著明に減少</b>する。（教科書 P177）"},
+
+{g:"henka",q:"運動時や出血時に腎血流量が減るのはなぜか。",
+ choices:[
+  ["腎臓の血管を収縮させて、腎臓以外への血流を増やすため",true,""],
+  ["腎臓の細胞の代謝が低下して、血液がいらなくなるため",false,"腎血流量が減る理由ではない。"],
+  ["糸球体濾過量（GFR）を増やすため",false,"腎臓へ流れる血液が減る変化で、GFRを増やす方向にははたらかない。"],
+  ["腎臓の血管が運動や出血で傷つくため",false,"腎血流量が減る理由ではない。"]],
+ exp:"緊急時には腎臓の血管を収縮させ、その分の血液を<b>腎臓以外へ回す</b>。これを予備循環という。（教科書 P177）"},
+
+{g:"henka",q:"緊急時に腎臓の血管を収縮させ、腎臓以外への血流を増やすはたらきを何というか。",kihon:true,
+ choices:[
+  ["予備循環",true,""],
+  ["自動調節",false,"血圧が変動しても、腎血流量をほぼ一定に保つしくみ。"],
+  ["濾過率",false,"腎臓へ流入する血漿のうち、糸球体で濾過されるものの割合。"],
+  ["側副循環",false,"血管が詰まったとき、別の血管を通って血液が流れること。"]],
+ exp:"腎臓は、腎以外への血流を増やす<b>予備循環</b>としての役割をもつ。（教科書 P177）"},
+
+{g:"adr",q:"少量のアドレナリン・ノルアドレナリンを投与すると、腎血流量はどうなるか。",kihon:true,
+ choices:[
+  ["減る",true,""],
+  ["増える",false,"実際とは逆向きの変化。"],
+  ["ほとんど変わらない",false,"少量投与で、GFRや尿量にみられる変化。"]],
+ exp:"少量では輸出細動脈が収縮し、腎血流量が<b>減る</b>。（教科書 P177）"},
+
+{g:"adr",q:"少量のアドレナリン・ノルアドレナリンを投与すると、糸球体濾過量（GFR）はどうなるか。",
+ choices:[
+  ["ほとんど変わらない",true,""],
+  ["減る",false,"強い交感神経刺激や大量投与のときの変化。"],
+  ["増える",false,"実際とは逆向きの変化。"]],
+ exp:"少量では輸出細動脈が収縮して腎血流量は減るが、濾過圧は変わらないので、GFRは<b>維持される</b>。（教科書 P177）"},
+
+{g:"adr",q:"少量のアドレナリン・ノルアドレナリンを投与すると、尿量はどうなるか。",
+ choices:[
+  ["ほとんど変わらない",true,""],
+  ["減る",false,"強い交感神経刺激や大量投与で、GFRが低下したときの変化。"],
+  ["増える",false,"実際とは逆向きの変化。"]],
+ exp:"濾過圧が変わらずGFRが保たれるので、尿量も<b>維持される</b>。（教科書 P177）"},
+
+{g:"adr",q:"少量のアドレナリン・ノルアドレナリンの投与で収縮する血管はどれか。",
+ choices:[
+  ["輸出細動脈",true,""],
+  ["輸入細動脈",false,"強い交感神経刺激や大量投与のときに、あわせて収縮する血管。"],
+  ["糸球体毛細血管",false,"血漿が濾過される毛細血管。"],
+  ["腎静脈",false,"腎臓から血液が出ていく静脈。"]],
+ exp:"少量では<b>輸出細動脈</b>が収縮する。そのため腎血流量は減るが、GFRは保たれる。（教科書 P177）"},
+
+{g:"kyo",q:"強い交感神経刺激やアドレナリンの大量投与で、尿量はどうなるか。",kihon:true,
+ choices:[
+  ["減る",true,""],
+  ["ほとんど変わらない",false,"少量のアドレナリン・ノルアドレナリンを投与したときの変化。"],
+  ["増える",false,"実際とは逆向きの変化。"]],
+ exp:"強い刺激や大量投与では、輸入細動脈も収縮してGFRが低下し、尿量が<b>減る</b>。（教科書 P177）"},
+
+{g:"kyo",q:"強い交感神経刺激やアドレナリンの大量投与で尿量が減るのはなぜか。",
+ choices:[
+  ["輸入細動脈も収縮して、GFRが低下するから",true,""],
+  ["輸出細動脈だけが収縮するから",false,"少量のアドレナリン投与のときの変化で、GFRは保たれる。"],
+  ["集合管で水の再吸収が促されるから",false,"バソプレシンのはたらき。"],
+  ["ボーマン嚢内圧が下がるから",false,"濾過に逆らう力が弱まる変化で、GFRはむしろ増える方向。"]],
+ exp:"強い刺激や大量投与では、輸出細動脈に加えて<b>輸入細動脈も収縮</b>する。GFRが低下し、尿量が減る。（教科書 P177）"},
+
+/* ---------- 腎血流の自動調節（P177） ---------- */
+
+{g:"jido",q:"動脈圧が100 mmHgから150 mmHgに上がると、腎血流量はどうなるか。",kihon:true,
+ choices:[
+  ["ほとんど変わらない",true,""],
+  ["血圧に比例して、約1.5倍に増える",false,"自動調節がない血管で起こる変化。"],
+  ["減る",false,"交感神経が強くはたらいたときなどに起こる変化。"],
+  ["尿がほとんどつくられなくなるまで減る",false,"血圧が60 mmHg以下に下がったときの変化。"]],
+ exp:"腎血流量には自動調節がある。動脈圧が80〜180 mmHgの範囲で変動しても、腎血流量の変動は約10％以下にとどまり、<b>ほとんど変わらない</b>。（教科書 P177）"},
+
+{g:"jido",q:"血圧がある程度変動しても、腎臓が尿をつくり続けられるのはなぜか。",kihon:true,
+ choices:[
+  ["自動調節によって、腎血流量とGFRがほぼ一定に保たれるから",true,""],
+  ["血圧が上がるほど、GFRが増えるから",false,"自動調節がない場合に起こる変化で、尿量が血圧に左右されてしまう。"],
+  ["交感神経が、腎血流量を一定に保つから",false,"交感神経を刺激すると、腎血流量はむしろ減る。"],
+  ["血圧が下がると、尿細管での再吸収が止まるから",false,"実際にはみられない変化。"]],
+ exp:"動脈圧が80〜180 mmHgの範囲で変動しても、腎血流量の変動は約10％以下。<b>GFRもほぼ一定に保たれる</b>ので、尿をつくり続けられる。（教科書 P177）"},
+
+{g:"jido",q:"大量出血によるショックで血圧が60 mmHg以下になると、腎臓はどうなるか。",
+ choices:[
+  ["自動調節がはたらかず、尿がほとんどつくられなくなる",true,""],
+  ["自動調節によって、腎血流量は一定に保たれる",false,"自動調節がはたらく範囲の血圧のときの変化。"],
+  ["GFRが増えて、尿量が増える",false,"実際とは逆向きの変化。"],
+  ["腎血流量が増えて、尿量が増える",false,"実際とは逆向きの変化。"]],
+ exp:"血圧が60 mmHg以下になると<b>自動調節がはたらかず</b>、尿はほとんど産生されなくなる。（教科書 P177）"},
+
+{g:"jido",q:"腎血流量の自動調節のしくみは、腎臓の内部にあると考えられている。その根拠はどれか。",
+ choices:[
+  ["腎臓の神経支配を除いても、取り出して灌流しても、自動調節がみられる",true,""],
+  ["交感神経を刺激すると、腎血流量が減る",false,"神経による腎血流量の変化で、自動調節とは別の現象。"],
+  ["動脈圧が60 mmHg以下では、尿がほとんどつくられない",false,"自動調節がはたらく範囲の下限を示す事実。"],
+  ["腎臓は全体重の0.5％ほどの重さしかない",false,"腎臓の大きさを示す事実。"]],
+ exp:"神経を除いても、取り出して灌流しても自動調節がみられることから、しくみは<b>腎臓の内部</b>にあると考えられている。（教科書 P177）"},
+
+{g:"jido",q:"腎血流量の自動調節について誤っているのはどれか。",gori:true,
+ choices:[
+  ["動脈圧が上がると、腎血流量もそれに比例して増える",true,""],
+  ["動脈圧が80〜180 mmHgで変動しても、腎血流量の変動は約10％以下である",false,"教科書どおりの記述なので、正しい。"],
+  ["糸球体濾過量（GFR）もほぼ一定に保たれる",false,"教科書どおりの記述なので、正しい。"],
+  ["腎臓の神経支配を除いても認められる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"自動調節の範囲内では、動脈圧が上がっても<b>腎血流量はほぼ一定</b>。そのため、血圧がある程度変動しても尿をつくり続けられる。（教科書 P177）"},
+
+/* ---------- クリアランスとGFRの測定（P177〜178） ---------- */
+
+{g:"hitsuyo",q:"物質Xのクリアランスを求めるのに必要でないのはどれか。",kihon:true,dobon:true,
+ choices:[
+  ["1分間あたりの腎血流量",true,""],
+  ["物質Xの血漿中濃度",false,"式の分母に入る値。"],
+  ["物質Xの尿中濃度",false,"式の分子に入る値。"],
+  ["1分間の尿量",false,"尿中濃度に掛けて、1分間に尿へ出る量を求める値。"]],
+ exp:"クリアランス＝（Xの尿中濃度×1分間の尿量）÷Xの血漿中濃度。<b>腎血流量は使わない</b>。（教科書 P178）"},
+
+{g:"hitsuyo",q:"物質Xのクリアランスを求めるのに必要でないのはどれか。",hosoku:true,
+ choices:[
+  ["尿比重",true,""],
+  ["物質Xの血漿中濃度",false,"式の分母に入る値。"],
+  ["物質Xの尿中濃度",false,"式の分子に入る値。"],
+  ["1分間の尿量",false,"尿中濃度に掛けて、1分間に尿へ出る量を求める値。"]],
+ exp:"補足知識（資料外）。<b>尿比重</b>は尿の濃さの目安で、クリアランスの計算には使わない。必要なのは、尿中濃度・1分間の尿量・血漿中濃度の3つ。"},
+
+{g:"hikaku",q:"糸球体濾過量（GFR）を求める式はどれか（Ux：物質Xの尿中濃度、V：1分間の尿量、Px：物質Xの血漿中濃度）。",kihon:true,
+ choices:[
+  ["（Ux×V）／Px",true,""],
+  ["（Px×V）／Ux",false,"尿中濃度と血漿中濃度を入れ替えた式。"],
+  ["Ux／（Px×V）",false,"尿量を分母に入れてしまった式。"],
+  ["（Ux×Px）／V",false,"尿量で割ってしまった式。"]],
+ exp:"再吸収も分泌も受けない物質Xでは、GFR×Px＝Ux×V となる。これを変形すると <b>GFR＝（Ux×V）／Px</b>。（教科書 P178）"},
+
+{g:"busshitsu",q:"糸球体濾過量（GFR）の測定にもっとも適した物質はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["イヌリン",true,""],
+  ["クレアチニン",false,"体内で一定量つくられ、臨床でGFRを求めるのに使われる物質。"],
+  ["パラアミノ馬尿酸（PAH）",false,"濾過されたうえ、近位尿細管から分泌される物質。"],
+  ["グルコース",false,"健常者では、濾過された分がすべて再吸収される糖。"]],
+ exp:"GFRの測定にもっとも適しているのは<b>イヌリン</b>（分子量5,500の多糖類）。（教科書 P178）"},
+
+{g:"hikaku",q:"糸球体濾過量（GFR）の測定にもっとも適した物質は、腎臓でどのように扱われるか。",kihon:true,
+ choices:[
+  ["糸球体で濾過されたあと、再吸収も分泌もされない",true,""],
+  ["糸球体で濾過されたうえ、近位尿細管から分泌される",false,"このような物質のクリアランスは、GFRより大きくなる。"],
+  ["糸球体で濾過されたあと、近位尿細管ですべて再吸収される",false,"このような物質のクリアランスは、ほぼ0になる。"],
+  ["糸球体でほとんど濾過されない",false,"血漿タンパク質のような大きな物質の扱われ方。"]],
+ exp:"<b>濾過された量がそのまま尿に出る</b>ので、そのクリアランスがGFRに一致する。（教科書 P178）"},
+
+{g:"busshitsu",q:"臨床で糸球体濾過量（GFR）を求めるために、クリアランスを測定する物質はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["クレアチニン",true,""],
+  ["パラアミノ馬尿酸（PAH）",false,"腎血漿流量を求めるのに使う物質。"],
+  ["グルコース",false,"健常者では、濾過された分がすべて再吸収される糖。"],
+  ["アルブミン",false,"糸球体でほとんど濾過されない血漿タンパク質。"]],
+ exp:"臨床では、内因性<b>クレアチニン</b>クリアランスを測定する。（教科書 P178）"},
+
+{g:"busshitsu",q:"臨床で糸球体濾過量（GFR）を求めるのに使う物質が、その目的に使える理由はどれか。",
+ choices:[
+  ["体内で比較的一定の量がつくられ、尿細管での分泌をほぼ無視できる",true,""],
+  ["尿細管で大部分が再吸収される",false,"グルコースやアミノ酸のような、からだに必要な成分の扱われ方。"],
+  ["糸球体でほとんど濾過されない",false,"血漿タンパク質の扱われ方。"],
+  ["近位尿細管から盛んに分泌される",false,"腎血漿流量を求めるのに使う物質の性質。"]],
+ exp:"クレアチニンは<b>体内で比較的一定の量がつくられ</b>、尿細管での分泌もほぼ無視できる。そのため、臨床でGFRの目安になる。（教科書 P178）"},
+
+{g:"busshitsu",q:"クリアランスの測定に使う物質について誤っているのはどれか。",gori:true,
+ choices:[
+  ["クレアチニンは、尿細管で大部分が再吸収される",true,""],
+  ["クレアチニンは、体内で比較的一定の量がつくられる",false,"教科書どおりの記述なので、正しい。"],
+  ["パラアミノ馬尿酸（PAH）は、糸球体で濾過されるほか、近位尿細管から分泌される",false,"教科書どおりの記述なので、正しい。"],
+  ["イヌリンは、分子量5,500の多糖類である",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"クレアチニンは尿細管での分泌がほぼ無視でき、<b>再吸収もほとんどされない</b>。（教科書 P178・P175）"},
+
+/* ---------- 腎血漿流量の測定（P178） ---------- */
+
+{g:"busshitsu",q:"腎血漿流量を求めるために、クリアランスを測定する物質はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["パラアミノ馬尿酸（PAH）",true,""],
+  ["イヌリン",false,"GFRの測定にもっとも適した物質。"],
+  ["クレアチニン",false,"臨床でGFRを求めるのに使われる物質。"],
+  ["グルコース",false,"健常者では、濾過された分がすべて再吸収される糖。"]],
+ exp:"<b>パラアミノ馬尿酸（PAH）</b>のクリアランスから腎血漿流量（RPF）を求める。（教科書 P178）"},
+
+{g:"busshitsu",q:"腎血漿流量を求めるのに使う物質が、その目的に使える理由はどれか。",
+ choices:[
+  ["腎臓を1回通るとほとんどが尿へ出て、腎静脈血漿中の濃度がほぼ0になる",true,""],
+  ["濾過されたあと、再吸収も分泌もされない",false,"GFRの測定に適した物質の性質。"],
+  ["体内で一定の量がつくられる",false,"臨床でGFRを求めるのに使う物質の性質。"],
+  ["糸球体でほとんど濾過されない",false,"血漿タンパク質の性質。"]],
+ exp:"PAHは濾過されたうえ近位尿細管から分泌されるので、<b>腎静脈血漿中ではほぼ0</b>になる。このため、そのクリアランスが腎血漿流量に等しくなる。（教科書 P178）"},
+
+{g:"busshitsu",q:"腎動脈血と腎静脈血で、血漿中の濃度の差がもっとも大きいのはどれか。",
+ choices:[
+  ["パラアミノ馬尿酸（PAH）",true,""],
+  ["グルコース",false,"濾過されても、ほとんどが再吸収されて血液に戻る糖。"],
+  ["アルブミン",false,"糸球体でほとんど濾過されない血漿タンパク質。"],
+  ["Na⁺",false,"濾過されるが、大部分が再吸収される電解質。"]],
+ exp:"<b>PAH</b>は腎臓を1回通るとほとんどが尿中へ排泄されるので、腎静脈血漿中の濃度はほぼ0になる。（教科書 P178）"},
+
+{g:"busshitsu",q:"腎動脈血と腎静脈血で、血漿中の濃度の差がもっとも大きいのはどれか。ただし、血漿は等張とする。",
+ choices:[
+  ["クレアチニン",true,""],
+  ["Na⁺",false,"濾過されるが、大部分が再吸収されて血液に戻る電解質。"],
+  ["アルブミン",false,"糸球体でほとんど濾過されない血漿タンパク質。"],
+  ["Ca²⁺",false,"濾過されるが、大部分が再吸収されて血液に戻る電解質。"]],
+ exp:"<b>クレアチニン</b>は濾過されたあと、再吸収も分泌もほとんどされずに尿へ出るので、腎臓を通るあいだに血漿中の濃度が下がる。パラアミノ馬尿酸（PAH）が選択肢にあれば、PAHのほうが差は大きい（腎静脈ではほぼ0）。（教科書 P175・178）"},
+
+{g:"ht",q:"腎血漿流量から腎血流量を求めるときに使う値はどれか。",
+ choices:[
+  ["ヘマトクリット",true,""],
+  ["心拍出量",false,"1分間に心臓から送り出される血液の量。"],
+  ["血漿タンパク質濃度",false,"血漿膠質浸透圧を決める値。"],
+  ["血糖値",false,"血液中のグルコースの濃度。"]],
+ exp:"腎血流量＝腎血漿流量÷（1−<b>ヘマトクリット</b>／100）。ヘマトクリットは血液中の血球の割合（第8章）。（教科書 P178）"},
+
+{g:"ht",q:"腎血漿流量600 mL/分、ヘマトクリット40％のとき、腎血流量はどれか。",
+ choices:[
+  ["1,000 mL/分",true,""],
+  ["360 mL/分",false,"600×0.6と、割らずに掛けてしまった値。"],
+  ["1,500 mL/分",false,"600÷0.4と、「1−」を忘れて割った値。"],
+  ["840 mL/分",false,"600×1.4と、40％を足してしまった値。"]],
+ exp:"600÷（1−40／100）＝600÷0.6＝<b>1,000 mL/分</b>。（教科書 P178）"},
+
+/* ---------- 濾過率と尿細管のはたらきの解析（P178〜179） ---------- */
+
+{g:"ff",q:"腎臓に流入する血漿のうち、糸球体で濾過される割合（濾過率）はどれか。",kihon:true,dobon:true,
+ choices:[
+  ["約20％",true,""],
+  ["約80％",false,"近位尿細管で再吸収される水の割合（パートB）。"],
+  ["約1％",false,"濾過された水のうち、尿として排泄される割合。"],
+  ["約50％",false,"実際の2倍以上の割合。"]],
+ exp:"濾過率（FF）の正常値は<b>約0.2（20％）</b>。（教科書 P178）"},
+
+{g:"ff",q:"濾過率を求める式はどれか。",
+ choices:[
+  ["糸球体濾過量（GFR）÷腎血漿流量",true,""],
+  ["腎血漿流量÷糸球体濾過量（GFR）",false,"分母と分子を入れ替えた式。"],
+  ["腎血流量÷心拍出量",false,"心拍出量のうち腎臓へ流れる割合。"],
+  ["1分間の尿量÷糸球体濾過量（GFR）",false,"濾過された水のうち、尿として出る割合。"]],
+ exp:"濾過率は<b>GFR÷腎血漿流量</b>で、2種類の物質のクリアランスの比で求める。正常値は約0.2。（教科書 P178）"},
+
+{g:"ff",q:"濾過率とクリアランスについて誤っているのはどれか。",gori:true,
+ choices:[
+  ["濾過率とは、腎臓へ流入する血漿のうち、尿として排泄される割合である",true,""],
+  ["濾過率の正常値は約0.2である",false,"教科書どおりの記述なので、正しい。"],
+  ["濾過率は、2種類の物質のクリアランスの比から求められる",false,"教科書どおりの記述なので、正しい。"],
+  ["尿の濃縮や希釈のはたらきも、クリアランスの測定で解析できる",false,"教科書どおりの記述なので、正しい。"]],
+ exp:"濾過率は、流入する血漿のうち<b>糸球体で濾過される</b>割合。尿として出る割合ではない。（教科書 P178〜179）"},
+
+{g:"hikaku",q:"ある物質のクリアランスが糸球体濾過量（GFR）より小さいとき、わかることはどれか。",kihon:true,
+ choices:[
+  ["その分が尿細管で再吸収された",true,""],
+  ["その分が尿細管から分泌された",false,"クリアランスがGFRより大きいときにわかること。"],
+  ["尿細管で再吸収も分泌もされない",false,"クリアランスがGFRと等しくなる物質の扱われ方。"],
+  ["健常者の尿中にほとんど出てこない",false,"クリアランスがほぼ0になる物質の扱われ方。"]],
+ exp:"クリアランスがGFRより小さければ、その分が尿細管で<b>再吸収</b>されたことを示す（例：尿素）。（教科書 P178）"},
+
+{g:"hikaku",q:"ある物質のクリアランスが糸球体濾過量（GFR）より大きいとき、わかることはどれか。",
+ choices:[
+  ["尿細管から分泌された",true,""],
+  ["尿細管で再吸収された分がある",false,"クリアランスがGFRより小さいときにわかること。"],
+  ["尿細管で再吸収も分泌もされない",false,"クリアランスがGFRと等しくなる物質の扱われ方。"],
+  ["健常者の尿中にほとんど出てこない",false,"クリアランスがほぼ0になる物質の扱われ方。"]],
+ exp:"濾過された量より多く尿に出ているので、尿細管から<b>分泌</b>されたことを示す。（教科書 P179）"},
+
+{g:"hikaku",q:"尿素のクリアランスについて正しいのはどれか。",kihon:true,
+ choices:[
+  ["糸球体濾過量（GFR）より小さい",true,""],
+  ["糸球体濾過量（GFR）と等しい",false,"尿細管で再吸収も分泌もされない物質の場合。"],
+  ["糸球体濾過量（GFR）より大きい",false,"尿細管から分泌される物質の場合。"],
+  ["ほぼ0である",false,"健常者のグルコースのように、すべて再吸収される物質の場合。"]],
+ exp:"尿素は濾過されたあと、一部が尿細管で再吸収されるので、クリアランスは<b>GFRより小さく</b>なる。（教科書 P178）"},
+
+];
+
+let mode="normal", drawn=[], idx=0, score=0, streak=0, answered=false, dead=false;
+let qmiss=0, totalMiss=0, firstTryCount=0; // ミス回数の集計（通常モード）
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function home(){
+  document.getElementById("htt").textContent="確認テスト";
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="0";
+  document.getElementById("bd").innerHTML=`
+    <div class="center">
+      <p class="lead">モードを選んでスタート。<br>問題は毎回シャッフルされ、プール${POOL.length}問から${PICK}問が出題されます。</p>
+      <div class="modes">
+        <button class="mode" onclick="start('normal')">
+          <div class="nm">通常モード</div>
+          <div class="ds">${PICK}問を最後まで解いて採点します。ふだんの確認用。<span class="mark kihon" style="margin-left:4px">🎯基本</span> は落としちゃダメな基本問題、<span class="mark gori">⚠ 誤りを選ぶ</span> は誤っているものを選ぶ問題、<span class="mark hosoku">📘 補足（資料外）</span> は教科書外の国試頻出テーマ。</div>
+        </button>
+        <button class="mode dob" onclick="start('dobon')">
+          <div class="nm">💣 ドボンチャレンジ</div>
+          <div class="ds">プールの中のごく一部、<b>絶対に落とせない最重要問題</b>だけが <b>💣ドボン！</b> に変身。それを外したらそこで終了。どこまで正解を続けられるか挑戦！</div>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById("ctrl").innerHTML="";
+}
+function start(m){
+  mode=m; drawn=draw();
+  idx=0;score=0;streak=0;dead=false;totalMiss=0;firstTryCount=0;render();
+}
+function render(){
+  answered=false; qmiss=0;
+  const item=drawn[idx];
+  const opts=shuffle(item.choices);
+  const isDob=(mode==="dobon" && item.dobon);
+  document.getElementById("htt").textContent=(mode==="dobon")?"ドボンチャレンジ":"確認テスト";
+  document.getElementById("pg").textContent=`問 ${idx+1} / ${drawn.length}`;
+  document.getElementById("bar").style.width=(idx/drawn.length*100)+"%";
+  const L=["ア","イ","ウ","エ","オ"];
+  let markHtml = isDob ? `<span class="mark dobon">💣 ドボン！</span>`
+                       : (item.kihon ? `<span class="mark kihon">🎯 基本</span>` : "");
+  if(item.gori)   markHtml += `<span class="mark gori">⚠ 誤りを選ぶ</span>`;
+  if(item.hosoku) markHtml += `<span class="mark hosoku">📘 補足（資料外）</span>`;
+  const qText = item.gori ? item.q.replace("誤っている",'<span class="ng">誤っている</span>') : item.q;
+  let h=`<div class="qnum">Q${idx+1} ${markHtml}</div><div class="q">${qText}</div><div class="opts">`;
+  opts.forEach((o,i)=>{h+=`<button class="opt" onclick="pick(this,${o[1]})"><span class="mk">${L[i]}</span><span>${o[0]}</span></button>`;});
+  h+=`</div><div class="exp" id="exp"><div class="vd" id="vd"></div><div class="tx" id="tx"></div></div>`;
+  document.getElementById("bd").innerHTML=h;
+  document.getElementById("ctrl").innerHTML=`<button class="btn" id="nx" onclick="next()" disabled>解答を選んでください</button>`;
+}
+function pick(el,ok){
+  if(answered)return;
+  if(el.classList.contains("dis"))return;
+  const item=drawn[idx];
+  const isDob=(mode==="dobon" && item.dobon);
+  const selText=el.querySelector("span:last-child").textContent;
+  const selChoice=item.choices.find(c=>c[0]===selText);
+  const exp=document.getElementById("exp");
+  const nx=document.getElementById("nx");
+
+  if(ok){
+    answered=true;
+    el.classList.add("correct");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    score++;
+    if(mode!=="dobon"){ if(qmiss===0) firstTryCount++; }
+    if(mode==="dobon") streak++;
+    exp.className="exp show ok";
+    document.getElementById("vd").textContent="正解！";
+    document.getElementById("tx").innerHTML=item.exp;
+    nx.disabled=false;
+    nx.textContent=(idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶";
+    return;
+  }
+
+  if(mode==="dobon"){
+    answered=true;
+    el.classList.add("wrong");
+    document.querySelectorAll(".opt").forEach(b=>b.classList.add("dis"));
+    if(item.dobon){ dead=true; }
+    exp.className="exp show ng";
+    document.getElementById("vd").textContent=isDob?"💣 ドボン！":"不正解";
+    document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}`;
+    nx.disabled=false;
+    nx.textContent=dead?"結果を見る（ドボン）▶":((idx+1<drawn.length)?"次の問題 ▶":"結果を見る ▶");
+    return;
+  }
+
+  qmiss++; totalMiss++;
+  el.classList.add("wrong","dis");
+  exp.className="exp show ng";
+  document.getElementById("vd").textContent="不正解（ミス "+qmiss+"回）";
+  document.getElementById("tx").innerHTML=`選んだ「<b>${selText}</b>」は… ${selChoice[2]}<br>ほかの選択肢からもう一度選んでください。`;
+}
+function next(){
+  if(dead){result();return;}
+  if(idx+1<drawn.length){idx++;render();}
+  else result();
+}
+function result(){
+  document.getElementById("pg").textContent="";
+  document.getElementById("bar").style.width="100%";
+  if(mode==="dobon"){
+    document.getElementById("htt").textContent="結果";
+    if(dead){
+      document.getElementById("bd").innerHTML=`<div class="center score dead">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>ドボンを踏んでしまいました</div>
+        <div class="big">${streak} 問連続正解</div>
+        <div class="msg">${idx}問正解のあと、${idx+1}問目でドボン。<br>上の解説を復習して再挑戦しましょう。</div>
+      </div>`;
+    }else{
+      document.getElementById("bd").innerHTML=`<div class="center score">
+        <span class="tag dob">💣 ドボンチャレンジ</span>
+        <div>クリア！</div>
+        <div class="big">${score} / ${drawn.length}</div>
+        <div class="msg">ドボンを踏まず完走しました。お見事！</div>
+      </div>`;
+    }
+  }else{
+    document.getElementById("htt").textContent="結果";
+    const n=drawn.length;
+    const ftPct=Math.round(firstTryCount/n*100);
+    const noMiss=(totalMiss===0);
+    let head = noMiss
+      ? `<div class="big">✨ ノーミス パーフェクト！</div><div>全 ${n} 問を一発で正解</div>`
+      : `<div>今回の成績</div><div class="big">${firstTryCount} / ${n}</div><div>一発正解率 ${ftPct}%</div>`;
+    let stat = `<div class="stats">一発正解 ${firstTryCount}問　｜　総ミス ${totalMiss}回</div>`;
+    let msg = noMiss?"完璧です。この調子！":ftPct>=60?"よくできました。ミスした問題を復習しましょう。":"もう一度スライドで確認してから挑戦しましょう。";
+    document.getElementById("bd").innerHTML=`<div class="center score">${head}${stat}<div class="msg">${msg}</div></div>`;
+  }
+  document.getElementById("ctrl").innerHTML=`<button class="btn sub" onclick="home()">モード選択へ</button><button class="btn" onclick="start(mode)">もう一度（シャッフル）▶</button>`;
+}
+home();
+</script>
+</body>
+</html>
